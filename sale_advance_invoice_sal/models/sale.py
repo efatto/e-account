@@ -61,7 +61,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         description += ('\n' + line.name)
                 for invoice_line in inv.invoice_line:
                     invoice_line.name += description
-                    #invoice_line.account_analytic_sale_id = self.sal_id
+                    if self.sal_id:
+                        invoice_line.account_analytic_sal_id = self.sal_id
             if self._context.get('open_invoices', False):
                 return self.open_invoices(inv_ids)
             return {'type': 'ir.actions.act_window_close'}
