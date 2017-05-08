@@ -19,12 +19,11 @@ class SaleAdvancePaymentInv(models.TransientModel):
         order_id = self.env['sale.order'].browse(
             self._context['active_id'])
         return order_id
-    #
-    # @api.onchange('advance_payment_method')
-    # def _get_sal_domain(self):
-    #     sale_order = self.env['sale.order'].browse(
-    #         self._context['active_id'])
-    #     self.project_id = sale_order.project_id
+
+    @api.onchange('sal_id')
+    def _get_sal_percent(self):
+        if self.sal_id:
+            self.amount = self.sal_id.percent_toinvoice
 
     order_id = fields.Many2one(
         comodel_name='sale.order',
