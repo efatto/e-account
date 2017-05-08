@@ -18,11 +18,12 @@
 #
 #
 {
-    'name': 'Sale advance invoice extension',
+    'name': 'Sale advance invoice description from lines',
     'version': '8.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'Sale advance invoice',
+    'description': 'Add ability to select order lines to print details in the'
+                   'invoice',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
