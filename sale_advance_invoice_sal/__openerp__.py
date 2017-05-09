@@ -18,15 +18,16 @@
 #
 #
 {
-    'name': 'Sale advance invoice extension',
+    'name': 'Sale advance invoice extension with SAL',
     'version': '8.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'Sale advance invoice',
+    'description': 'Add ability to get description from sale order during'
+                   ' advance invoice creation, with contract SAL.',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
-        'sale',
+        'sale_advance_invoice',
         'account_analytic_sal',
     ],
     'data': [

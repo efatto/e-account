@@ -9,12 +9,6 @@ class SaleAdvancePaymentInv(models.TransientModel):
     _inherit = "sale.advance.payment.inv"
 
     @api.model
-    def _get_order_lines(self):
-        line_ids = self.env['sale.order'].browse(
-            self._context['active_id']).order_line
-        return line_ids
-
-    @api.model
     def _get_order(self):
         order_id = self.env['sale.order'].browse(
             self._context['active_id'])
@@ -31,14 +25,6 @@ class SaleAdvancePaymentInv(models.TransientModel):
     )
     project_id = fields.Many2one(
         related='order_id.project_id'
-    )
-    order_line_ids = fields.Many2many(
-        comodel_name='sale.order.line',
-        relation='advance_sale_order_line_rel_sal',
-        column1='order_line_id', column2='advance_id',
-        string='Order lines',
-        default=_get_order_lines,
-        help='Select order lines to print details in invoice'
     )
     sal_id = fields.Many2one(
         comodel_name='account.analytic.sal',
