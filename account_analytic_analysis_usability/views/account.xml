@@ -7,8 +7,11 @@
             <field name="model">account.analytic.account</field>
             <field name="inherit_id" ref="account_analytic_analysis.view_account_analytic_account_tree_c2c_3"/>
             <field name="arch" type="xml">
-                <field name="toinvoice_total" position="attributes">
-                    <attribute name="sum">Total to invoice</attribute>
+                <field name="toinvoice_total" position="replace">
+                    <field name="est_total" sum="Total Estimated" string="Estimated"/>
+                    <field name="remaining_total" sum="Total Remaining" string="Remaining"/>
+                    <field name="fix_price_to_invoice" sum="Fix Prices To Invoice" string="FP To Invoice"/>
+                    <field name="ca_to_invoice" sum="Timesheet To Invoice" string="TS To Invoice"/>
                 </field>
             </field>
         </record>
