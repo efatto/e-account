@@ -16,5 +16,18 @@
                 </field>
         </field>
     </record>
+    <record id="view_sale_order_line_make_invoice_sal" model="ir.ui.view">
+        <field name="name">Sales OrderLine Make Invoice SAL</field>
+        <field name="model">sale.order.line.make.invoice</field>
+        <field name="inherit_id" ref="sale.view_sale_order_line_make_invoice"/>
+        <field name="arch" type="xml">
+         <p class="oe_grey" position="after">
+            <field name="project_id" invisible="0"/>
+            <field name="sal_id"
+                   domain="[('account_analytic_id', '=', project_id)]"
+                   attrs="{'invisible': [('project_id','=', False)]}"/>
+         </p>
+      </field>
+    </record>
   </data>
 </openerp>
