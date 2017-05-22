@@ -2,4 +2,11 @@
 ##############################################################################
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
-from . import models
+from openerp import models, fields, api, _
+
+
+class AccountAnalyticAccount(models.Model):
+    _inherit = 'account.analytic.account'
+
+    complete_name = fields.Char(
+        store=True)
