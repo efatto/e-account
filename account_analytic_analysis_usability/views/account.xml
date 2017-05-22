@@ -7,6 +7,9 @@
             <field name="model">account.analytic.account</field>
             <field name="inherit_id" ref="account_analytic_analysis.view_account_analytic_account_tree_c2c_3"/>
             <field name="arch" type="xml">
+                <field name="complete_name" position="replace">
+                    <field name="name"/>
+                </field>
                 <field name="toinvoice_total" position="replace">
                     <field name="fix_price_to_invoice" sum="Total Contract To Invoice" string="Contract Amount"/>
                     <field name="invoiced_total" sum="Total Invoiced" string="Invoiced"/>
