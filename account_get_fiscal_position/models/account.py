@@ -100,3 +100,5 @@ class SaleOrder(models.Model):
             delivery_id=delivery_id, fiscal_position=fiscal_position,
             context=context_sale
         )
+
+#TODO add purchase, invoice, etc.
