@@ -46,7 +46,11 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     for line in self.order_line_ids:
                         description += ('\n' + line.name)
                 for invoice_line in inv.invoice_line:
-                    invoice_line.name += description
+                    invoice_line.name = \
+                        self.with_context({
+                          'lang': self.order_line_ids.order_id.partner_id.lang}
+                        )._translate_advance(percentage=True) % (
+                          self.amount) + description
                     if self.sal_id:
                         invoice_line.account_analytic_sal_id = self.sal_id
             if self._context.get('open_invoices', False):
