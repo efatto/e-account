@@ -14,6 +14,15 @@ class SaleAdvancePaymentInv(models.TransientModel):
             self._context['active_id']).order_line
         return line_ids
 
+    @api.model
+    def _get_advance_product(self):
+        line_ids = self.env['sale.order'].browse(
+            self._context['active_id']).order_line
+        if line_ids and line_ids[0].product_id:
+            return line_ids[0].product_id
+        else:
+            return super(SaleAdvancePaymentInv, self)._get_advance_product()
+
     order_line_ids = fields.Many2many(
         comodel_name='sale.order.line',
         relation='advance_sale_order_line_rel',
@@ -21,6 +30,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
         string='Order lines',
         default=_get_order_lines,
         help='Select order lines to print details in invoice'
+    )
+    product_id = fields.Many2one(
+        default=_get_advance_product,
     )
 
     @api.multi
@@ -36,9 +48,23 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     for line in self.order_line_ids:
                         description += ('\n' + line.name)
                 for invoice_line in inv.invoice_line:
-                    invoice_line.name += description
+                    invoice_line.name = \
+                        self.with_context({
+                          'lang': self.order_line_ids.order_id.partner_id.lang}
+                        )._translate_advance(percentage=True) % (
+                          self.amount) + description
             if self._context.get('open_invoices', False):
                 return self.open_invoices(inv_ids)
             return {'type': 'ir.actions.act_window_close'}
         else:
             return super(SaleAdvancePaymentInv, self).create_invoices()
+
+    #remove setting False to product_id if percentage method
+    @api.multi
+    def onchange_method(self, advance_payment_method, product_id):
+        if advance_payment_method == 'percentage':
+            return {}#'value': {'amount': 0, 'product_id': False}}
+        if product_id:
+            product = self.env['product.product'].browse(product_id)
+            return {'value': {'amount': product.list_price}}
+        return {'value': {'amount': 0}}
