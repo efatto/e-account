@@ -31,6 +31,7 @@
     ],
     'data': [
         'views/account.xml',
+        'views/hr_timesheet_invoice_data.xml',
     ],
     'installable': True,
 }
