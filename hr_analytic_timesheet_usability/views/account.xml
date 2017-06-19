@@ -9,7 +9,7 @@
                 <field name="unit_amount" position="after">
                     <field name="invoice_id"/>
                     <field name="invoice_state" invisible="1"/>
-                    <field name="invoiceable"/>
+                    <field name="invoiceable" invisible="1"/>
                 </field>
                 <tree position="attributes">
                     <attribute name="colors">magenta:invoice_state == False and invoiceable != False;
