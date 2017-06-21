@@ -122,10 +122,6 @@ class SaleOrderLineMakeInvoice(models.TransientModel):
             return False
         return project_ids
 
-    # order_id = fields.Many2one(
-    #     comodel_name='sale.order',
-    #     default=_get_order
-    # )
     project_id = fields.Many2one(
         comodel_name='account.analytic.account',
         default=_get_project
