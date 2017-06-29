@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_order_tree_invoiced" model="ir.ui.view">
+            <field name="name">view_order_tree_invoiced</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="amount_total" position="after">
+                    <field name="picking_invoiced" invisible="1"/>
+                    <field name="picking_done" invisible="1"/>
+                </field>
+                <tree position="attributes">
+                    <attribute name="colors">grey:state=='cancel';blue:state in ('waiting_date','manual');green:picking_done == False;red:state in ('invoice_except','shipping_except') or picking_invoiced == False</attribute>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</openerp>
