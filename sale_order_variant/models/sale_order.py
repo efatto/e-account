@@ -124,42 +124,42 @@ class SaleOrderLine(models.Model):
         if self.product:
             product_obj = self.env['product.product']
 
-            # check if written manually
-            if not self.product_attribute_value_id and not \
-                    self.product_template_id:
-                # search attribute-child type
-                child_attributes = re.search(
-                    '[A-Z][0-9]{2}ST[0-9]{2}', self.product.upper())
-                if child_attributes:
+            # check if written manually ONLY IN MOBILE USAGE
+            # if not self.product_attribute_value_id and not \
+            #         self.product_template_id:
+            # search attribute-child type
+            child_attributes = re.search(
+                '[A-Z][0-9]{2}ST[0-9]{2}', self.product.upper())
+            if child_attributes:
+                product_template = self.env['product.template'].search(
+                    [('prefix_code', '=',
+                      self.product.upper().split(
+                          child_attributes.group(0))[0])])
+                if product_template:
+                    self._set_product_template(product_template)
+                self._set_material_color(
+                    child_attributes.group(0)[0],
+                    child_attributes.group(0)[1:3])
+                self._get_stitching(child_attributes.group(0)[5:7])
+
+            # search attribute type only
+            else:
+                attributes = re.search(
+                    '[0-9]{6}[A-Z][0-9]{2}', self.product.upper())
+                if attributes:
                     product_template = self.env['product.template'].search(
                         [('prefix_code', '=',
                           self.product.upper().split(
-                              child_attributes.group(0))[0])])
+                              attributes.group(0))[0])])
                     if product_template:
                         self._set_product_template(product_template)
+                    # material-color
                     self._set_material_color(
-                        child_attributes.group(0)[0],
-                        child_attributes.group(0)[1:3])
-                    self._get_stitching(child_attributes.group(0)[5:7])
-
-                # search attribute type only
-                else:
-                    attributes = re.search(
-                        '[0-9]{6}[A-Z][0-9]{2}', self.product.upper())
-                    if attributes:
-                        product_template = self.env['product.template'].search(
-                            [('prefix_code', '=',
-                              self.product.upper().split(
-                                  attributes.group(0))[0])])
-                        if product_template:
-                            self._set_product_template(product_template)
-                        # material-color
-                        self._set_material_color(
-                            attributes.group(0)[0:1], attributes.group(0)[1:4])
-                if not self.product_attribute_value_id:
-                    raise exceptions.ValidationError(
-                        _('Code is not valid!')
-                    )
+                        attributes.group(0)[0:1], attributes.group(0)[1:4])
+            if not self.product_attribute_value_id:
+                raise exceptions.ValidationError(
+                    _('Code is not valid!')
+                )
 
             # then search product - if it is attribute-child
             if self.product_template_id and self.product_attribute_child_id \
