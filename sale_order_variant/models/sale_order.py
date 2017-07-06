@@ -107,7 +107,8 @@ class SaleOrderLine(models.Model):
                 attribute_line_ids.filtered(
                     lambda x: x.attribute_id.code == 'ST')
             if product_attribute_line:
-                self.product_attribute_line_stitching_id = product_attribute_line
+                self.product_attribute_line_stitching_id = \
+                    product_attribute_line
                 stitching_id = product_attribute_line.value_ids.filtered(
                     lambda x: x.code == stitching
                 )
@@ -124,21 +125,24 @@ class SaleOrderLine(models.Model):
             product_obj = self.env['product.product']
 
             # check if written manually
-            if not self.product_attribute_value_id and not self.product_template_id:
+            if not self.product_attribute_value_id and not \
+                    self.product_template_id:
                 # search attribute-child type
                 child_attributes = re.search(
                     '[A-Z][0-9]{2}ST[0-9]{2}', self.product.upper())
                 if child_attributes:
                     product_template = self.env['product.template'].search(
                         [('prefix_code', '=',
-                          self.product.upper().split(child_attributes.group(0))[0])])
+                          self.product.upper().split(
+                              child_attributes.group(0))[0])])
                     if product_template:
                         self._set_product_template(product_template)
                     self._set_material_color(
-                        child_attributes.group(0)[0], child_attributes.group(0)[1:3])
+                        child_attributes.group(0)[0],
+                        child_attributes.group(0)[1:3])
                     self._get_stitching(child_attributes.group(0)[5:7])
 
-                # serch attribute type only
+                # search attribute type only
                 else:
                     attributes = re.search(
                         '[0-9]{6}[A-Z][0-9]{2}', self.product.upper())
@@ -149,7 +153,7 @@ class SaleOrderLine(models.Model):
                                   attributes.group(0))[0])])
                         if product_template:
                             self._set_product_template(product_template)
-                        # material-color 10 T35
+                        # material-color
                         self._set_material_color(
                             attributes.group(0)[0:1], attributes.group(0)[1:4])
                 if not self.product_attribute_value_id:
@@ -176,7 +180,8 @@ class SaleOrderLine(models.Model):
                     })
 
             # attribute type only
-            if self.product_template_id and not self.product_attribute_child_id:
+            if self.product_template_id and not \
+                    self.product_attribute_child_id:
                 product_id = product_obj.search([
                     ('product_tmpl_id', '=', self.product_template_id.id),
                     ('attribute_value_ids', '=',
@@ -195,9 +200,7 @@ class SaleOrderLine(models.Model):
                     'Found more than 1 product, product template has malformed'
                     ' variants.'
                 )
-            # price_unit = self._get_price_unit() or 0.0
             self.product_tmpl_id = product_id.product_tmpl_id
-            # self.product_attribute_ids = product_id.attribute_value_ids.ids
             self.product_id = product_id
             self.update_attributes_from_product()
 
@@ -241,6 +244,7 @@ class SaleOrderLine(models.Model):
         if not self.product_tmpl_id.attribute_line_ids:
             self.product_id = self.product_tmpl_id.product_variant_ids
         else:
+            # check if written by hand, then not reset
             if not self.product and not \
                     self.env.context.get('not_reset_product'):
                 self.product_id = False
