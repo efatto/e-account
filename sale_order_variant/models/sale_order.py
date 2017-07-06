@@ -2,8 +2,7 @@
 ##############################################################################
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
-from openerp import models, fields, api, _, exceptions, tools
-import openerp.addons.decimal_precision as dp
+from openerp import models, fields, api, _, exceptions
 import re
 
 
@@ -53,8 +52,6 @@ class SaleOrderLine(models.Model):
     @api.multi
     def _set_product_template(self, product_template):
         self.product_template_id = product_template
-        self.product = product_template.prefix_code
-        self.scan = ''
         # clean all children fields
         self.product_attribute_line_id = \
             self.product_attribute_child_id = \
@@ -89,8 +86,6 @@ class SaleOrderLine(models.Model):
                     lambda x: x.attribute_id.code == material)
             if product_attribute_line:
                 self.product_attribute_line_id = product_attribute_line
-                self.product = self.product_template_id.prefix_code + \
-                    product_attribute_line.attribute_id.code
                 self._get_color(color)
 
     def _get_color(self, color):
@@ -104,15 +99,7 @@ class SaleOrderLine(models.Model):
             self.product_attribute_value_id = product_attribute_value
         else:
             self.product_attribute_value_id = False
-
-        if self.product_attribute_child_id:
-            self.product = self.product_template_id.prefix_code + \
-                self.product_attribute_child_id.code + \
-                product_attribute_value.code
-        else:
-            self.product = self.product_template_id.prefix_code + \
-                self.product_attribute_line_id.attribute_id.code + \
-                product_attribute_value.code
+            raise exceptions.ValidationError('Material color not found')
 
     def _get_stitching(self, stitching):
         if self.product_attribute_child_id and self.product_attribute_value_id:
@@ -126,16 +113,12 @@ class SaleOrderLine(models.Model):
                 )
                 if stitching_id:
                     self.stitching_value_id = stitching_id
-                    self.product = self.product_template_id.prefix_code + \
-                        self.product_attribute_child_id.code + \
-                        self.product_attribute_value_id.code + \
-                        self.product_attribute_line_stitching_id.attribute_id.code + \
-                        stitching_id.code
             else:
                 self.product_attribute_line_stitching_id = False
+                raise exceptions.ValidationError('Material color not found')
 
     @api.onchange('product')
-    def add_product_to_order(self):
+    def onchange_product(self):
         product_id = False
         if self.product:
             product_obj = self.env['product.product']
@@ -156,24 +139,28 @@ class SaleOrderLine(models.Model):
                     self._get_stitching(child_attributes.group(0)[5:7])
 
                 # serch attribute type only
-                attributes = re.search(
-                    '[0-9]{6}[A-Z][0-9]{2}', self.product.upper())
-                if attributes and not child_attributes:
-                    product_template = self.env['product.template'].search(
-                        [('prefix_code', '=',
-                          self.product.upper().split(attributes.group(0))[0])])
-                    if product_template:
-                        self._set_product_template(product_template)
-                    # material-color 10 T35
-                    self._set_material_color(
-                        attributes.group(0)[0:1], attributes.group(0)[1:4])
+                else:
+                    attributes = re.search(
+                        '[0-9]{6}[A-Z][0-9]{2}', self.product.upper())
+                    if attributes:
+                        product_template = self.env['product.template'].search(
+                            [('prefix_code', '=',
+                              self.product.upper().split(
+                                  attributes.group(0))[0])])
+                        if product_template:
+                            self._set_product_template(product_template)
+                        # material-color 10 T35
+                        self._set_material_color(
+                            attributes.group(0)[0:1], attributes.group(0)[1:4])
                 if not self.product_attribute_value_id:
                     raise exceptions.ValidationError(
                         _('Code is not valid!')
                     )
 
             # then search product - if it is attribute-child
-            if self.product_template_id and self.product_attribute_child_id:
+            if self.product_template_id and self.product_attribute_child_id \
+                    and self.product_attribute_value_id \
+                    and self.stitching_value_id:
                 domain = product_obj._build_attributes_domain(
                     self.product_template_id, [
                         {'value_id': self.product_attribute_value_id.id},
@@ -222,7 +209,6 @@ class SaleOrderLine(models.Model):
                 self.product_attribute_child_id = \
                 self.product_attribute_value_id = \
                 False
-            # self.product = ''
 
     @api.multi
     def update_attributes_from_product(self):
@@ -255,7 +241,8 @@ class SaleOrderLine(models.Model):
         if not self.product_tmpl_id.attribute_line_ids:
             self.product_id = self.product_tmpl_id.product_variant_ids
         else:
-            if not self.product and not self.env.context.get('not_reset_product'):
+            if not self.product and not \
+                    self.env.context.get('not_reset_product'):
                 self.product_id = False
             attribute_list = []
             for attribute_line in self.product_tmpl_id.attribute_line_ids:
