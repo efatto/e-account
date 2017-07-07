@@ -28,13 +28,14 @@
     'license': 'AGPL-3',
     'depends': [
         'sale',
-        'stock',
+        'l10n_it_ddt_ext',
     ],
     'data': [
         'security/ir.model.access.csv',
         'views/sale_order.xml',
         'views/partner.xml',
         'views/account_invoice.xml',
+        'views/picking.xml',
     ],
     'installable': True
 }
