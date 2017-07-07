@@ -10,10 +10,6 @@ class ProductAdditionalDescription(models.Model):
     _description = 'Additional description for product from partner'
 
     name = fields.Char('Additional description')
-    # partner_id = fields.Many2one(
-    #     comodel_name='res.partner',
-    #     string='Partner'
-    # )
 
 
 class ResPartner(models.Model):
@@ -21,8 +17,5 @@ class ResPartner(models.Model):
 
     partner_product_additional_description = fields.Many2one(
         comodel_name='product.additional.description',
-        #inverse_name='partner_id',
-        # string='Additional description',
-        # ondelete='cascade',
-        # required=False,
+        string='Additional description',
     )
