@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='date_invoice']"
                        position="after">
-                    <field name="partner_product_additional_description"/>
+                    <field name="partner_product_additional_description_id"/>
                 </xpath>
             </field>
         </record>

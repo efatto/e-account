@@ -5,9 +5,21 @@
 from openerp import models, fields, api
 
 
-class AccountInvoiceLine(models.Model):
+class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    partner_product_additional_description = fields.Many2one(
-        related='partner_id.partner_product_additional_description'
+    def get_partner_product_additional_description(self):
+        for invoice in self:
+            if not invoice.partner_id.is_company:
+                invoice.partner_product_additional_description_id = \
+                    invoice.partner_id.parent_id.\
+                    partner_product_additional_description_id
+            else:
+                invoice.partner_product_additional_description_id = \
+                    invoice.partner_id.\
+                    partner_product_additional_description_id
+
+    partner_product_additional_description_id = fields.Many2one(
+        comodel_name='product.additional.description',
+        compute=get_partner_product_additional_description,
     )

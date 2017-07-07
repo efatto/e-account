@@ -15,7 +15,7 @@ class ProductAdditionalDescription(models.Model):
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    partner_product_additional_description = fields.Many2one(
+    partner_product_additional_description_id = fields.Many2one(
         comodel_name='product.additional.description',
         string='Additional description',
     )

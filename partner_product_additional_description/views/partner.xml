@@ -8,7 +8,8 @@
         <field name="inherit_id" ref="base.view_partner_form" />
         <field name="arch" type="xml">
             <field name="company_id" position="after">
-                <field name="partner_product_additional_description"/>
+                <field name="partner_product_additional_description_id"
+                attrs="{'invisible': [('is_company', '=', False)]}"/>
             </field>
         </field>
     </record>
