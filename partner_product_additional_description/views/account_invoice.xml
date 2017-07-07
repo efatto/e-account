@@ -13,6 +13,16 @@
                 </xpath>
             </field>
         </record>
+        <record id="stock_picking_package_preparation_form_additional" model="ir.ui.view">
+            <field name="name">stock.picking.package.preparation.form.additional</field>
+            <field name="model">stock.picking.package.preparation</field>
+            <field name="inherit_id" ref="stock_picking_package_preparation.stock_picking_package_preparation_form"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="after">
+                    <field name="partner_product_additional_description_id"/>
+                </field>
+            </field>
+        </record>
 
     </data>
 </openerp>
