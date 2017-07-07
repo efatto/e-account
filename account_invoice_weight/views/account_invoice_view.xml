@@ -20,7 +20,7 @@
   </data>
   <data noupdate="1">
         <record forcecreate="True" id="config_parameter_account_invoice_weight" model="ir.config_parameter">
-            <field name="key">account.print_weight</field>
+            <field name="key">invoice.print_weight</field>
             <field name="value" eval="True"/>
         </record>
   </data>
