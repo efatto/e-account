@@ -10,7 +10,7 @@ class AccountInvoice(models.Model):
 
     def get_partner_product_additional_description(self):
         for invoice in self:
-            if not invoice.partner_id.is_company:
+            if invoice.partner_id.parent_id:
                 invoice.partner_product_additional_description_id = \
                     invoice.partner_id.parent_id.\
                     partner_product_additional_description_id

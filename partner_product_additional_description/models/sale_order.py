@@ -10,7 +10,7 @@ class SaleOrder(models.Model):
 
     def get_partner_product_additional_description(self):
         for order in self:
-            if not order.partner_id.is_company:
+            if order.partner_id.parent_id:
                 order.partner_product_additional_description_id = \
                     order.partner_id.parent_id.\
                     partner_product_additional_description_id

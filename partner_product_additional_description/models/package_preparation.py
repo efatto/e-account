@@ -10,7 +10,7 @@ class StockPickingPackagePreparation(models.Model):
 
     def get_partner_product_additional_description(self):
         for pack in self:
-            if not pack.partner_id.is_company:
+            if pack.partner_id.parent_id:
                 pack.partner_product_additional_description_id = \
                     pack.partner_id.parent_id.\
                     partner_product_additional_description_id
