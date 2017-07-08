@@ -3,7 +3,6 @@
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
 from openerp import models, api, fields, exceptions, _
-import time
 
 
 class AccountInvoice(models.Model):
@@ -57,14 +56,7 @@ class AccountInvoice(models.Model):
                 lambda t: t.company_id.id == invoice.company_id.id)
             taxes_ids = invoice.fiscal_position.map_tax(taxes) if \
                 invoice.fiscal_position else False
-            price_unit = grid.get_price_invoice(
-                invoice, time.strftime('%Y-%m-%d'))
-            # if invoice.company_id.currency_id.id != \
-            #         invoice.pricelist_id.currency_id.id:
-            #     price_unit = invoice.company_id.currency_id.with_context(
-            #         date=invoice.date_invoice).\
-            #         compute(invoice.pricelist_id.currency_id.id,
-            #                 price_unit)
+            price_unit = grid.get_price_invoice(invoice)
             values = {
                 'invoice_id': invoice.id,
                 'name': grid.carrier_id.name,
@@ -94,7 +86,7 @@ class DeliveryGrid(models.Model):
     _inherit = "delivery.grid"
 
     @api.multi
-    def get_price_invoice(self, invoice, dt):
+    def get_price_invoice(self, invoice):
         for grid in self:
             total = weight = volume = quantity = 0
             for line in invoice.invoice_line:
