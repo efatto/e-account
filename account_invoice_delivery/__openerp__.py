@@ -27,6 +27,7 @@
     'license': 'AGPL-3',
     'depends': [
         'delivery',
+        'product_types',
     ],
     'data': [
         'views/account_invoice_view.xml',

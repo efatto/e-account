@@ -18,7 +18,7 @@ msgstr ""
 #. module: account_invoice_delivery
 #: view:account.invoice:account_invoice_delivery.view_invoice_form_delivery
 msgid "Add in Quote"
-msgstr "Aggiungi in fattura"
+msgstr "Aggiungi o aggiorna in fattura"
 
 #. module: account_invoice_delivery
 #: help:account.invoice,carrier_id:0

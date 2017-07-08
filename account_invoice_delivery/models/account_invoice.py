@@ -39,7 +39,6 @@ class AccountInvoice(models.Model):
     @api.multi
     def delivery_set(self):
         line_obj = self.env['account.invoice.line']
-        acc_fp_obj = self.env['account.fiscal.position']
         self._delivery_unset()
         line_ids = []
         for invoice in self:
@@ -98,11 +97,11 @@ class DeliveryGrid(models.Model):
     def get_price_invoice(self, invoice, dt):
         for grid in self:
             total = weight = volume = quantity = 0
-            total_delivery = 0.0
             for line in invoice.invoice_line:
-                if line.is_delivery:
-                    total_delivery += line.price_subtotal + \
-                        self.pool['account.invoice']._amount_line_tax(line)
+                if not line.product_id.is_contribution\
+                        and not line.product_id.is_other\
+                        and not line.product_id.is_transport:
+                    total += line.price_subtotal
                 if not line.product_id or line.is_delivery:
                     continue
                 q = line.uos_id._compute_qty(
@@ -110,16 +109,14 @@ class DeliveryGrid(models.Model):
                 weight += (line.product_id.weight or 0.0) * q
                 volume += (line.product_id.volume or 0.0) * q
                 quantity += q
-            total = (invoice.amount_total or 0.0) - total_delivery
-
             total = invoice.currency_id.with_context(
                 date=invoice.date_invoice
             ).compute(from_amount=total, to_currency=invoice.currency_id)
-            return grid.get_price_from_picking_invoice(
+            return grid.get_price_from_invoice(
                 total, weight, volume, quantity)
 
     @api.multi
-    def get_price_from_picking_invoice(self, total, weight, volume, quantity):
+    def get_price_from_invoice(self, total, weight, volume, quantity):
         for grid in self:
             price = 0.0
             ok = False
