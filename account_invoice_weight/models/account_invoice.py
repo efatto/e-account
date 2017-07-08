@@ -52,7 +52,8 @@ class AccountInvoice(models.Model):
             for line in invoice.invoice_line: # sum weight for line without origin
                 for sppp in invoice.stock_picking_package_preparation_ids:
                     for picking in sppp.picking_ids:
-                        if line.origin not in picking.origin and \
+                        if line.origin and line.origin not in \
+                                picking.origin and \
                                 line.origin not in picking.name:
                             invoice.weight += line.product_id.\
                                 weight * line.quantity
