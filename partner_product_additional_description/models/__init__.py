@@ -7,3 +7,4 @@ from . import sale_order
 from . import account_invoice
 from . import package_preparation
 from . import picking
+from . import stock_move

@@ -36,6 +36,7 @@
         'views/partner.xml',
         'views/account_invoice.xml',
         'views/picking.xml',
+        'views/stock_move.xml',
     ],
     'installable': True
 }
