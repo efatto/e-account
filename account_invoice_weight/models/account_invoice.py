@@ -47,9 +47,9 @@ class AccountInvoice(models.Model):
     @api.multi
     def _compute_weight(self):
         for invoice in self:
-            #todo for sale in invoice.sale_id ?? if in the order-picking was set a custom weight
             # compute from invoice and sppp
-            for line in invoice.invoice_line: # sum weight for line without origin
+            # sum weight for line without origin
+            for line in invoice.invoice_line:
                 for sppp in invoice.stock_picking_package_preparation_ids:
                     for picking in sppp.picking_ids:
                         if line.origin and line.origin not in \
