@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-09 22:07+0000\n"
-"PO-Revision-Date: 2017-07-09 22:07+0000\n"
+"POT-Creation-Date: 2017-07-10 08:51+0000\n"
+"PO-Revision-Date: 2017-07-10 08:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,14 +17,13 @@ msgstr ""
 
 #. module: partner_product_additional_description
 #: field:product.additional.description,name:0
-#: field:res.partner,partner_product_additional_description_id:0
 msgid "Additional description"
 msgstr "Descrizione aggiuntiva del prodotto"
 
 #. module: partner_product_additional_description
 #: model:ir.model,name:partner_product_additional_description.model_product_additional_description
 msgid "Additional description for product from partner"
-msgstr "Descrizione aggiuntiva del prodotto per il partner"
+msgstr "Descrizione aggiuntiva del prodotto per questo partner"
 
 #. module: partner_product_additional_description
 #: field:product.additional.description,create_uid:0
@@ -77,6 +76,11 @@ msgid "Picking List"
 msgstr "Picking List"
 
 #. module: partner_product_additional_description
+#: field:res.partner,partner_product_additional_description_id:0
+msgid "Product additional description"
+msgstr "Descrizione aggiuntiva del prodotto"
+
+#. module: partner_product_additional_description
 #: model:ir.model,name:partner_product_additional_description.model_sale_order
 msgid "Sales Order"
 msgstr "Ordine di vendita"
@@ -90,4 +94,9 @@ msgstr "Riga ordine di vendita"
 #: model:ir.model,name:partner_product_additional_description.model_stock_move
 msgid "Stock Move"
 msgstr "Movimento di magazzino"
+
+#. module: partner_product_additional_description
+#: help:res.partner,partner_product_additional_description_id:0
+msgid "This description will be added to all product moved with this partner"
+msgstr "Questa descrizione sarà aggiunta a tutti i prodotti movimentati con questo partner"
 

@@ -22,4 +22,7 @@ class StockPicking(models.Model):
     partner_product_additional_description_id = fields.Many2one(
         comodel_name='product.additional.description',
         compute=get_partner_product_additional_description,
+        string='Product additional description',
+        help='This description will be added to all product moved with this '
+             'partner',
     )
