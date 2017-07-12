@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_order_invoices" model="ir.ui.view">
+            <field name="name">sale.order.form.view.invoices</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//page[@string='Other Information']" position="after">
+                    <page string="Invoiced amount by product type">
+                        <group string="Invoiced amount by product type">
+                            <field name="invoice_sale_order_ids" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="invoice_id"/>
+                                    <field name="amount_invoice"/>
+                                    <field name="amount_product"/>
+                                    <field name="amount_transport"/>
+                                    <field name="amount_contribution"/>
+                                    <field name="amount_other"/>
+                                    <field name="amount_invoice_not_found"/>
+                                    <field name="order_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
