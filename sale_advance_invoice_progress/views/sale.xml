@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+        <record id="view_order_form_advance_invoice" model="ir.ui.view">
+            <field name="name">sale.order.form.advance.invoice</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']"
+                   position="attributes">
+                   <attribute name="attrs">{'invisible': [('state','not in',['manual','progress'])]}</attribute>
+                </xpath>
+                 <xpath expr="//page[@string='Other Information']" position="after">
+                    <page string="Invoices">
+                        <group>
+                            <field name="advance_amount"/>
+                            <field name="advance_percentage"/>
+                        </group>
+                        <group string="Refunded invoice lines">
+                            <field name="refunded_invoice_line_ids" nolabel="1"/>
+                        </group>
+                        <group string="Advance Invoices">
+                            <field name="advance_invoice_ids" nolabel="1">
+                                <!--<tree>-->
+                                    <!--<field name="name"/>-->
+                                    <!--<field name="amount_untaxed"/>-->
+                                <!--</tree>-->
+                            </field>
+                        </group>
+                        <group string="Invoices from Order">
+                            <field name="from_line_invoice_ids" nolabel="1"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+  </data>
+</openerp>
