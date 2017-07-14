@@ -2,8 +2,7 @@
 ##############################################################################
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
-from openerp import models, fields, api, _, exceptions
-from openerp import workflow
+from openerp import models, fields, api, _, exceptions, workflow
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
@@ -104,10 +103,12 @@ class SaleOrderLineMakeInvoice(models.TransientModel):
                   ' one of the following reasons:\n1.The state of this sales '
                   'order line is either "draft" or "cancel"!\n2.The Sales '
                   'Order Line is Invoiced!'))
+        # Add sal_id to invoice lines
         for inv in self.pool['account.invoice'].browse(cr, uid, res, context=context):
             for line in inv.invoice_line:
                 wiz = self.browse(cr, uid, ids, context=context)
                 line.account_analytic_sal_id = wiz[0].sal_id
+        # End modification
         if context.get('open_invoices', False):
             return self.open_invoices(cr, uid, ids, res, context=context)
         return {'type': 'ir.actions.act_window_close'}
