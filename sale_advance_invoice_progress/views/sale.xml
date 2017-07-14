@@ -8,14 +8,22 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']"
-                   position="attributes">
-                   <attribute name="attrs">{'invisible': [('state','not in',['manual','progress'])]}</attribute>
+                   position="replace">
+                   <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+                    type="action" class="oe_highlight" groups="base.group_user"
+                    attrs="{'invisible': [('state', 'not in', ['manual','progress']),]}"
+                />
                 </xpath>
                  <xpath expr="//page[@string='Other Information']" position="after">
                     <page string="Invoices">
                         <group>
-                            <field name="advance_amount"/>
-                            <field name="advance_percentage"/>
+                            <group>
+                                <field name="advance_amount"/>
+                                <field name="advance_percentage"/>
+                            </group>
+                            <group>
+                                <field name="refunded_amount"/>
+                            </group>
                         </group>
                         <group string="Refunded invoice lines">
                             <field name="refunded_invoice_line_ids" nolabel="1"/>

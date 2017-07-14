@@ -5,8 +5,6 @@
 from openerp import models, fields, api, _, exceptions, workflow
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 import time
-#TODO if order_policy == 'picking' type of invoice creation = 'percentage' or 'fixed' only
-#TODO if order_id.invoice_ids: detrai importi se non sono fatture create dal ddt
 
 
 class AccountInvoiceLine(models.Model):
@@ -14,6 +12,27 @@ class AccountInvoiceLine(models.Model):
 
     advance_invoice_id = fields.Many2one('account.invoice', 'Advance invoice')
 
+
+class SaleAdvancePaymentInv(models.TransientModel):
+    _inherit = "sale.advance.payment.inv"
+
+    @api.model
+    def _get_payment_method(self):
+        order_id = self.env['sale.order'].browse(
+            self._context['active_id'])
+        if order_id.order_policy == 'picking':
+            return [('percentage','Percentage'),
+                    ('fixed','Fixed price (deposit)'),]
+        else:
+            return [
+                ('all', 'Invoice the whole sales order'),
+                ('percentage','Percentage'), ('fixed','Fixed price (deposit)'),
+                ('lines', 'Some order lines')]
+
+    advance_payment_method = fields.Selection(
+        selection=_get_payment_method,
+        default=False,
+    )
 
 class SaleOrderLineMakeInvoice(models.TransientModel):
     _inherit = "sale.order.line.make.invoice"
@@ -126,6 +145,9 @@ class SaleOrder(models.Model):
                     ('advance_invoice_id', 'in', order.advance_invoice_ids.ids)
                     , ('invoice_id.state', 'in', ['open', 'paid'])
                 ])
+            order.refunded_amount = sum(
+                x.price_subtotal for x in order.refunded_invoice_line_ids
+            )
 
     advance_invoice_ids = fields.One2many(
         comodel_name='account.invoice',
@@ -141,6 +163,10 @@ class SaleOrder(models.Model):
         comodel_name='account.invoice.line',
         compute=_get_advance_invoices,
         string='Invoice line advance refunded'
+    )
+    refunded_amount = fields.Float(
+        compute=_get_advance_invoices,
+        string='Refunded amount',
     )
     advance_percentage = fields.Float(
         compute=_get_advance_invoices,
