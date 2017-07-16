@@ -84,3 +84,22 @@ msgstr "Anticipo su fattura di vendita"
 msgid "Sales Order"
 msgstr "Ordine di vendita"
 
+#. module: sale_advance_invoice_progress
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Percentage"
+msgstr "Percentuale"
+
+#. module: sale_advance_invoice_progress
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Some order lines"
+msgstr "Alcune righe dell'ordine"
+
+#. module: sale_advance_invoice_progress
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Fixed price (deposit)"
+msgstr "Prezzo Fisso (acconto)"
+
+#. module: sale_advance_invoice_progress
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Invoice the whole sales order"
+msgstr "Fattura l'intero ordine di vendita"

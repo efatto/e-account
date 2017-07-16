@@ -34,6 +34,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
         default=False,
     )
 
+
 class SaleOrderLineMakeInvoice(models.TransientModel):
     _inherit = "sale.order.line.make.invoice"
 
