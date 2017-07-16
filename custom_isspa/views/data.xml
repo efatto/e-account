@@ -36,5 +36,7 @@
                 </tree>
             </field>
         </record>
+
+        <delete id="hr_timesheet.menu_hr_working_hours" model="ir.ui.menu"/>
     </data>
 </openerp>
