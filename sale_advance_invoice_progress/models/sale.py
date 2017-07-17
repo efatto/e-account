@@ -52,7 +52,7 @@ class SaleOrderLineMakeInvoice(models.TransientModel):
         sales_order_obj = self.pool.get('sale.order')
         order_invoiced_amount = {}
         for line in sales_order_line_obj.browse(cr, uid, context.get(
-            'active_ids', []), context=context):
+                'active_ids', []), context=context):
             if (not line.invoiced) and (line.state not in ('draft', 'cancel')):
                 if not line.order_id in invoices:
                     invoices[line.order_id] = []
@@ -60,7 +60,7 @@ class SaleOrderLineMakeInvoice(models.TransientModel):
                     cr, uid, [line.id])
                 for lid in line_id:
                     invoices[line.order_id].append(lid)
-                    # TODO get total amount invoiced for order
+                    # get total amount invoiced for order
                     if not line.order_id.id in order_invoiced_amount:
                         order_invoiced_amount[line.order_id.id] = \
                             line.price_subtotal
