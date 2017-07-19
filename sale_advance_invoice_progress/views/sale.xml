@@ -29,7 +29,7 @@
                             <field name="refunded_invoice_line_ids" nolabel="1"/>
                         </group>
                         <group string="Advance Invoices">
-                            <field name="advance_invoice_ids" nolabel="1">
+                            <field name="advance_invoice_ids" context="{'form_view_ref': 'account.invoice_form'}" nolabel="1">
                                 <!--<tree>-->
                                     <!--<field name="name"/>-->
                                     <!--<field name="amount_untaxed"/>-->
@@ -37,7 +37,7 @@
                             </field>
                         </group>
                         <group string="Invoices from Order">
-                            <field name="from_line_invoice_ids" nolabel="1"/>
+                            <field name="from_line_invoice_ids" context="{'form_view_ref': 'account.invoice_form'}" nolabel="1"/>
                         </group>
                     </page>
                 </xpath>
