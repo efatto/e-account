@@ -27,3 +27,26 @@ class AccountInvoice(models.Model):
                 res['value'].update(
                     {'account_id': partner.property_account_payable.id})
         return res
+
+    @api.model
+    def create(self, vals):
+        res = super(AccountInvoice, self).create(vals)
+        if not res.partner_id:
+            return res
+        if res.account_id.type == 'view':
+            partner = res.partner_id
+            if partner.property_account_receivable.type == 'view' and \
+                    partner.customer:
+                partner.with_context(create_partner=True).write(
+                    {'customer': True})
+                if type in ['out_invoice', 'out_refund']:
+                    res.update(
+                        {'account_id': partner.property_account_receivable.id})
+            if partner.property_account_payable.type == 'view' and \
+                    partner.supplier:
+                partner.with_context(create_partner=True).write(
+                    {'supplier': True})
+                if type in ['in_invoice', 'in_refund']:
+                    res.update(
+                        {'account_id': partner.property_account_payable.id})
+        return res
