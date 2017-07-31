@@ -22,6 +22,7 @@
                                 <field name="advance_percentage"/>
                             </group>
                             <group>
+                                <field name="advance_residual"/>
                                 <field name="refunded_amount"/>
                             </group>
                         </group>

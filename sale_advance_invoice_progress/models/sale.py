@@ -138,6 +138,8 @@ class SaleOrder(models.Model):
             )
             order.advance_amount = sum(
                 x.amount_untaxed for x in order.advance_invoice_ids)
+            order.advance_residual = sum(
+                x.residual for x in order.advance_invoice_ids)
             order.advance_percentage = \
                 order.advance_amount / order.amount_untaxed * 100 if \
                 order.advance_amount and order.amount_untaxed else 0.0
@@ -176,6 +178,10 @@ class SaleOrder(models.Model):
     advance_amount = fields.Float(
         compute=_get_advance_invoices,
         string='Advance amount'
+    )
+    advance_residual = fields.Float(
+        compute=_get_advance_invoices,
+        string='Advance residual'
     )
     advance_amount_refunded = fields.Float(
         compute=_get_advance_invoices,
