@@ -22,7 +22,7 @@
     'version': '8.0.1.0.0',
     'category': 'Accounting & Finance',
     'author': 'Sergio Corato',
-    'description': 'Account move line usability',
+    'description': 'Set zero for credit if put a value in debit and viceversa',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
