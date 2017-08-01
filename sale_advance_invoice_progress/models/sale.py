@@ -129,15 +129,38 @@ class SaleOrder(models.Model):
         for order in self:
             invoiced_sale_line_ids = order_line_obj.search(
                 [('order_id', '=', order.id), ('invoiced', '=', True)],)
+
             order.from_line_invoice_ids = invoiced_sale_line_ids.mapped(
                 'invoice_lines.invoice_id'
             )
+            if order.from_line_invoice_ids:
+                order.from_line_invoice_tag = \
+                    str([str(x.number) + '(' + str(
+                        sum(y.price_subtotal for y in x.invoice_line.filtered(
+                            lambda z: not z.advance_invoice_id
+                        ))) + ')' for x in order.from_line_invoice_ids])
+                order.from_line_amount_residual = sum(
+                    x.residual for x in order.from_line_invoice_ids
+                )
+            else:
+                order.from_line_invoice_tag = _(u'(No invoiced lines yet)')
+
             order.advance_invoice_ids = order.invoice_ids.filtered(
                 lambda x: x.state not in ('cancel',) and
                 x not in order.from_line_invoice_ids
             )
+            if order.advance_invoice_ids:
+                order.advance_invoice_tag = \
+                    str([str(x.number) + '(' + str(x.amount_untaxed) + ')' for
+                         x in
+                         order.advance_invoice_ids])
+            else:
+                order.advance_invoice_tag = _(u'(No advance invoice yet)')
+
             order.advance_amount = sum(
                 x.amount_untaxed for x in order.advance_invoice_ids)
+            order.advance_amount_total = sum(
+                x.amount_total for x in order.advance_invoice_ids)
             order.advance_residual = sum(
                 x.residual for x in order.advance_invoice_ids)
             order.advance_percentage = \
@@ -157,10 +180,22 @@ class SaleOrder(models.Model):
         compute=_get_advance_invoices,
         string='Advance Invoices',
     )
+    advance_invoice_tag = fields.Char(
+        compute=_get_advance_invoices,
+        string='Amount Advance by Invoice',
+    )
     from_line_invoice_ids = fields.One2many(
         comodel_name='account.invoice',
         compute=_get_advance_invoices,
         string='Invoices from Order',
+    )
+    from_line_invoice_tag = fields.Char(
+        compute=_get_advance_invoices,
+        string='Amount Invoiced by Invoice',
+    )
+    from_line_amount_residual = fields.Float(
+        compute=_get_advance_invoices,
+        string='Amount Invoiced not yet paid',
     )
     refunded_invoice_line_ids = fields.One2many(
         comodel_name='account.invoice.line',
@@ -169,7 +204,7 @@ class SaleOrder(models.Model):
     )
     refunded_amount = fields.Float(
         compute=_get_advance_invoices,
-        string='Refunded amount',
+        string='Advance Amount refunded',
     )
     advance_percentage = fields.Float(
         compute=_get_advance_invoices,
@@ -179,13 +214,13 @@ class SaleOrder(models.Model):
         compute=_get_advance_invoices,
         string='Advance amount'
     )
+    advance_amount_total = fields.Float(
+        compute=_get_advance_invoices,
+        string='Advance amount total'
+    )
     advance_residual = fields.Float(
         compute=_get_advance_invoices,
-        string='Advance residual'
-    )
-    advance_amount_refunded = fields.Float(
-        compute=_get_advance_invoices,
-        string='Advance amount refunded'
+        string='Advance amount not yet paid'
     )
 
     @api.cr_uid_context

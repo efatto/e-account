@@ -6,14 +6,47 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-16 16:28+0000\n"
-"PO-Revision-Date: 2017-07-16 16:28+0000\n"
+"POT-Creation-Date: 2017-08-01 09:46+0000\n"
+"PO-Revision-Date: 2017-08-01 09:46+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: sale_advance_invoice_progress
+#: code:addons/sale_advance_invoice_progress/models/sale.py:158
+#, python-format
+msgid "(No advance invoice yet)"
+msgstr "(Nessuna fattura di acconto)"
+
+#. module: sale_advance_invoice_progress
+#: code:addons/sale_advance_invoice_progress/models/sale.py:146
+#, python-format
+msgid "(No invoiced lines yet)"
+msgstr "(Nessuna riga di fattura)"
+
+#. module: sale_advance_invoice_progress
+#: model:ir.actions.act_window,help:sale_advance_invoice_progress.action_advance_invoice_progress
+msgid "<p class=\"oe_view_nocontent_create\">\n"
+"                Click to create a sale order advance view.\n"
+"              </p><p>\n"
+"                This menu gives you sale order advance.\n"
+"              </p>\n"
+"            "
+msgstr "<p class=\"oe_view_nocontent_create\">\n"
+"                Click to create a sale order advance view.\n"
+"              </p><p>\n"
+"                This menu gives you sale order advance.\n"
+"              </p>\n"
+"            "
+
+#. module: sale_advance_invoice_progress
+#: model:ir.actions.act_window,name:sale_advance_invoice_progress.action_advance_invoice_progress
+#: model:ir.ui.menu,name:sale_advance_invoice_progress.menu_advance_invoice_progress
+msgid "Advance Invoice Progress"
+msgstr "Acconti su Ordini"
 
 #. module: sale_advance_invoice_progress
 #: view:sale.order:sale_advance_invoice_progress.view_order_form_advance_invoice
@@ -62,9 +95,9 @@ msgid "Invoices from Order"
 msgstr "Fatture generate dall'ordine"
 
 #. module: sale_advance_invoice_progress
-#: model:ir.model,name:sale_advance_invoice_progress.model_stock_picking
-msgid "Picking List"
-msgstr "Picking List"
+#: view:sale.order:sale_advance_invoice_progress.view_order_advance_progress_tree
+msgid "Order Number"
+msgstr "Numero Ordine"
 
 #. module: sale_advance_invoice_progress
 #: view:sale.order:sale_advance_invoice_progress.view_order_form_advance_invoice
@@ -87,21 +120,22 @@ msgid "Sales Order"
 msgstr "Ordine di vendita"
 
 #. module: sale_advance_invoice_progress
-#: selection:sale.advance.payment.inv,advance_payment_method:0
-msgid "Percentage"
-msgstr "Percentuale"
+#: view:sale.order:sale_advance_invoice_progress.view_order_advance_progress_tree
+msgid "Sales Orders Advances"
+msgstr "Fatture di Acconto"
 
 #. module: sale_advance_invoice_progress
-#: selection:sale.advance.payment.inv,advance_payment_method:0
-msgid "Some order lines"
-msgstr "Alcune righe dell'ordine"
+#: view:sale.order:sale_advance_invoice_progress.view_order_advance_progress_tree
+msgid "Total Tax Included"
+msgstr "Totale (tasse incluse)"
 
 #. module: sale_advance_invoice_progress
-#: selection:sale.advance.payment.inv,advance_payment_method:0
-msgid "Fixed price (deposit)"
-msgstr "Prezzo Fisso (acconto)"
+#: view:sale.order:sale_advance_invoice_progress.view_order_advance_progress_tree
+msgid "Total Untaxed"
+msgstr "Totale Imponibile"
 
 #. module: sale_advance_invoice_progress
-#: selection:sale.advance.payment.inv,advance_payment_method:0
-msgid "Invoice the whole sales order"
-msgstr "Fattura l'intero ordine di vendita"
+#: view:sale.order:sale_advance_invoice_progress.view_order_advance_progress_tree
+msgid "Total invoiced not yet paid"
+msgstr "Totale fatturato non ancora pagato"
+

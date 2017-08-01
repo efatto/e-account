@@ -20,10 +20,11 @@
                             <group>
                                 <field name="advance_amount"/>
                                 <field name="advance_percentage"/>
+                                <field name="refunded_amount"/>
                             </group>
                             <group>
+                                <field name="advance_amount_total"/>
                                 <field name="advance_residual"/>
-                                <field name="refunded_amount"/>
                             </group>
                         </group>
                         <group string="Refunded invoice lines">
@@ -44,6 +45,53 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="view_order_advance_progress_tree" model="ir.ui.view">
+            <field name="name">sale.order.advance.progress.tree</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Orders Advances" fonts="bold:message_unread==True" colors="grey:state=='cancel';blue:state in ('waiting_date','manual');red:state in ('invoice_except','shipping_except')">
+                    <field name="message_unread" invisible="1"/>
+                    <field name="name" string="Order Number"/>
+                    <field name="date_order"/>
+                    <field name="partner_id"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="amount_untaxed" sum="Total Untaxed"/>
+                    <field name="from_line_invoice_tag" widget="many2many_tags"/>
+                    <field name="from_line_amount_residual" sum="Total invoiced not yet paid"/>
+                    <field name="amount_total" sum="Total Tax Included"/>
+                    <field name="state"/>
+                    <field name="advance_amount"/>
+                    <field name="refunded_amount"/>
+                    <field name="advance_invoice_tag" widget="many2many_tags"/>
+                    <field name="advance_amount_total"/>
+                    <field name="advance_residual"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_advance_invoice_progress" model="ir.actions.act_window">
+            <field name="name">Advance Invoice Progress</field>
+            <field name="res_model">sale.order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="sale_advance_invoice_progress.view_order_advance_progress_tree"/>
+            <!--<field name="search_view_id" ref="stock.view_move_search"/>-->
+            <field name="domain">[('state', 'not in', ('draft', 'cancel'))]</field>
+            <!--<field name="context">{}</field>-->
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale order advance view.
+              </p><p>
+                This menu gives you sale order advance.
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="action_advance_invoice_progress" id="menu_advance_invoice_progress"
+            parent="base.menu_sales" groups="base.group_sale_salesman,base.group_sale_manager"
+            sequence="10"/>
 
   </data>
 </openerp>
