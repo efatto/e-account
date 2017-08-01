@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-01 09:46+0000\n"
-"PO-Revision-Date: 2017-08-01 09:46+0000\n"
+"POT-Creation-Date: 2017-08-01 10:21+0000\n"
+"PO-Revision-Date: 2017-08-01 10:21+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -139,3 +139,52 @@ msgstr "Totale Imponibile"
 msgid "Total invoiced not yet paid"
 msgstr "Totale fatturato non ancora pagato"
 
+#. module: sale_advance_invoice_progress
+#: field:sale.order,advance_percentage:0
+msgid "Advance Percentage"
+msgstr "Acconto (%)"
+
+#. module: sale_advance_invoice_progress
+#: field:sale.order,advance_amount:0
+msgid "Advance Amount"
+msgstr "Importo Acconto"
+
+#. module: sale_advance_invoice_progress
+#: field:sale.order,advance_amount_total:0
+msgid "Advance Amount Total"
+msgstr "Importo Totale Acconto"
+
+#. module: sale_advance_invoice_progress
+#: field:sale.order,advance_residual:0
+msgid "Advance Amount not yet paid"
+msgstr "Importo Acconto non pagato"
+
+#. module: sale_advance_invoice_progress
+#: field:sale.order,advance_refunded_amount:0
+msgid "Advance Refunded Amount"
+msgstr "Importo Acconto Reso"
+
+#. module: sale_advance_invoice_progress
+#: field:sale.order,refunded_invoice_line_ids:0
+msgid "Invoice line advance refunded"
+msgstr "Righe fatture di reso acconto"
+
+#. module: sale_advance_invoice_progress
+#: field:sale.order,from_line_amount_residual:0
+msgid "Amount Invoiced not yet paid"
+msgstr "Importo fatture non pagate"
+
+#. module: sale_advance_invoice_progress
+#: field:sale.order,from_line_invoice_tag:0
+msgid "Amount Invoiced by Invoice"
+msgstr "Importo Fatturato per fattura"
+
+#. module: sale_advance_invoice_progress
+#: field:sale.order,from_line_invoice_ids:0
+msgid "Invoices from Order"
+msgstr "Fatture collegate"
+
+#. module: sale_advance_invoice_progress
+#: field:sale.order,advance_invoice_tag:0
+msgid "Amount Advance by Invoice"
+msgstr "Fatturato per fattura"

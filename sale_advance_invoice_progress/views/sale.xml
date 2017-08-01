@@ -20,7 +20,7 @@
                             <group>
                                 <field name="advance_amount"/>
                                 <field name="advance_percentage"/>
-                                <field name="refunded_amount"/>
+                                <field name="advance_refunded_amount"/>
                             </group>
                             <group>
                                 <field name="advance_amount_total"/>
@@ -62,7 +62,7 @@
                     <field name="amount_total" sum="Total Tax Included"/>
                     <field name="state"/>
                     <field name="advance_amount"/>
-                    <field name="refunded_amount"/>
+                    <field name="advance_refunded_amount"/>
                     <field name="advance_invoice_tag" widget="many2many_tags"/>
                     <field name="advance_amount_total"/>
                     <field name="advance_residual"/>

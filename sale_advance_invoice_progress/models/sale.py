@@ -171,56 +171,55 @@ class SaleOrder(models.Model):
                     ('advance_invoice_id', 'in', order.advance_invoice_ids.ids)
                     , ('invoice_id.state', 'in', ['open', 'paid'])
                 ])
-            order.refunded_amount = sum(
+            order.advance_refunded_amount = sum(
                 x.price_subtotal for x in order.refunded_invoice_line_ids
             )
 
     advance_invoice_ids = fields.One2many(
         comodel_name='account.invoice',
-        compute=_get_advance_invoices,
-        string='Advance Invoices',
+        compute=_get_advance_invoices
     )
     advance_invoice_tag = fields.Char(
         compute=_get_advance_invoices,
         string='Amount Advance by Invoice',
+        translate=True,
     )
     from_line_invoice_ids = fields.One2many(
         comodel_name='account.invoice',
         compute=_get_advance_invoices,
         string='Invoices from Order',
+        translate=True,
     )
     from_line_invoice_tag = fields.Char(
         compute=_get_advance_invoices,
         string='Amount Invoiced by Invoice',
+        translate=True,
     )
     from_line_amount_residual = fields.Float(
         compute=_get_advance_invoices,
         string='Amount Invoiced not yet paid',
+        translate=True,
     )
     refunded_invoice_line_ids = fields.One2many(
         comodel_name='account.invoice.line',
         compute=_get_advance_invoices,
-        string='Invoice line advance refunded'
+        string='Invoice line advance refunded',
+        translate=True,
     )
-    refunded_amount = fields.Float(
-        compute=_get_advance_invoices,
-        string='Advance Amount refunded',
+    advance_refunded_amount = fields.Float(
+        compute=_get_advance_invoices
     )
     advance_percentage = fields.Float(
-        compute=_get_advance_invoices,
-        string='Advance (%)'
+        compute=_get_advance_invoices
     )
     advance_amount = fields.Float(
-        compute=_get_advance_invoices,
-        string='Advance amount'
+        compute=_get_advance_invoices
     )
     advance_amount_total = fields.Float(
-        compute=_get_advance_invoices,
-        string='Advance amount total'
+        compute=_get_advance_invoices
     )
     advance_residual = fields.Float(
-        compute=_get_advance_invoices,
-        string='Advance amount not yet paid'
+        compute=_get_advance_invoices
     )
 
     @api.cr_uid_context
