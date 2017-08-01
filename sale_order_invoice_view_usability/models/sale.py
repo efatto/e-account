@@ -11,10 +11,10 @@ class SaleOrder(models.Model):
     def _get_picking_state(self):
         for order in self:
             order.picking_invoiced = False if order.picking_ids.filtered(
-                lambda x: x.invoice_state != 'invoiced'
+                lambda x: x.invoice_state != 'invoiced' and x.state != 'cancel'
             ) else True
             order.picking_done = False if order.picking_ids.filtered(
-                lambda x: x.state != 'done'
+                lambda x: x.state not in ['cancel', 'done']
             ) else True
 
     picking_invoiced = fields.Boolean(
