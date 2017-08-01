@@ -18,16 +18,17 @@
 #
 #
 {
-    'name': 'Sale order view usability',
+    'name': 'Sale order invoice view usability on picking state',
     'version': '8.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'This module add sale order ref and origin in tree view and'
-                   ' total amount after untaxed amount.',
+    'description': 'This module change color of tree of sale order based '
+                   'on picking, adding green if picking is not done, and '
+                   'red if picking is not invoiced of in except state.',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
-        'sale',
+        'sale_order_view_usability',
     ],
     'data': [
         'views/sale_order_view.xml',
