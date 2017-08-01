@@ -27,7 +27,7 @@
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
-        'sale',
+        'sale_advance_invoice_progress',
         'stock',
     ],
     'data': [
