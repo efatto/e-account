@@ -19,11 +19,12 @@
 #
 ##############################################################################
 {
-    'name': 'Account fiscal position for multicompany',
+    'name': 'SUPERSEEDED Account fiscal position for multicompany',
     'version': '8.0.1.0.0',
     'category': 'Extra Tools',
     'description':
-        'Account fiscal position for multicompany',
+        'Account fiscal position for multicompany SUPERSEEDED by '
+        'account tax product multi company default',
     'author': 'Sergio Corato',
     'website': 'http://www.efatto.it',
     'depends': [
@@ -32,5 +33,5 @@
     'data': [
         'views/account.xml',
     ],
-    'installable': True,
+    'installable': False,
 }
