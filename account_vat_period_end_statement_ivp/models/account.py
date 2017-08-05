@@ -113,6 +113,7 @@ class AccountVatPeriodEndStatement(orm.Model):
             return {'value': {name: fiscalcode}}
         return {}
 
+
 class AccountVatSettlementAttachment(orm.Model):
     _name = "account.vat.settlement.attachment"
     _description = "Vat Settlement Export File"

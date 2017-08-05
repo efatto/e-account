@@ -5,14 +5,21 @@
 # Namespace urn:www.agenziaentrate.gov.it:specificheTecniche:sco:ivp
 
 from __future__ import unicode_literals
-import pyxb
-import pyxb.binding
-import pyxb.binding.saxer
+import logging
 import io
-import pyxb.utils.utility
-import pyxb.utils.domutils
 import sys
-import pyxb.utils.six as _six
+_logger = logging.getLogger(__name__)
+try:
+    import pyxb
+    import pyxb.binding
+    import pyxb.binding.saxer
+    import pyxb.utils.utility
+    import pyxb.utils.domutils
+    import pyxb.utils.six as _six
+    # Import bindings for namespaces imported into schema
+    import pyxb.binding.datatypes
+except ImportError as err:
+    _logger.debug(err)
 
 # Unique identifier for bindings created at the same time
 _GenerationUID = pyxb.utils.utility.UniqueIdentifier('urn:uuid:7c714a02-793b-11e7-afb3-b05adae3c683')
@@ -24,7 +31,6 @@ if pyxb.__version__ != _PyXBVersion:
     raise pyxb.PyXBVersionError(_PyXBVersion)
 
 # Import bindings for namespaces imported into schema
-import pyxb.binding.datatypes
 import _cm as _ImportedBinding__cm
 from openerp.addons.l10n_it_fatturapa.bindings import _ds as _ImportedBinding__ds
 
