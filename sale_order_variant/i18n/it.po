@@ -23,8 +23,8 @@ msgstr "Il codice non è valido!"
 
 #. module: sale_order_variant
 #: field:sale.order.line,product:0
-msgid "Product"
-msgstr "Prodotto"
+msgid "Product variant code"
+msgstr "Scan codice variante"
 
 #. module: sale_order_variant
 #: field:sale.order.line,product_attribute_child_id:0

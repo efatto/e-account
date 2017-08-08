@@ -47,7 +47,7 @@ class SaleOrderLine(models.Model):
     )
     product_attribute_image = fields.Binary(
         related='product_attribute_value_id.image')
-    product = fields.Char()
+    product = fields.Char('Product variant code')
 
     @api.multi
     def _set_product_template(self, product_template):
