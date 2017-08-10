@@ -101,11 +101,11 @@ class SaleOrderLine(models.Model):
             self.product_attribute_value_id = False
             raise exceptions.ValidationError('Material color not found')
 
-    def _get_stitching(self, stitching):
+    def _get_stitching(self, stitching, code_stitching):
         if self.product_attribute_child_id and self.product_attribute_value_id:
             product_attribute_line = self.product_template_id.\
                 attribute_line_ids.filtered(
-                    lambda x: x.attribute_id.code == 'ST')
+                    lambda x: x.attribute_id.code == code_stitching)
             if product_attribute_line:
                 self.product_attribute_line_stitching_id = \
                     product_attribute_line
@@ -129,7 +129,7 @@ class SaleOrderLine(models.Model):
             #         self.product_template_id:
             # search attribute-child type
             child_attributes = re.search(
-                '[A-Z][0-9]{2}ST[0-9]{2}', self.product.upper())
+                '[A-Z][0-9]{2}[S&][T&][0-9]{2}', self.product.upper())
             if child_attributes:
                 product_template = self.env['product.template'].search(
                     [('prefix_code', '=',
@@ -140,7 +140,8 @@ class SaleOrderLine(models.Model):
                 self._set_material_color(
                     child_attributes.group(0)[0],
                     child_attributes.group(0)[1:3])
-                self._get_stitching(child_attributes.group(0)[5:7])
+                self._get_stitching(child_attributes.group(0)[5:7],
+                                    child_attributes.group(0)[3:5])
 
             # search attribute type only
             else:
