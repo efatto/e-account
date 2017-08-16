@@ -28,7 +28,7 @@
     'license': 'AGPL-3',
     'depends': [
         'sale',
-        'product_types',
+        'service_type',
     ],
     'data': [
         'security/ir.model.access.csv',
