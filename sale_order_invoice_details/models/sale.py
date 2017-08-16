@@ -56,25 +56,36 @@ class SaleOrder(models.Model):
                                             line.origin in picking.name):
                                         amount_invoice += line.price_subtotal
                                         if line.product_id:
-                                            if line.product_id.is_contribution:
-                                                amount_contribution += line.price_subtotal
-                                            elif line.product_id.is_transport:
-                                                amount_transport += line.price_subtotal
-                                            elif line.product_id.is_other:
-                                                amount_other += line.price_subtotal
+                                            if line.product_id.service_type\
+                                                    == 'contribution':
+                                                amount_contribution += \
+                                                    line.price_subtotal
+                                            elif line.product_id.service_type\
+                                                    == 'transport':
+                                                amount_transport += \
+                                                    line.price_subtotal
+                                            elif line.product_id.service_type\
+                                                    == 'other':
+                                                amount_other += \
+                                                    line.price_subtotal
                                             else: # discount is here too
-                                                amount_product += line.price_subtotal
+                                                amount_product += \
+                                                    line.price_subtotal
                                         else: # not product defined
                                             amount_other += line.price_subtotal
                         else:
                             if line.origin and line.origin in order.name:
                                 amount_invoice += line.price_subtotal
                                 if line.product_id:
-                                    if line.product_id.is_contribution:
-                                        amount_contribution += line.price_subtotal
-                                    elif line.product_id.is_transport:
+                                    if line.product_id.service_type \
+                                            == 'contribution':
+                                        amount_contribution += \
+                                            line.price_subtotal
+                                    elif line.product_id.service_type \
+                                            == 'transport':
                                         amount_transport += line.price_subtotal
-                                    elif line.product_id.is_other:
+                                    elif line.product_id.service_type \
+                                            == 'other':
                                         amount_other += line.price_subtotal
                                     else:  # discount is here too
                                         amount_product += line.price_subtotal
