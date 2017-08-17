@@ -27,7 +27,7 @@
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
-        'sale',
+        'sale_order_weight',
         'l10n_it_ddt',
     ],
     'data': [
