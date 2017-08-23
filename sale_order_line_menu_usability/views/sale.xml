@@ -9,6 +9,7 @@
                 <search string="Search Uninvoiced Lines">
                     <filter icon="terp-gtk-go-back-rtl" string="To Do" domain="[('state','=','confirmed')]" name="sale order" help="Confirmed sales order lines, not yet delivered"/>
                     <filter icon="terp-dialog-close" string="Done" domain="[('state','=','done')]" name="sale_order_done" help="Sales order lines done"/>
+                    <filter icon="terp-dialog-close" string="Draft" domain="[('state','=','draft')]" name="sale_order_draft" help="Quotation order lines"/>
                     <filter icon="terp-accessories-archiver" string="Shipped" domain="[('state','=','done')]" name="unshipped" help="Sales Order Lines that are in 'done' state"/>
                     <separator/>
                     <filter icon="terp-dolar_ok!" string="Uninvoiced" name="uninvoiced" domain="[('invoiced','&lt;&gt;', 1),('state','&lt;&gt;','draft'),('state','&lt;&gt;','cancel')]" help="Sales Order Lines that are confirmed, done or in exception state and haven't yet been invoiced"/>
