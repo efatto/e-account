@@ -461,7 +461,7 @@ class Parser(report_sxw.rml_parse):
             code = line.product_id.code.replace('XXXX', '')
             for attr_value in line.product_id.attribute_value_ids:
                 if attr_value.attribute_id.code_in_report:
-                    code = re.sub('[&][A-Z]',
+                    code = re.sub('[&@#£$][A-Z]',
                                   attr_value.attribute_id.code_in_report, code)
             if line.product_id.product_pack_id:
                 code += " | " + line.product_id.product_pack_id.default_code
