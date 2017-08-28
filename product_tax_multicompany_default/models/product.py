@@ -52,6 +52,7 @@ class ProductTemplate(models.Model):
             'taxes_id': [(6, 0, customer_tax_ids)],
             'supplier_taxes_id': [(6, 0, supplier_tax_ids)],
         })
+        return True
 
     @api.model
     def create(self, vals):
