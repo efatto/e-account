@@ -128,4 +128,4 @@ class DeliveryGrid(models.Model):
                 raise exceptions.ValidationError(
                     _("Selected product in the delivery method doesn't fulfill"
                       " any of the delivery grid(s) criteria."))
-        return price
+            return price
