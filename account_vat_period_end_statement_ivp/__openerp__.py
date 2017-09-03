@@ -1,27 +1,23 @@
 # -*- coding: utf-8 -*-
+#    Copyright (C) 2011-12 Domsense s.r.l. <http://www.domsense.com>.
+#    Copyright (C) 2012-15 Agile Business Group sagl <http://www.agilebg.com>
+#    Copyright (C) 2012-15 LinkIt Spa <http://http://www.linkgroup.it>
+#    Copyright (C) 2015-17 Associazione Odoo Italia
+#                          <http://www.odoo-italia.org>
+#    Copyright (C) 2017    SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-#    Copyright (C) 2017 Sergio Corato
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-#
+# [2011: domsense] First version
+# [2012: agilebg] Various enhancements
+# [2013: openerp-italia] Various enhancements
+# [2017: odoo-italia] Electronic VAT statement
 {
     'name': 'IVP 2017',
     'version': '8.0.1.0.0',
     'category': 'other',
-    'author': 'Sergio Corato',
+    'author': "Agile Business Group, Odoo Italia Associazione,"
+              " Odoo Community Association (OCA), Sergio Corato",
     'description': 'IVP 2017 export xml file',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
