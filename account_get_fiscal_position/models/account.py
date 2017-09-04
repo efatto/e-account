@@ -82,7 +82,7 @@ class AccountFiscalPosition(models.Model):
                           ('country_group_id', '=', None)], limit=1)
             if fiscal_position_ids:
                 return fiscal_position_ids.id
-        return False
+        return res
 
 
 class SaleOrder(models.Model):
