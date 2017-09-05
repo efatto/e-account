@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="1">
+        <record forcecreate="True" id="config_parameter_report_aeroo_footer_header" model="ir.config_parameter">
+            <field name="key">report_aeroo.print_footer_header</field>
+            <field name="value" eval="True"/>
+        </record>
+  </data>
+</openerp>
