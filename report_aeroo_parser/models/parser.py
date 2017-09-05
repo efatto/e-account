@@ -36,6 +36,7 @@ class Parser(report_sxw.rml_parse):
             'variant_images': self._variant_images,
             'sale_weight': self._sale_weight,
             'invoice_weight': self._invoice_weight,
+            'footer_header': self._footer_header,
             'translate': self._translate_text,
             'img_gray': self._convert_to_gray_scale,
             'get_total_discount': self._get_total_discount,
@@ -374,6 +375,14 @@ class Parser(report_sxw.rml_parse):
         res = False
         if self.pool['ir.config_parameter'].get_param(
                 self.cr, self.uid, 'invoice.print_weight',
+                default=False):
+            res = True
+        return res
+
+    def _footer_header(self):
+        res = False
+        if self.pool['ir.config_parameter'].get_param(
+                self.cr, self.uid, 'report_aeroo.print_footer_header',
                 default=False):
             res = True
         return res
