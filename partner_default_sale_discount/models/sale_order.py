@@ -10,7 +10,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     default_sale_discount = fields.Float(
-        related="partner_id.commercial_partner_id.default_sale_discount",
+        related="partner_id.default_sale_discount",
         string="Default sales discount (%)",
     )
 
