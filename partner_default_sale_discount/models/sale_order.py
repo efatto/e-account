@@ -10,9 +10,17 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     default_sale_discount = fields.Float(
-        related="partner_id.default_sale_discount",
         string="Default sales discount (%)",
     )
+
+    @api.multi
+    def onchange_partner_id(self, part):
+        res = super(SaleOrder, self).onchange_partner_id(part)
+        if part:
+            partner_id = self.env['res.partner'].browse(part)
+            res['value'].update(
+                {'default_sale_discount': partner_id.default_sale_discount})
+        return res
 
     @api.model
     def fields_view_get(self, view_id=None, view_type='form', toolbar=False,
