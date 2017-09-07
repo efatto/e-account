@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <field name="sale_note" position="before">
                     <field name="sale_partner_default"/>
+                    <field name="default_delivery_carrier_id"/>
                 </field>
             </field>
         </record>
