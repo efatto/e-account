@@ -2,29 +2,6 @@
 <openerp>
 <data>
 
-    <!--<record id="view_account_vat_period_end_statement_ivp17" model="ir.ui.view">-->
-        <!--<field name="name">account.vat.period.end.statement.form.ivp17</field>-->
-        <!--<field name="model">account.vat.period.end.statement</field>-->
-        <!--<field name="inherit_id" ref="account_vat_period_end_statement.view_account_vat_period_end_statement"/>-->
-        <!--<field name="arch" type="xml">-->
-            <!--<group string="Page Number" position="after">-->
-                <!--<group colspan="4" string="Legal Notice">-->
-                    <!--<field name="soggetto_codice_fiscale"-->
-                           <!--on_change="onchange_fiscalcode(soggetto_codice_fiscale,-->
-                           <!--'soggetto_codice_fiscale')" />-->
-                    <!--<field name="codice_carica" />-->
-                    <!--<field name="incaricato_trasmissione_codice_fiscale"-->
-                           <!--on_change="onchange_fiscalcode(incaricato_trasmissione_codice_fiscale,-->
-                           <!--'incaricato_trasmissione_codice_fiscale')" />-->
-                    <!--<field name="incaricato_trasmissione_numero_CAF" />-->
-                    <!--<field name="incaricato_trasmissione_data_impegno" />-->
-                    <!--<field name="progressivo_telematico"-->
-                           <!--readonly="1"/>-->
-                <!--</group>-->
-            <!--</group>-->
-        <!--</field>-->
-    <!--</record>-->
-
     <record id="view_invoice_statement_attachment_form" model="ir.ui.view">
         <field name="name">invoice.statement.attachment.form</field>
         <field name="model">invoice.statement.attachment</field>

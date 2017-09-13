@@ -72,25 +72,18 @@ class WizardInvoiceStatement(models.TransientModel):
                                                DEFAULT_SERVER_DATE_FORMAT)
         return date_start, date_stop
 
-    def saveAttachment(self, company_vat, progressive_number):
+    def saveAttachment(self, company_vat, statement_id):
         attach_obj = self.env['invoice.statement.attachment']
         attach_vals = {
-            'name': '%s_%s.xml' % (company_vat, str(progressive_number)),
-            'datas_fname': '%s_%s.xml' % (company_vat, str(progressive_number)),
+            'name': '%s_%s.xml' % (company_vat, str(
+                statement_id.progressive_number)),
+            'datas_fname': '%s_%s.xml' % (company_vat, str(
+                statement_id.progressive_number)),
             'datas': base64.encodestring(self.statement.toxml("latin1")),
+            'res_model': 'invoice.statement',
+            'res_id': statement_id.id,
         }
         attach_id = attach_obj.create(attach_vals)
-
-        # vat_settlement_xml = settlement.toDOM().toprettyxml(encoding="latin1")
-        # fn_name = 'LiquidazioneIVA-%05d.xml' % progressivo_telematico
-        # fn_name = 'IT%s_LI_%05d.xml' % (vat, progressivo_telematico)
-        # attach_vals = {
-        #     'name': fn_name,
-        #     'datas_fname': fn_name,
-        #     'datas': base64.encodestring(vat_settlement_xml),
-        #     'res_model': 'account.vat.period.end.statement',
-        #     'res_id': statement.id
-        # }
 
         return attach_id
 
@@ -122,7 +115,8 @@ class WizardInvoiceStatement(models.TransientModel):
         # create container object Statement
         self.statement = DatiFattura(versione='DAT20') #(DatiFatturaType())
         self.statement.DatiFatturaHeader = (DatiFatturaHeaderType())
-        self.statement.DatiFatturaHeader.ProgressivoInvio = str(progressive_number + 1)
+        self.statement.DatiFatturaHeader.ProgressivoInvio = str(
+            progressive_number + 1)
 
         #get invoice for date of period selected
 
@@ -187,53 +181,35 @@ class WizardInvoiceStatement(models.TransientModel):
                     #todo get invoice tax
                     DatiFatturaBodyDTR = DatiFatturaBodyDTRType()
                     DatiFatturaBodyDTR.DatiGenerali = (DatiGeneraliDTRType())
-                    DatiFatturaBodyDTR.DatiGenerali.TipoDocumento = u'TD01'
+                    DatiFatturaBodyDTR.DatiGenerali.TipoDocumento = invoice.fiscal_document_type_id.code
                     DatiFatturaBodyDTR.DatiGenerali.Data = invoice.date_invoice
                     DatiFatturaBodyDTR.DatiGenerali.Numero = invoice.supplier_invoice_number
                     DatiFatturaBodyDTR.DatiGenerali.DataRegistrazione = invoice.registration_date
                     for invoice_tax in invoice.tax_line:
                         #todo add line...
+                        #  : allora l'aliquota va presa dal padre e sono piu righe di iva
                         DatiRiepilogo = DatiRiepilogoType()
                         DatiRiepilogo.ImponibileImporto = '%.2f' % invoice_tax.base
                         DatiRiepilogo.DatiIVA = (DatiIVAType())
                         DatiRiepilogo.DatiIVA.Imposta = '%.2f' % invoice_tax.amount
-                        DatiRiepilogo.DatiIVA.Aliquota = '%.2f' % invoice_tax.tax_amount #factor_tax?
+                        tax_id = invoice_tax.tax_code_id.tax_ids[0]
+                        if invoice_tax.tax_code_id.parent_id:
+                            tax_id = invoice_tax.tax_code_id.tax_ids[0].parent_id
+                        DatiRiepilogo.DatiIVA.Aliquota = '%.2f' % (tax_id.amount * 100)
                         # DatiRiepilogo.Natura = se non iva
-                        DatiRiepilogo.EsigibilitaIVA = 'I'
+                        DatiRiepilogo.EsigibilitaIVA = 'S' if invoice.split_payment else 'I'
                         DatiFatturaBodyDTR.DatiRiepilogo.append(DatiRiepilogo)
                     CedentePrestatoreDTR.DatiFatturaBodyDTR.append(DatiFatturaBodyDTR)
                 self.statement.DTR.CedentePrestatoreDTR.append(CedentePrestatoreDTR)
-
 
         #('type', 'in', ['out_invoice', 'out_refund']),
         # todo ESCLUDERE AUTOFATTURE
         #auto_invoice_id nella fatture fornitori non c'è
 
-        #
-        #     _logger.debug(settlement.Intestazione.toDOM().toprettyxml(
-        #         encoding="latin1"))
-        #     if statement.codice_carica:
-        #         if statement.codice_carica != '0':
-        #             settlement.Comunicazione.Frontespizio.CFDichiarante = \
-        #                 statement.soggetto_codice_fiscale
-        #             settlement.Comunicazione.Frontespizio.CodiceCaricaDichiarante = \
-        #                 statement.codice_carica
-        #         elif not statement.incaricato_trasmissione_codice_fiscale:
-        #             settlement.Comunicazione.Frontespizio.CodiceFiscale = \
-        #                 statement.soggetto_codice_fiscale
-
-
-        #     settlement.Comunicazione.DatiContabili.Modulo.append(modulo)
-        #
-        #     _logger.debug(settlement.Comunicazione.DatiContabili.toDOM().toprettyxml(encoding="latin1"))
-        #
-        #     settlement.Comunicazione.identificativo = \
-        #         "%05d" % progressivo_telematico
-        #
         statement_id.write(
             {'progressive_number': progressive_number})
         try:
-            attach_id = self.saveAttachment(company_vat, progressive_number)
+            attach_id = self.saveAttachment(company_vat, statement_id)
         except (SimpleFacetValueError, SimpleTypeValueError) as e:
             raise exceptions.ValidationError(
                 _("XML SDI validation error"),

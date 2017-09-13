@@ -13,11 +13,6 @@ class AddPeriod(models.TransientModel):
 
     @api.multi
     def add_period(self):
-        data = self.read()[0]
-        # if 'active_id' not in context:
-        #     raise orm.except_orm(_('Error'),_('Current statement not found'))
-        # statement_pool = self.pool.get('account.vat.period.end.statement')
-        # wizard = self.browse(cr, uid, ids, context)[0]
         if self.period_id.invoice_statement_id:
             raise exceptions.ValidationError(
                 _('Period %s is associated to statement %s yet') %

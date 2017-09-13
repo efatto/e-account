@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* sale_order_variant
+#	* account_invoice_statement
 #
 msgid ""
 msgstr ""
@@ -14,50 +14,4 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: sale_order_variant
-#: code:addons/sale_order_variant/models/sale_order.py:161
-#, python-format
-msgid "Code is not valid!"
-msgstr "Il codice non è valido!"
-
-#. module: sale_order_variant
-#: field:sale.order.line,product:0
-msgid "Product"
-msgstr "Prodotto"
-
-#. module: sale_order_variant
-#: field:sale.order.line,product_attribute_child_id:0
-msgid "Product attribute child id"
-msgstr "Product attribute child id"
-
-#. module: sale_order_variant
-#: field:sale.order.line,product_attribute_line_id:0
-msgid "Product attribute line id"
-msgstr "Product attribute line id"
-
-#. module: sale_order_variant
-#: field:sale.order.line,product_attribute_line_stitching_id:0
-msgid "Product attribute line stitching id"
-msgstr "Product attribute line stitching id"
-
-#. module: sale_order_variant
-#: field:sale.order.line,product_attribute_value_id:0
-msgid "Product attribute value id"
-msgstr "Product attribute value id"
-
-#. module: sale_order_variant
-#: field:sale.order.line,product_template_id:0
-msgid "Product template id"
-msgstr "Product template id"
-
-#. module: sale_order_variant
-#: model:ir.model,name:sale_order_variant.model_sale_order_line
-msgid "Sales Order Line"
-msgstr "Riga ordine di vendita"
-
-#. module: sale_order_variant
-#: field:sale.order.line,stitching_value_id:0
-msgid "Stitching value id"
-msgstr "Stitching value id"
 
