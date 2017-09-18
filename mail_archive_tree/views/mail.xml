@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="view_mail_mail_tree" model="ir.ui.menu">
+          <field name="name">Archive Mail Sent</field>
+          <field name="sequence" eval="17"/>
+          <field name="action" ref="mail_tracking.action_view_mail_tracking_email"/>
+          <field name="parent_id" ref="mail.mail_feeds"/>
+        </record>
+    </data>
+</openerp>
