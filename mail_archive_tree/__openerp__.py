@@ -26,7 +26,7 @@
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
-        'mail',
+        'mail_tracking',
     ],
     'data': [
         'views/mail.xml',
