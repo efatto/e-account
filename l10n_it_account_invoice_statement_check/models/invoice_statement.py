@@ -53,6 +53,8 @@ class InvoiceStatement(models.Model):
             ws.write(0, 0, 'Name')
             ws.write(0, 1, 'Id')
             ws.write(0, 2, 'Errors')
+            ws.write(0, 3, 'Invoice Number')
+            ws.write(0, 4, 'Invoices Errors')
             for partner_id in partner_ids:
                 errors = []
                 # exclude vat != IT
@@ -82,25 +84,32 @@ class InvoiceStatement(models.Model):
                     ws.write(row, 1, partner_id.id)
                     ws.write(row, 2, str(errors))
 
-            #
-            # for invoice in invoice_ids.filtered(
-            #         lambda x: x.partner_id == partner_id):
-            #     if not invoice.fiscal_document_type_id.code:
-            #         missing_vat_partners[partner_id.id].append(
-            #             'Missing fiscal document type')
-            #     if not invoice.date_invoice:
-            #         missing_vat_partners[partner_id.id].append(
-            #             'Missing date invoice')
-            #     if not invoice.supplier_invoice_number:
-            #         missing_vat_partners[partner_id.id].append(
-            #             'Missing supplier invoice number')
-            #     if not invoice.registration_date:
-            #         missing_vat_partners[partner_id.id].append(
-            #             'Missing invoice registration date')
+                for invoice in invoice_ids.filtered(
+                        lambda x: x.partner_id == partner_id):
+                    invoices_errors = []
+                    if not invoice.fiscal_document_type_id.code:
+                        invoices_errors.append(
+                            'Missing fiscal document type')
+                    if not invoice.date_invoice:
+                        invoices_errors.append(
+                            'Missing date invoice')
+                    if not invoice.supplier_invoice_number:
+                        invoices_errors.append(
+                            'Missing supplier invoice number')
+                    if not invoice.registration_date:
+                        invoices_errors.append(
+                            'Missing invoice registration date')
+                    if invoices_errors:
+                        row += 1
+                        ws.write(row, 0, partner_id.name)
+                        ws.write(row, 1, partner_id.id)
+                        ws.write(row, 3, invoice.number)
+                        ws.write(row, 4, str(invoices_errors))
 
         request.session['wb'] = wb
         return {
             'type': 'ir.actions.act_url',
-            'url': '/l10n_it_account_invoice_statement/export_report/download_xls_report?model=module.table',
+            'url': '/l10n_it_account_invoice_statement/export_report/'
+                   'download_xls_report?model=invoice.statement',
             'target': 'new',
         }
