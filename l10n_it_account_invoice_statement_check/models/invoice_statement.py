@@ -44,7 +44,8 @@ class InvoiceStatement(models.Model):
                 # ('period_id', 'in', statement_id.period_ids)
                 ('registration_date', '>=', date_start),
                 ('registration_date', '<=', date_stop),
-                ('type', 'in', ['in_invoice', 'in_refund']),
+                ('type', 'in', ['in_invoice', 'in_refund'],),
+                ('state', 'in', ['open', 'paid']),
             ])
         # report this to the user to fix partners
         partner_ids = invoice_ids.mapped('partner_id')
@@ -87,9 +88,6 @@ class InvoiceStatement(models.Model):
                 for invoice in invoice_ids.filtered(
                         lambda x: x.partner_id == partner_id):
                     invoices_errors = []
-                    if not invoice.fiscal_document_type_id.code:
-                        invoices_errors.append(
-                            'Missing fiscal document type')
                     if not invoice.date_invoice:
                         invoices_errors.append(
                             'Missing date invoice')
@@ -105,6 +103,29 @@ class InvoiceStatement(models.Model):
                         ws.write(row, 1, partner_id.id)
                         ws.write(row, 3, invoice.number)
                         ws.write(row, 4, str(invoices_errors))
+                    if invoice.tax_line:
+                        for invoice_tax in invoice.tax_line:
+                            if invoice_tax.tax_code_id and not \
+                                    invoice_tax.tax_code_id.\
+                                    exclude_from_registries:
+                                tax_id = invoice_tax.tax_code_id.tax_ids[0]
+                                # if tax_id is a child of other tax, use it for aliquota
+                                if tax_id.parent_id and tax_id.parent_id.child_depend:
+                                    tax_id = tax_id.parent_id
+                                if tax_id.amount == 0.0:
+                                    if not tax_id.kind_id:
+                                        row += 1
+                                        ws.write(row, 0, partner_id.name)
+                                        ws.write(row, 1, partner_id.id)
+                                        ws.write(row, 3, invoice.number)
+                                        ws.write(row, 4, 'Tax %s without kind'
+                                                 % tax_id.code)
+                    else:
+                        row += 1
+                        ws.write(row, 0, partner_id.name)
+                        ws.write(row, 1, partner_id.id)
+                        ws.write(row, 3, invoice.number)
+                        ws.write(row, 4, 'Missing Tax in invoice')
 
         request.session['wb'] = wb
         return {
