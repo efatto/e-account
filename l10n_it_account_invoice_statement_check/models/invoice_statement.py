@@ -1,0 +1,106 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in root directory
+##############################################################################
+from openerp import models, fields, _, api
+import datetime
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+import xlwt
+from openerp.http import request
+
+
+class InvoiceStatement(models.Model):
+    _inherit = "invoice.statement"
+
+    def get_date_start_stop(self):
+        date_start = False
+        date_stop = False
+        for period in self.period_ids:
+            if not date_start:
+                date_start = period.date_start
+            else:
+                if period.date_start < date_start:
+                    date_start = period.date_start
+            if not date_stop:
+                date_stop = period.date_stop
+            else:
+                if period.date_stop > date_stop:
+                    date_stop = period.date_stop
+        date_start = datetime.datetime.strptime(date_start,
+                                                DEFAULT_SERVER_DATE_FORMAT)
+        date_stop = datetime.datetime.strptime(date_stop,
+                                               DEFAULT_SERVER_DATE_FORMAT)
+        return date_start, date_stop
+
+    @api.multi
+    def btn_export(self):
+        wb = xlwt.Workbook(encoding="UTF-8")
+        ws = wb.add_sheet('sheet_name')
+
+        statement_id = self
+        date_start, date_stop = self.get_date_start_stop()
+        if statement_id.type == 'DTR':
+            invoice_ids = self.env['account.invoice'].search([
+                # ('period_id', 'in', statement_id.period_ids)
+                ('registration_date', '>=', date_start),
+                ('registration_date', '<=', date_stop),
+                ('type', 'in', ['in_invoice', 'in_refund']),
+            ])
+        # report this to the user to fix partners
+        partner_ids = invoice_ids.mapped('partner_id')
+        if partner_ids:
+            row = 0
+            ws.write(0, 0, 'Name')
+            ws.write(0, 1, 'Id')
+            ws.write(0, 2, 'Errors')
+            for partner_id in partner_ids:
+                errors = []
+                # exclude vat != IT
+                if partner_id.vat and partner_id.vat[:2].upper() != 'IT':
+                    continue
+                if not partner_id.street:
+                    errors.append(
+                        'Missing partner street')
+                if not partner_id.zip:
+                    errors.append(
+                        'Missing partner zip')
+                if not partner_id.city:
+                    errors.append(
+                        'Missing partner city')
+                if not partner_id.state_id:
+                    errors.append(
+                        'Missing partner county')
+                if not partner_id.country_id:
+                    errors.append(
+                        'Missing partner country')
+                if not partner_id.vat and not partner_id.fiscalcode:
+                    errors.append(
+                        'Missing partner vat or fiscalcode')
+                if errors:
+                    row += 1
+                    ws.write(row, 0, partner_id.name)
+                    ws.write(row, 1, partner_id.id)
+                    ws.write(row, 2, str(errors))
+
+            #
+            # for invoice in invoice_ids.filtered(
+            #         lambda x: x.partner_id == partner_id):
+            #     if not invoice.fiscal_document_type_id.code:
+            #         missing_vat_partners[partner_id.id].append(
+            #             'Missing fiscal document type')
+            #     if not invoice.date_invoice:
+            #         missing_vat_partners[partner_id.id].append(
+            #             'Missing date invoice')
+            #     if not invoice.supplier_invoice_number:
+            #         missing_vat_partners[partner_id.id].append(
+            #             'Missing supplier invoice number')
+            #     if not invoice.registration_date:
+            #         missing_vat_partners[partner_id.id].append(
+            #             'Missing invoice registration date')
+
+        request.session['wb'] = wb
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '/l10n_it_account_invoice_statement/export_report/download_xls_report?model=module.table',
+            'target': 'new',
+        }
