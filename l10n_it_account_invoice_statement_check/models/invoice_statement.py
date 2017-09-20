@@ -7,6 +7,7 @@ import datetime
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 import xlwt
 from openerp.http import request
+import re
 
 
 class InvoiceStatement(models.Model):
@@ -58,21 +59,24 @@ class InvoiceStatement(models.Model):
             ws.write(0, 4, 'Invoices Errors')
             for partner_id in partner_ids:
                 errors = []
-                # exclude vat != IT
-                if partner_id.vat and partner_id.vat[:2].upper() != 'IT':
-                    continue
+                # exclude vat != IT solo per vendite!
+                # if partner_id.vat and partner_id.vat[:2].upper() != 'IT':
+                #     continue
                 if not partner_id.street:
                     errors.append(
                         'Missing partner street')
-                if not partner_id.zip:
-                    errors.append(
-                        'Missing partner zip')
+                # if not partner_id.zip:
+                #     errors.append(
+                #         'Missing partner zip')
+                # elif not re.match('^[0-9]{5}$', partner_id.zip):
+                #     errors.append(
+                #         'Malformed partner zip %s' % partner_id.zip)
                 if not partner_id.city:
                     errors.append(
                         'Missing partner city')
-                if not partner_id.state_id:
-                    errors.append(
-                        'Missing partner county')
+                # if not partner_id.state_id:
+                #     errors.append(
+                #         'Missing partner county')
                 if not partner_id.country_id:
                     errors.append(
                         'Missing partner country')
@@ -120,6 +124,18 @@ class InvoiceStatement(models.Model):
                                         ws.write(row, 3, invoice.number)
                                         ws.write(row, 4, 'Tax %s without kind'
                                                  % tax_id.code)
+                            else:
+                                if invoice_tax.base_code_id and not \
+                                        invoice_tax.base_code_id. \
+                                        exclude_from_registries:
+                                    tax_id = invoice_tax.base_code_id.base_tax_ids[0]
+                                    if not tax_id.kind_id.code:
+                                        row += 1
+                                        ws.write(row, 0, partner_id.name)
+                                        ws.write(row, 1, partner_id.id)
+                                        ws.write(row, 3, invoice.number)
+                                        ws.write(row, 4, 'Tax %s without kind'
+                                                 % tax_id.name)
                     else:
                         row += 1
                         ws.write(row, 0, partner_id.name)
