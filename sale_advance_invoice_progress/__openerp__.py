@@ -22,7 +22,8 @@
     'version': '8.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'Create invoice even in progress state',
+    'description': 'Create invoice even in progress state and add fields '
+                   'to view state of order and invoice linked.',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
