@@ -26,7 +26,7 @@ class IrMailServer(models.Model):
             mail_server = self.sudo().search([], order='sequence', limit=1)
 
         if mail_server and mail_server.smtp_from:
-            message.add_header('Sender', message['From'])
+            # message.add_header('Sender', message['From'])
             split_from = message['From'].rsplit(' <', 1)
             if len(split_from) > 1:
                 email_from = '%s <%s>' % (
@@ -35,7 +35,7 @@ class IrMailServer(models.Model):
             else:
                 email_from = mail_server.smtp_from
 
-            message.replace_header('From', email_from)
+            # message.replace_header('From', email_from)
 
             if not message['Return-Path']:
                 message.add_header('Return-Path', email_from)
