@@ -174,6 +174,8 @@ class SaleOrder(models.Model):
             order.advance_refunded_amount = sum(
                 x.price_subtotal for x in order.refunded_invoice_line_ids
             )
+            order.amount_residual = order.amount_total - \
+                order.advance_amount_total + order.advance_residual
 
     advance_invoice_ids = fields.One2many(
         comodel_name='account.invoice',
@@ -219,6 +221,9 @@ class SaleOrder(models.Model):
         compute=_get_advance_invoices
     )
     advance_residual = fields.Float(
+        compute=_get_advance_invoices
+    )
+    amount_residual = fields.Float(
         compute=_get_advance_invoices
     )
 

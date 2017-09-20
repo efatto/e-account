@@ -25,6 +25,7 @@
                             <group>
                                 <field name="advance_amount_total"/>
                                 <field name="advance_residual"/>
+                                <field name="amount_residual"/>
                             </group>
                         </group>
                         <group string="Refunded invoice lines">
@@ -66,6 +67,7 @@
                     <field name="advance_invoice_tag" widget="many2many_tags"/>
                     <field name="advance_amount_total"/>
                     <field name="advance_residual"/>
+                    <field name="amount_residual"/>
                 </tree>
             </field>
         </record>
