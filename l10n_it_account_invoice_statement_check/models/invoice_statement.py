@@ -40,14 +40,25 @@ class InvoiceStatement(models.Model):
 
         statement_id = self
         date_start, date_stop = self.get_date_start_stop()
+        DTR_invoice_ids = self.env['account.invoice'].search([
+            ('registration_date', '>=', date_start),
+            ('registration_date', '<=', date_stop),
+            ('type', 'in', ['in_invoice', 'in_refund'],),
+            ('state', 'in', ['open', 'paid']),
+        ])
+        DTE_invoice_ids = self.env['account.invoice'].search([
+            ('registration_date', '>=', date_start),
+            ('registration_date', '<=', date_stop),
+            ('type', 'in', ['out_invoice', 'out_refund']),
+            ('state', 'in', ['open', 'paid']),
+        ])
+        auto_invoice_ids = DTR_invoice_ids.filtered('auto_invoice_id')
+        DTE_invoice_ids -= auto_invoice_ids
+
         if statement_id.type == 'DTR':
-            invoice_ids = self.env['account.invoice'].search([
-                # ('period_id', 'in', statement_id.period_ids)
-                ('registration_date', '>=', date_start),
-                ('registration_date', '<=', date_stop),
-                ('type', 'in', ['in_invoice', 'in_refund'],),
-                ('state', 'in', ['open', 'paid']),
-            ])
+            invoice_ids = DTR_invoice_ids
+        elif statement_id.type == 'DTE':
+            invoice_ids = DTE_invoice_ids
         # report this to the user to fix partners
         partner_ids = invoice_ids.mapped('partner_id')
         if partner_ids:
@@ -95,9 +106,14 @@ class InvoiceStatement(models.Model):
                     if not invoice.date_invoice:
                         invoices_errors.append(
                             'Missing date invoice')
-                    if not invoice.supplier_invoice_number:
-                        invoices_errors.append(
-                            'Missing supplier invoice number')
+                    if statement_id.type == 'DTR':
+                        if not invoice.supplier_invoice_number:
+                            invoices_errors.append(
+                                'Missing supplier invoice number')
+                    elif statement_id.type == 'DTE':
+                        if not invoice.number:
+                            invoices_errors.append(
+                                'Missing customer invoice number')
                     if not invoice.registration_date:
                         invoices_errors.append(
                             'Missing invoice registration date')
