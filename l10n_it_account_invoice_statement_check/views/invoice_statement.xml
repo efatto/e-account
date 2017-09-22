@@ -7,10 +7,12 @@
         <field name="model">invoice.statement</field>
         <field name="inherit_id" ref="l10n_it_account_invoice_statement.invoice_statement_view_form"/>
         <field name="arch" type="xml">
-            <field name="sender_date_commitment" position="after">
-                <button name="btn_export" type="object" class="oe_highlight">
-                    <i class="fa fa-file-excel-o fa-1x" aria-hidden="true">  Export</i>
+            <field name="period_ids" position="after">
+                <group colspan="8" col="4">
+                <button name="btn_export" type="object" class="oe_highlight" colspan="2">
+                    <i class="fa fa-file-excel-o fa-1x" aria-hidden="true">  Export Check</i>
                 </button>
+                </group>
             </field>
         </field>
     </record>
