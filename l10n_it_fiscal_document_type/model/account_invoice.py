@@ -44,3 +44,5 @@ class AccountInvoice(models.Model):
         string="Tipo documento fiscale",
         required=False,
         readonly=False)
+    fiscal_document_type_code = fields.Char(
+        related='fiscal_document_type_id.code')

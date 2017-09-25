@@ -7,7 +7,8 @@
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='fiscal_position']" position="before">
-                        <field name="fiscal_document_type_id" class="oe_inline" />
+                    <field name="fiscal_document_type_id" class="oe_inline" />
+                    <field name="fiscal_document_type_code"/>
                 </xpath>
             </field>
         </record>
@@ -18,7 +19,8 @@
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='fiscal_position']" position="before">
-                        <field name="fiscal_document_type_id" class="oe_inline" />
+                    <field name="fiscal_document_type_id" class="oe_inline" />
+                    <field name="fiscal_document_type_code"/>
                 </xpath>
             </field>
         </record>

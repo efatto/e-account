@@ -6,3 +6,4 @@ id,code,name,type,journal_id
 5,TD08,nota di credito semplificata,out_refund,
 6,TD10, fattura di acquisto intracomunitario beni,in_invoice,
 7,TD11, fattura di acquisto intracomunitario servizi,in_invoice,
+8,NONE, ecluso dallo spesometro,,
