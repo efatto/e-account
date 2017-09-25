@@ -45,12 +45,16 @@ class InvoiceStatement(models.Model):
             ('registration_date', '<=', date_stop),
             ('type', 'in', ['in_invoice', 'in_refund'],),
             ('state', 'in', ['open', 'paid']),
+            '|', ('fiscal_document_type_code', '!=', 'NONE'),
+            ('fiscal_document_type_id', '=', False),
         ])
         DTE_invoice_ids = self.env['account.invoice'].search([
             ('registration_date', '>=', date_start),
             ('registration_date', '<=', date_stop),
             ('type', 'in', ['out_invoice', 'out_refund']),
             ('state', 'in', ['open', 'paid']),
+            '|', ('fiscal_document_type_code', '!=', 'NONE'),
+            ('fiscal_document_type_id', '=', False),
         ])
         auto_invoice_ids = DTR_invoice_ids.filtered('auto_invoice_id')
         DTE_invoice_ids -= auto_invoice_ids
@@ -59,7 +63,7 @@ class InvoiceStatement(models.Model):
             invoice_ids = DTR_invoice_ids
         elif statement_id.type == 'DTE':
             invoice_ids = DTE_invoice_ids
-        # report this to the user to fix partners
+
         partner_ids = invoice_ids.mapped('partner_id')
         if partner_ids:
             row = 0
