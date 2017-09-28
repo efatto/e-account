@@ -2,7 +2,9 @@
 ##############################################################################
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+from datetime import datetime
 
 
 class StockPicking(models.Model):
@@ -59,10 +61,18 @@ class StockPicking(models.Model):
                                     'invoice_id': invoice_id.id,
                                     'price_unit': - order_invoice[invoice_id]
                                     [picking_id.sale_id] *
-                                    picking_id.sale_id.advance_percentage / 100 *
-                                    preline.price_subtotal /
+                                    picking_id.sale_id.advance_percentage /
+                                    100 * preline.price_subtotal /
                                     picking_id.sale_id.advance_amount,
                                     'advance_invoice_id': advance_invoice.id,
+                                    'sequence': 0,
+                                    'name': (_('Ref. Advance Invoice n. %s '
+                                               'dated %s') % (
+                                                advance_invoice.number,
+                                                datetime.strptime(
+                                                 advance_invoice.date_invoice,
+                                                 DEFAULT_SERVER_DATE_FORMAT).
+                                                 strftime("%d/%m/%Y")))
                                 })
                         invoice_obj.button_compute(
                             cr, uid, [invoice_id.id], context=context,
