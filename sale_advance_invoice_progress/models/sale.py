@@ -5,6 +5,7 @@
 from openerp import models, fields, api, _, exceptions, workflow
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 import time
+from datetime import datetime
 
 
 class AccountInvoiceLine(models.Model):
@@ -179,7 +180,8 @@ class SaleOrder(models.Model):
 
     advance_invoice_ids = fields.One2many(
         comodel_name='account.invoice',
-        compute=_get_advance_invoices
+        compute=_get_advance_invoices,
+        translate=True
     )
     advance_invoice_tag = fields.Char(
         compute=_get_advance_invoices,
@@ -209,22 +211,22 @@ class SaleOrder(models.Model):
         translate=True,
     )
     advance_refunded_amount = fields.Float(
-        compute=_get_advance_invoices
+        compute=_get_advance_invoices, translate=True
     )
     advance_percentage = fields.Float(
-        compute=_get_advance_invoices
+        compute=_get_advance_invoices, translate=True
     )
     advance_amount = fields.Float(
-        compute=_get_advance_invoices
+        compute=_get_advance_invoices, translate=True
     )
     advance_amount_total = fields.Float(
-        compute=_get_advance_invoices
+        compute=_get_advance_invoices, translate=True
     )
     advance_residual = fields.Float(
-        compute=_get_advance_invoices
+        compute=_get_advance_invoices, translate=True
     )
     amount_residual = fields.Float(
-        compute=_get_advance_invoices
+        compute=_get_advance_invoices, translate=True
     )
 
     @api.cr_uid_context
@@ -251,6 +253,13 @@ class SaleOrder(models.Model):
                             'invoice_id': False,
                             'price_unit': -preline.price_unit,
                             'advance_invoice_id': preinv.id,
+                            'sequence': 0,
+                            'name': (_('Ref. Advance Invoice n. %s dated %s') %
+                                     (preinv.number,
+                                      datetime.strptime(
+                                          preinv.date_invoice,
+                                          DEFAULT_SERVER_DATE_FORMAT).
+                                          strftime("%d/%m/%Y")))
                         })
                     lines.append(inv_line_id)
         inv = self._prepare_invoice(cr, uid, order, lines, context=context)
