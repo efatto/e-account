@@ -18,6 +18,7 @@ class AccountInvoice(models.Model):
     commercial_partner_id = fields.Many2one(
         'res.partner', string='Commercial Entity',
         compute='_get_commercial_partner_id',
+        related=False,
         store=True, readonly=True,
         help="The commercial entity that will be used on Journal "
              "Entries for this invoice")
