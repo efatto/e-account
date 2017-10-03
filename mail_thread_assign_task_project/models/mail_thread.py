@@ -22,7 +22,7 @@ class MailThread(models.AbstractModel):
                 email_from = message_dict.get('from')
                 email = tools.email_split(email_from)
                 partner = self.env['res.partner'].search(
-                    [('email', '=', email)], limit=1)
+                    [('email', '=', email[0])], limit=1)
                 if partner:
                     commercial_partner = partner.commercial_partner_id
                     if commercial_partner:
