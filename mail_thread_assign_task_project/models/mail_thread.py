@@ -22,13 +22,13 @@ class MailThread(models.AbstractModel):
                 email_from = message_dict.get('from')
                 email = tools.email_split(email_from)
                 partner = self.env['res.partner'].search(
-                    [('email', '=', email)])
+                    [('email', '=', email)], limit=1)
                 if partner:
                     commercial_partner = partner.commercial_partner_id
                     if commercial_partner:
                         project_id = self.env['project.project'].search([
                             ('partner_id', '=', commercial_partner.id)
-                        ])
+                        ], limit=1)
                         if project_id:
                             self.env[model].browse(res).write({
                                 'project_id': project_id.id,
