@@ -63,6 +63,11 @@ msgstr "importo"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
+msgid "net amount"
+msgstr "importo netto"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
 msgid "total untaxed"
 msgstr "totale imponibile"
 
