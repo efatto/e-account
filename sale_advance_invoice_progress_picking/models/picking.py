@@ -2,7 +2,7 @@
 ##############################################################################
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
-from openerp import models, fields, api, _
+from openerp import models, fields, api, _, exceptions
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from datetime import datetime
 
@@ -54,6 +54,13 @@ class StockPicking(models.Model):
                                 picking_id.sale_id]})
 
                     for advance_invoice in picking_id.sale_id.advance_invoice_ids:
+                        if advance_invoice.state == 'cancel':
+                            return False
+                        if advance_invoice.state not in ['open', 'paid']:
+                            raise exceptions.ValidationError(
+                                _('Advance invoice can\'t be in state '
+                                  'different from open or paid.')
+                            )
                         for preline in advance_invoice.invoice_line:
                             inv_line_id = self.pool[
                                 'account.invoice.line'].copy(
