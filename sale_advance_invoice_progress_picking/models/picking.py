@@ -58,8 +58,8 @@ class StockPicking(models.Model):
                             return False
                         if advance_invoice.state not in ['open', 'paid']:
                             raise exceptions.ValidationError(
-                                _('Advance invoice can\'t be in state '
-                                  'different from open or paid.')
+                                _('Advance invoice must be in state '
+                                  'open or paid.')
                             )
                         for preline in advance_invoice.invoice_line:
                             inv_line_id = self.pool[
