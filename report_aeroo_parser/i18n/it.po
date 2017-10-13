@@ -63,6 +63,16 @@ msgstr "importo"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
+msgid "price"
+msgstr "prezzo"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "net price"
+msgstr "prezzo netto"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
 msgid "net amount"
 msgstr "importo netto"
 
