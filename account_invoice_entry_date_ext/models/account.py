@@ -50,15 +50,10 @@ class AccountInvoice(models.Model):
         super(AccountInvoice, self).action_move_create()
 
         for inv in self:
-            sql = "update account_move_line set ref = '" + (
-                inv.supplier_invoice_number and
-                inv.supplier_invoice_number or ''
-                ) + "' where move_id = " + str(inv.move_id.id)
-            self._cr.execute(sql)
-
-            self.env['account.move'].write({
-                'ref': inv.supplier_invoice_number and
-                inv.supplier_invoice_number or ''})
+            for line in inv.move_id.line_id:
+                line.write({
+                    'ref': inv.supplier_invoice_number and
+                    inv.supplier_invoice_number or ''})
 
         return True
 
