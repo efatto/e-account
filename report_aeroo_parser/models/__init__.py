@@ -5,3 +5,4 @@
 from . import parser
 from . import account
 from . import company
+from . import sale

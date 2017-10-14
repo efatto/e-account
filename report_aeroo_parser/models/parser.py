@@ -240,13 +240,9 @@ class Parser(report_sxw.rml_parse):
     #         return False
     
     def _get_invoice_tree(self, invoice_lines, picking_preparation_ids):
-        invoice = {}
-        keys = {}
-        ddt = False
-        sale_order = False
-        ddt_date = False
-        sale_order_date = False
-        client_order_ref = False
+        invoice = keys = {}
+        ddt = sale_order = ddt_date = sale_order_date = client_order_ref = \
+            False
 
         for line in invoice_lines:
             if line.origin:
@@ -296,16 +292,16 @@ class Parser(report_sxw.rml_parse):
                     self, ddt, ddt_date, sale_order, sale_order_date,
                     client_order_ref)
                 invoice[key] = {'description': description, 'lines': [line]}
-        
+
         return OrderedDict(
             sorted(invoice.items(), key=lambda t: t[0])).values()
 
-    def _get_ddt_tree(self, sppp_line):
-        keys = {}
-        order = {}
-        description = False
+    def _get_ddt_tree(self, sppp_line_ids):
+        # group sppp lines by sale order if present
+        keys = order = {}
+        description = order_ref = False
         order_obj = self.pool['sale.order']
-        for line in sppp_line:
+        for line in sppp_line_ids:
             if line.move_id:
                 # if there is origin get order name and date
                 if line.move_id.origin:
@@ -331,17 +327,13 @@ class Parser(report_sxw.rml_parse):
                             sale_order_date.strftime("%d/%m/%Y"),
                             ' - ' + order_ref if order_ref else '',
                         )
-                # if there is move_id but not origin
-                else:
+                else: # if there is move_id but not origin
                     key = False
-            # if there is not move_id
-            else:
+            else: # if there is not move_id
                 key = False
-            # append subsequent lines
-            if key in order:
+            if key in order: # append subsequent lines
                 order[key]['lines'].append(line)
-            # create line
-            else:
+            else: # create line
                 order[key] = {
                     'description': description,
                     'lines': [line]}
