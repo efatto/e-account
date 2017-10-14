@@ -55,7 +55,7 @@ class AccountInvoice(models.Model):
             taxes = grid.carrier_id.product_id.taxes_id.filtered(
                 lambda t: t.company_id.id == invoice.company_id.id)
             taxes_ids = invoice.fiscal_position.map_tax(taxes) if \
-                invoice.fiscal_position else False
+                invoice.fiscal_position else taxes
             price_unit = grid.get_price_invoice(invoice)
             values = {
                 'invoice_id': invoice.id,
@@ -64,7 +64,7 @@ class AccountInvoice(models.Model):
                 'uos_id': grid.carrier_id.product_id.uom_id.id,
                 'product_id': grid.carrier_id.product_id.id,
                 'price_unit': price_unit,
-                'tax_id': [(6, 0, taxes_ids)],
+                'invoice_line_tax_id': [(6, 0, taxes_ids.ids)],
                 'is_delivery': True,
             }
             res = line_obj.product_id_change(
