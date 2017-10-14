@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright (C) 2017 Sergio Corato
 #    Copyright (C) 2015-2016 SimplERP srl (<http://www.simplerp.it>).
 #    Copyright (c) 2013-2014 Didotech SRL (info at didotech.com)
 #
