@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-#    Copyright (C) 2013-2014 Didotech Srl (<http://www.didotech.com>)
-#    Copyright (C) 2016 Sergio Corato - SimplERP srl (<http://www.simplerp.it>)
+#
+#    Copyright (C) 2017 Sergio Corato
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -26,9 +26,10 @@
     'description': 'Add field price unit net to sale order line.',
     'license': 'AGPL-3',
     'depends': [
-        'sale',
+        'report_aeroo_parser',
     ],
     'data': [
+        'views/sale.xml',
     ],
     'installable': True
 }
