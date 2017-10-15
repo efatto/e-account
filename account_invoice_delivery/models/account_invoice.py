@@ -118,8 +118,8 @@ class DeliveryGrid(models.Model):
                     line.type+line.operator+str(line.max_value), price_dict)
                 if test:
                     if line.price_type == 'variable':
-                        price = line.list_price * price_dict[
-                            line.variable_factor]
+                        price = round(line.list_price * price_dict[
+                            line.variable_factor], 2)
                     else:
                         price = line.list_price
                     ok = True
