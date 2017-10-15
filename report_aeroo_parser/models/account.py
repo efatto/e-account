@@ -23,8 +23,8 @@ class AccountInvoice(models.Model):
             amount_taxable = amount_tax = 0.0
             for line in invoice.tax_line.filtered(
                 lambda x: not (
-                    x.tax_code_id.exclude_from_registries and
-                    x.tax_code_id.notprintable and
+                    x.tax_code_id.exclude_from_registries or
+                    x.tax_code_id.notprintable or
                     x.tax_code_id.withholding_type
                 )
             ):
@@ -37,6 +37,7 @@ class AccountInvoice(models.Model):
     base_amount_tax = fields.Float(compute=_get_amount_taxable_lines)
     tax_amount_tax = fields.Float(compute=_get_amount_taxable_lines)
     total_amount_tax = fields.Float(compute=_get_amount_taxable_lines)
+
 
 class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
