@@ -17,6 +17,7 @@ class AccountTax(models.Model):
     @api.model
     def create(self, vals):
         tax_code_obj = self.env['account.tax.code']
+        company_id = self.env.user.company_id.id
         if vals.get('company_id', False):
             company_id = vals['company_id']
         if self.search([('name', '=', vals['name']),
