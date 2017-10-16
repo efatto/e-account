@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="sale_journal_caparre" model="account.journal">
+            <field name="name">Sezionale Caparre</field>
+            <field name="type">sale</field>
+            <field name="code">CAP</field>
+            <field name="default_debit_account_id" search="[('code','=','3805010')]" model="account.account"/>
+            <field name="default_credit_account_id" search="[('code','=','3805010')]" model="account.account"/>
+            <field name="centralisation" eval="0"/>
+            <field name="update_posted">True</field>
+            <field name="caparre">True</field>
+        </record>
+
+        <record id="tax_base_code_fc_caparre" model="account.tax.code">
+            <field name="name">Fuori campo IVA caparre</field>
+            <field name="exclude_from_registries">True</field>
+            <field name="code">FC0I</field>
+            <field name="is_base">True</field>
+        </record>
+
+        <record id="FC0" model="account.tax">
+            <field name="name">Fuori campo IVA caparra DPR 633/72</field>
+            <field name="description">FC0</field>
+            <field name="amount">0.00</field>
+            <field name="type_tax_use">sale</field>
+            <!--<field name="kind_id" ref="l10n_it_account_tax_kind.n4"></field>-->
+            <!--<field name="law_reference">Fuori campo IVA DPR 633/72</field>-->
+            <field name="base_code_id" ref="tax_base_code_fc_caparre"></field>
+            <!--<field name="tax_code_id" ref="tax_code_purchase_0"></field>-->
+        </record>
+
+        <record id="product_template_caparra" model="product.template">
+            <field name="name">Caparra da clienti</field>
+            <field name="type">service</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field name="caparra">True</field>
+            <field name="taxes_id" eval="[(6,0,[ref('l10n_it_caparre.FC0')])]"/>
+        </record>
+
+    </data>
+</openerp>
