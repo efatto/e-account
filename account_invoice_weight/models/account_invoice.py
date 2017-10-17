@@ -59,17 +59,25 @@ class AccountInvoice(models.Model):
             # compute from invoice and sppp
             # sum weight for line without origin
             for line in invoice.invoice_line:
-                for sppp in invoice.stock_picking_package_preparation_ids:
-                    for picking in sppp.picking_ids:
-                        if line.origin and picking.origin and line.origin \
-                                not in picking.origin and \
-                                line.origin not in picking.name:
-                            invoice.weight += line.product_id.\
-                                weight * line.quantity
-                            invoice.net_weight += line.product_id. \
-                                weight_net * line.quantity
-                            invoice.volume += line.product_id. \
-                                volume * line.quantity
+                if invoice.stock_picking_package_preparation_ids:
+                    for sppp in invoice.stock_picking_package_preparation_ids:
+                        for picking in sppp.picking_ids:
+                            if line.origin and picking.origin and line.origin \
+                                    not in picking.origin and \
+                                    line.origin not in picking.name:
+                                invoice.weight += line.product_id.\
+                                    weight * line.quantity
+                                invoice.net_weight += line.product_id. \
+                                    weight_net * line.quantity
+                                invoice.volume += line.product_id. \
+                                    volume * line.quantity
+                else: # if not pickings, sum all lines
+                    invoice.weight += line.product_id. \
+                                          weight * line.quantity
+                    invoice.net_weight += line.product_id. \
+                                              weight_net * line.quantity
+                    invoice.volume += line.product_id. \
+                                          volume * line.quantity
             # then sum weight from sppp (for residual lines)
             invoice.weight += sum(
                 x.weight for x in
