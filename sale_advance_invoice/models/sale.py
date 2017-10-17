@@ -59,13 +59,3 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 return {'type': 'ir.actions.act_window_close'}
             else:
                 return super(SaleAdvancePaymentInv, order).create_invoices()
-
-    #remove setting False to product_id if percentage method
-    @api.multi
-    def onchange_method(self, advance_payment_method, product_id):
-        if advance_payment_method == 'percentage':
-            return {}#'value': {'amount': 0, 'product_id': False}}
-        if product_id:
-            product = self.env['product.product'].browse(product_id)
-            return {'value': {'amount': product.list_price}}
-        return {'value': {'amount': 0}}
