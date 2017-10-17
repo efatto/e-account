@@ -412,8 +412,8 @@ class Parser(report_sxw.rml_parse):
 
     def _get_total_goods_amount(self, lines):
         total_goods_amount = 0.0
-        for line in (l for l in lines if not l.is_delivery):
-            if not line.product_id.service_type in [
+        for line in (l for l in lines if not l.is_delivery and l.product_id):
+            if line.product_id.service_type not in [
                             'transport', 'contribution', 'other', 'discount']:
                 total_goods_amount += line.price_subtotal
         return total_goods_amount
