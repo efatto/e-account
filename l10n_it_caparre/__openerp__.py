@@ -31,6 +31,7 @@
     'license': 'AGPL-3',
     'depends': [
         'account',
+        'sale',
     ],
     'data': [
         'data/account_journal.xml',

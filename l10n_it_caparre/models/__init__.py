@@ -4,3 +4,4 @@
 ##############################################################################
 from . import account_journal
 from . import product
+from . import sale_make_invoice
