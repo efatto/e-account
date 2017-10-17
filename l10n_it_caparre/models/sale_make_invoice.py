@@ -22,7 +22,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         ('caparre', '=', True)
                     ])
                     if journal_caparre_id:
-                        inv.journal_id = journal_caparre_id
+                        inv.write({
+                            'journal_id': journal_caparre_id.id,
+                        })
             # end
             if self._context.get('open_invoices', False):
                 return self.open_invoices(inv_ids)

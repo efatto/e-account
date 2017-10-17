@@ -9,3 +9,9 @@ class AccountJournal(models.Model):
     _inherit = 'account.journal'
 
     caparre = fields.Boolean()
+
+
+class AccountInvoice(models.Model):
+    _inherit = 'account.invoice'
+
+    caparra = fields.Boolean(related='journal_id.caparre')

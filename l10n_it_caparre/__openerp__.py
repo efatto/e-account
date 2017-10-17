@@ -35,6 +35,7 @@
     ],
     'data': [
         'data/account_journal.xml',
+        'views/invoice_view.xml',
     ],
     'installable': True
 }

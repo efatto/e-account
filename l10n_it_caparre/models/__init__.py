@@ -2,6 +2,6 @@
 ##############################################################################
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
-from . import account_journal
+from . import account
 from . import product
 from . import sale_make_invoice
