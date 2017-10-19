@@ -53,6 +53,21 @@ msgstr "cod."
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
+msgid "CODE"
+msgstr "COD."
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "DESCRIPTION"
+msgstr "DESCRIZIONE"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Q.TY"
+msgstr "Q.TÀ"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
 msgid "q.ty"
 msgstr "q.tà"
 
@@ -63,13 +78,23 @@ msgstr "importo"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
-msgid "price"
-msgstr "prezzo"
+msgid "DISC OUNT"
+msgstr "SCONTO"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
-msgid "net price"
-msgstr "prezzo netto"
+msgid "RETAIL PRICE"
+msgstr "PREZZO"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "NET AMOUNT"
+msgstr "PREZZO NETTO"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "TOTAL AMOUNT"
+msgstr "IMPORTO TOTALE"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
@@ -145,6 +170,26 @@ msgstr "totali"
 #: report:ir.actions.report.xml:account.account_invoices
 msgid "goods amount"
 msgstr "importo beni"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "notes"
+msgstr "note"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "other"
+msgstr "altro"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "1,5 % contribution"
+msgstr "contributo"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "transport"
+msgstr "trasporto"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
