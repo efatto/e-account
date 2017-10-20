@@ -31,9 +31,13 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def _delivery_unset(self):
+        # remove only if the same product
         for invoice in self:
-            invoice.invoice_line.filtered(
-                lambda x: x.is_delivery).unlink()
+            line_ids = invoice.invoice_line.filtered(
+                lambda x: x.is_delivery and
+                          x.product_id == x.invoice_id.carrier_id.product_id
+            )
+            line_ids.unlink()
 
     @api.multi
     def delivery_set(self):
