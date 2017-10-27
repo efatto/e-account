@@ -108,6 +108,11 @@ msgstr "totale imponibile"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
+msgid "balance due"
+msgstr "saldo"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
 msgid "total tax"
 msgstr "totale imposta"
 
