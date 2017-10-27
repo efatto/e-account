@@ -245,7 +245,11 @@ class ResPartner(models.Model):
         ids_account = list(set(ids_account_payable + ids_account_receivable))
 
         if res and ids_account:
-            self.env['account.account'].sudo().browse(ids_account).unlink()
+            if not self.env['res.partner'].search([
+                '|', ('property_account_payable', 'in', ids_account),
+                ('property_account_receivable', 'in', ids_account)
+            ]):
+                self.env['account.account'].sudo().browse(ids_account).unlink()
         return res
 
     @api.multi
