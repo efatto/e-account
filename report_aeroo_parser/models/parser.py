@@ -49,6 +49,7 @@ class Parser(report_sxw.rml_parse):
             'get_bank_riba': self._get_bank_riba,
             'transform_forbidden_word': self._transform_forbidden_word,
             'get_product_code': self._get_product_code,
+            'get_group_tax': self._get_group_tax,
         })
         self.cache = {}
 
@@ -340,6 +341,19 @@ class Parser(report_sxw.rml_parse):
 
         return OrderedDict(
             sorted(order.items(), key=lambda t: t[0])).values()
+
+    def _get_group_tax(self, tax_line):
+        tax_group = {}
+        for line in tax_line:
+            if line.name not in tax_group:
+                tax_group[line.name] = {
+                    'name': line.name,
+                    'base': line.base,
+                    'amount': line.amount}
+            else:
+                tax_group[line.name]['base'] += line.base
+                tax_group[line.name]['amount'] += line.amount
+        return tax_group.values()
 
     def _get_invoice_move_lines(self, move_id):
         if move_id.line_id:
