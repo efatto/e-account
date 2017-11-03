@@ -223,7 +223,7 @@ msgstr "Totali nella prima pagina"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
-msgid "Out refund"
+msgid "Credit note"
 msgstr "Nota di credito"
 
 #. module: report_aeroo_parser
