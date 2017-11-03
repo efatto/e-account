@@ -18,7 +18,9 @@ class AccountInvoice(models.Model):
             self, type, partner_id, date_invoice=False, payment_term=False,
             partner_bank_id=False, company_id=False):
         res = super(AccountInvoice, self).onchange_partner_id(
-            type, partner_id)
+            type, partner_id, date_invoice=date_invoice,
+            payment_term=payment_term, partner_bank_id=partner_bank_id,
+            company_id=company_id)
         if partner_id:
             dtype = self.env['res.partner'].browse(
                 partner_id).property_delivery_carrier.id
