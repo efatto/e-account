@@ -44,7 +44,6 @@ class AccountInvoice(models.Model):
                 _('Total amount of due amount lines must be equal to '
                   'invoice total amount %d') % self.amount_total)
 
-        # todo compare dueamount_line with move_lines in date_maturity & amount
         dueamount_ids = self.dueamount_line.ids
         maturity_move_lines = [
             l for l in move_lines if l[2].get('date_maturity', False)]
