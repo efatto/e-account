@@ -72,7 +72,7 @@ class AccountInvoice(models.Model):
             for line in move_lines:
                 if line[2].get('date_maturity', False):
                     dueamount_line = dueamount_lines[i]
-                    is_credit = True if line[2]['credit'] > 0 else False
+                    is_credit = True if line[2]['credit'] != 0 else False
                     line[2].update({'date_maturity': dueamount_line.date})
                     if is_credit:
                         line[2].update({'credit': dueamount_line.amount})
@@ -86,8 +86,8 @@ class AccountInvoice(models.Model):
 class AccountInvoiceDueamountLine(models.Model):
     _name = 'account.invoice.dueamount.line'
 
-    amount = fields.Float()
-    date = fields.Date()
+    amount = fields.Float(required=True)
+    date = fields.Date(required=True)
     invoice_id = fields.Many2one(
         comodel_name='account.invoice',
         string='Invoice'
