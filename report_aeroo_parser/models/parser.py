@@ -470,7 +470,7 @@ class Parser(report_sxw.rml_parse):
                         word.new_name if word.new_name else '')
         return phrase
 
-    def _get_product_code(self, line):
+    def _get_product_code(self, line, pack=False):
         code = ''
         if line.product_id and line.product_id.code:
             code = line.product_id.code.replace('XXXX', '')
@@ -478,8 +478,8 @@ class Parser(report_sxw.rml_parse):
                 if attr_value.attribute_id.code_in_report:
                     code = re.sub('[&@#£$][A-Z]',
                                   attr_value.attribute_id.code_in_report, code)
-            # if line.product_id.product_pack_id:
-            #     code += " | " + line.product_id.product_pack_id.default_code
+            if pack and line.product_id.product_pack_id:
+                code += " | " + line.product_id.product_pack_id.default_code
         #check if product_tmpl_id is possible
         # elif line.product_tmpl_id and line.product_tmpl_id.prefix_code:
         #     code = line.product_tmpl_id.prefix_code.replace('XXXX','')
