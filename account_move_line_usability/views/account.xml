@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_move_form_width">
+              <field name="name">account.move.form.width</field>
+              <field name="model">account.move</field>
+              <field name="inherit_id" ref="account.view_move_form"/>
+              <field name="arch" type="xml">
+                  <xpath expr="//page[@string='Journal Items']/field[@name='line_id']/tree" position="attributes">
+                      <attribute name="class">account_move_line_usability_class</attribute>
+                  </xpath>
+              </field>
+          </record>
+    </data>
+</openerp>
