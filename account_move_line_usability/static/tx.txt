@@ -1,0 +1,42 @@
+
+14
+Sylvain LE GAL
+On 12/21/13, 10:58 PM
+
+Hi,
+
+I was facing this problem and I finally found the solution to customize a column in TREE view, only for ONE view ;
+
+Solution 1 that doesn't work :
+
+    xml <field width="200" /> or <field style="width: 200" /> or <field style="width: 30 %%" />
+
+--> width attribute doesn't seem to work in tree view ;
+
+Solution 2 that doesn't work :
+
+    xml <field class="my_class" /> ;
+    css .my_class { width: 1000px;}
+
+--> class attribute doesn't seem to work in tree view ;
+
+Solution 3 that doesn't work :
+
+    xml : <field name="my_field" />
+    css : [data-id="my_field"]{width: 1000px;}
+
+--> this works for ALL the column named "my_field". Not very good if we want to change the render of a column if the field is "name" ;
+
+The workaround I found
+
+    xml : <tree string="Tree String" version="7.0" class="my_class"> <field name="my_field" />
+    css : .my_class [data-id="my_field"]{width: 1000px;}
+
+--> class attribute works on tree tag.
+
+-->To be sure to target only the desired view the name of my class is "myModuleName__myTreeViewName"
+
+Thanks for your feedback.
+
+Flag
+
