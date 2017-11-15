@@ -29,6 +29,8 @@
         'account',
     ],
     'data': [
+        'views/css.xml',
+        'views/account.xml',
     ],
     'installable': True
 }
