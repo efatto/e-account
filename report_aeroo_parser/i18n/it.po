@@ -79,7 +79,17 @@ msgstr "importo"
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
 msgid "DISC OUNT"
-msgstr "SCONTO"
+msgstr "SCO NTO"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "ITEM PHOTO"
+msgstr "FOTO ART."
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "ORDERED COLOUR"
+msgstr "COLORE ORDINATO"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
