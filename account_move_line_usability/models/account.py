@@ -8,6 +8,8 @@ from openerp import models, fields, api, _
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
+    name = fields.Text('Name', required=True)
+
     @api.onchange('credit')
     def _credit_onchange(self):
         if self.credit and self.debit:
