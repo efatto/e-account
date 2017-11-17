@@ -26,7 +26,10 @@ class AccountInvoice(models.Model):
                 lambda x: not (
                     x.tax_code_id.exclude_from_registries or
                     x.tax_code_id.notprintable or
-                    x.tax_code_id.withholding_type
+                    x.tax_code_id.withholding_type or
+                    x.base_code_id.exclude_from_registries or
+                    x.base_code_id.notprintable or
+                    x.base_code_id.withholding_type
                 )
             ):
                 amount_taxable += line.base_amount
