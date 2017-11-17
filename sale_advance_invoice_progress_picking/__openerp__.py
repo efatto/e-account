@@ -29,6 +29,7 @@
     'depends': [
         'sale_advance_invoice_progress',
         'stock',
+        'account_journal_advance',
     ],
     'data': [
     ],

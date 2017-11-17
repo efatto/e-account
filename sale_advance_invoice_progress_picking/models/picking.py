@@ -73,8 +73,10 @@ class StockPicking(models.Model):
                                     picking_id.sale_id.advance_amount,
                                     'advance_invoice_id': advance_invoice.id,
                                     'sequence': 0,
-                                    'name': (_('Ref. Advance Invoice n. %s '
+                                    'name': (_('Ref. %s nr. %s '
                                                'dated %s') % (
+                                                advance_invoice.journal_id.
+                                                advance_description,
                                                 advance_invoice.number,
                                                 datetime.strptime(
                                                  advance_invoice.date_invoice,
