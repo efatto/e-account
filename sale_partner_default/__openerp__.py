@@ -26,6 +26,7 @@
     'website': 'http://efatto.it',
     'depends': [
         'sale',
+        'delivery',
     ],
     'data': [
         'views/company.xml',
