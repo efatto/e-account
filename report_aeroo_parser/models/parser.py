@@ -50,6 +50,8 @@ class Parser(report_sxw.rml_parse):
             'transform_forbidden_word': self._transform_forbidden_word,
             'get_product_code': self._get_product_code,
             'get_group_tax': self._get_group_tax,
+            'is_printable_invoice_line_tax': self.
+                _is_printable_invoice_line_tax,
         })
         self.cache = {}
 
@@ -342,17 +344,18 @@ class Parser(report_sxw.rml_parse):
         return OrderedDict(
             sorted(order.items(), key=lambda t: t[0])).values()
 
-    def _get_group_tax(self, tax_line):
+    def _get_group_tax(self, tax_lines):
         tax_group = {}
-        for line in tax_line:
-            if line.name not in tax_group:
-                tax_group[line.name] = {
-                    'name': line.name,
-                    'base': line.base,
-                    'amount': line.amount}
-            else:
-                tax_group[line.name]['base'] += line.base
-                tax_group[line.name]['amount'] += line.amount
+        for tax_line in tax_lines:
+            if tax_line.name not in tax_group and \
+                    self._is_printable_invoice_line_tax(tax_line):
+                tax_group[tax_line.name] = {
+                    'name': tax_line.name,
+                    'base': tax_line.base,
+                    'amount': tax_line.amount}
+            elif self._is_printable_invoice_line_tax(tax_line):
+                tax_group[tax_line.name]['base'] += tax_line.base
+                tax_group[tax_line.name]['amount'] += tax_line.amount
         return tax_group.values()
 
     def _get_invoice_move_lines(self, move_id):
@@ -428,7 +431,8 @@ class Parser(report_sxw.rml_parse):
         total_goods_amount = 0.0
         for line in (l for l in lines if not l.is_delivery and l.product_id):
             if line.product_id.service_type not in [
-                            'transport', 'contribution', 'other', 'discount']:
+                    'transport', 'contribution', 'other', 'discount'] and \
+                    self._is_printable_invoice_line_tax(line.invoice_line_tax_id):
                 total_goods_amount += line.price_subtotal
         return total_goods_amount
 
@@ -485,3 +489,14 @@ class Parser(report_sxw.rml_parse):
         # elif line.product_tmpl_id and line.product_tmpl_id.prefix_code:
         #     code = line.product_tmpl_id.prefix_code.replace('XXXX','')
         return code
+
+    @staticmethod
+    def _is_printable_invoice_line_tax(tax_line):
+        if (tax_line.tax_code_id.exclude_from_registries or
+            tax_line.tax_code_id.notprintable or
+            tax_line.tax_code_id.withholding_type or
+            tax_line.base_code_id.exclude_from_registries or
+            tax_line.base_code_id.notprintable or
+                tax_line.base_code_id.withholding_type):
+            return False
+        return True
