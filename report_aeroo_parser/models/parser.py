@@ -432,9 +432,15 @@ class Parser(report_sxw.rml_parse):
         for line in (l for l in lines if not l.is_delivery and l.product_id):
             if line.product_id.service_type not in [
                     'transport', 'contribution', 'other', 'discount']:
-                    # and \
-                    # self._is_printable_invoice_line_tax(line.invoice_line_tax_id):
-                total_goods_amount += line.price_subtotal
+                if isinstance(line._model, type(
+                        self.pool['account.invoice.line'])):
+                    if self._is_printable_invoice_line_tax(
+                            line.invoice_line_tax_id):
+                        total_goods_amount += line.price_subtotal
+                else:
+                    # if self._is_printable_invoice_line_tax(
+                    #         line.tax_id): useful if report is compatible
+                    total_goods_amount += line.price_subtotal
         return total_goods_amount
 
     def _get_total_other_amount(self, lines):
