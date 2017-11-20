@@ -259,7 +259,8 @@ class ResPartner(models.Model):
             return super(ResPartner, self).write(vals)
         company = self.env.user.company_id
         for partner in self:
-            if not company.enable_partner_subaccount:
+            if not company.enable_partner_subaccount or partner != partner.\
+                    commercial_partner_id:
                 continue
             # if user has put a valid custom created account
             payable_is_valid = False
