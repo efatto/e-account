@@ -19,3 +19,15 @@ class AccountMoveLine(models.Model):
     def _debit_onchange(self):
         if self.debit and self.credit:
             self.credit = 0
+
+    user_type = fields.Many2one(
+            related='account_id.user_type',
+            relation='account.account',
+            string='Account user type',
+            store=False)
+    date_from = fields.Date(
+        compute=lambda *a, **k: {},
+        string="Date from")
+    date_to = fields.Date(
+        compute=lambda *a, **k: {},
+        string="Date to")
