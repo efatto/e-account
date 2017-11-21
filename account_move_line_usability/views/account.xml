@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-
         <record model="ir.ui.view" id="view_move_form_width">
               <field name="name">account.move.form.width</field>
               <field name="model">account.move</field>
@@ -22,6 +21,13 @@
                     <field name="date_from" filter_domain="[('date','&gt;=',self)]"/>
                     <field name="date_to" filter_domain="[('date','&lt;=',self)]"/>
                 </field>
+                <filter string="Unbalanced" position="after">
+                    <filter string="Receivable" domain="[('account_id.type','=','receivable')]"/>
+                    <filter string="Payable" domain="[('account_id.type','=','payable')]"/>
+                    <filter string="Income" domain="[('account_id.user_type.code','=','income')]"/>
+                    <filter string="Expense" domain="[('account_id.user_type.code','=','expense')]"/>
+                <separator orientation="vertical"/>
+                </filter>
             </field>
         </record>
     </data>
