@@ -499,11 +499,13 @@ class Parser(report_sxw.rml_parse):
 
     @staticmethod
     def _is_printable_invoice_line_tax(tax_line):
-        if (tax_line.tax_code_id.exclude_from_registries or
-            tax_line.tax_code_id.notprintable or
-            tax_line.tax_code_id.withholding_type or
-            tax_line.base_code_id.exclude_from_registries or
-            tax_line.base_code_id.notprintable or
-                tax_line.base_code_id.withholding_type):
-            return False
-        return True
+        for line in tax_line:
+            # check if at least 1 is printable
+            if not (line.tax_code_id.exclude_from_registries or
+                    line.tax_code_id.notprintable or
+                    line.tax_code_id.withholding_type or
+                    line.base_code_id.exclude_from_registries or
+                    line.base_code_id.notprintable or
+                    line.base_code_id.withholding_type):
+                return True
+        return False

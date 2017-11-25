@@ -18,30 +18,6 @@ class AccountInvoice(models.Model):
     print_totals_in_first_page = fields.Boolean()
     print_payment_in_footer = fields.Boolean()
 
-    @api.multi
-    def _get_amount_taxable_lines(self):
-        for invoice in self:
-            amount_taxable = amount_tax = 0.0
-            for line in invoice.tax_line.filtered(
-                lambda x: not (
-                    x.tax_code_id.exclude_from_registries or
-                    x.tax_code_id.notprintable or
-                    x.tax_code_id.withholding_type or
-                    x.base_code_id.exclude_from_registries or
-                    x.base_code_id.notprintable or
-                    x.base_code_id.withholding_type
-                )
-            ):
-                amount_taxable += line.base_amount
-                amount_tax += line.amount
-            invoice.base_amount_tax = amount_taxable
-            invoice.tax_amount_tax = amount_tax
-            invoice.total_amount_tax = amount_taxable + amount_tax
-
-    base_amount_tax = fields.Float(compute=_get_amount_taxable_lines)
-    tax_amount_tax = fields.Float(compute=_get_amount_taxable_lines)
-    total_amount_tax = fields.Float(compute=_get_amount_taxable_lines)
-
 
 class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
