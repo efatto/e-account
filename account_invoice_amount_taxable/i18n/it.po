@@ -1,0 +1,292 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* report_aeroo_parser
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-06 09:50+0000\n"
+"PO-Revision-Date: 2016-07-06 09:50+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: report_aeroo_parser
+#: model:ir.model,name:report_aeroo_parser.model_account_invoice
+msgid "Invoice"
+msgstr "Fattura"
+
+#. module: report_aeroo_parser
+#: view:account.invoice:report_aeroo_parser.invoice_form_pickings
+#: field:account.invoice,stock_picking_package_preparation_ids:0
+msgid "Pickings"
+msgstr "Consegne"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Page"
+msgstr "Pag."
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Date"
+msgstr "Data"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "description"
+msgstr "descrizione"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "UoM"
+msgstr "u.m."
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "code"
+msgstr "cod."
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "CODE"
+msgstr "COD."
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "DESCRIPTION"
+msgstr "DESCRIZIONE"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Q.TY"
+msgstr "Q.TÀ"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "q.ty"
+msgstr "q.tà"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "amount"
+msgstr "importo"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "DISC OUNT"
+msgstr "SCO NTO"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "ITEM PHOTO"
+msgstr "FOTO ART."
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "ORDERED COLOUR"
+msgstr "COLORE ORDINATO"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "RETAIL PRICE"
+msgstr "PREZZO"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "NET AMOUNT"
+msgstr "PREZZO NETTO"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "TOTAL AMOUNT"
+msgstr "IMPORTO TOTALE"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "net amount"
+msgstr "importo netto"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "total untaxed"
+msgstr "totale imponibile"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "balance due"
+msgstr "saldo"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "total tax"
+msgstr "totale imposta"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "total invoice"
+msgstr "totale fattura"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Shipping location"
+msgstr "Luogo di destinazione"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Billing"
+msgstr "Fatturazione"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Registered office"
+msgstr "Sede Legale"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "VAT #"
+msgstr "P.IVA"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "VAT"
+msgstr "IVA"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Quotation"
+msgstr "Preventivo"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Quotation Request"
+msgstr "Richiesta Offerta"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Order"
+msgstr "Ordine"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "discount"
+msgstr "sconto"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "totals"
+msgstr "totali"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "goods amount"
+msgstr "importo beni"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "notes"
+msgstr "note"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "other"
+msgstr "altro"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "1,5 % contribution"
+msgstr "contributo"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "transport"
+msgstr "trasporto"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "image"
+msgstr "foto"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "ordered color"
+msgstr "colore"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Registered office"
+msgstr "Sede legale"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Operational office"
+msgstr "Sede operativa"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Totals in first page"
+msgstr "Totali nella prima pagina"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Credit note"
+msgstr "Nota di credito"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "hour"
+msgstr "ora"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Our Ref. Picking %s dated %s. %s"
+msgstr "Ns. Rif. DDT %s del %s. %s"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Our Ref. Order %s dated %s. %s"
+msgstr "Ns. Rif. Ordine %s del %s. %s"
+
+#. module: report_aeroo_parser
+#: report:ir.actions.report.xml:account.account_invoices
+msgid "Your Ref. %s"
+msgstr "Vs. Rif. %s"
+
+#. module: report_aeroo_parser
+#: field:account.invoice,print_net_price:0
+msgid "Print net price"
+msgstr "Stampa Prezzi Netti"
+
+#. module: report_aeroo_parser
+#: view:account.invoice:report_aeroo_parser.invoice_form_pickings
+msgid "Shipping Informations"
+msgstr "Informazioni spedizione"
+
+#. module: report_aeroo_parser
+#: field:account.invoice,tax_stamp_image:0
+msgid "Tax stamp"
+msgstr "Bollo"
+
+#. module: report_aeroo_parser
+#: field:account.invoice,print_hide_uom:0
+msgid "Print hide uom"
+msgstr "Non Stampa U.M."
+
+#. module: report_aeroo_parser
+#: field:account.invoice,print_shipping_address:0
+msgid "Print Shipping Address"
+msgstr "Stampa Indirizzo Consegna"
+
+#. module: report_aeroo_parser
+#: field:account.invoice,print_totals_in_first_page:0
+msgid "Print Totals In First Page"
+msgstr "Stampa Totali in Prima Pagina"
+
+#. module: report_aeroo_parser
+#: field:account.invoice,print_payment_in_footer:0
+msgid "Print Payment In Footer"
+msgstr "Stampa Pagamenti"
