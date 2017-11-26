@@ -20,7 +20,7 @@
             <field name="name">Stampa Fattura .doc</field>
             <field name="type">ir.actions.report.xml</field>
             <field name="model">account.invoice</field>
-            <field name="report_name">account_invoice_report_aeroo.report_invoice_odc</field>
+            <field name="report_name">account_invoice_report_aeroo.report_invoice_doc</field>
             <field name="report_type">aeroo</field>
             <field name="tml_source">file</field>
             <field name="in_format">oo-odt</field>
@@ -37,28 +37,6 @@
             <field name="key2">client_print_multi</field>
             <field name="model">account.invoice</field>
             <field name="value" eval="'ir.actions.report.xml,' + str(ref('account_invoice_doc'))"/>
-        </record>
-        <record id="account_invoice_report_aeroo.account_invoice_rev01" model="ir.actions.report.xml">
-            <field name="name">Stampa Fattura rev 01</field>
-            <field name="type">ir.actions.report.xml</field>
-            <field name="model">account.invoice</field>
-            <field name="report_name">account_invoice_report_aeroo.report_invoice_rev01</field>
-            <field name="report_type">aeroo</field>
-            <field name="tml_source">file</field>
-            <field name="in_format">oo-odt</field>
-            <field name="out_format" eval="ref('report_aeroo.report_mimetypes_pdf_odt')"></field>
-            <field name="parser_loc">report_aeroo_parser/models/parser.py</field>
-            <field name="report_rml">account_invoice_report_aeroo/data/fattura-rev01.odt</field>
-            <field name="parser_state">loc</field>
-            <field name="attachment"></field>
-            <field name="attachment_use" eval="0"/>
-        </record>
-        <record model="ir.values" id="account_invoice_rev01_report_action">
-            <field name="name">Stampa Fattura rev 01</field>
-            <field name="key">action</field>
-            <field name="key2">client_print_multi</field>
-            <field name="model">account.invoice</field>
-            <field name="value" eval="'ir.actions.report.xml,' + str(ref('account_invoice_rev01'))"/>
         </record>
 
     </data>
