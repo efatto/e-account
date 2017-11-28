@@ -20,5 +20,7 @@ class AccountInvoice(models.Model):
         for inv in self:
             result.append((inv.id, "%s %s" % (
                 inv.number or TYPES[inv.type],
-                inv.name and (inv.name[:90] + '...') or '')))
+                inv.name and
+                (inv.name[:60] + '...' if len(inv.name) > 60 else inv.name)
+                or '')))
         return result
