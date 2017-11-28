@@ -10,5 +10,5 @@ class AccountJournal(models.Model):
 
     advance_description = fields.Char(
         string='Description for advance documents',
-        size=64, translate=True,
-    )
+        size=64, translate=True,)
+    downpayment = fields.Boolean()
