@@ -25,7 +25,7 @@
     'description': 'Compute invoice totals on taxable lines only.',
     'license': 'AGPL-3',
     'depends': [
-        'account',
+        'account_journal_advance',
         'l10n_configurable',
     ],
     'data': [
