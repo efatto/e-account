@@ -16,11 +16,11 @@
             <field name="attachment"></field>
             <field name="attachment_use" eval="0"/>
         </record>
-        <record id="account_invoice_report_aeroo.account_invoice_doc" model="ir.actions.report.xml">
+        <record id="account_invoice_report_aeroo_01.account_invoice_doc" model="ir.actions.report.xml">
             <field name="name">Stampa Fattura .doc</field>
             <field name="type">ir.actions.report.xml</field>
             <field name="model">account.invoice</field>
-            <field name="report_name">account_invoice_report_aeroo.report_invoice_odc</field>
+            <field name="report_name">account_invoice_report_aeroo_01.report_invoice_doc</field>
             <field name="report_type">aeroo</field>
             <field name="tml_source">file</field>
             <field name="in_format">oo-odt</field>
