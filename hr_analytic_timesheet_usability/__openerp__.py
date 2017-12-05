@@ -23,7 +23,8 @@
     'version': '8.0.1.0.0',
     'category': 'Extra Tools',
     'description':
-        'Hr analytic timesheet show linked invoice',
+        'Hr analytic timesheet show linked invoice and fix invoice factor '
+        'for gratis selection.',
     'author': 'Sergio Corato',
     'website': 'http://www.efatto.it',
     'depends': [
