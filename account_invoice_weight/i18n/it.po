@@ -22,7 +22,7 @@ msgstr "Calcola il peso"
 
 #. module: account_invoice_weight
 #: view:account.invoice:account_invoice_weight.view_invoice_form_weight
-msgid "Computed from pickings and invoice if missing"
+msgid "Computed from pickings or invoice if missing"
 msgstr "Calcolato dai DDT e dalla fattura dove mancanti"
 
 #. module: account_invoice_weight

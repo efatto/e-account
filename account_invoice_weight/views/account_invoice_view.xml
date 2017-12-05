@@ -22,7 +22,7 @@
                         </group>
                     <group>
                         <group string="Weight Informations" colspan="4">
-                            <group string="Computed from pickings and invoice if missing">
+                            <group string="Computed from pickings or invoice if missing">
                             <field name="compute_weight"/>
                             <field name="volume_custom" attrs="{'invisible': [('compute_weight','=',True)]}"/>
                             <field name="weight_custom" attrs="{'invisible': [('compute_weight','=',True)]}"/>
@@ -30,11 +30,6 @@
                             <field name="volume" attrs="{'invisible': [('compute_weight','!=',True)]}"/>
                             <field name="weight" attrs="{'invisible': [('compute_weight','!=',True)]}"/>
                             <field name="net_weight" attrs="{'invisible': [('compute_weight','!=',True)]}"/>
-                            </group>
-                            <group string="Computed only from invoice - not used in report">
-                            <field name="volume_invoice"/>
-                            <field name="weight_invoice"/>
-                            <field name="net_weight_invoice"/>
                             </group>
                         </group>
                     </group>
