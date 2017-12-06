@@ -14,7 +14,8 @@ class AccountInvoice(models.Model):
     def action_number(self):
         res = super(AccountInvoice, self).action_number()
         for invoice in self:
-            if invoice.type in ('out_invoice', 'out_refund'):
+            if invoice.type in ('out_invoice', 'out_refund') and not \
+                    invoice.journal_id.invoicing_period_excluded:
                 registration_fy_id = self.env['account.fiscalyear'].find(
                     dt=self.date_invoice)
                 last_open_period = self.env['account.period'].search([
@@ -39,3 +40,9 @@ class AccountPeriod(models.Model):
     _inherit = "account.period"
 
     invoicing_closed = fields.Boolean()
+
+
+class AccountJournal(models.Model):
+    _inherit = "account.journal"
+
+    invoicing_period_excluded = fields.Boolean()
