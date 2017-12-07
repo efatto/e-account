@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-06 23:11+0000\n"
-"PO-Revision-Date: 2017-12-06 23:11+0000\n"
+"POT-Creation-Date: 2017-12-07 07:55+0000\n"
+"PO-Revision-Date: 2017-12-07 07:55+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgid "Account period"
 msgstr "Periodo contabile"
 
 #. module: account_invoice_period_invoicing
-#: code:addons/account_invoice_period_invoicing/models/account_invoice.py:27
+#: code:addons/account_invoice_period_invoicing/models/account_invoice.py:28
 #, python-format
 msgid "Cannot create invoice! The current period of invoicing has max date available: %s"
 msgstr "Non è possibile creare la fattura! Il periodo attuale di fatturazione ha massima data disponibile: %s"
@@ -35,4 +35,14 @@ msgstr "Fattura"
 #: field:account.period,invoicing_closed:0
 msgid "Invoicing closed"
 msgstr "Fatturazione chiusa"
+
+#. module: account_invoice_period_invoicing
+#: field:account.journal,invoicing_period_excluded:0
+msgid "Invoicing period excluded"
+msgstr "Ignora controllo data fatturazione"
+
+#. module: account_invoice_period_invoicing
+#: model:ir.model,name:account_invoice_period_invoicing.model_account_journal
+msgid "Journal"
+msgstr "Sezionale"
 
