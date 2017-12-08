@@ -8,9 +8,6 @@ from openerp import fields, models, api
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    stock_picking_package_preparation_ids = fields.One2many(
-        'stock.picking.package.preparation', 'invoice_id', 'Pickings',
-        groups="stock.group_stock_user")
     tax_stamp_image = fields.Binary('Tax stamp')
     print_net_price = fields.Boolean()
     print_hide_uom = fields.Boolean()

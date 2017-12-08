@@ -6,11 +6,6 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="l10n_it_ddt.invoice_form_view_ddt"/>
             <field name="arch" type="xml">
-                <group string="Shipping Informations" position="after">
-                    <group string="Pickings" groups="stock.group_stock_user">
-                        <field name="stock_picking_package_preparation_ids"/>
-                    </group>
-                </group>
                 <field name="comment" position="after">
                     <field name="tax_stamp_image" widget="image" class="oe_left oe_avatar"/>
                 </field>
