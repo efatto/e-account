@@ -6,6 +6,9 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
+                <xpath expr="/form/header/button[1]" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('sent','=',True),('state', 'in', ['draft', 'cancel'])]}</attribute>
+                </xpath>
                 <xpath expr="/form/header/button[3]" position="attributes">
                     <attribute name="attrs">{'invisible':['|',('sent','=',False),('state', 'in', ['draft', 'cancel'])]}</attribute>
                 </xpath>
