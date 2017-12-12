@@ -23,66 +23,59 @@ class StockPicking(models.Model):
                 if invoice.id in invoice_ids:
                     if invoice not in invoice_id_picking_ids:
                         invoice_id_picking_ids = {invoice: [move.picking_id]}
-                    elif move.picking_id not in invoice_id_picking_ids[invoice]:
+                    elif move.picking_id not in \
+                            invoice_id_picking_ids[invoice]:
                         invoice_id_picking_ids[invoice].append(move.picking_id)
 
         order_invoiced_amount = {}
-        order_invoice = {}
         if invoice_id_picking_ids:
             for invoice_id, picking_ids in invoice_id_picking_ids.items():
-                for picking_id in picking_ids:
-                    # take only not advance invoice lines
-                    for line in invoice_id.invoice_line.filtered(
-                        lambda x: not x.advance_invoice_id
-                    ):
-                        # take only invoice lines originated from picking
+                invoice_lines = invoice_id.invoice_line.filtered(
+                    lambda x: not x.advance_invoice_id)
+                for line in invoice_lines:
+                    for picking_id in picking_ids:
                         if picking_id.name == line.origin or \
                                 picking_id.origin == line.origin:
                             if picking_id.sale_id not in order_invoiced_amount:
                                 order_invoiced_amount[picking_id.sale_id] = \
                                     line.price_subtotal
+                                break
                             else:
                                 order_invoiced_amount[picking_id.sale_id] += \
                                     line.price_subtotal
-                    if invoice_id not in order_invoice:
-                        order_invoice[invoice_id] = {
-                            picking_id.sale_id: order_invoiced_amount[
-                                picking_id.sale_id]}
-                    if picking_id.sale_id not in order_invoice[invoice_id]:
-                        order_invoice[invoice_id].update(
-                            {picking_id.sale_id: order_invoiced_amount[
-                                picking_id.sale_id]})
-
-                    for advance_invoice in picking_id.sale_id.advance_invoice_ids:
+                                break
+                total_return_amount = 0
+                for sale_id in order_invoiced_amount.keys():
+                    for advance_invoice in sale_id.advance_invoice_ids:
                         if advance_invoice.state == 'cancel':
                             return False
-                        if advance_invoice.state not in ['open', 'paid']:
+                        if advance_invoice.state not in ['paid']:
                             raise exceptions.ValidationError(
-                                _('Advance invoice must be in state '
-                                  'open or paid.')
+                                _('Advance invoice %s of %s sale order must be'
+                                  ' in state paid to be returned.') %
+                                (advance_invoice.number, sale_id.name)
                             )
                         for preline in advance_invoice.invoice_line:
-                            inv_line_id = self.pool[
+                            return_amount = (
+                                order_invoiced_amount[sale_id]
+                                * sale_id.advance_percentage /
+                                100 * preline.price_subtotal /
+                                sale_id.advance_amount)
+                            self.pool[
                                 'account.invoice.line'].copy(
                                 cr, uid, preline.id, {
                                     'invoice_id': invoice_id.id,
-                                    'price_unit': - order_invoice[invoice_id]
-                                    [picking_id.sale_id] *
-                                    picking_id.sale_id.advance_percentage /
-                                    100 * preline.price_subtotal /
-                                    picking_id.sale_id.advance_amount,
+                                    'price_unit': - return_amount,
                                     'advance_invoice_id': advance_invoice.id,
                                     'sequence': 0,
                                     'name': (_('Ref. %s nr. %s ') % (
                                                 advance_invoice.journal_id.
                                                 advance_description,
                                                 advance_invoice.number))
-                                                # datetime.strptime(
-                                                #  advance_invoice.date_invoice,
-                                                #  DEFAULT_SERVER_DATE_FORMAT).
-                                                #  strftime("%d/%m/%Y")))
                                 })
+                            total_return_amount += return_amount
                         invoice_obj.button_compute(
                             cr, uid, [invoice_id.id], context=context,
-                            set_total=(inv_type in ('in_invoice', 'in_refund')))
+                            set_total=(inv_type in (
+                                'in_invoice', 'in_refund')))
         return invoice_ids
