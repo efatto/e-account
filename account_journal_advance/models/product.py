@@ -2,13 +2,10 @@
 ##############################################################################
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
-from openerp import models, fields
+from openerp import models, fields, api, _
 
 
-class AccountJournal(models.Model):
-    _inherit = 'account.journal'
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
 
-    advance_description = fields.Char(
-        string='Description for advance documents',
-        size=64, translate=True,)
     downpayment = fields.Boolean()

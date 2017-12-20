@@ -28,9 +28,11 @@
     'license': 'AGPL-3',
     'depends': [
         'account',
+        'sale',
     ],
     'data': [
         'views/account_journal_view.xml',
+        'views/product.xml',
     ],
     'installable': True
 }
