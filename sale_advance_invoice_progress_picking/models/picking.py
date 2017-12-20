@@ -61,6 +61,10 @@ class StockPicking(models.Model):
                                 * sale_id.advance_percentage /
                                 100 * preline.price_subtotal /
                                 sale_id.advance_amount)
+                            if (return_amount - sale_id.advance_refunded_amount
+                            ) > sale_id.advance_amount:
+                                return_amount = sale_id.advance_amount + \
+                                    sale_id.advance_refunded_amount
                             self.pool[
                                 'account.invoice.line'].copy(
                                 cr, uid, preline.id, {
