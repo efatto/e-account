@@ -136,10 +136,13 @@ class AccountTax(models.Model):
                 parent_base_tax_code = tax.account_base_tax_code_id or \
                     tax_code_obj.browse(vals['account_base_tax_code_id'])
                 base_tax_code_vals = {
-                    'name': tax.name or vals.get('name') + ' (imp)',
-                    'code': parent_base_tax_code.code + tax.description or
-                    vals.get('description'),
-                    'parent_id': tax.account_base_tax_code_id.id or
+                    'name': tax.name if tax.name else
+                    vals.get('name') + ' (imp)',
+                    'code': parent_base_tax_code.code + (
+                        tax.description if tax.description else
+                        vals.get('description')),
+                    'parent_id': tax.account_base_tax_code_id.id if
+                    tax.account_base_tax_code_id else
                     vals.get('account_base_tax_code_id'),
                     'is_base': True,
                     'company_id': company_id,
@@ -167,9 +170,11 @@ class AccountTax(models.Model):
                     tax_code_obj.browse(vals['account_tax_code_id'])
                 tax_code_vals = {
                     'name': tax.name or vals.get('name'),
-                    'code': parent_tax_code.code + tax.description or
-                    vals.get('description'),
-                    'parent_id': tax.account_tax_code_id.id or
+                    'code': parent_tax_code.code + (
+                        tax.description if tax.description else
+                        vals.get('description')),
+                    'parent_id': tax.account_tax_code_id.id if
+                    tax.account_base_tax_code_id else
                     vals.get('account_tax_code_id'),
                     'is_base': False,
                     'company_id': company_id,
