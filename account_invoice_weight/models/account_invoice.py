@@ -52,6 +52,10 @@ class AccountInvoice(models.Model):
         help="The volume is computed when the invoice is done.",
         digits_compute=dp.get_precision('Stock Volume'),
         digits=dp.get_precision('Stock Volume'))
+    parcels_sppp = fields.Float(
+        compute='_compute_weight',
+        help="Parcels are computed when the invoice is saved.",
+        string='Parcels (computed)')
 
     @api.multi
     def _compute_weight(self):
@@ -67,6 +71,9 @@ class AccountInvoice(models.Model):
                 invoice.volume += sum(
                     x.volume for x in
                     invoice.stock_picking_package_preparation_ids)
+                invoice.parcels_sppp += sum(
+                    x.parcels for x in
+                    invoice.stock_picking_package_preparation_ids)
             # compute from invoice if not pickings
             else:
                 invoice.weight = sum(
@@ -78,8 +85,10 @@ class AccountInvoice(models.Model):
                 invoice.volume = sum(
                     l.product_id.volume and l.product_id.volume
                     * l.quantity for l in invoice.invoice_line)
+                invoice.parcels_sppp = 0
             # put custom value if selected from user
             if not invoice.compute_weight:
                 invoice.net_weight = invoice.net_weight_custom
                 invoice.weight = invoice.weight_custom
                 invoice.volume = invoice.volume_custom
+                invoice.parcels_sppp = invoice.parcels
