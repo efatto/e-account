@@ -18,7 +18,8 @@
                                 widget="selection"/>
                             <field name="transportation_method_id"
                                 widget="selection"/>
-                            <field name="parcels" />
+                            <field name="parcels" attrs="{'invisible': [('compute_weight','=',True)]}"/>
+                            <field name="parcels_sppp" attrs="{'invisible': [('compute_weight','!=',True)]}"/>
                         </group>
                     <group>
                         <group string="Weight Informations" colspan="4">
