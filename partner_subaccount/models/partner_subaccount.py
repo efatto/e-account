@@ -132,8 +132,23 @@ class ResPartner(models.Model):
                 vals.get('parent_id', False):
             return super(ResPartner, self).create(vals)
 
+        # if user has put a valid custom created account
+        payable_is_valid = receivable_is_valid = False
+        if vals.get('property_account_payable', False):
+            if isinstance(vals['property_account_payable'], int):
+                if self.env['account.account'].browse(
+                    vals['property_account_payable']
+                )[0].type != 'view':
+                    payable_is_valid = True
+        if vals.get('property_account_receivable', False):
+            if isinstance(vals['property_account_receivable'], int):
+                if self.env['account.account'].browse(
+                        vals['property_account_receivable']
+                )[0].type != 'view':
+                    receivable_is_valid = True
+
         # 1 if tagged as customer - create is not exists
-        if not (vals.get('supplier', False) or (
+        if not receivable_is_valid and not (vals.get('supplier', False) or (
             len(vals) == 2 and (
                 self._context.get('default_supplier', False) == 1 or
                 self._context.get('search_default_supplier', False) == 1 or
@@ -161,7 +176,7 @@ class ResPartner(models.Model):
                 self.get_create_customer_partner_account(vals)
 
         # 2 if tagged as supplier - create if not exists
-        if (vals.get('supplier', False) or (
+        if not payable_is_valid and (vals.get('supplier', False) or (
                 len(vals) == 2 and (
                     self._context.get('default_supplier', False) == 1 or
                     self._context.get(
@@ -191,7 +206,8 @@ class ResPartner(models.Model):
                 self.get_create_supplier_partner_account(vals)
 
         # 3 if tagged as customer and supplier - create if not exists
-        if (vals.get('customer', False) or (
+        if not payable_is_valid and not receivable_is_valid and \
+            (vals.get('customer', False) or (
                 len(vals) == 2 and
                 self._context.get('customer', False) == 1
                 )) and (
@@ -199,6 +215,7 @@ class ResPartner(models.Model):
                     len(vals) == 2 and
                     self._context.get('supplier', False) == 1
                 )):
+            # this do not cover the case when user put 1 account valid on 2
             vals['block_ref_customer'] = True
             if not vals.get('property_customer_ref', False):
                 vals['property_customer_ref'] = self.env['ir.sequence'].get(
