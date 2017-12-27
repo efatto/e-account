@@ -11,7 +11,7 @@
                     <field name="dueamount_line" attrs="{'readonly': [('state', '!=', 'draft')]}">
                         <tree string="Due amounts" editable="bottom">
                             <field name="date"/>
-                            <field name="amount"/>
+                            <field name="amount" sum="Total amount"/>
                         </tree>
                     </field>
                 </xpath>
