@@ -24,6 +24,7 @@
     'category': 'Generic Modules',
     'website': 'https://www.efatto.it',
     "author": "Sergio Corato",
+    'description': 'Move customer and supplier ref in header.',
     'depends': [
         'partner_subaccount',
     ],
