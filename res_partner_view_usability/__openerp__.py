@@ -23,7 +23,8 @@
     'version': '8.0.1.0.0',
     'category': 'Extra Tools',
     'description':
-        'Partner view usability',
+        'In partner view remove page "Internal notes" and move note '
+        'below website, immediately visibles.',
     'author': 'Sergio Corato',
     'website': 'http://www.efatto.it',
     'depends': [
