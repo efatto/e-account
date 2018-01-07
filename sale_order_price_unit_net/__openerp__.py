@@ -26,7 +26,7 @@
     'description': 'Add field price unit net to sale order line.',
     'license': 'AGPL-3',
     'depends': [
-        'report_aeroo_parser',
+        'sale',
     ],
     'data': [
         'views/sale.xml',
