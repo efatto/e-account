@@ -24,7 +24,8 @@
     'category': 'Generic Modules',
     'website': 'https://www.efatto.it',
     "author": "Sergio Corato",
-    'description': 'Partner payment.',
+    'description': 'Partner payment remove selection widget because '
+                   'limited to 100 records.',
     'depends': [
         'account',
     ],
