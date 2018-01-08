@@ -24,7 +24,9 @@
     'version': '8.0.1.0.0',
     'category': 'Accounting & Finance',
     'author': 'Sergio Corato',
-    'description': 'Fix commercial partner',
+    'description': 'Remove stored related field (wich is not recomputed on '
+                   'invoice when changed in the partner) and substitute with '
+                   'computed field wich is always correct.',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
