@@ -248,7 +248,7 @@ class Parser(report_sxw.rml_parse):
             False
 
         for line in invoice_lines:
-            rental_ddt = False
+            rental_ddt = rental_ddt_date = False
             if line.origin:
                 if picking_preparation_ids:
                     for picking_preparation in picking_preparation_ids:
@@ -306,7 +306,7 @@ class Parser(report_sxw.rml_parse):
                 description = self.get_description(
                     self, ddt, ddt_date, sale_order, sale_order_date,
                     client_order_ref)
-                if rental_ddt:
+                if rental_ddt and rental_ddt_date:
                     date = datetime.strptime(
                         rental_ddt_date, DEFAULT_SERVER_DATE_FORMAT)
                     description = '\n'.join(
