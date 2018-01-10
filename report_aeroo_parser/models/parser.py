@@ -248,6 +248,7 @@ class Parser(report_sxw.rml_parse):
             False
 
         for line in invoice_lines:
+            rental_ddt = False
             if line.origin:
                 if picking_preparation_ids:
                     for picking_preparation in picking_preparation_ids:
@@ -256,9 +257,10 @@ class Parser(report_sxw.rml_parse):
                                     picking.origin == line.origin:
                                 ddt = picking_preparation.ddt_number
                                 ddt_date = picking_preparation.date
-                                sale_order = picking.sale_id.name
-                                sale_order_date = picking.sale_id.date_order
-                                client_order_ref = picking.sale_id.\
+                                sale_order_id = picking.sale_id
+                                sale_order = sale_order_id.name
+                                sale_order_date = sale_order_id.date_order
+                                client_order_ref = sale_order_id.\
                                     client_order_ref
                 else:
                     sale_order = line.origin
@@ -266,13 +268,23 @@ class Parser(report_sxw.rml_parse):
                         self.cr, self.uid, [
                             ('name', '=', line.origin),
                             ('company_id', '=', line.company_id.id)
-                        ])
-                    if sale_order_id and len(sale_order_id) == 1:
+                        ], limit=1)
+                    if sale_order_id:
                         sale_order_obj = self.pool['sale.order'].browse(
                             self.cr, self.uid, sale_order_id
                         )
                         sale_order_date = sale_order_obj.date_order
                         client_order_ref = sale_order_obj.client_order_ref
+                        if self._check_installed_module('sale_rental_machine'):
+                            # add sale rental data if exists
+                            for order_line in sale_order_obj.order_line:
+                                if order_line.rental_type:
+                                    rental_ddt = order_line.order_id.ddt_ids[
+                                        0].ddt_number
+                                    rental_ddt_date = order_line.order_id.\
+                                        ddt_ids[0].date
+                                    # return_picking_id = order_line.order_id.\
+                                    #     picking_ids.filtered()
 
             # Order lines by date and by ddt, so first create date_ddt key:
             if ddt:
@@ -294,6 +306,13 @@ class Parser(report_sxw.rml_parse):
                 description = self.get_description(
                     self, ddt, ddt_date, sale_order, sale_order_date,
                     client_order_ref)
+                if rental_ddt:
+                    date = datetime.strptime(
+                        rental_ddt_date, DEFAULT_SERVER_DATE_FORMAT)
+                    description = '\n'.join(
+                        [description, 'Documento di uscita: %s del %s' %(
+                            rental_ddt, date.strftime("%d/%m/%Y"))]
+                    )
                 invoice[key] = {'description': description, 'lines': [line]}
 
         return OrderedDict(
