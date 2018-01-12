@@ -61,14 +61,14 @@ class HrAttendanceImport(models.TransientModel):
                     fields.Datetime.from_string(
                         values['date'] + ' ' + values['sign_in']),
                     is_dst=None).astimezone(pytz.utc))
-            if hr_attendance_obj.search([
-                ('employee_id', '=', hr_employee_id.id),
-                ('name', '>', tz_date_in)
-            ]):
-                raise exceptions.ValidationError(
-                    _('Employee has already attendance in dates > than '
-                    'dates in this importation.')
-                )
+            # if hr_attendance_obj.search([
+            #     ('employee_id', '=', hr_employee_id.id),
+            #     ('name', '>', tz_date_in)
+            # ]):
+            #     raise exceptions.ValidationError(
+            #         _('Employee has already attendance in dates > than '
+            #         'dates in this importation.')
+            #     )
 
             val_in = {
                 'name': tz_date_in,
