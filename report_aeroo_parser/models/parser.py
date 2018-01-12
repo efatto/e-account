@@ -180,7 +180,7 @@ class Parser(report_sxw.rml_parse):
 
     @staticmethod
     def get_description(self, ddt_name, ddt_date, order_name, order_date,
-                        client_order_ref):
+                        client_order_ref, ddt_id, sale_orders):
         description = []
 
         if ddt_name:
@@ -192,14 +192,17 @@ class Parser(report_sxw.rml_parse):
                     'Our Ref. Picking %s dated %s. %s') % (
                     ddt_name,
                     ddt_date.strftime("%d/%m/%Y") if ddt_date else '',
-                    self._translate_text('Your Ref. %s') % client_order_ref if
-                    client_order_ref else ''
-                ))
+                    self._translate_text('Your Ref. %s') %
+                    ', '.join(
+                        (' '.join([sale_orders[ddt_id][x]['name'],
+                                   sale_orders[ddt_id][x]['date']])
+                         for x in sale_orders[ddt_id]
+                         ) if sale_orders and ddt_id else ''
+                    )
+                )
+            )
 
         elif order_name:
-            # and not self.pool['res.users'].browse(
-            #self.cr, self.uid, self.uid).
-            # company_id.disable_sale_ref_invoice_report:
             if order_date:
                 order_date = datetime.strptime(
                     order_date[:10], DEFAULT_SERVER_DATE_FORMAT)
@@ -213,39 +216,28 @@ class Parser(report_sxw.rml_parse):
                 ))
 
         return '\n'.join(description)
-    
-    # def _get_picking_name(self, line):
-    #     picking_obj = self.pool['stock.picking']
-    #     picking_ids = picking_obj.search(self.cr, self.uid, [
-    #         ('origin', '=', line.origin)])
-    #
-    #     if len(picking_ids) == 1:
-    #         picking = picking_obj.browse(self.cr, self.uid, picking_ids[0])
-    #         return picking.name
-    #     elif picking_ids:
-    #         move_obj = self.pool['stock.move']
-    #         move_ids = move_obj.search(self.cr, self.uid, [
-    #             ('product_id', '=', line.product_id.id),
-    #             ('origin', '=', line.origin)])
-    #         if len(move_ids) == 1:
-    #             stock_move = move_obj.browse(self.cr, self.uid, move_ids[0])
-    #             if stock_move.picking_id:
-    #                 return stock_move.picking_id.name
-    #             else:
-    #                 return False
-    #         elif move_ids:
-    #             # The same product from the same sale_order is present in
-    #             # various picking lists
-    #             raise orm.except_orm('Warning', _('Ambiguous line origin'))
-    #         else:
-    #             return False
-    #     else:
-    #         return False
-    
+
     def _get_invoice_tree(self, invoice_lines, picking_preparation_ids):
         invoice = keys = {}
         ddt = sale_order = ddt_date = sale_order_date = client_order_ref = \
-            False
+            ddt_id = False
+        sale_orders = {}
+        if picking_preparation_ids:
+            for picking_preparation in picking_preparation_ids:
+                for picking in picking_preparation.picking_ids:
+                    ddt_id = picking_preparation
+                    if ddt_id.id not in sale_orders:
+                        sale_orders[ddt_id.id] = {}
+                    if picking.sale_id and picking.sale_id.id \
+                            not in sale_orders[ddt_id.id]:
+                        sale_orders[ddt_id.id][
+                            picking.sale_id.id] = \
+                            {'name': picking.sale_id.name,
+                             'date': datetime.strptime(
+                                 picking.sale_id.date_order[:10],
+                                 DEFAULT_SERVER_DATE_FORMAT
+                             ).strftime("%d/%m/%Y"),
+                             'ref': picking.sale_id.client_order_ref}
 
         for line in invoice_lines:
             rental_ddt = rental_ddt_date = False
@@ -255,13 +247,9 @@ class Parser(report_sxw.rml_parse):
                         for picking in picking_preparation.picking_ids:
                             if picking.name == line.origin or \
                                     picking.origin == line.origin:
+                                ddt_id = picking_preparation.id
                                 ddt = picking_preparation.ddt_number
                                 ddt_date = picking_preparation.date
-                                sale_order_id = picking.sale_id
-                                sale_order = sale_order_id.name
-                                sale_order_date = sale_order_id.date_order
-                                client_order_ref = sale_order_id.\
-                                    client_order_ref
                 else:
                     sale_order = line.origin
                     sale_order_id = self.pool['sale.order'].search(
@@ -305,7 +293,7 @@ class Parser(report_sxw.rml_parse):
             else:
                 description = self.get_description(
                     self, ddt, ddt_date, sale_order, sale_order_date,
-                    client_order_ref)
+                    client_order_ref, ddt_id, sale_orders)
                 if rental_ddt and rental_ddt_date:
                     date = datetime.strptime(
                         rental_ddt_date, DEFAULT_SERVER_DATE_FORMAT)
