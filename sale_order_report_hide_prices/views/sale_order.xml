@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <field name="partner_shipping_id" position="after">
                 <field name="print_hide_prices"/>
+                <field name="print_hide_product_code"/>
             </field>
         </field>
     </record>
