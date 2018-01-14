@@ -8,6 +8,7 @@
               <field name="arch" type="xml">
                   <xpath expr="//page[@string='Journal Items']/field[@name='line_id']/tree" position="attributes">
                       <attribute name="class">account_move_line_usability_class</attribute>
+                      <attribute name="editable">bottom</attribute>
                   </xpath>
               </field>
         </record>
