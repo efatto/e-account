@@ -31,3 +31,14 @@ class AccountMoveLine(models.Model):
     date_to = fields.Date(
         compute=lambda *a, **k: {},
         string="Date to")
+
+    @api.model
+    def default_get(self, fields):
+        data = super(AccountMoveLine, self).default_get(fields)
+        if data:
+            if 'partner_id' in data:
+                data['partner_id'] = False
+            if 'name' in data and self.env['ir.config_parameter'].get_param(
+                    'account.move.line.not.copy.name'):
+                data['name'] = False
+        return data
