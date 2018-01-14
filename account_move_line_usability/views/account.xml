@@ -10,6 +10,11 @@
                       <attribute name="class">account_move_line_usability_class</attribute>
                       <attribute name="editable">bottom</attribute>
                   </xpath>
+                  <xpath expr="//page[@string='Journal Items']/field[@name='line_id']/tree/field[@name='name']" position="replace">
+                  </xpath>
+                  <xpath expr="//page[@string='Journal Items']/field[@name='line_id']/tree/field[@name='partner_id']" position="after">
+                      <field name="name"/>
+                  </xpath>
               </field>
         </record>
         <record id="view_account_move_line_filter_date_from_date_to" model="ir.ui.view">
