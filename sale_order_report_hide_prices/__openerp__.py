@@ -17,12 +17,14 @@
 #
 #
 {
-    'name': 'Sale order hide prices in report',
+    'name': 'Sale order hide prices or product codes in report',
     'version': '8.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
     'website': 'http://www.efatto.it',
-    'description': 'Add a boolean that can be used in report to hide prices',
+    'description': 'Add boolean that can be used in report to:'
+                   '\n- hide prices;'
+                   '\n- hide product codes.',
     'license': 'AGPL-3',
     'depends': [
         'sale',
