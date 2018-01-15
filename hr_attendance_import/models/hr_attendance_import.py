@@ -56,6 +56,27 @@ class HrAttendanceImport(models.TransientModel):
             if not values['sign_in'] or not values['sign_out'] or not \
                     values['date']:
                 continue
+            if values['sign_in1'] and values['sign_out1']:
+                tz_date_in_1 = fields.Datetime.to_string(
+                    pytz.timezone(self.env.context['tz']).localize(
+                        fields.Datetime.from_string(
+                            values['date'] + ' ' + values['sign_in1']),
+                        is_dst=None).astimezone(pytz.utc))
+                val_in_1 = {
+                    'name': tz_date_in_1,
+                    'action': 'sign_in',
+                    'employee_id': hr_employee_id.id,
+                }
+                tz_date_out_1 = fields.Datetime.to_string(
+                    pytz.timezone(self.env.context['tz']).localize(
+                        fields.Datetime.from_string(
+                            values['date'] + ' ' + values['sign_out1']),
+                        is_dst=None).astimezone(pytz.utc))
+                val_out_1 = {
+                    'name': tz_date_out_1,
+                    'action': 'sign_out',
+                    'employee_id': hr_employee_id.id,
+                }
             tz_date_in = fields.Datetime.to_string(
                 pytz.timezone(self.env.context['tz']).localize(
                     fields.Datetime.from_string(
@@ -89,13 +110,24 @@ class HrAttendanceImport(models.TransientModel):
                 # first sign in, then out
                 hr_attendance_obj.create(val_in)
                 hr_attendance_obj.create(val_out)
+                if val_in_1 and val_out_1:
+                    hr_attendance_obj.create(val_in_1)
+                    hr_attendance_obj.create(val_out_1)
             else:
                 # first sign out, then sign in
                 hr_attendance_obj.create(val_out)
                 hr_attendance_obj.create(val_in)
+                if val_in_1 and val_out_1:
+                    hr_attendance_obj.create(val_out_1)
+                    hr_attendance_obj.create(val_in_1)
 
             logging.getLogger('openerp.addons.hr_attendance_import').info(
                 'Imported %s attendance for %s employee: sign in %s, sign '
-                'out %s.' % (
+                'out %s. %s' % (
                     values['date'], hr_employee_id.name, values['sign_in'],
-                    values['sign_out']))
+                    values['sign_out'],
+                    'Second sign in %s, second sign out %s' % (
+                        values['sign_in1'],
+                        values['sign_out1']
+                    )
+                ))
