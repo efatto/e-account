@@ -192,7 +192,7 @@ class Parser(report_sxw.rml_parse):
                     'Our Ref. Picking %s dated %s. %s') % (
                     ddt_name,
                     ddt_date.strftime("%d/%m/%Y") if ddt_date else '',
-                    self._translate_text('Orders: %s') %
+                    self._translate_text('Your Ref. %s') %
                     ', '.join(
                         (' '.join([sale_orders[ddt_id][x]['name'],
                                    sale_orders[ddt_id][x]['date'],
