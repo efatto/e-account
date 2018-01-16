@@ -19,7 +19,6 @@ openerp.web_widget_number = function (instance) {
 
         _translate_comma: function() {
             var val
-            debugger;
             val = this.$el.find('input').attr('value');
             currenttxt = val.toString().replace(/,/g,'.');
             if (currenttxt){
