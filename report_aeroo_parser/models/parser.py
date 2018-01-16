@@ -238,7 +238,7 @@ class Parser(report_sxw.rml_parse):
                                  picking.sale_id.date_order[:10],
                                  DEFAULT_SERVER_DATE_FORMAT
                              ).strftime("%d/%m/%Y"),
-                             'ref': picking.sale_id.client_order_ref}
+                             'ref': picking.sale_id.client_order_ref or ''}
 
         for line in invoice_lines:
             rental_ddt = rental_ddt_date = False
