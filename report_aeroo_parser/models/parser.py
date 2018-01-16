@@ -195,7 +195,8 @@ class Parser(report_sxw.rml_parse):
                     self._translate_text('Your Ref. %s') %
                     ', '.join(
                         (' '.join([sale_orders[ddt_id][x]['name'],
-                                   sale_orders[ddt_id][x]['date']])
+                                   sale_orders[ddt_id][x]['date'],
+                                   sale_orders[ddt_id][x]['ref']])
                          for x in sale_orders[ddt_id]
                          ) if sale_orders and ddt_id else ''
                     )
