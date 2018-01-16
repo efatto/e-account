@@ -497,7 +497,7 @@ class Parser(report_sxw.rml_parse):
                     code_in_report = attr_value.attribute_id.code_in_report
                     if code_in_report.upper() == 'FALSE':
                         code_in_report = ''
-                    code = re.sub('[&@#£$][A-Z]', code_in_report, code)
+                    code = re.sub('[&@#£$§°€][A-Z]', code_in_report, code)
             if pack and line.product_id.product_pack_id:
                 code += " | " + line.product_id.product_pack_id.default_code \
                     if line.product_id.product_pack_id.default_code else ''
