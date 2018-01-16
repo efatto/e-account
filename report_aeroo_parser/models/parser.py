@@ -180,7 +180,7 @@ class Parser(report_sxw.rml_parse):
 
     @staticmethod
     def get_description(self, ddt_name, ddt_date, order_name, order_date,
-                        client_order_ref, ddt_id, sale_orders):
+                        client_order_ref, ddt_id, sale_orders, mrp_repairs):
         description = []
 
         if ddt_name:
@@ -189,7 +189,7 @@ class Parser(report_sxw.rml_parse):
                     ddt_date[:10], DEFAULT_SERVER_DATE_FORMAT)
             description.append(
                 self._translate_text(
-                    'Our Ref. Picking %s dated %s. %s') % (
+                    'Our Ref. Picking %s dated %s. %s %s') % (
                     ddt_name,
                     ddt_date.strftime("%d/%m/%Y") if ddt_date else '',
                     self._translate_text('Your Ref. %s') %
@@ -198,9 +198,20 @@ class Parser(report_sxw.rml_parse):
                                    sale_orders[ddt_id][x]['date'],
                                    sale_orders[ddt_id][x]['ref']])
                          for x in sale_orders[ddt_id]
-                         ) if sale_orders and ddt_id else ''
+                         )
                     )
-                )
+                    if sale_orders and ddt_id else '',
+                    self._translate_text('%s') %
+                    ' '.join(
+                        ' '.join([
+                            self._translate_text('\nRef. Our. Order ')
+                            + mrp_repairs[ddt_id][x]['name'],
+                            self._translate_text(' dated ')
+                            + mrp_repairs[ddt_id][x]['date'],
+                            self._translate_text('\nMachine: ')
+                            + mrp_repairs[ddt_id][x]['machine']
+                        ]) for x in mrp_repairs[ddt_id]
+                    ) if mrp_repairs and ddt_id else '')
             )
 
         elif order_name:
@@ -223,6 +234,7 @@ class Parser(report_sxw.rml_parse):
         ddt = sale_order = ddt_date = sale_order_date = client_order_ref = \
             ddt_id = False
         sale_orders = {}
+        mrp_repairs = {}
         if picking_preparation_ids:
             for picking_preparation in picking_preparation_ids:
                 for picking in picking_preparation.picking_ids:
@@ -232,13 +244,41 @@ class Parser(report_sxw.rml_parse):
                     if picking.sale_id and picking.sale_id.id \
                             not in sale_orders[ddt_id.id]:
                         sale_orders[ddt_id.id][
-                            picking.sale_id.id] = \
-                            {'name': picking.sale_id.name,
-                             'date': datetime.strptime(
+                            picking.sale_id.id] = {
+                            'name': picking.sale_id.name,
+                            'date': datetime.strptime(
                                  picking.sale_id.date_order[:10],
                                  DEFAULT_SERVER_DATE_FORMAT
-                             ).strftime("%d/%m/%Y"),
-                             'ref': picking.sale_id.client_order_ref or ''}
+                            ).strftime("%d/%m/%Y"),
+                            'ref': picking.sale_id.client_order_ref or ''
+                        }
+                    # search mrp with out_picking_id
+                    if self._check_installed_module('mrp_repair_management'):
+                        if ddt_id.id not in mrp_repairs:
+                            mrp_repairs[ddt_id.id] = {}
+                        mrp_id = self.pool['mrp.repair'].search(
+                            self.cr, self.uid, [
+                                ('out_picking_id', '=', picking.id)
+                            ])
+                        if mrp_id:
+                            mrp = self.pool['mrp.repair'].browse(
+                                self.cr, self.uid, mrp_id
+                            )
+                        if mrp and mrp.id not in mrp_repairs[ddt_id.id]:
+                            mrp_repairs[ddt_id.id][mrp.id] = {
+                                'name': mrp.name,
+                                'date': datetime.strptime(
+                                    mrp.date[:10],
+                                    DEFAULT_SERVER_DATE_FORMAT
+                                ).strftime("%d/%m/%Y"),
+                                'machine': mrp.machine_id.name,
+                                # 'return': mrp.out_sppp_id.name,
+                                # 'return_date': datetime.strptime(
+                                #     mrp.out_sppp_id.date[:10],
+                                #     DEFAULT_SERVER_DATE_FORMAT
+                                # ).strftime("%d/%m/%Y"),
+                            }
+
 
         for line in invoice_lines:
             rental_ddt = rental_ddt_date = False
@@ -294,7 +334,7 @@ class Parser(report_sxw.rml_parse):
             else:
                 description = self.get_description(
                     self, ddt, ddt_date, sale_order, sale_order_date,
-                    client_order_ref, ddt_id, sale_orders)
+                    client_order_ref, ddt_id, sale_orders, mrp_repairs)
                 if rental_ddt and rental_ddt_date:
                     date = datetime.strptime(
                         rental_ddt_date, DEFAULT_SERVER_DATE_FORMAT)
