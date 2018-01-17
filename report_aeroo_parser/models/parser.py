@@ -256,6 +256,7 @@ class Parser(report_sxw.rml_parse):
                     if self._check_installed_module('mrp_repair_management'):
                         if ddt_id.id not in mrp_repairs:
                             mrp_repairs[ddt_id.id] = {}
+                        mrp = False
                         mrp_id = self.pool['mrp.repair'].search(
                             self.cr, self.uid, [
                                 ('out_picking_id', '=', picking.id)
