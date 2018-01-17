@@ -110,7 +110,10 @@ class Parser(report_sxw.rml_parse):
                 bank = invoice.partner_id.company_bank_id
             elif invoice.partner_id.bank_ids:
                 bank = invoice.partner_id.bank_ids[0]
-            elif invoice.company_id.bank_ids:
+            elif invoice.company_id.bank_ids and not \
+                    self.pool['ir.config_parameter'].get_param(
+                    self.cr, self.uid, 'report.not.print.default.bank',
+                    default=False):
                 bank = company_banks[0]
         return bank if bank else []
 
