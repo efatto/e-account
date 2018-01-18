@@ -75,7 +75,7 @@ class Parser(report_sxw.rml_parse):
                     if pt_line.type == 'RB':
                         has_bank = True
                         break
-            elif invoice.payment_term.type == 'RB':
+            if invoice.payment_term.type == 'RB':
                 has_bank = True
         if has_bank:
             if invoice.bank_riba_id:

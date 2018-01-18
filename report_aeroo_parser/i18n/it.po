@@ -315,7 +315,7 @@ msgstr "Ns. Rif. DDT %s del %s. %s %s"
 #: code:addons/report_aeroo_parser/models/parser.py:366
 #, python-format
 msgid "Outgo document: %s dated %s.%s"
-msgstr "Documento di reso: %s del %s.%s"
+msgstr "Documento di consegna: %s del %s.%s"
 
 #. module: report_aeroo_parser
 #: field:account.invoice,print_hide_uom:0
@@ -343,7 +343,7 @@ msgid "Print totals in first page"
 msgstr "Stampa Totali in Prima Pagina"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:213
+#: code:addons/report_aeroo_parser/models/parser.py:212
 #, python-format
 msgid "Ref. Our. Order %s dated %s"
 msgstr "Rif. Ns. Ordine %s del %s"
