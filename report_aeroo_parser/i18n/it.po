@@ -243,8 +243,8 @@ msgstr "ora"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
-msgid "Our Ref. Picking %s dated %s. %s"
-msgstr "Ns. Rif. DDT %s del %s. %s"
+msgid "Our Ref. Picking %s dated %s. %s %s"
+msgstr "Ns. Rif. DDT %s del %s. %s %s"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
@@ -290,3 +290,139 @@ msgstr "Stampa Totali in Prima Pagina"
 #: field:account.invoice,print_payment_in_footer:0
 msgid "Print Payment In Footer"
 msgstr "Stampa Pagamenti"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:216
+#, python-format
+msgid "\n"
+"Machine: %s"
+msgstr "\n"
+"Machine: %s"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:367
+#, python-format
+msgid "\n"
+"Outgo document: %s dated %s.%s"
+msgstr "\n"
+"Outgo document: %s dated %s.%s"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:212
+#, python-format
+msgid "\n"
+"Ref. Our. Order %s"
+msgstr "\n"
+"Ref. Our. Order %s"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:369
+#, python-format
+msgid " Date return %s."
+msgstr " Date return %s."
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:214
+#, python-format
+msgid " dated %s"
+msgstr " dated %s"
+
+#. module: report_aeroo_parser
+#: model:ir.model,name:report_aeroo_parser.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: report_aeroo_parser
+#: field:res.company,logo_heigth:0
+msgid "Height of logo (cm)"
+msgstr "Height of logo (cm)"
+
+#. module: report_aeroo_parser
+#: help:res.company,logo_heigth:0
+msgid "Height will be proportioned to max 3 cm"
+msgstr "Height will be proportioned to max 3 cm"
+
+#. module: report_aeroo_parser
+#: model:ir.model,name:report_aeroo_parser.model_account_invoice
+msgid "Invoice"
+msgstr "Fattura"
+
+#. module: report_aeroo_parser
+#: model:ir.model,name:report_aeroo_parser.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Riga fattura"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:229
+#, python-format
+msgid "Our Ref. Order %s dated %s. %s"
+msgstr "Our Ref. Order %s dated %s. %s"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:195
+#, python-format
+msgid "Our Ref. Picking %s dated %s. %s %s"
+msgstr "Our Ref. Picking %s dated %s. %s %s"
+
+#. module: report_aeroo_parser
+#: field:account.invoice,print_hide_uom:0
+msgid "Print hide uom"
+msgstr "Non Stampa U.M."
+
+#. module: report_aeroo_parser
+#: field:account.invoice,print_net_price:0
+msgid "Print net price"
+msgstr "Stampa Prezzi Netti"
+
+#. module: report_aeroo_parser
+#: field:account.invoice,print_payment_in_footer:0
+msgid "Print payment in footer"
+msgstr "Print payment in footer"
+
+#. module: report_aeroo_parser
+#: field:account.invoice,print_shipping_address:0
+msgid "Print shipping address"
+msgstr "Print shipping address"
+
+#. module: report_aeroo_parser
+#: field:account.invoice,print_totals_in_first_page:0
+msgid "Print totals in first page"
+msgstr "Print totals in first page"
+
+#. module: report_aeroo_parser
+#: model:ir.model,name:report_aeroo_parser.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Linea d'ordine di vendita"
+
+#. module: report_aeroo_parser
+#: field:account.invoice,tax_stamp_image:0
+msgid "Tax stamp"
+msgstr "Bollo"
+
+#. module: report_aeroo_parser
+#: field:res.company,logo_width:0
+msgid "Width of logo (cm)"
+msgstr "Width of logo (cm)"
+
+#. module: report_aeroo_parser
+#: help:res.company,logo_width:0
+msgid "Width will be proportioned to max 8 cm"
+msgstr "Width will be proportioned to max 8 cm"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:201
+#, python-format
+msgid "Your Ref. "
+msgstr "Your Ref. "
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:232
+#, python-format
+msgid "Your Ref. %s"
+msgstr "Your Ref. %s"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:203
+#, python-format
+msgid "dated"
+msgstr "dated"

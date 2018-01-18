@@ -5,6 +5,7 @@
 
 import time
 import re
+from openerp import _
 from openerp.report import report_sxw
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
@@ -191,30 +192,33 @@ class Parser(report_sxw.rml_parse):
                 ddt_date = datetime.strptime(
                     ddt_date[:10], DEFAULT_SERVER_DATE_FORMAT)
             description.append(
-                self._translate_text(
-                    'Our Ref. Picking %s dated %s. %s %s') % (
+                _('Our Ref. Picking %s dated %s. %s %s') % (
                     ddt_name,
                     ddt_date.strftime("%d/%m/%Y") if ddt_date else '',
-                    self._translate_text('Your Ref. %s') %
-                    ', '.join(
-                        (' '.join([sale_orders[ddt_id][x]['name'],
-                                   sale_orders[ddt_id][x]['date'],
-                                   sale_orders[ddt_id][x]['ref']])
-                         for x in sale_orders[ddt_id]
-                         )
-                    )
-                    if sale_orders and ddt_id else '',
-                    self._translate_text('%s') %
-                    ' '.join(
-                        ' '.join([
-                            self._translate_text('\nRef. Our. Order ')
-                            + mrp_repairs[ddt_id][x]['name'],
-                            self._translate_text(' dated ')
-                            + mrp_repairs[ddt_id][x]['date'],
-                            self._translate_text('\nMachine: ')
-                            + mrp_repairs[ddt_id][x]['machine']
-                        ]) for x in mrp_repairs[ddt_id]
-                    ) if mrp_repairs and ddt_id else '')
+                    ('%s' %
+                        ', '.join(
+                            (' '.join([
+                                _('Your Ref. '),
+                                sale_orders[ddt_id][x]['name'],
+                                _('dated'),
+                                sale_orders[ddt_id][x]['date'],
+                                sale_orders[ddt_id][x]['ref']])
+                             for x in sale_orders[ddt_id]
+                             )
+                    )) if sale_orders and ddt_id else '',
+                    ('%s' %
+                        ' '.join(
+                            ' '.join([
+                                _('\nRef. Our. Order %s')
+                                % mrp_repairs[ddt_id][x]['name'],
+                                _(' dated %s')
+                                % mrp_repairs[ddt_id][x]['date'],
+                                _('\nMachine: %s')
+                                % mrp_repairs[ddt_id][x]['machine']
+                            ]) for x in mrp_repairs[ddt_id]
+                        )
+                    ) if mrp_repairs and ddt_id else '',
+                )
             )
 
         elif order_name:
@@ -222,11 +226,10 @@ class Parser(report_sxw.rml_parse):
                 order_date = datetime.strptime(
                     order_date[:10], DEFAULT_SERVER_DATE_FORMAT)
             description.append(
-                self._translate_text(
-                    'Our Ref. Order %s dated %s. %s') % (
-                    order_name.replace('Consuntivo', ''),
+                _('Our Ref. Order %s dated %s. %s') % (
+                    order_name,
                     order_date.strftime("%d/%m/%Y") if order_date else '',
-                    self._translate_text('Your Ref. %s') % client_order_ref if
+                    (_('Your Ref. %s') % client_order_ref) if
                     client_order_ref else ''
                 ))
 
@@ -285,7 +288,7 @@ class Parser(report_sxw.rml_parse):
 
 
         for line in invoice_lines:
-            rental_ddt = rental_ddt_date = False
+            rental_ddt = rental_ddt_date = return_pick_date = False
             if line.origin:
                 if picking_preparation_ids:
                     for picking_preparation in picking_preparation_ids:
@@ -316,8 +319,26 @@ class Parser(report_sxw.rml_parse):
                                         0].ddt_number
                                     rental_ddt_date = order_line.order_id.\
                                         ddt_ids[0].date
-                                    # return_picking_id = order_line.order_id.\
-                                    #     picking_ids.filtered()
+                                    pick_type_in = self.pool[
+                                        'ir.model.data'].\
+                                        get_object_reference(
+                                        self.cr, self.uid,
+                                        'stock', 'picking_type_in')
+                                    if pick_type_in:
+                                        pick_type_in_id = pick_type_in \
+                                            and pick_type_in[1] or False
+                                    return_pick_id = [
+                                        x for x in
+                                        order_line.order_id.picking_ids if
+                                        x.picking_type_id.id ==
+                                        pick_type_in_id]
+                                    if return_pick_id:
+                                        return_pick_date = \
+                                            datetime.strptime(
+                                                return_pick_id[0].date_done[
+                                                    :10],
+                                                DEFAULT_SERVER_DATE_FORMAT
+                                            ).strftime("%d/%m/%Y")
 
             # Order lines by date and by ddt, so first create date_ddt key:
             if ddt:
@@ -342,9 +363,12 @@ class Parser(report_sxw.rml_parse):
                 if rental_ddt and rental_ddt_date:
                     date = datetime.strptime(
                         rental_ddt_date, DEFAULT_SERVER_DATE_FORMAT)
-                    description = '\n'.join(
-                        [description, 'Documento di uscita: %s del %s' %(
-                            rental_ddt, date.strftime("%d/%m/%Y"))]
+                    description = ' '.join(
+                        [description, _('\nOutgo document: %s dated %s.%s') %(
+                            rental_ddt, date.strftime("%d/%m/%Y"),
+                            _(' Date return %s.') % return_pick_date if
+                            return_pick_date else ''
+                        )]
                     )
                 invoice[key] = {'description': description, 'lines': [line]}
 
