@@ -419,16 +419,19 @@ class Parser(report_sxw.rml_parse):
         return OrderedDict(
             sorted(order.items(), key=lambda t: t[0])).values()
 
-    def _get_group_tax(self, tax_lines):
+    @staticmethod
+    def _get_group_tax(tax_lines):
         tax_group = {}
         for tax_line in tax_lines:
             if tax_line.name not in tax_group and \
-                    self._is_printable_invoice_line_tax(tax_line):
+                    not(tax_line.tax_code_id.notprintable or
+                        tax_line.base_code_id.notprintable):
                 tax_group[tax_line.name] = {
                     'name': tax_line.name,
                     'base': tax_line.base,
                     'amount': tax_line.amount}
-            elif self._is_printable_invoice_line_tax(tax_line):
+            elif not(tax_line.tax_code_id.notprintable or
+                     tax_line.base_code_id.notprintable):
                 tax_group[tax_line.name]['base'] += tax_line.base
                 tax_group[tax_line.name]['amount'] += tax_line.amount
         return tax_group.values()
@@ -578,11 +581,7 @@ class Parser(report_sxw.rml_parse):
     def _is_printable_invoice_line_tax(tax_line):
         for line in tax_line:
             # check if at least 1 is printable
-            if not (line.tax_code_id.exclude_from_registries or
-                    line.tax_code_id.notprintable or
-                    line.tax_code_id.withholding_type or
-                    line.base_code_id.exclude_from_registries or
-                    line.base_code_id.notprintable or
-                    line.base_code_id.withholding_type):
+            if not (line.tax_code_id.notprintable or
+                    line.base_code_id.notprintable):
                 return True
         return False
