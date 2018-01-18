@@ -243,23 +243,8 @@ msgstr "ora"
 
 #. module: report_aeroo_parser
 #: report:ir.actions.report.xml:account.account_invoices
-msgid "Our Ref. Picking %s dated %s. %s %s"
-msgstr "Ns. Rif. DDT %s del %s. %s %s"
-
-#. module: report_aeroo_parser
-#: report:ir.actions.report.xml:account.account_invoices
-msgid "Our Ref. Order %s dated %s. %s"
-msgstr "Ns. Rif. Ordine %s del %s. %s"
-
-#. module: report_aeroo_parser
-#: report:ir.actions.report.xml:account.account_invoices
 msgid "Your Ref. %s"
 msgstr "Vs. Rif. %s"
-
-#. module: report_aeroo_parser
-#: field:account.invoice,print_net_price:0
-msgid "Print net price"
-msgstr "Stampa Prezzi Netti"
 
 #. module: report_aeroo_parser
 #: view:account.invoice:report_aeroo_parser.invoice_form_pickings
@@ -276,56 +261,12 @@ msgstr "Bollo"
 msgid "Print hide uom"
 msgstr "Non Stampa U.M."
 
+# DA QUI ESTRAZIONE NORMALE
 #. module: report_aeroo_parser
-#: field:account.invoice,print_shipping_address:0
-msgid "Print Shipping Address"
-msgstr "Stampa Indirizzo Consegna"
-
-#. module: report_aeroo_parser
-#: field:account.invoice,print_totals_in_first_page:0
-msgid "Print Totals In First Page"
-msgstr "Stampa Totali in Prima Pagina"
-
-#. module: report_aeroo_parser
-#: field:account.invoice,print_payment_in_footer:0
-msgid "Print Payment In Footer"
-msgstr "Stampa Pagamenti"
-
-#. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:216
-#, python-format
-msgid "\n"
-"Machine: %s"
-msgstr "\n"
-"Macchina: %s"
-
-#. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:367
-#, python-format
-msgid "\n"
-"Outgo document: %s dated %s.%s"
-msgstr "\n"
-"Documento di reso: %s del %s.%s"
-
-#. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:212
-#, python-format
-msgid "\n"
-"Ref. Our. Order %s"
-msgstr "\n"
-"Rif. Ns. Ordine %s"
-
-#. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:369
+#: code:addons/report_aeroo_parser/models/parser.py:368
 #, python-format
 msgid " Date return %s."
 msgstr " Data rientro %s."
-
-#. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:214
-#, python-format
-msgid " dated %s"
-msgstr " del %s"
 
 #. module: report_aeroo_parser
 #: model:ir.model,name:report_aeroo_parser.model_res_company
@@ -335,12 +276,12 @@ msgstr "Aziende"
 #. module: report_aeroo_parser
 #: field:res.company,logo_heigth:0
 msgid "Height of logo (cm)"
-msgstr "Height of logo (cm)"
+msgstr "Altezza del logo (cm)"
 
 #. module: report_aeroo_parser
 #: help:res.company,logo_heigth:0
 msgid "Height will be proportioned to max 3 cm"
-msgstr "Height will be proportioned to max 3 cm"
+msgstr "L'altezza sarà proporzionata a max 3 cm"
 
 #. module: report_aeroo_parser
 #: model:ir.model,name:report_aeroo_parser.model_account_invoice
@@ -353,7 +294,13 @@ msgid "Invoice Line"
 msgstr "Riga fattura"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:229
+#: code:addons/report_aeroo_parser/models/parser.py:215
+#, python-format
+msgid "Machine: %s"
+msgstr "Macchina: %s"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:228
 #, python-format
 msgid "Our Ref. Order %s dated %s. %s"
 msgstr "Ns. Rif. Ordine %s del %s. %s"
@@ -363,6 +310,12 @@ msgstr "Ns. Rif. Ordine %s del %s. %s"
 #, python-format
 msgid "Our Ref. Picking %s dated %s. %s %s"
 msgstr "Ns. Rif. DDT %s del %s. %s %s"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:366
+#, python-format
+msgid "Outgo document: %s dated %s.%s"
+msgstr "Documento di reso: %s del %s.%s"
 
 #. module: report_aeroo_parser
 #: field:account.invoice,print_hide_uom:0
@@ -377,17 +330,23 @@ msgstr "Stampa Prezzi Netti"
 #. module: report_aeroo_parser
 #: field:account.invoice,print_payment_in_footer:0
 msgid "Print payment in footer"
-msgstr "Print payment in footer"
+msgstr "Stampa Pagamenti"
 
 #. module: report_aeroo_parser
 #: field:account.invoice,print_shipping_address:0
 msgid "Print shipping address"
-msgstr "Print shipping address"
+msgstr "Stampa Indirizzo Consegna"
 
 #. module: report_aeroo_parser
 #: field:account.invoice,print_totals_in_first_page:0
 msgid "Print totals in first page"
-msgstr "Print totals in first page"
+msgstr "Stampa Totali in Prima Pagina"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:213
+#, python-format
+msgid "Ref. Our. Order %s dated %s"
+msgstr "Rif. Ns. Ordine %s del %s"
 
 #. module: report_aeroo_parser
 #: model:ir.model,name:report_aeroo_parser.model_sale_order_line
@@ -416,7 +375,7 @@ msgid "Your Ref. "
 msgstr "Vs. Rif. "
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:232
+#: code:addons/report_aeroo_parser/models/parser.py:231
 #, python-format
 msgid "Your Ref. %s"
 msgstr "Vs. Rif. %s"

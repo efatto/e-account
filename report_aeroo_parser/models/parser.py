@@ -208,12 +208,11 @@ class Parser(report_sxw.rml_parse):
                     )) if sale_orders and ddt_id else '',
                     ('%s' %
                         ' '.join(
-                            ' '.join([
-                                _('\nRef. Our. Order %s')
-                                % mrp_repairs[ddt_id][x]['name'],
-                                _(' dated %s')
-                                % mrp_repairs[ddt_id][x]['date'],
-                                _('\nMachine: %s')
+                            '\n'.join([
+                                _('Ref. Our. Order %s dated %s' %
+                                  (mrp_repairs[ddt_id][x]['name'],
+                                   mrp_repairs[ddt_id][x]['date'])),
+                                _('Machine: %s')
                                 % mrp_repairs[ddt_id][x]['machine']
                             ]) for x in mrp_repairs[ddt_id]
                         )
@@ -363,8 +362,8 @@ class Parser(report_sxw.rml_parse):
                 if rental_ddt and rental_ddt_date:
                     date = datetime.strptime(
                         rental_ddt_date, DEFAULT_SERVER_DATE_FORMAT)
-                    description = ' '.join(
-                        [description, _('\nOutgo document: %s dated %s.%s') %(
+                    description = '\n'.join(
+                        [description, _('Outgo document: %s dated %s.%s') %(
                             rental_ddt, date.strftime("%d/%m/%Y"),
                             _(' Date return %s.') % return_pick_date if
                             return_pick_date else ''
