@@ -297,7 +297,7 @@ msgstr "Stampa Pagamenti"
 msgid "\n"
 "Machine: %s"
 msgstr "\n"
-"Machine: %s"
+"Macchina: %s"
 
 #. module: report_aeroo_parser
 #: code:addons/report_aeroo_parser/models/parser.py:367
@@ -305,7 +305,7 @@ msgstr "\n"
 msgid "\n"
 "Outgo document: %s dated %s.%s"
 msgstr "\n"
-"Outgo document: %s dated %s.%s"
+"Documento di reso: %s del %s.%s"
 
 #. module: report_aeroo_parser
 #: code:addons/report_aeroo_parser/models/parser.py:212
@@ -313,19 +313,19 @@ msgstr "\n"
 msgid "\n"
 "Ref. Our. Order %s"
 msgstr "\n"
-"Ref. Our. Order %s"
+"Rif. Ns. Ordine %s"
 
 #. module: report_aeroo_parser
 #: code:addons/report_aeroo_parser/models/parser.py:369
 #, python-format
 msgid " Date return %s."
-msgstr " Date return %s."
+msgstr " Data rientro %s."
 
 #. module: report_aeroo_parser
 #: code:addons/report_aeroo_parser/models/parser.py:214
 #, python-format
 msgid " dated %s"
-msgstr " dated %s"
+msgstr " del %s"
 
 #. module: report_aeroo_parser
 #: model:ir.model,name:report_aeroo_parser.model_res_company
@@ -356,13 +356,13 @@ msgstr "Riga fattura"
 #: code:addons/report_aeroo_parser/models/parser.py:229
 #, python-format
 msgid "Our Ref. Order %s dated %s. %s"
-msgstr "Our Ref. Order %s dated %s. %s"
+msgstr "Ns. Rif. Ordine %s del %s. %s"
 
 #. module: report_aeroo_parser
 #: code:addons/report_aeroo_parser/models/parser.py:195
 #, python-format
 msgid "Our Ref. Picking %s dated %s. %s %s"
-msgstr "Our Ref. Picking %s dated %s. %s %s"
+msgstr "Ns. Rif. DDT %s del %s. %s %s"
 
 #. module: report_aeroo_parser
 #: field:account.invoice,print_hide_uom:0
@@ -413,16 +413,16 @@ msgstr "Width will be proportioned to max 8 cm"
 #: code:addons/report_aeroo_parser/models/parser.py:201
 #, python-format
 msgid "Your Ref. "
-msgstr "Your Ref. "
+msgstr "Vs. Rif. "
 
 #. module: report_aeroo_parser
 #: code:addons/report_aeroo_parser/models/parser.py:232
 #, python-format
 msgid "Your Ref. %s"
-msgstr "Your Ref. %s"
+msgstr "Vs. Rif. %s"
 
 #. module: report_aeroo_parser
 #: code:addons/report_aeroo_parser/models/parser.py:203
 #, python-format
 msgid "dated"
-msgstr "dated"
+msgstr "del"
