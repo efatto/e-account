@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #
-#    Copyright (C) 2017 Sergio Corato
+#    Copyright (C) 2017-2018 Sergio Corato
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -18,16 +18,20 @@
 #
 #
 {
-    'name': 'Partner phone or email required',
+    'name': 'Partner phone, mobile or email required in sale order creation',
     'version': '8.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'Partner phone or email required',
+    'description': 'When creating a partner directly from a sale order, '
+                   'phone, mobile or email are required with this module. '
+                   'Partner cannot be created quickly - e.g. only with name.',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
     ],
     'data': [
+        'views/partner.xml',
+        'views/sale_order.xml',
     ],
     'installable': True
 }
