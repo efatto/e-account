@@ -2,7 +2,7 @@
 See __openerp__.py file for Copyright and Licence Informations.
 *******************************************************************************/
 
-openerp.web_widget_float_formula = function (instance) {
+openerp.web_widget_number = function (instance) {
 
     instance.web.FormView = instance.web.FormView.extend({
         /***********************************************************************
