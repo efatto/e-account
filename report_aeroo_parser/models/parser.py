@@ -606,7 +606,9 @@ class Parser(report_sxw.rml_parse):
     def _get_product_code(self, line, pack=False):
         code = ''
         if line.product_id and line.product_id.code:
-            code = line.product_id.code.replace('XXXX', '')
+            template_code = line.product_id.product_tmpl_id.prefix_code
+            code = line.product_id.code.replace('XXXX', '').replace(
+                template_code, '')
             for attr_value in line.product_id.attribute_value_ids:
                 if attr_value.attribute_id.code_in_report:
                     code_in_report = attr_value.attribute_id.code_in_report
@@ -619,7 +621,7 @@ class Parser(report_sxw.rml_parse):
         #check if product_tmpl_id is possible
         # elif line.product_tmpl_id and line.product_tmpl_id.prefix_code:
         #     code = line.product_tmpl_id.prefix_code.replace('XXXX','')
-        return code
+        return '\n'.join([template_code, code])
 
     @staticmethod
     def _is_printable_invoice_line_tax(tax_line):
