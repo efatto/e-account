@@ -2,16 +2,28 @@
 <openerp>
     <data>
 
-        <record id="invoice_form_pickings" model="ir.ui.view">
+        <record id="invoice_form_ddts" model="ir.ui.view">
+            <field name="name">account.invoice.form.ddts</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="l10n_it_ddt.invoice_form_view_ddt"/>
             <field name="arch" type="xml">
                 <group string="Shipping Informations" position="after">
-                    <group string="Pickings" groups="stock.group_stock_user">
+                    <group string="DDTs" groups="stock.group_stock_user">
                         <field name="stock_picking_package_preparation_ids" nolabel="1"/>
                     </group>
                 </group>
             </field>
         </record>
+        <record id="invoice_tree_ddts" model="ir.ui.view">
+            <field name="name">account.invoice.tree.ddts</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="before">
+                    <field name="stock_picking_package_preparation_ids" widget="one2many_tags"/>
+                </field>
+            </field>
+        </record>
+
     </data>
 </openerp>
