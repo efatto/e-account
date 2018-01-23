@@ -96,7 +96,7 @@ class AccountVatPeriodEndStatement(orm.Model):
             tax_code_pool = self.pool.get('account.tax.code')
             debit_tax_code_ids = tax_code_pool.search(cr, uid, [
                 ('vat_statement_account_id', '!=', False),
-                # ('exclude_from_registries', '!=', True),
+                ('exclude_from_registries', '!=', True),
                 ('vat_statement_type', '=', 'debit'),
             ], context=context)
             for debit_tax_code_id in debit_tax_code_ids:
@@ -138,7 +138,7 @@ class AccountVatPeriodEndStatement(orm.Model):
 
             credit_tax_code_ids = tax_code_pool.search(cr, uid, [
                 ('vat_statement_account_id', '!=', False),
-                # ('exclude_from_registries', '!=', True),
+                ('exclude_from_registries', '!=', True),
                 ('vat_statement_type', '=', 'credit'),
             ], context=context)
             for credit_tax_code_id in credit_tax_code_ids:
