@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="view_account_invoice_filter_default_not_cancelled" model="ir.ui.view">
+        <field name="name">account.invoice.select</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <filter name="unpaid" position="after">
+                <filter name="uncancelled" string="Uncancelled" domain="[('state','!=','cancel')]" help="Uncancelled Invoices"/>
+            </filter>
+        </field>
+    </record>
+
+  <record id="account.action_invoice_tree1" model="ir.actions.act_window">
+      <field name="context">{
+          'search_default_uncancelled':1,
+          'default_type':'out_invoice', 'type':'out_invoice', 'journal_type': 'sale'}</field>
+  </record>
+  </data>
+</openerp>
