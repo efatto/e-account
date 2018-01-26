@@ -18,11 +18,11 @@
 #
 #
 {
-    'name': 'compatibility date on sale order and commission',
+    'name': 'Compatibility date on sale order and commission',
     'version': '8.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'This modul.',
+    'description': 'This module .',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
