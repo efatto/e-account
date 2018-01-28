@@ -35,7 +35,7 @@ msgstr "La fattura ha le righe %s con imposte non ammesse dal sezionale"
 #. module: account_journal_tax_control
 #: model:ir.model,name:account_journal_tax_control.model_account_journal
 msgid "Journal"
-msgstr "Sezionale"
+msgstr "Giornale"
 
 #. module: account_journal_tax_control
 #: view:account.journal:account_journal_tax_control.view_account_journal_form_tax_control
