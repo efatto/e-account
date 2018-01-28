@@ -44,5 +44,5 @@ msgstr "Ignora controllo data fatturazione"
 #. module: account_invoice_period_invoicing
 #: model:ir.model,name:account_invoice_period_invoicing.model_account_journal
 msgid "Journal"
-msgstr "Sezionale"
+msgstr "Giornale"
 
