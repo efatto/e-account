@@ -65,57 +65,65 @@ class Parser(report_sxw.rml_parse):
                 invoice_address = address
         return invoice_address
 
-    def _get_bank_riba(self):
-        invoice = self.pool['account.invoice'].browse(
+    def _get_bank_riba(self, model=False):
+        if not model:
+            model = 'account.invoice'
+        obj = self.pool[model].browse(
             self.cr, self.uid, self.ids[0])
         has_bank = bank = False
-        if invoice.payment_term:
-            if invoice.payment_term.line_ids:
-                for pt_line in invoice.payment_term.line_ids:
+        if obj.payment_term:
+            if obj.payment_term.line_ids:
+                for pt_line in obj.payment_term.line_ids:
                     if pt_line.type == 'RB':
                         has_bank = True
                         break
-            if invoice.payment_term.type == 'RB':
+            if obj.payment_term.type == 'RB':
                 has_bank = True
         if has_bank:
-            if invoice.bank_riba_id:
-                bank = invoice.bank_riba_id
-            elif invoice.partner_id.bank_riba_id:
-                bank = invoice.partner_id.bank_riba_id
+            if model == 'account.invoice':
+                if obj.bank_riba_id:
+                    bank = obj.bank_riba_id
+            if not bank:
+                if obj.partner_id.bank_riba_id:
+                    bank = obj.partner_id.bank_riba_id
         return bank if bank else []
 
-    def _get_bank(self):
-        invoice = self.pool['account.invoice'].browse(
+    def _get_bank(self, model=False):
+        if not model:
+            model = 'account.invoice'
+        obj = self.pool[model].browse(
             self.cr, self.uid, self.ids[0])
         company_bank_ids = self.pool['res.partner.bank'].search(
             self.cr, self.uid,
-            [('company_id', '=', invoice.company_id.id)],
+            [('company_id', '=', obj.company_id.id)],
             order='sequence', limit=1)
         if company_bank_ids:
             company_banks = self.pool['res.partner.bank'].browse(
                 self.cr, self.uid, company_bank_ids)
         has_bank = bank = False
-        if invoice.payment_term:
-            if invoice.payment_term.line_ids:
-                for pt_line in invoice.payment_term.line_ids:
+        if obj.payment_term:
+            if obj.payment_term.line_ids:
+                for pt_line in obj.payment_term.line_ids:
                     if pt_line.type != 'RB' or not pt_line.type:
                         has_bank = True
                         break
-            elif invoice.payment_term.type != 'RB' \
-                    or not invoice.payment_term.type:
+            elif obj.payment_term.type != 'RB' \
+                    or not obj.payment_term.type:
                 has_bank = True
-        if has_bank or not invoice.payment_term:
-            if invoice.partner_bank_id:
-                bank = invoice.partner_bank_id
-            elif invoice.partner_id.company_bank_id:
-                bank = invoice.partner_id.company_bank_id
-            elif invoice.partner_id.bank_ids:
-                bank = invoice.partner_id.bank_ids[0]
-            elif invoice.company_id.bank_ids and not \
-                    self.pool['ir.config_parameter'].get_param(
-                    self.cr, self.uid, 'report.not.print.default.bank',
-                    default=False):
-                bank = company_banks[0]
+        if has_bank or not obj.payment_term:
+            if model == 'account.invoice':
+                if obj.partner_bank_id:
+                    bank = obj.partner_bank_id
+            if not bank:
+                if obj.partner_id.company_bank_id:
+                    bank = obj.partner_id.company_bank_id
+                elif obj.partner_id.bank_ids:
+                    bank = obj.partner_id.bank_ids[0]
+                elif obj.company_id.bank_ids and not \
+                        self.pool['ir.config_parameter'].get_param(
+                        self.cr, self.uid, 'report.not.print.default.bank',
+                        default=False):
+                    bank = company_banks[0]
         return bank if bank else []
 
     def _get_total_tax_fiscal(self, tax_line):
