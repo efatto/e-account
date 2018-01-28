@@ -56,18 +56,15 @@ class Parser(report_sxw.rml_parse):
         })
         self.cache = {}
 
-    def _get_invoice_address(self):
-        invoice = self.pool['account.invoice'].browse(self.cr, self.uid,
-                                                      self.ids[0])
-        invoice_address = invoice.partner_id
-        for address in invoice.partner_id.child_ids:
+    def _get_invoice_address(self, model='account.invoice'):
+        obj = self.pool[model].browse(self.cr, self.uid, self.ids[0])
+        invoice_address = obj.partner_id
+        for address in obj.partner_id.child_ids:
             if address.type == 'invoice':
                 invoice_address = address
         return invoice_address
 
-    def _get_bank_riba(self, model=False):
-        if not model:
-            model = 'account.invoice'
+    def _get_bank_riba(self, model='account.invoice'):
         obj = self.pool[model].browse(
             self.cr, self.uid, self.ids[0])
         has_bank = bank = False
@@ -88,9 +85,7 @@ class Parser(report_sxw.rml_parse):
                     bank = obj.partner_id.bank_riba_id
         return bank if bank else []
 
-    def _get_bank(self, model=False):
-        if not model:
-            model = 'account.invoice'
+    def _get_bank(self, model='account.invoice'):
         obj = self.pool[model].browse(
             self.cr, self.uid, self.ids[0])
         company_bank_ids = self.pool['res.partner.bank'].search(
