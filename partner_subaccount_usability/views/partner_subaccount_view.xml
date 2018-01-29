@@ -2,6 +2,15 @@
 <openerp>
     <data>
 
+        <record id="view_partner_form_fiscalcode_data_inh" model="ir.ui.view">
+            <field name="name">res.partner.fiscalcode.data.inh</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="l10n_it_fiscalcode.view_partner_form_fiscalcode_data"/>
+            <field name="arch" type="xml">
+                <field name="individual" position="replace" />
+            </field>
+        </record>
+
         <record id="partner_subaccount.view_partner_inherit_view_subaccount" model="ir.ui.view">
 			<field name="name">view.partner.form.inherit.subaccount</field>
 			<field name="model">res.partner</field>
@@ -22,6 +31,7 @@
                             <field name="property_supplier_ref" attrs="{'readonly':[('block_ref_supplier','=',True),('supplier','=',False)]}"/>
                             <field name="block_ref_customer" invisible="True"/>
                             <field name="block_ref_supplier" invisible="True"/>
+                            <field name="individual"/>
                         </group>
                     </field>
                     <field name="property_account_payable" position="replace">

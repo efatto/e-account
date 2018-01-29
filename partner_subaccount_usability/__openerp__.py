@@ -26,6 +26,7 @@
     "author": "Sergio Corato",
     'description': 'Move customer and supplier ref in header.',
     'depends': [
+        'l10n_it_fiscalcode',
         'partner_subaccount',
     ],
     'data': [
