@@ -608,6 +608,7 @@ class Parser(report_sxw.rml_parse):
 
     def _get_product_code(self, line, pack=False):
         code = ''
+        template_code = ''
         if line.product_id and line.product_id.code:
             template_code = line.product_id.product_tmpl_id.prefix_code
             code = line.product_id.code.replace('XXXX', '').replace(
