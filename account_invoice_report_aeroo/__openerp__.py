@@ -28,6 +28,7 @@
     'depends': [
         'account',
         'report_aeroo_parser',
+        'account_invoice_sppp',
     ],
     'data': [
         'data/reports.xml',
