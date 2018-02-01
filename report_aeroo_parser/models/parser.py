@@ -347,7 +347,8 @@ class Parser(report_sxw.rml_parse):
                                         order_line.order_id.picking_ids if
                                         x.picking_type_id.id ==
                                         pick_type_in_id]
-                                    if return_pick_id:
+                                    if return_pick_id and \
+                                            return_pick_id[0].date_done:
                                         return_pick_date = \
                                             datetime.strptime(
                                                 return_pick_id[0].date_done[
