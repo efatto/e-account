@@ -22,6 +22,7 @@ class AccountInvoice(models.Model):
                     ('partner_id', '=', invoice.partner_id.id),
                     ('company_id', '=', invoice.company_id.id),
                     ('id', '!=', invoice.id),
+                    ('state', 'not in', ['cancel', 'draft']),
                 ])
                 if supplier_invoice_ids:
                     raise exceptions.Warning(
