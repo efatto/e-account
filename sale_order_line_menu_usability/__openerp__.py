@@ -18,7 +18,7 @@
 #
 #
 {
-    'name': 'Account invoice menu usability',
+    'name': 'Sale order line menu usability',
     'version': '8.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
