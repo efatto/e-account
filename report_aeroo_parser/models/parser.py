@@ -33,6 +33,7 @@ class Parser(report_sxw.rml_parse):
             'desc_nocode': self._desc_nocode,
             'total_fiscal': self._get_total_fiscal,
             'total_tax_fiscal': self._get_total_tax_fiscal,
+            'get_initial_residual': self._get_initial_residual,
             'address_invoice_id': self._get_invoice_address,
             'variant_images': self._variant_images,
             'sale_weight': self._sale_weight,
@@ -139,6 +140,16 @@ class Parser(report_sxw.rml_parse):
                 amount_withholding += line.tax_amount
         if amount_withholding != 0.0:
             return invoice.amount_total - amount_withholding
+        return invoice.amount_total
+
+    def _get_initial_residual(self, tax_line):
+        invoice = self.pool['account.invoice'].browse(self.cr, self.uid, self.ids[0])
+        amount_excluded = 0.0
+        for line in tax_line:
+            if line.tax_code_id.exclude_from_registries:
+                amount_excluded += line.tax_amount
+        if amount_excluded != 0.0:
+            return invoice.amount_total + amount_excluded
         return invoice.amount_total
 
     def _desc_nocode(self, string):
