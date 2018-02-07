@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record id="invoice_form_update_agents" model="ir.ui.view">
+        <field name="name">account.invoice.form.agents.update</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <field name="account_id" position="after">
+                <group col="3" colspan="2">
+                    <field name="agents" widget="many2many_tags"/>
+                    <group>
+                    <button string="Update agents" name="invoice_update_agents" type="object" icon="gtk-ok"
+                    help='Add agents to all invoice line. Agents are only added, cannot be removed from this function.'/>
+                    </group>
+                </group>
+            </field>
+        </field>
+    </record>
+
+</data>
+</openerp>
