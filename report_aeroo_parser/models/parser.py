@@ -329,7 +329,8 @@ class Parser(report_sxw.rml_parse):
                         if self._check_installed_module('sale_rental_machine'):
                             # add sale rental data if exists
                             for order_line in sale_order_obj.order_line:
-                                if order_line.rental_type:
+                                if order_line.rental_type and \
+                                        order_line.order_id.ddt_ids:
                                     rental_ddt = order_line.order_id.ddt_ids[
                                         0].ddt_number
                                     rental_ddt_date = order_line.order_id.\
