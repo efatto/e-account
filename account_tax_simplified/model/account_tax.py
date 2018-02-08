@@ -16,6 +16,7 @@ class AccountTax(models.Model):
 
     @api.model
     def create(self, vals):
+        vat_account = False
         tax_code_obj = self.env['account.tax.code']
         company_id = self.env.user.company_id.id
         if vals.get('company_id', False):
@@ -66,8 +67,21 @@ class AccountTax(models.Model):
                         base_tax_code_vals['name'] += str(i)
                     break
             base_code = tax_code_obj.create(base_tax_code_vals)
+            vat_account = base_code.vat_statement_account_id if \
+                base_code.vat_statement_account_id else \
+                base_code.parent_id.vat_statement_account_id if \
+                base_code.parent_id and base_code.parent_id. \
+                vat_statement_account_id else False
             vals.update({'base_code_id': base_code.id,
                          'ref_base_code_id': base_code.id})
+        if not vals.get('account_tax_code_id', False) and not \
+                vals.get('tax_code_id', False) and vat_account:
+            # is a tax without amount - exempt or similar
+            vals.update({'account_collected_id': vat_account.id if
+                         vat_account else False,
+                         'account_paid_id': vat_account.id if
+                         vat_account else False,
+                         })
 
         if not vals.get('tax_code_id', False) and vals.get(
                 'account_tax_code_id', False):
@@ -97,8 +111,18 @@ class AccountTax(models.Model):
                         tax_code_vals['name'] += str(i)
                     break
             tax_code = tax_code_obj.create(tax_code_vals)
+            vat_account = tax_code.vat_statement_account_id if \
+                tax_code.vat_statement_account_id else \
+                tax_code.parent_id.vat_statement_account_id if \
+                    tax_code.parent_id and tax_code.parent_id. \
+                        vat_statement_account_id else False
             vals.update({'tax_code_id': tax_code.id,
-                         'ref_tax_code_id': tax_code.id})
+                         'ref_tax_code_id': tax_code.id,
+                         'account_collected_id': vat_account.id if
+                         vat_account else False,
+                         'account_paid_id': vat_account.id if
+                         vat_account else False,
+                         })
 
         return super(AccountTax, self).create(vals)
 
@@ -107,6 +131,7 @@ class AccountTax(models.Model):
         tax_code_obj = self.env['account.tax.code']
         company_id = self.company_id.id
         tax = self[0]
+        vat_account = False
         if vals.get('name', False):
             if self.search([('name', '=', vals['name']),
                             ('company_id', '=', company_id)]):
@@ -126,13 +151,13 @@ class AccountTax(models.Model):
               tax.type_tax_use) == 'purchase':
             vals.update({'base_sign': -1, 'tax_sign': -1,
                          'ref_base_sign': 1, 'ref_tax_sign': 1})
-        if tax.base_code_id or tax.tax_code_id:
-            return super(AccountTax, self).write(vals)
+
         if not tax.base_code_id:
             if not vals.get('account_base_tax_code_id', False) and \
                     not tax.account_base_tax_code_id:
                 raise Warning(_("Base Tax Code parent must be set."))
             elif not vals.get('base_code_id', False):
+                # missing base tax, so create it
                 parent_base_tax_code = tax.account_base_tax_code_id or \
                     tax_code_obj.browse(vals['account_base_tax_code_id'])
                 base_tax_code_vals = {
@@ -158,14 +183,26 @@ class AccountTax(models.Model):
                                 'type_tax_use')) == 'purchase' and -1,
                 }
                 base_code = tax_code_obj.create(base_tax_code_vals)
+                vat_account = base_code.vat_statement_account_id if \
+                    base_code.vat_statement_account_id else \
+                    base_code.parent_id.vat_statement_account_id if \
+                    base_code.parent_id and base_code.parent_id. \
+                    vat_statement_account_id else False
                 vals.update({'base_code_id': base_code.id,
                              'ref_base_code_id': base_code.id})
 
         if not tax.tax_code_id:
             if not vals.get('account_tax_code_id', False) and \
                     not tax.account_tax_code_id:
-                raise Warning(_("Tax Code parent must be set."))
+                if vat_account:
+                    # is a tax without amount - exempt or similar
+                    vals.update({'account_collected_id': vat_account.id if
+                                 vat_account else False,
+                                 'account_paid_id': vat_account.id if
+                                 vat_account else False,
+                                 })
             elif not vals.get('tax_code_id', False):
+                # missing tax, so create it
                 parent_tax_code = tax.account_tax_code_id or \
                     tax_code_obj.browse(vals['account_tax_code_id'])
                 tax_code_vals = {
@@ -174,7 +211,7 @@ class AccountTax(models.Model):
                         tax.description if tax.description else
                         vals.get('description')),
                     'parent_id': tax.account_tax_code_id.id if
-                    tax.account_base_tax_code_id else
+                    tax.account_tax_code_id else
                     vals.get('account_tax_code_id'),
                     'is_base': False,
                     'company_id': company_id,
@@ -191,8 +228,18 @@ class AccountTax(models.Model):
                                     'type_tax_use')) == 'purchase' and -1,
                 }
                 tax_code = tax_code_obj.create(tax_code_vals)
+                vat_account = tax_code.vat_statement_account_id if \
+                    tax_code.vat_statement_account_id else \
+                    tax_code.parent_id.vat_statement_account_id if \
+                    tax_code.parent_id and tax_code.parent_id.\
+                    vat_statement_account_id else False
                 vals.update({'tax_code_id': tax_code.id,
-                             'ref_tax_code_id': tax_code.id})
+                             'ref_tax_code_id': tax_code.id,
+                             'account_collected_id': vat_account.id if
+                             vat_account else False,
+                             'account_paid_id': vat_account.id if
+                             vat_account else False,
+                             })
 
         return super(AccountTax, self).write(vals)
 
@@ -208,12 +255,6 @@ class AccountTax(models.Model):
             elif type_tax_use == "all":
                 return {'value': {'base_sign': 1, 'tax_sign': 1,
                                   'ref_base_sign': 1, 'ref_tax_sign': 1}}
-
-    @api.onchange('account_tax_code_id')
-    def onchange_account_tax_code_id(self):
-        if self.account_tax_code_id.vat_statement_account_id:
-            self.account_collected_id = self.account_paid_id = \
-                self.account_tax_code_id.vat_statement_account_id
 
     account_tax_code_id = fields.Many2one(
         'account.tax.code', string='Tax Code Parent',
