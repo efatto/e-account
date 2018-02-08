@@ -224,10 +224,10 @@ class Parser(report_sxw.rml_parse):
                     ('%s' %
                         ' '.join(
                             '\n'.join([
-                                _('Ref. Our. Order %s dated %s' %
+                                (_('Rif. Ns. Ordine %s del %s') %
                                   (mrp_repairs[ddt_id][x]['name'],
                                    mrp_repairs[ddt_id][x]['date'])),
-                                _('Machine: %s')
+                                _('Macchina: %s')
                                 % mrp_repairs[ddt_id][x]['machine']
                             ]) for x in mrp_repairs[ddt_id]
                         )
@@ -250,9 +250,9 @@ class Parser(report_sxw.rml_parse):
                     ('%s' %
                      ' '.join(
                          '\n'.join([
-                             _(' dated %s') %
+                             _(' del %s') %
                              mrp_repairs_onsite[order_name][x]['date'],
-                             _('Machine: %s')
+                             _('Macchina: %s')
                              % mrp_repairs_onsite[order_name][x]['machine']
                          ]) for x in mrp_repairs_onsite[order_name]
                      )
@@ -306,15 +306,10 @@ class Parser(report_sxw.rml_parse):
                                     DEFAULT_SERVER_DATE_FORMAT
                                 ).strftime("%d/%m/%Y"),
                                 'machine': mrp.machine_id.name,
-                                # 'return': mrp.out_sppp_id.name,
-                                # 'return_date': datetime.strptime(
-                                #     mrp.out_sppp_id.date[:10],
-                                #     DEFAULT_SERVER_DATE_FORMAT
-                                # ).strftime("%d/%m/%Y"),
                             }
 
         for line in invoice_lines:
-            rental_ddt = rental_ddt_date = return_pick_date = False
+            rental_ddt = rental_ddt_date = return_pick_date = ddt = False
             if line.origin:
                 if picking_preparation_ids:
                     for picking_preparation in picking_preparation_ids:
@@ -324,7 +319,7 @@ class Parser(report_sxw.rml_parse):
                                 ddt_id = picking_preparation.id
                                 ddt = picking_preparation.ddt_number
                                 ddt_date = picking_preparation.date
-                else:
+                if not ddt:
                     sale_order = line.origin
                     sale_order_id = self.pool['sale.order'].search(
                         self.cr, self.uid, [
