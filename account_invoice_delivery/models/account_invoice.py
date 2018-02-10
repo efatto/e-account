@@ -13,17 +13,19 @@ class AccountInvoice(models.Model):
         string="Delivery Method",
         help="Complete this field to add delivery cost to invoice.")
 
-    @api.multi
+    @api.cr_uid_ids_context
     def onchange_partner_id(
-            self, type, partner_id, date_invoice=False, payment_term=False,
-            partner_bank_id=False, company_id=False):
+        self, cr, uid, ids, type, partner_id, date_invoice=False,
+        payment_term=False, partner_bank_id=False, company_id=False,
+        context=None):
+        if context is None:
+            context = {}
         res = super(AccountInvoice, self).onchange_partner_id(
-            type, partner_id, date_invoice=date_invoice,
-            payment_term=payment_term, partner_bank_id=partner_bank_id,
-            company_id=company_id)
+            cr, uid, ids, type, partner_id, date_invoice, payment_term,
+            partner_bank_id, company_id, context)
         if partner_id:
-            dtype = self.env['res.partner'].browse(
-                partner_id).property_delivery_carrier.id
+            dtype = self.pool['res.partner'].browse(
+                cr, uid, partner_id, context).property_delivery_carrier.id
             # TDE NOTE: not sure the aded 'if dtype' is valid
             if dtype:
                 res['value']['carrier_id'] = dtype
