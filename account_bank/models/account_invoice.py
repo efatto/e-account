@@ -28,12 +28,12 @@ class account_invoice(orm.Model):
     }
 
     def onchange_partner_id(
-            self, cr, uid, ids, i_type, partner_id, date_invoice=False,
-            payment_term=False, bank_riba_id=False, company_id=False,
+            self, cr, uid, ids, type, partner_id, date_invoice=False,
+            payment_term=False, partner_bank_id=False, company_id=False,
             context=None):
         result = super(account_invoice, self).onchange_partner_id(
-            cr, uid, ids, i_type, partner_id, date_invoice, payment_term,
-            bank_riba_id, company_id)
+            cr, uid, ids, type, partner_id, date_invoice, payment_term,
+            partner_bank_id, company_id, context)
 
         partner = self.pool['res.partner'].browse(
             cr, uid, partner_id, context)
