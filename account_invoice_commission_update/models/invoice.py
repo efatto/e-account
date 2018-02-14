@@ -30,4 +30,5 @@ class AccountInvoice(models.Model):
                         'account.invoice.line.agent'] \
                         .new(vals).display_name
                     agents.append(vals)
+                line.agents.unlink()
                 line.agents = [(0, 0, x) for x in agents]
