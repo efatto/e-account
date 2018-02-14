@@ -17,5 +17,21 @@
                 </xpath>
             </field>
         </record>
+        <record id="view_invoice_supplier_form_dueamount_lines" model="ir.ui.view">
+            <field name="name">account.invoice.form.dueamount_lines</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@string='Payments']/field[@name='payment_ids']" position="before">
+                    <button name="dueamount_set" string="Compute payments" type="object" states="draft"/>
+                    <field name="dueamount_line" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                        <tree string="Due amounts" editable="bottom">
+                            <field name="date"/>
+                            <field name="amount" sum="Total amount"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
   </data>
 </openerp>
