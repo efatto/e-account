@@ -227,8 +227,9 @@ class Parser(report_sxw.rml_parse):
                                 (_('Rif. Ns. Ordine %s del %s') %
                                   (mrp_repairs[ddt_id][x]['name'],
                                    mrp_repairs[ddt_id][x]['date'])),
-                                _('Macchina: %s')
-                                % mrp_repairs[ddt_id][x]['machine']
+                                _('Macchina: %s telaio %s')
+                                % (mrp_repairs[ddt_id][x]['machine'],
+                                   mrp_repairs[ddt_id][x]['frame'])
                             ]) for x in mrp_repairs[ddt_id]
                         )
                     ) if mrp_repairs and ddt_id else '',
@@ -252,8 +253,9 @@ class Parser(report_sxw.rml_parse):
                          '\n'.join([
                              _(' del %s') %
                              mrp_repairs_onsite[order_name][x]['date'],
-                             _('Macchina: %s')
-                             % mrp_repairs_onsite[order_name][x]['machine']
+                             _('Macchina: %s telaio %s')
+                             % (mrp_repairs_onsite[order_name][x]['machine'],
+                                mrp_repairs_onsite[order_name][x]['frame'])
                          ]) for x in mrp_repairs_onsite[order_name]
                      )
                      ) if mrp_repairs_onsite else '',
@@ -306,6 +308,8 @@ class Parser(report_sxw.rml_parse):
                                     DEFAULT_SERVER_DATE_FORMAT
                                 ).strftime("%d/%m/%Y"),
                                 'machine': mrp.machine_id.name,
+                                'frame': mrp.machine_id.frame if
+                                mrp.machine_id.frame else 'n.d.',
                             }
 
         for line in invoice_lines:
@@ -387,11 +391,8 @@ class Parser(report_sxw.rml_parse):
                                     DEFAULT_SERVER_DATE_FORMAT
                                 ).strftime("%d/%m/%Y"),
                                 'machine': mrp_onsite.machine_id.name,
-                                # 'return': mrp.out_sppp_id.name,
-                                # 'return_date': datetime.strptime(
-                                #     mrp.out_sppp_id.date[:10],
-                                #     DEFAULT_SERVER_DATE_FORMAT
-                                # ).strftime("%d/%m/%Y"),
+                                'frame': mrp_onsite.machine_id.frame if
+                                mrp_onsite.machine_id.frame else 'n.d.',
                             }
             # Order lines by date and by ddt, so first create date_ddt key:
             if ddt:
