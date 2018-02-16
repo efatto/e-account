@@ -20,7 +20,8 @@
             <field name="inherit_id" ref="account.invoice_tree"/>
             <field name="arch" type="xml">
                 <field name="origin" position="before">
-                    <field name="stock_picking_package_preparation_ids" widget="one2many_tags"/>
+                    <field name="stock_picking_package_preparation_ids" widget="one2many_tags"
+                           invisible="context.get('type') not in ['out_invoice', 'out_refund']"/>
                 </field>
             </field>
         </record>
