@@ -98,6 +98,10 @@ class InvoiceStatement(models.Model):
                 if not partner_id.vat and not partner_id.fiscalcode:
                     errors.append(
                         'Missing partner vat or fiscalcode')
+                if partner_id.individual and not (partner_id.first_name or
+                                                  partner_id.last_name):
+                    errors.append(
+                        'Missing individual first_name or last_name')
                 if errors:
                     row += 1
                     ws.write(row, 0, partner_id.name)
@@ -143,7 +147,7 @@ class InvoiceStatement(models.Model):
                                         ws.write(row, 1, partner_id.id)
                                         ws.write(row, 3, invoice.number)
                                         ws.write(row, 4, 'Tax %s without kind'
-                                                 % tax_id.code)
+                                                 % tax_id.description)
                             else:
                                 if invoice_tax.base_code_id and not \
                                         invoice_tax.base_code_id. \
