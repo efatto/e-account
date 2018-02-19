@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <template id="due_list_layout">
+        <t t-set="company" t-value="res_company" />
+        <t t-call="report.external_layout_header" />
+        <t t-raw="0" />
+    </template>
+
+    <template id="account_due_list_report_qweb.duelist_qweb">
+
+        <style type="text/css">
+            p {
+                font-size: 11px;
+                margin-bottom: 0px;
+                }
+            .doc_data {
+                font-size: 11px;
+                font-weight: bold;
+                text-align: right;
+                }
+            .due_list_title {
+                font-size: 15px;
+                font-weight: bold;
+                }
+            .with_bord {
+                border:1px solid #ddd;
+                padding-bottom:3px;
+                margin-bottom:5px;
+                }
+            .signature { min-height: 2em; }
+            address { font-size: 11px; }
+        </style>
+
+        <t t-call="report.html_container">
+
+            <t t-call="account_due_list_report_qweb.due_list_layout">
+                <div class="page">
+
+                    <div id="due_list_title" class="row with_bord" style="padding: 2px;">
+                        <p class="due_list_title">
+                            DUE LIST
+                        </p>
+                    </div>
+                    <t t-as="maturity_date" t-foreach="get_group">
+                    <div class="row">
+                        <table id="duelist_details" class="table table-bordered table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <p>Partner</p>
+                                    </th>
+                                    <th>
+                                        <p>Due Date</p>
+                                    </th>
+                                    <th>
+                                        <p>Invoice</p>
+                                    </th>
+                                    <th>
+                                        <p>Payment</p>
+                                    </th>
+                                    <th>
+                                        <p>Debit</p>
+                                    </th>
+                                    <th>
+                                        <p>Credit</p>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="tot_amount" t-value="0" />
+                                <t t-set="tot_debit" t-value="0" />
+                                <t t-set="tot_credit" t-value="0" />
+                                <t t-set="nr" t-value="0"/>
+                                <tr t-foreach="get_group[maturity_date]" t-as="line">
+                                    <td>
+                                        <p><span t-field="line.partner_id.name" /></p>
+                                    </td>
+                                    <td>
+                                        <p><span t-field="line.date_maturity" /></p>
+                                    </td>
+                                    <td>
+                                        <p><span t-field="line.invoice.supplier_invoice_number" /></p>
+                                    </td>
+                                    <td>
+                                        <p><span t-field="line.invoice.payment_term" /></p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p><span t-field="line.debit"/></p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p><span t-field="line.credit"/></p>
+                                    </td>
+                                    <t t-set="tot_amount" t-value="tot_amount + line.debit - line.credit" />
+                                    <t t-set="tot_debit" t-value="tot_debit + line.debit" />
+                                    <t t-set="tot_credit" t-value="tot_credit + line.credit" />
+                                </tr>
+                                <tr>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td><p>Total</p></td>
+                                    <td class="text-right">
+                                        <p><span t-esc="tot_debit" />
+                                        </p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p><span t-esc="tot_credit" />
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    </t>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+    </data>
+</openerp>
