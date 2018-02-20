@@ -17,12 +17,16 @@ class AccountInvoice(models.Model):
             if invoice.type in ('out_invoice', 'out_refund') and not \
                     invoice.journal_id.invoicing_period_excluded:
                 registration_fy_id = self.env['account.fiscalyear'].find(
-                    dt=self.date_invoice)
+                    dt=invoice.date_invoice)
                 last_open_period = self.env['account.period'].search([
                     ('invoicing_closed', '=', False),
                     ('special', '=', False),
                     ('fiscalyear_id', '=', registration_fy_id)
                 ], order='date_stop asc', limit=1)
+                if not last_open_period:
+                    raise exceptions.ValidationError(
+                        _('Cannot create invoice! No available period found '
+                          'in fiscal year: %s' % registration_fy_id.code))
                 if invoice.date_invoice > last_open_period.date_stop:
                     raise exceptions.ValidationError(
                         _('Cannot create invoice! The current period of '
