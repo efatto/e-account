@@ -38,4 +38,6 @@ class DueListReportQweb(models.AbstractModel):
                 res.update({date_maturity: [line]})
             else:
                 res[date_maturity] = res[date_maturity] + [line]
-        return res
+        dates = sorted([datetime.strptime(ts, "%d/%m/%Y") for ts in res])
+        dates_sorted = [datetime.strftime(ts, "%d/%m/%Y") for ts in dates]
+        return res, dates_sorted

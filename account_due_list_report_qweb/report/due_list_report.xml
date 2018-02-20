@@ -43,10 +43,15 @@
                             DUE LIST
                         </p>
                     </div>
-                    <t t-as="maturity_date" t-foreach="get_group">
+                    <t t-as="maturity_date" t-foreach="get_group[1]">
                     <div class="row">
                         <table id="duelist_details" class="table table-bordered table-responsive">
                             <thead>
+                                <tr>
+                                    <td colspan="6" style="font-size: 14px;">
+                                            <p>Settlement of <span t-esc="maturity_date"/></p>
+                                        </td>
+                                    </tr>
                                 <tr>
                                     <th style="width: 5cm;">
                                         <p>Partner</p>
@@ -73,7 +78,7 @@
                                 <t t-set="tot_debit" t-value="0" />
                                 <t t-set="tot_credit" t-value="0" />
                                 <t t-set="nr" t-value="0"/>
-                                <tr t-foreach="get_group[maturity_date]" t-as="line">
+                                <tr t-foreach="get_group[0][maturity_date]" t-as="line">
                                     <td style="width: 5cm;">
                                         <p><span t-field="line.partner_id.name" /></p>
                                     </td>
@@ -87,10 +92,12 @@
                                         <p><span t-field="line.invoice.payment_term" /></p>
                                     </td>
                                     <td class="text-right" style="width: 2cm;">
-                                        <p><span t-field="line.debit"/></p>
+                                        <p><span t-field="line.debit"
+                                        t-field-options='{"widget": "monetary", "display_currency": "line.move_id.company_id.currency_id"}'/></p>
                                     </td>
                                     <td class="text-right" style="width: 2cm;">
-                                        <p><span t-field="line.credit"/></p>
+                                        <p><span t-field="line.credit"
+                                        t-field-options='{"widget": "monetary", "display_currency": "line.move_id.company_id.currency_id"}'/></p>
                                     </td>
                                     <t t-set="tot_amount" t-value="tot_amount + line.debit - line.credit" />
                                     <t t-set="tot_debit" t-value="tot_debit + line.debit" />
