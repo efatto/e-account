@@ -26,7 +26,9 @@ class AccountInvoice(models.Model):
                 if not last_open_period:
                     raise exceptions.ValidationError(
                         _('Cannot create invoice! No available period found '
-                          'in fiscal year: %s' % registration_fy_id.code))
+                          'in fiscal year: %s' %
+                          self.env['account.fiscalyear'].browse(
+                              registration_fy_id).code))
                 if invoice.date_invoice > last_open_period.date_stop:
                     raise exceptions.ValidationError(
                         _('Cannot create invoice! The current period of '
