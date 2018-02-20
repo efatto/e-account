@@ -2,7 +2,7 @@
 ##############################################################################
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
-from openerp import api, models
+from openerp import api, models, fields
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from datetime import datetime
 
@@ -31,10 +31,15 @@ class DueListReportQweb(models.AbstractModel):
     def _get_group(self, objects):
         res = {}
         for line in objects:
+            if not line.date_maturity:
+                date = fields.Date.today()
+            else:
+                date = line.date_maturity
             date_maturity = datetime.strptime(
-                line.date_maturity, DEFAULT_SERVER_DATE_FORMAT
+                date, DEFAULT_SERVER_DATE_FORMAT
             ).strftime('%d/%m/%Y')
-            if not date_maturity in res:
+
+            if date_maturity not in res:
                 res.update({date_maturity: [line]})
             else:
                 res[date_maturity] = res[date_maturity] + [line]

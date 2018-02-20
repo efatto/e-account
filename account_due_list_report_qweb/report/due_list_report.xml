@@ -86,7 +86,8 @@
                                         <p><span t-field="line.date_maturity" /></p>
                                     </td>
                                     <td style="width: 2cm;">
-                                        <p><span t-field="line.invoice.supplier_invoice_number" /></p>
+                                        <p><span t-esc="line.invoice.supplier_invoice_number or line.invoice.number" /> -
+                                            <span t-field="line.invoice.date_invoice"/> </p>
                                     </td>
                                     <td style="width: 4cm;">
                                         <p><span t-field="line.invoice.payment_term" /></p>
