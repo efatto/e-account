@@ -43,6 +43,7 @@
                             DUE LIST
                         </p>
                     </div>
+                    <t t-set="tot_amount" t-value="0" />
                     <t t-as="maturity_date" t-foreach="get_group[1]">
                     <div class="row">
                         <table id="duelist_details" class="table table-bordered table-responsive">
@@ -74,7 +75,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-set="tot_amount" t-value="0" />
                                 <t t-set="tot_debit" t-value="0" />
                                 <t t-set="tot_credit" t-value="0" />
                                 <t t-set="nr" t-value="0"/>
@@ -124,7 +124,11 @@
                     </div>
 
                     </t>
-
+                    <div id="total" class="row with_bord text-right" style="padding: 2px;">
+                        <strong><p>TOTAL   <span t-esc="tot_amount"
+                            t-esc-options='{"widget": "monetary", "display_currency": "docs[0].move_id.company_id.currency_id"}'/>
+                        </p></strong>
+                    </div>
                 </div>
             </t>
         </t>
