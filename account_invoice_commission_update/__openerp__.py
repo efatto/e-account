@@ -28,6 +28,7 @@
     'author': "Sergio Corato",
     'depends': [
         'account',
+        'service_type',
         'sale_commission',
     ],
     'data': [
