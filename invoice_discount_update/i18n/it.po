@@ -1,13 +1,13 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #	* invoice_discount_update
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0-20130812-231022\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-10 08:58+0000\n"
-"PO-Revision-Date: 2016-08-10 08:58+0000\n"
+"POT-Creation-Date: 2018-02-23 17:15+0000\n"
+"PO-Revision-Date: 2018-02-23 17:15+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,17 +15,23 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: sale_discount_update
-#: field:sale.order,discount:0
+#. module: invoice_discount_update
+#: field:account.invoice,discount:0
 msgid "Discount"
 msgstr "Sconto"
 
-#. module: sale_discount_update
-#: model:ir.model,name:sale_discount_update.model_sale_order
-msgid "Sales Order"
-msgstr "Ordine di vendita"
+#. module: invoice_discount_update
+#: model:ir.model,name:invoice_discount_update.model_account_invoice
+msgid "Invoice"
+msgstr "Fattura"
 
-#. module: sale_discount_update
-#: help:sale.order,discount:0
-msgid "If changed will affect all order lines."
-msgstr "Se cambiato modificherà tutte le righe dell'ordine."
+#. module: invoice_discount_update
+#: view:account.invoice:invoice_discount_update.invoice_form_update_discount
+msgid "Update discount in invoice line of type product and consumable to % input."
+msgstr "Aggiorna lo sconto nelle righe fattura di tipo prodotto o consumabile alla % indicata."
+
+#. module: invoice_discount_update
+#: view:account.invoice:invoice_discount_update.invoice_form_update_discount
+msgid "Update discount to:"
+msgstr "Aggiorna lo sconto al:"
+

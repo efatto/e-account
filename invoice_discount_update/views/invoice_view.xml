@@ -8,8 +8,13 @@
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="arch" type="xml">
             <field name="account_id" position="after">
-               <field name="discount" attrs="{'readonly':[('state','not in',['draft','proforma','proforma2'])]}" nolabel="1" placeholder="Update discount"/>
-               <button string="Update discount" name="invoice_discount_update" type="object" icon="gtk-ok" attrs="{'invisible':[('state','not in',['draft','proforma','proforma2'])]}"/>
+               <button string="Update discount to:" name="invoice_discount_update"
+                       type="object"
+                       attrs="{'invisible':[('state','not in',['draft','proforma','proforma2'])]}"
+                       help='Update discount in invoice line of type product and consumable to % input.'/>
+                <field name="discount"
+                      attrs="{'invisible':[('state','not in',['draft','proforma','proforma2'])]}"
+                      nolabel="1"/>
             </field>
         </field>
     </record>
