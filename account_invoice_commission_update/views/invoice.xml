@@ -8,13 +8,9 @@
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="arch" type="xml">
             <field name="account_id" position="after">
-                <group col="3" colspan="2">
-                    <field name="agents" widget="many2many_tags"/>
-                    <group>
-                    <button string="Update agents" name="invoice_update_agents" type="object" icon="gtk-ok"
-                    help='Add agents to all invoice line. Agents are only added, cannot be removed from this function.'/>
-                    </group>
-                </group>
+                <field name="agents" widget="many2many_tags" nolabel="1" placeholder="Update agents"/>
+                <button string="Update agents" name="invoice_update_agents" type="object" icon="gtk-ok"
+                help='Update agents in invoice lines, except the ones with service type in: trasport, other or contribution.'/>
             </field>
         </field>
     </record>

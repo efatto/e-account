@@ -10,9 +10,7 @@ class AccountInvoice(models.Model):
 
     agents = fields.Many2many(
         comodel_name='res.partner',
-        domain=[('agent', '=', True)],
-        help='Add agents to all invoice line. Agents are only added, cannot '
-             'be removed from this function.'
+        domain=[('agent', '=', True)]
     )
 
     @api.multi
