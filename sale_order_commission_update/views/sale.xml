@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record id="view_order_form_update_agents" model="ir.ui.view">
+        <field name="name">sale.order.form.agents.update</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_shipping_id" position="after">
+                <field name="agents" widget="many2many_tags" nolabel="1" placeholder="Update agents"/>
+                <button string="Update agents" name="update_agents" type="object" icon="gtk-ok"
+                help='Update agents in order lines, except the ones with service type in: trasport, other or contribution.'/>
+            </field>
+        </field>
+    </record>
+
+</data>
+</openerp>
