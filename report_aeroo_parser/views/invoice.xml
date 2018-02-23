@@ -9,7 +9,7 @@
                 <field name="comment" position="after">
                     <field name="tax_stamp_image" widget="image" class="oe_left oe_avatar"/>
                 </field>
-                <field name="fiscal_position" position="after">
+                <field name="move_id" position="after">
                     <group colspan="2" col="4">
                         <group>
                             <field name="print_net_price"/>
