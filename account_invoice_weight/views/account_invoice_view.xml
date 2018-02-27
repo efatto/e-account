@@ -28,9 +28,9 @@
                             <field name="volume_custom" attrs="{'invisible': [('compute_weight','=',True)]}"/>
                             <field name="weight_custom" attrs="{'invisible': [('compute_weight','=',True)]}"/>
                             <field name="net_weight_custom" attrs="{'invisible': [('compute_weight','=',True)]}"/>
-                            <field name="volume" attrs="{'invisible': [('compute_weight','!=',True)]}"/>
-                            <field name="weight" attrs="{'invisible': [('compute_weight','!=',True)]}"/>
-                            <field name="net_weight" attrs="{'invisible': [('compute_weight','!=',True)]}"/>
+                            <field name="volume" string="Volume" attrs="{'invisible': [('compute_weight','!=',True)]}"/>
+                            <field name="weight" string="Weight" attrs="{'invisible': [('compute_weight','!=',True)]}"/>
+                            <field name="net_weight" string="Net Weight" attrs="{'invisible': [('compute_weight','!=',True)]}"/>
                             </group>
                         </group>
                     </group>
