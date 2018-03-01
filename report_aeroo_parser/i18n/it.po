@@ -187,8 +187,8 @@ msgstr "Stampa Totali in Prima Pagina"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
-msgid "Q.TY"
-msgstr "Q.TÀ"
+msgid "Q.ty"
+msgstr "Q.tà"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
