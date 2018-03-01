@@ -40,8 +40,8 @@ msgstr "contributo 1,5 %"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
-msgid "AMOUNT"
-msgstr "IMPORTO"
+msgid "Amount"
+msgstr "Importo"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
@@ -50,8 +50,8 @@ msgstr "Fatturazione"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
-msgid "CODE"
-msgstr "COD."
+msgid "Code"
+msgstr "Cod."
 
 #. module: report_aeroo_parser
 #: model:ir.model,name:report_aeroo_parser.model_res_company
@@ -70,8 +70,8 @@ msgstr "DDT"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
-msgid "DESCRIPTION"
-msgstr "DESCRIZIONE"
+msgid "Description"
+msgstr "Descrizione"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
@@ -218,8 +218,8 @@ msgstr "Luogo di destinazione"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
-msgid "TOTAL"
-msgstr "TOTALE"
+msgid "Total"
+msgstr "Totale"
 
 #. module: report_aeroo_parser
 #: field:account.invoice,tax_stamp_image:0
@@ -271,8 +271,8 @@ msgstr "del"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
-msgid "discount"
-msgstr "sconto"
+msgid "Discount"
+msgstr "Sconto"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice

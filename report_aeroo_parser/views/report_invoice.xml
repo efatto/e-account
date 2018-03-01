@@ -11,23 +11,23 @@
     <span>Invoice</span>
     <span>Total invoice</span>
     <span>Date</span>
-    <span>DESCRIPTION</span>
+    <span>Description</span>
     <span>Credit note</span>
     <span>Operational office</span>
     <span>Registered office</span>
     <span>UoM</span>
-    <span>CODE</span>
-    <span>Q.TY</span>
+    <span>Code</span>
+    <span>Q.ty</span>
     <span>DISC OUNT</span>
     <span>ITEM PHOTO</span>
     <span>ORDERED COLOUR</span>
     <span>RETAIL NET PRICE</span>
     <span>NET AMOUNT</span>
-    <span>TOTAL</span>
-    <span>AMOUNT</span>
+    <span>Total</span>
+    <span>Amount</span>
     <span>VAT #</span>
     <span>VAT</span>
-    <span>discount</span>
+    <span>Discount</span>
     <span>goods amount</span>
     <span>other</span>
     <span>notes</span>
