@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+
+<template id="report_invoice">
+    <span>Billing address</span>
+    <span>Shipping location</span>
+    <span>Balance due</span>
+    <span>Page</span>
+    <span>Invoice</span>
+    <span>Total invoice</span>
+    <span>Date</span>
+    <span>DESCRIPTION</span>
+    <span>Credit note</span>
+    <span>Operational office</span>
+    <span>Registered office</span>
+    <span>UoM</span>
+    <span>CODE</span>
+    <span>Q.TY</span>
+    <span>DISC OUNT</span>
+    <span>ITEM PHOTO</span>
+    <span>ORDERED COLOUR</span>
+    <span>RETAIL NET PRICE</span>
+    <span>NET AMOUNT</span>
+    <span>TOTAL</span>
+    <span>AMOUNT</span>
+    <span>VAT #</span>
+    <span>VAT</span>
+    <span>discount</span>
+    <span>goods amount</span>
+    <span>other</span>
+    <span>notes</span>
+    <span>1,5 % contribution</span>
+    <span>transport</span>
+    <span>hour</span>
+</template>
+
+
+</data>
+</openerp>

@@ -536,7 +536,7 @@ class Parser(report_sxw.rml_parse):
         if self.objects:  # needed?
             lang = self.objects[0].partner_id.lang
         return trans_obj._get_source(
-            self.cr, self.uid, 'ir.actions.report.xml', 'report', lang, source)
+            self.cr, self.uid, 'website', 'view', lang, source)
 
     def _convert_to_gray_scale(self, base64_source, encoding='base64'):
         if not base64_source:

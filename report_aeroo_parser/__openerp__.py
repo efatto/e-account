@@ -36,6 +36,7 @@
     'data': [
         'views/invoice.xml',
         'views/company.xml',
+        'views/report_invoice.xml',
     ],
     'installable': True
 }
