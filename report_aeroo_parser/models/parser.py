@@ -427,8 +427,13 @@ class Parser(report_sxw.rml_parse):
                     )
                 invoice[key] = {'description': description, 'lines': [line]}
 
-        return OrderedDict(
-            sorted(invoice.items(), key=lambda t: t[0])).values()
+        def get_key(t):
+            if t[0]:
+                return t[0]
+            else:
+                return 'ZZZ'
+
+        return OrderedDict(sorted(invoice.items(), key=get_key)).values()
 
     def _get_ddt_tree(self, sppp_line_ids):
         # group sppp lines by sale order if present
