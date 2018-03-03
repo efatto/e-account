@@ -6,6 +6,7 @@
 <template id="report_invoice">
     <span>Billing address</span>
     <span>Shipping location</span>
+    <span>Shipping address</span>
     <span>Balance due</span>
     <span>Page</span>
     <span>Invoice</span>

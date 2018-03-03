@@ -218,6 +218,11 @@ msgstr "Luogo di destinazione"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
+msgid "Shipping address"
+msgstr "Indirizzo di consegna"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
 msgid "Total"
 msgstr "Totale"
 
