@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-01 08:47+0000\n"
-"PO-Revision-Date: 2018-03-01 08:47+0000\n"
+"POT-Creation-Date: 2018-03-05 07:50+0000\n"
+"PO-Revision-Date: 2018-03-05 07:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -45,13 +45,18 @@ msgstr "Importo"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
+msgid "Balance due"
+msgstr "Saldo"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
 msgid "Billing address"
 msgstr "Fatturazione"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
 msgid "Code"
-msgstr "Cod."
+msgstr "Codice"
 
 #. module: report_aeroo_parser
 #: model:ir.model,name:report_aeroo_parser.model_res_company
@@ -66,12 +71,7 @@ msgstr "Nota di credito"
 #. module: report_aeroo_parser
 #: field:account.invoice,stock_picking_package_preparation_ids:0
 msgid "DDTs"
-msgstr "DDT"
-
-#. module: report_aeroo_parser
-#: view:website:report_aeroo_parser.report_invoice
-msgid "Description"
-msgstr "Descrizione"
+msgstr "DDTs"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
@@ -82,6 +82,16 @@ msgstr "SCO NTO"
 #: view:website:report_aeroo_parser.report_invoice
 msgid "Date"
 msgstr "Data"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
+msgid "Discount"
+msgstr "Sconto"
 
 #. module: report_aeroo_parser
 #: field:res.company,logo_heigth:0
@@ -130,6 +140,11 @@ msgstr "COLORE ORDINATO"
 #: view:website:report_aeroo_parser.report_invoice
 msgid "Operational office"
 msgstr "Sede operativa"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
+msgid "Order"
+msgstr "Ordine"
 
 #. module: report_aeroo_parser
 #: code:addons/report_aeroo_parser/models/parser.py:244
@@ -192,6 +207,11 @@ msgstr "Q.tà"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
+msgid "Quotation"
+msgstr "Preventivo"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
 msgid "RETAIL NET PRICE"
 msgstr "PREZZO"
 
@@ -213,13 +233,18 @@ msgstr "Linea d'ordine di vendita"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
+msgid "Shipping address"
+msgstr "Indirizzo di consegna"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
 msgid "Shipping location"
 msgstr "Luogo di destinazione"
 
 #. module: report_aeroo_parser
-#: view:website:report_aeroo_parser.report_invoice
-msgid "Shipping address"
-msgstr "Indirizzo di consegna"
+#: field:account.invoice,tax_stamp_image:0
+msgid "Tax stamp"
+msgstr "Bollo"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
@@ -227,9 +252,9 @@ msgid "Total"
 msgstr "Totale"
 
 #. module: report_aeroo_parser
-#: field:account.invoice,tax_stamp_image:0
-msgid "Tax stamp"
-msgstr "Bollo"
+#: view:website:report_aeroo_parser.report_invoice
+msgid "Total invoice"
+msgstr "Totale fattura"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
@@ -263,21 +288,11 @@ msgid "Your Ref. "
 msgstr "Vs. Rif. "
 
 #. module: report_aeroo_parser
-#: view:website:report_aeroo_parser.report_invoice
-msgid "Balance due"
-msgstr "Saldo"
-
-#. module: report_aeroo_parser
 #: code:addons/report_aeroo_parser/models/parser.py:218
 #: code:addons/report_aeroo_parser/models/parser.py:247
 #, python-format
 msgid "dated"
 msgstr "del"
-
-#. module: report_aeroo_parser
-#: view:website:report_aeroo_parser.report_invoice
-msgid "Discount"
-msgstr "Sconto"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
@@ -298,11 +313,6 @@ msgstr "note"
 #: view:website:report_aeroo_parser.report_invoice
 msgid "other"
 msgstr "altro"
-
-#. module: report_aeroo_parser
-#: view:website:report_aeroo_parser.report_invoice
-msgid "Total invoice"
-msgstr "Totale fattura"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
