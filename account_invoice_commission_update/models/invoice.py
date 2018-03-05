@@ -30,5 +30,6 @@ class AccountInvoice(models.Model):
                     agents.append(vals)
                 line.agents.unlink()
                 if line.product_id.product_tmpl_id.service_type not in (
-                        'transport', 'other', 'contribution'):
+                        'transport', 'other', 'contribution') and not \
+                        line.product_id.product_tmpl_id.downpayment:
                     line.agents = [(0, 0, x) for x in agents]
