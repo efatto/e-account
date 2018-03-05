@@ -35,8 +35,8 @@ msgstr ".Vs. Rif. %s"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
-msgid "1,5 % contribution"
-msgstr "contributo 1,5 %"
+msgid "1,5 % fixed costs"
+msgstr "costi fissi 1,5 %"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
