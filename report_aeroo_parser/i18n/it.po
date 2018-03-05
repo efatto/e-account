@@ -259,7 +259,7 @@ msgstr "Totale fattura"
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
 msgid "UoM"
-msgstr "u.m."
+msgstr "U.M."
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
