@@ -11,6 +11,6 @@ class ProductTemplate(models.Model):
     service_type = fields.Selection([
         ('transport', 'Transport'),
         ('other', 'Other'),
-        ('contribution', 'Contribution'),
+        ('contribution', 'Fixed Costs'),
         ('discount', 'Discount'),
     ], string='Service type')
