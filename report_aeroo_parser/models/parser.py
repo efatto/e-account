@@ -27,9 +27,7 @@ class Parser(report_sxw.rml_parse):
             'time': time,
             'invoice_tree': self._get_invoice_tree,
             'invoice_move_lines': self._get_invoice_move_lines,
-            'ddt': self._get_ddt,
             'ddt_tree': self._get_ddt_tree,
-            'set_picking': self._set_picking,
             'desc_nocode': self._desc_nocode,
             'total_fiscal': self._get_total_fiscal,
             'total_tax_fiscal': self._get_total_tax_fiscal,
@@ -154,23 +152,6 @@ class Parser(report_sxw.rml_parse):
 
     def _desc_nocode(self, string):
         return re.compile('\[.*\]\ ').sub('', string)
-
-    def _set_picking(self, invoice):
-        self._get_invoice_tree(invoice.invoice_line, invoice.stock_picking_package_preparation_ids)
-        return False
-
-    def _get_ddt(self):
-        def get_picking(picking_name):
-            picking_ids = self.pool['stock.picking'].search(self.cr, self.uid, [('name', '=', picking_name)])
-            if picking_ids:
-                return self.pool['stock.picking'].browse(self.cr, self.uid, picking_ids[0])
-
-        invoice = self.pool['account.invoice'].browse(self.cr, self.uid, self.ids[0])
-        if hasattr(invoice, 'move_products') and invoice.move_products:
-            return self.pool['account.invoice'].browse(self.cr, self.uid, self.ids[0])
-        if hasattr(self, 'picking_name'):
-            return self.cache.get(self.picking_name, False) or self.cache.setdefault(self.picking_name, get_picking(self.picking_name))
-        return False
 
     @staticmethod
     def get_description(self, ddt_name, ddt_date, order_name, order_date,
