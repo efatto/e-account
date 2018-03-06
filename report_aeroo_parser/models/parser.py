@@ -10,6 +10,7 @@ from openerp.report import report_sxw
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from datetime import datetime
+from dateutil import tz
 from collections import defaultdict, Mapping, OrderedDict
 try:
     import cStringIO as StringIO
@@ -263,6 +264,14 @@ class Parser(report_sxw.rml_parse):
 
         return '\n'.join(description)
 
+    def _convert_date_tz(self, date):
+        to_zone = tz.gettz(self.localcontext['tz'])
+        from_zone = tz.tzutc()
+        date_tz = datetime.strptime(date, DEFAULT_SERVER_DATETIME_FORMAT
+            ).replace(tzinfo=from_zone).astimezone(
+                to_zone).strftime("%d/%m/%Y")
+        return date_tz
+
     def _get_invoice_tree(self, invoice_lines, picking_preparation_ids):
         invoice = keys = {}
         ddt = sale_order = ddt_date = sale_order_date = client_order_ref = \
@@ -281,10 +290,8 @@ class Parser(report_sxw.rml_parse):
                         sale_orders[ddt_id.id][
                             picking.sale_id.id] = {
                             'name': picking.sale_id.name,
-                            'date': datetime.strptime(
-                                 picking.sale_id.date_order[:10],
-                                 DEFAULT_SERVER_DATE_FORMAT
-                            ).strftime("%d/%m/%Y"),
+                            'date': self._convert_date_tz(
+                                picking.sale_id.date_order),
                             'ref': picking.sale_id.client_order_ref or ''
                         }
                     # search mrp with out_picking_id
@@ -303,10 +310,7 @@ class Parser(report_sxw.rml_parse):
                         if mrp and mrp.id not in mrp_repairs[ddt_id.id]:
                             mrp_repairs[ddt_id.id][mrp.id] = {
                                 'name': mrp.name,
-                                'date': datetime.strptime(
-                                    mrp.date[:10],
-                                    DEFAULT_SERVER_DATE_FORMAT
-                                ).strftime("%d/%m/%Y"),
+                                'date': self._convert_date_tz(mrp.date),
                                 'machine': mrp.machine_id.name,
                                 'frame': mrp.machine_id.frame if
                                 mrp.machine_id.frame else 'n.d.',
@@ -387,8 +391,8 @@ class Parser(report_sxw.rml_parse):
                             ] = {
                                 'name': mrp_onsite.name,
                                 'date': datetime.strptime(
-                                    mrp_onsite.date[:10],
-                                    DEFAULT_SERVER_DATE_FORMAT
+                                    mrp_onsite.date,
+                                    DEFAULT_SERVER_DATETIME_FORMAT
                                 ).strftime("%d/%m/%Y"),
                                 'machine': mrp_onsite.machine_id.name,
                                 'frame': mrp_onsite.machine_id.frame if
