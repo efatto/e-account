@@ -30,7 +30,6 @@ class Parser(report_sxw.rml_parse):
             'ddt': self._get_ddt,
             'ddt_tree': self._get_ddt_tree,
             'set_picking': self._set_picking,
-            'line_description': self._line_description,
             'desc_nocode': self._desc_nocode,
             'total_fiscal': self._get_total_fiscal,
             'total_tax_fiscal': self._get_total_tax_fiscal,
@@ -156,30 +155,6 @@ class Parser(report_sxw.rml_parse):
     def _desc_nocode(self, string):
         return re.compile('\[.*\]\ ').sub('', string)
 
-    def _line_description(self, origin):
-        sale_order_line_obj = self.pool['sale.order.line']
-        stock_picking_obj = self.pool['stock.picking']
-        description = []
-        if origin and len(origin.split(':')) == 3: # inserire l10n_it_ddt
-            sale_order_id = int(origin.split(':')[2])
-            sale_order_line = sale_order_line_obj.browse(self.cr, self.uid, sale_order_id)
-            description.append(u'Contratto: {name}'.format(name=sale_order_line.order_id.name))
-            picking_in_ids = stock_picking_obj.search(self.cr, self.uid, [('type', '=', 'in'), ('rentable', '=', True), ('origin', '=', sale_order_line.order_id.name)])
-            picking_out_ids = stock_picking_obj.search(self.cr, self.uid, [('type', '=', 'out'), ('origin', '=', sale_order_line.order_id.name)])
-            picking_in = False
-            if picking_in_ids:
-                picking_in = stock_picking_obj.browse(self.cr, self.uid, picking_in_ids[0])
-            if picking_out_ids:
-                picking_out = stock_picking_obj.browse(self.cr, self.uid, picking_out_ids[0])
-            if picking_out.ddt_number:
-                ddt_date = datetime.strptime(picking_out.ddt_date[:10], DEFAULT_SERVER_DATE_FORMAT)
-                description.append('Documento di Uscita: {ddt} del {ddt_date}'.format(ddt=picking_out.ddt_number, ddt_date=ddt_date.strftime("%d/%m/%Y")))
-            if picking_in:
-                ddt_date = datetime.strptime(picking_in.date[:10], DEFAULT_SERVER_DATETIME_FORMAT)
-                description.append('Documento di Reso: {ddt} del {ddt_date}'.format(ddt=picking_in.name.replace('-return', ''), ddt_date=ddt_date.strftime("%d/%m/%Y")))
-
-        return '\n'.join(description)
-
     def _set_picking(self, invoice):
         self._get_invoice_tree(invoice.invoice_line, invoice.stock_picking_package_preparation_ids)
         return False
@@ -264,7 +239,7 @@ class Parser(report_sxw.rml_parse):
 
         return '\n'.join(description)
 
-    def _convert_date_tz(self, date):
+    def _convert_datetime_to_date_tz(self, date):
         to_zone = tz.gettz(self.localcontext['tz'])
         from_zone = tz.tzutc()
         date_tz = datetime.strptime(date, DEFAULT_SERVER_DATETIME_FORMAT
@@ -290,7 +265,7 @@ class Parser(report_sxw.rml_parse):
                         sale_orders[ddt_id.id][
                             picking.sale_id.id] = {
                             'name': picking.sale_id.name,
-                            'date': self._convert_date_tz(
+                            'date': self._convert_datetime_to_date_tz(
                                 picking.sale_id.date_order),
                             'ref': picking.sale_id.client_order_ref or ''
                         }
@@ -310,7 +285,8 @@ class Parser(report_sxw.rml_parse):
                         if mrp and mrp.id not in mrp_repairs[ddt_id.id]:
                             mrp_repairs[ddt_id.id][mrp.id] = {
                                 'name': mrp.name,
-                                'date': self._convert_date_tz(mrp.date),
+                                'date': self._convert_datetime_to_date_tz(
+                                    mrp.date),
                                 'machine': mrp.machine_id.name,
                                 'frame': mrp.machine_id.frame if
                                 mrp.machine_id.frame else 'n.d.',
@@ -357,19 +333,17 @@ class Parser(report_sxw.rml_parse):
                                     if pick_type_in:
                                         pick_type_in_id = pick_type_in \
                                             and pick_type_in[1] or False
-                                    return_pick_id = [
-                                        x for x in
-                                        order_line.order_id.picking_ids if
-                                        x.picking_type_id.id ==
-                                        pick_type_in_id]
+                                    if pick_type_in_id:
+                                        return_pick_id = [
+                                            x for x in
+                                            order_line.order_id.picking_ids if
+                                            x.picking_type_id.id ==
+                                            pick_type_in_id]
                                     if return_pick_id and \
                                             return_pick_id[0].date_done:
                                         return_pick_date = \
-                                            datetime.strptime(
-                                                return_pick_id[0].date_done[
-                                                    :10],
-                                                DEFAULT_SERVER_DATE_FORMAT
-                                            ).strftime("%d/%m/%Y")
+                                            self._convert_datetime_to_date_tz(
+                                                return_pick_id[0].date_done)
                     #
                     # search mrp without out_picking_id (onsite)
                     if self._check_installed_module('mrp_repair_management'):
@@ -390,10 +364,8 @@ class Parser(report_sxw.rml_parse):
                             mrp_repairs_onsite[sale_order][mrp_onsite.id
                             ] = {
                                 'name': mrp_onsite.name,
-                                'date': datetime.strptime(
-                                    mrp_onsite.date,
-                                    DEFAULT_SERVER_DATETIME_FORMAT
-                                ).strftime("%d/%m/%Y"),
+                                'date': self._convert_datetime_to_date_tz(
+                                    mrp_onsite.date),
                                 'machine': mrp_onsite.machine_id.name,
                                 'frame': mrp_onsite.machine_id.frame if
                                 mrp_onsite.machine_id.frame else 'n.d.',
