@@ -161,16 +161,17 @@ class Parser(report_sxw.rml_parse):
 
         if ddt_name:
             if ddt_date:
-                ddt_date = self._convert_datetime_to_date_tz(ddt_date)
+                ddt_date = datetime.strptime(
+                    ddt_date, DEFAULT_SERVER_DATE_FORMAT)
             description.append(
                 _('Our Ref. Picking %s dated %s. %s %s') % (
                     ddt_name,
-                    ddt_date if ddt_date else '',
+                    ddt_date.strftime("%d/%m/%Y") if ddt_date else '',
                     ' '.join([
                         (_('Your Order %s ref. %s dated %s ') % (
                             sale_orders[ddt_id][x]['name'],
-                            sale_orders[ddt_id][x]['date'],
                             sale_orders[ddt_id][x]['ref'],
+                            sale_orders[ddt_id][x]['date'],
                         )) for x in sale_orders[ddt_id]])
                     if sale_orders and ddt_id else '',
                     ' '.join([
