@@ -167,29 +167,22 @@ class Parser(report_sxw.rml_parse):
                 _('Our Ref. Picking %s dated %s. %s %s') % (
                     ddt_name,
                     ddt_date.strftime("%d/%m/%Y") if ddt_date else '',
-                    ('%s' %
-                        ', '.join(
-                            (' '.join([
-                                _('Your Ref. '),
-                                sale_orders[ddt_id][x]['name'],
-                                _('dated'),
-                                sale_orders[ddt_id][x]['date'],
-                                sale_orders[ddt_id][x]['ref']])
-                             for x in sale_orders[ddt_id]
-                             )
-                    )) if sale_orders and ddt_id else '',
-                    ('%s' %
-                        ' '.join(
-                            '\n'.join([
-                                (_('Rif. Ns. Ordine %s del %s') %
-                                  (mrp_repairs[ddt_id][x]['name'],
-                                   mrp_repairs[ddt_id][x]['date'])),
-                                _('Macchina: %s telaio %s')
-                                % (mrp_repairs[ddt_id][x]['machine'],
-                                   mrp_repairs[ddt_id][x]['frame'])
-                            ]) for x in mrp_repairs[ddt_id]
-                        )
-                    ) if mrp_repairs and ddt_id else '',
+                    ' '.join([
+                        (_('Your Ref. %s dated %s ') % (
+                            sale_orders[ddt_id][x]['name'],
+                            sale_orders[ddt_id][x]['date'],
+                            sale_orders[ddt_id][x]['ref'],
+                        )) for x in sale_orders[ddt_id]])
+                    if sale_orders and ddt_id else '',
+                    ' '.join([
+                        (_('Ref. Our Order %s dated %s. Machine: %s frame %s'
+                           ) % (
+                            mrp_repairs[ddt_id][x]['name'],
+                            mrp_repairs[ddt_id][x]['date'],
+                            mrp_repairs[ddt_id][x]['machine'],
+                            mrp_repairs[ddt_id][x]['frame'],
+                        )) for x in mrp_repairs[ddt_id]])
+                    if mrp_repairs and ddt_id else '',
                 )
             )
 
@@ -200,22 +193,17 @@ class Parser(report_sxw.rml_parse):
             description.append(
                 _('Our Ref. Order %s %s %s %s') % (
                     order_name,
-                    ('%s %s' % (
-                        _('dated'),
-                        order_date.strftime("%d/%m/%Y"))if order_date else ''),
+                    (_(' dated %s') % order_date.strftime("%d/%m/%Y")) if
+                    order_date else '',
                     (_('.Your Ref. %s') % client_order_ref) if
                     client_order_ref else '',
-                    ('%s' %
-                     ' '.join(
-                         '\n'.join([
-                             _(' del %s') %
-                             mrp_repairs_onsite[order_name][x]['date'],
-                             _('Macchina: %s telaio %s')
-                             % (mrp_repairs_onsite[order_name][x]['machine'],
-                                mrp_repairs_onsite[order_name][x]['frame'])
-                         ]) for x in mrp_repairs_onsite[order_name]
-                     )
-                     ) if mrp_repairs_onsite else '',
+                    ' '.join([
+                        (_(' dated %s. Machine: %s frame %s') % (
+                            mrp_repairs_onsite[order_name][x]['date'],
+                            mrp_repairs_onsite[order_name][x]['machine'],
+                            mrp_repairs_onsite[order_name][x]['frame'],
+                        )) for x in mrp_repairs_onsite[order_name]])
+                    if mrp_repairs_onsite else '',
                 ))
 
         return '\n'.join(description)

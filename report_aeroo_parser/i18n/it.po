@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-05 07:50+0000\n"
-"PO-Revision-Date: 2018-03-05 07:50+0000\n"
+"POT-Creation-Date: 2018-03-07 11:26+0000\n"
+"PO-Revision-Date: 2018-03-07 11:26+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,25 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:424
+#: code:addons/report_aeroo_parser/models/parser.py:369
 #, python-format
 msgid " Date return %s."
 msgstr " Data rientro %s."
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:254
+#: code:addons/report_aeroo_parser/models/parser.py:196
 #, python-format
-msgid " del %s"
+msgid " dated %s"
 msgstr " del %s"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:249
+#: code:addons/report_aeroo_parser/models/parser.py:201
+#, python-format
+msgid " dated %s. Machine: %s frame %s"
+msgstr " del %s. Macchina: %s telaio %s"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:198
 #, python-format
 msgid ".Your Ref. %s"
 msgstr ".Vs. Rif. %s"
@@ -67,11 +73,6 @@ msgstr "Aziende"
 #: view:website:report_aeroo_parser.report_invoice
 msgid "Credit note"
 msgstr "Nota di credito"
-
-#. module: report_aeroo_parser
-#: field:account.invoice,stock_picking_package_preparation_ids:0
-msgid "DDTs"
-msgstr "DDTs"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
@@ -120,13 +121,6 @@ msgid "Invoice Line"
 msgstr "Riga Fattura"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:230
-#: code:addons/report_aeroo_parser/models/parser.py:256
-#, python-format
-msgid "Macchina: %s telaio %s"
-msgstr "Macchina: %s telaio %s"
-
-#. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
 msgid "NET AMOUNT"
 msgstr "PREZZO NETTO"
@@ -147,19 +141,19 @@ msgid "Order"
 msgstr "Ordine"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:244
+#: code:addons/report_aeroo_parser/models/parser.py:194
 #, python-format
 msgid "Our Ref. Order %s %s %s %s"
 msgstr "Ns. Rif. Ordine %s %s %s %s"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:210
+#: code:addons/report_aeroo_parser/models/parser.py:167
 #, python-format
 msgid "Our Ref. Picking %s dated %s. %s %s"
 msgstr "Ns. Rif. DDT %s del %s. %s %s"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:422
+#: code:addons/report_aeroo_parser/models/parser.py:367
 #, python-format
 msgid "Outgo document: %s dated %s.%s"
 msgstr "Documento di consegna: %s del %s.%s"
@@ -171,14 +165,13 @@ msgstr "Pag."
 
 #. module: report_aeroo_parser
 #: field:account.invoice.line,price_unit_net:0
-#: field:sale.order.line,price_unit_net:0
 msgid "Price unit net"
 msgstr "Prezzo netto"
 
 #. module: report_aeroo_parser
 #: field:account.invoice,print_hide_uom:0
 msgid "Print hide uom"
-msgstr "Nascondi U.M. nella stampa"
+msgstr "Non Stampa U.M."
 
 #. module: report_aeroo_parser
 #: field:account.invoice,print_net_price:0
@@ -216,15 +209,15 @@ msgid "RETAIL NET PRICE"
 msgstr "PREZZO"
 
 #. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:178
+#, python-format
+msgid "Ref. Our Order %s dated %s. Machine: %s frame %s"
+msgstr "Rif. Ns. Ordine %s del %s. Macchina: %s telaio %s"
+
+#. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
 msgid "Registered office"
 msgstr "Sede Legale"
-
-#. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:227
-#, python-format
-msgid "Rif. Ns. Ordine %s del %s"
-msgstr "Rif. Ns. Ordine %s del %s"
 
 #. module: report_aeroo_parser
 #: model:ir.model,name:report_aeroo_parser.model_sale_order_line
@@ -282,17 +275,10 @@ msgid "Width will be proportioned to max 8 cm"
 msgstr "La larghezza sarà parametrata a max 8 cm"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:216
+#: code:addons/report_aeroo_parser/models/parser.py:171
 #, python-format
-msgid "Your Ref. "
-msgstr "Vs. Rif. "
-
-#. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:218
-#: code:addons/report_aeroo_parser/models/parser.py:247
-#, python-format
-msgid "dated"
-msgstr "del"
+msgid "Your Ref. %s dated %s "
+msgstr "Vs. Rif. %s del %s "
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
