@@ -359,11 +359,10 @@ class Parser(report_sxw.rml_parse):
                     client_order_ref, ddt_id, sale_orders, mrp_repairs,
                     mrp_repairs_onsite)
                 if rental_ddt and rental_ddt_date:
-                    date = datetime.strptime(
-                        rental_ddt_date, DEFAULT_SERVER_DATE_FORMAT)
-                    description = '\n'.join(
-                        [description, _('Outgo document: %s dated %s.%s') %(
-                            rental_ddt, date.strftime("%d/%m/%Y"),
+                    rental_date = self._convert_datetime_to_date_tz(rental_ddt_date)
+                    description = '\n'.join([
+                        description, _('Outgo document: %s dated %s.%s') % (
+                            rental_ddt, rental_date,
                             _(' Date return %s.') % return_pick_date if
                             return_pick_date else ''
                         )]
