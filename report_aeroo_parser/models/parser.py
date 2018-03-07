@@ -161,12 +161,11 @@ class Parser(report_sxw.rml_parse):
 
         if ddt_name:
             if ddt_date:
-                ddt_date = datetime.strptime(
-                    ddt_date[:10], DEFAULT_SERVER_DATE_FORMAT)
+                ddt_date = self._convert_datetime_to_date_tz(ddt_date)
             description.append(
                 _('Our Ref. Picking %s dated %s. %s %s') % (
                     ddt_name,
-                    ddt_date.strftime("%d/%m/%Y") if ddt_date else '',
+                    ddt_date if ddt_date else '',
                     ' '.join([
                         (_('Your Ref. %s dated %s ') % (
                             sale_orders[ddt_id][x]['name'],
@@ -188,13 +187,11 @@ class Parser(report_sxw.rml_parse):
 
         elif order_name:
             if order_date:
-                order_date = datetime.strptime(
-                    order_date[:10], DEFAULT_SERVER_DATE_FORMAT)
+                order_date = self._convert_datetime_to_date_tz(order_date)
             description.append(
                 _('Our Ref. Order %s %s %s %s') % (
                     order_name,
-                    (_(' dated %s') % order_date.strftime("%d/%m/%Y")) if
-                    order_date else '',
+                    (_(' dated %s') % order_date) if order_date else '',
                     (_('.Your Ref. %s') % client_order_ref) if
                     client_order_ref else '',
                     ' '.join([
@@ -361,11 +358,10 @@ class Parser(report_sxw.rml_parse):
                     client_order_ref, ddt_id, sale_orders, mrp_repairs,
                     mrp_repairs_onsite)
                 if rental_ddt and rental_ddt_date:
-                    date = datetime.strptime(
-                        rental_ddt_date, DEFAULT_SERVER_DATE_FORMAT)
-                    description = '\n'.join(
-                        [description, _('Outgo document: %s dated %s.%s') %(
-                            rental_ddt, date.strftime("%d/%m/%Y"),
+                    rental_date = self._convert_datetime_to_date_tz(rental_ddt_date)
+                    description = '\n'.join([
+                        description, _('Outgo document: %s dated %s.%s') % (
+                            rental_ddt, rental_date,
                             _(' Date return %s.') % return_pick_date if
                             return_pick_date else ''
                         )]
