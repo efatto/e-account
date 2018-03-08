@@ -8,4 +8,8 @@ from openerp import models, fields, api, _
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    downpayment = fields.Boolean()
+    downpayment = fields.Selection([
+        ('down_payment_intra', 'Down payment Intra CEE'),
+        ('down_payment_extra', 'Down payment Extra CEE'),
+        ('down_payment_it', 'Down payment Italy'),
+    ], string='Down Payment type')

@@ -11,7 +11,11 @@ class AccountJournal(models.Model):
     advance_description = fields.Char(
         string='Description for advance documents',
         size=64, translate=True,)
-    downpayment = fields.Boolean()
+    downpayment = fields.Selection([
+        ('down_payment_intra', 'Down payment Intra CEE'),
+        ('down_payment_extra', 'Down payment Extra CEE'),
+        ('down_payment_it', 'Down payment Italy'),
+    ], string='Down Payment type')
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
@@ -32,7 +36,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 for inv in self.env['account.invoice'].browse(inv_ids):
                     if self.product_id.downpayment:
                         journal_id = self.env['account.journal'].search([
-                            ('downpayment', '=', True)
+                            ('downpayment', '=', self.product_id.downpayment)
                         ], limit=1)
                         if journal_id:
                             inv.write({'journal_id': journal_id.id})
