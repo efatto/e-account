@@ -52,7 +52,7 @@ msgstr "Saldo"
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
 msgid "Billing address"
-msgstr "Fatturazione"
+msgstr "Indirizzo di fatturazione"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
