@@ -97,7 +97,8 @@ class DeliveryGrid(models.Model):
             total = weight = volume = quantity = 0
             for line in invoice.invoice_line:
                 if line.product_id.service_type not in [
-                        'contribution', 'other', 'transport']:
+                        'contribution', 'other', 'transport'] \
+                        and not line.product_id.downpayment:
                     total += line.price_subtotal
                 if not line.product_id or line.is_delivery:
                     continue
