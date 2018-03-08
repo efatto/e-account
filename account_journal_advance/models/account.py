@@ -24,9 +24,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
     @api.multi
     def create_invoices(self):
         """ create invoices for the active sales orders """
-        res = super(SaleAdvancePaymentInv, self).create_invoices()
         if not self.product_id.downpayment:
-            return res
+            return super(SaleAdvancePaymentInv, self).create_invoices()
         else:
             if self.advance_payment_method in ('fixed', 'percentage'):
                 inv_ids = []
