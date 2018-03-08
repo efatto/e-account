@@ -26,6 +26,7 @@
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
+        'account_journal_advance',
         'delivery',
         'service_type',
     ],
