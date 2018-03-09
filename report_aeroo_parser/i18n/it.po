@@ -305,3 +305,7 @@ msgstr "altro"
 msgid "transport"
 msgstr "trasporto"
 
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
+msgid "Tax vat 22%"
+msgstr "IVA 22%"
