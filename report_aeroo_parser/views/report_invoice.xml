@@ -38,6 +38,8 @@
     <span>transport</span>
     <span>hour</span>
     <span>Tax vat 22%</span>
+    <span>Amount before taxes</span>
+    <span>Payment terms</span>
 </template>
 
 
