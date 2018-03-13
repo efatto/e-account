@@ -29,6 +29,7 @@
         'account_journal_advance',
         'delivery',
         'service_type',
+        'sale_advance_invoice_progress',
     ],
     'data': [
         'views/account_invoice_view.xml',

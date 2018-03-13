@@ -98,7 +98,8 @@ class DeliveryGrid(models.Model):
             for line in invoice.invoice_line:
                 if line.product_id.service_type not in [
                         'contribution', 'other', 'transport'] \
-                        and not line.product_id.downpayment:
+                        and not line.product_id.downpayment \
+                        and not line.advance_invoice_id:
                     total += line.price_subtotal
                 if not line.product_id or line.is_delivery:
                     continue
