@@ -46,6 +46,11 @@ msgstr "Importo"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
+msgid "Total Untaxed"
+msgstr "Totale Imponibile"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
 msgid "Balance due"
 msgstr "Saldo"
 
