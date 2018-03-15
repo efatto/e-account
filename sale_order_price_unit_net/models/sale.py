@@ -11,7 +11,11 @@ class SaleOrderLine(models.Model):
     @api.multi
     def _get_price_unit_net(self):
         for line in self:
-            line.price_unit_net = line.price_unit * (
+            line.sale_price_unit_net = line.price_unit * (
                 1 - line.discount / 100.0)
 
-    price_unit_net = fields.Float(compute=_get_price_unit_net)
+    sale_price_unit_net = fields.Float(
+        compute=_get_price_unit_net,
+        string='Sale Price Net',
+        help='Sale price unit net'
+    )
