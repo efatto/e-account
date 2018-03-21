@@ -45,15 +45,18 @@ class InvoiceStatement(models.Model):
             ('registration_date', '<=', date_stop),
             ('type', 'in', ['in_invoice', 'in_refund'],),
             ('state', 'in', ['open', 'paid']),
-            '|', ('fiscal_document_type_code', '!=', 'NONE'),
+            '|', ('fiscal_document_type_id.code', '!=', 'NONE'),
             ('fiscal_document_type_id', '=', False),
         ])
+        summary_invoice_ids = DTR_invoice_ids.filtered(
+            lambda x: x.fiscal_document_type_id.code == 'TD12')
+        summary_partner_ids = summary_invoice_ids.mapped('partner_id')
         DTE_invoice_ids = self.env['account.invoice'].search([
             ('registration_date', '>=', date_start),
             ('registration_date', '<=', date_stop),
             ('type', 'in', ['out_invoice', 'out_refund']),
             ('state', 'in', ['open', 'paid']),
-            '|', ('fiscal_document_type_code', '!=', 'NONE'),
+            '|', ('fiscal_document_type_id.code', '!=', 'NONE'),
             ('fiscal_document_type_id', '=', False),
         ])
         auto_invoice_ids = DTR_invoice_ids.filtered('auto_invoice_id')
@@ -74,34 +77,19 @@ class InvoiceStatement(models.Model):
             ws.write(0, 4, 'Invoices Errors')
             for partner_id in partner_ids:
                 errors = []
-                # exclude vat != IT solo per vendite!
-                # if partner_id.vat and partner_id.vat[:2].upper() != 'IT':
-                #     continue
-                if not partner_id.street:
-                    errors.append(
-                        'Missing partner street')
-                # if not partner_id.zip:
-                #     errors.append(
-                #         'Missing partner zip')
-                # elif not re.match('^[0-9]{5}$', partner_id.zip):
-                #     errors.append(
-                #         'Malformed partner zip %s' % partner_id.zip)
-                if not partner_id.city:
-                    errors.append(
-                        'Missing partner city')
-                # if not partner_id.state_id:
-                #     errors.append(
-                #         'Missing partner county')
-                if not partner_id.country_id:
-                    errors.append(
-                        'Missing partner country')
-                if not partner_id.vat and not partner_id.fiscalcode:
-                    errors.append(
-                        'Missing partner vat or fiscalcode')
-                if partner_id.individual and not (partner_id.first_name or
-                                                  partner_id.last_name):
-                    errors.append(
-                        'Missing individual first_name or last_name')
+                if partner_id not in summary_partner_ids:
+                    if not partner_id.street:
+                        errors.append(
+                            'Missing partner street')
+                    if not partner_id.city:
+                        errors.append(
+                            'Missing partner city')
+                    if not partner_id.country_id:
+                        errors.append(
+                            'Missing partner country')
+                    if not partner_id.vat and not partner_id.fiscalcode:
+                        errors.append(
+                            'Missing partner vat or fiscalcode')
                 if errors:
                     row += 1
                     ws.write(row, 0, partner_id.name)
