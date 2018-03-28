@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<record id="view_payments_tree_payment_type" model="ir.ui.view">
+    <field name="model">account.move.line</field>
+    <field name="inherit_id" ref="account_due_list.view_payments_tree"/>
+    <field name="arch" type="xml">
+        <field name="payment_term_id" position="after">
+            <field name="payment_term_type" readonly="1" string="Payment Type"/>
+        </field>
+    </field>
+</record>
+<record id="view_payments_filter_payment_type" model="ir.ui.view">
+    <field name="model">account.move.line</field>
+    <field name="inherit_id" ref="account_due_list.view_payments_filter"/>
+    <field name="priority" eval="20"/>
+    <field name="arch" type="xml">
+            <field name="date_maturity" position="after">
+                <field name="payment_term_type" string="Payment Type"/>
+            </field>
+    </field>
+</record>
+</data>
+</openerp>
