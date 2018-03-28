@@ -32,6 +32,18 @@
                     <filter string="Payable" domain="[('account_id.type','=','payable')]"/>
                     <filter string="Income" domain="[('account_id.user_type.code','=','income')]"/>
                     <filter string="Expense" domain="[('account_id.user_type.code','=','expense')]"/>
+                    <filter string="Current Month" name="current_month"
+                            domain="[('date', '&gt;=', (context_today()).strftime('%%Y-%%m-01'))]"/>
+                    <filter string="Last Month" name="last_month"
+                            domain="[
+                            ('date', '&lt;', (context_today()).strftime('%%Y-%%m-01')),
+                            ('date', '&gt;=', (context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01'))]"/>
+                    <filter string="Current Year" name="current_year"
+                            domain="[('date', '&gt;=', (context_today()).strftime('%%Y-01-01'))]"/>
+                    <filter string="Last Year" name="last_year"
+                            domain="[
+                            ('date', '&lt;=', (context_today()-relativedelta(months=12)).strftime('%%Y-12-31')),
+                            ('date', '&gt;=', (context_today()-relativedelta(months=12)).strftime('%%Y-01-01'))]"/>
                 <separator orientation="vertical"/>
                 </filter>
             </field>
