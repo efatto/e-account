@@ -1,16 +1,97 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
+#	* account_move_line_usability
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-03 07:31+0000\n"
-"PO-Revision-Date: 2017-05-03 07:31+0000\n"
+"POT-Creation-Date: 2018-03-28 09:48+0000\n"
+"PO-Revision-Date: 2018-03-28 09:48+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: account_move_line_usability
+#: help:account.move.line,user_type:0
+msgid "Account Type is used for information purpose, to generate country-specific legal reports, and set the rules to close a fiscal year and generate opening entries."
+msgstr "Account Type is used for information purpose, to generate country-specific legal reports, and set the rules to close a fiscal year and generate opening entries."
+
+#. module: account_move_line_usability
+#: field:account.move.line,user_type:0
+msgid "Account user type"
+msgstr "Account user type"
+
+#. module: account_move_line_usability
+#: view:account.move.line:account_move_line_usability.view_account_move_line_filter_date_from_date_to
+msgid "Current Month"
+msgstr "Mese Corrente"
+
+#. module: account_move_line_usability
+#: view:account.move.line:account_move_line_usability.view_account_move_line_filter_date_from_date_to
+msgid "Current Year"
+msgstr "Anno Corrente"
+
+#. module: account_move_line_usability
+#: field:account.move.line,date_from:0
+msgid "Date from"
+msgstr "Da Data"
+
+#. module: account_move_line_usability
+#: field:account.move.line,date_to:0
+msgid "Date to"
+msgstr "A Data"
+
+#. module: account_move_line_usability
+#: view:account.move.line:account_move_line_usability.view_account_move_line_filter_date_from_date_to
+msgid "Expense"
+msgstr "Costi"
+
+#. module: account_move_line_usability
+#: view:account.move.line:account_move_line_usability.view_account_move_line_filter_date_from_date_to
+msgid "Income"
+msgstr "Ricavi"
+
+#. module: account_move_line_usability
+#: model:ir.model,name:account_move_line_usability.model_account_move_line
+msgid "Journal Items"
+msgstr "Voci Sezionale"
+
+#. module: account_move_line_usability
+#: view:account.move.line:account_move_line_usability.view_account_move_line_filter_date_from_date_to
+msgid "Last Month"
+msgstr "Mese Scorso"
+
+#. module: account_move_line_usability
+#: view:account.move.line:account_move_line_usability.view_account_move_line_filter_date_from_date_to
+msgid "Last Year"
+msgstr "Anno Scorso"
+
+#. module: account_move_line_usability
+#: view:account.move.line:account_move_line_usability.view_account_move_line_filter_date_from_date_to
+msgid "Payable"
+msgstr "Debiti"
+
+#. module: account_move_line_usability
+#: view:account.move.line:account_move_line_usability.view_account_move_line_filter_date_from_date_to
+msgid "Receivable"
+msgstr "Crediti"
+
+#. module: account_move_line_usability
+#: view:account.move.line:account_move_line_usability.view_account_move_line_filter_date_from_date_to
+msgid "Unbalanced"
+msgstr "Squadrate"
+
+#. module: account_move_line_usability
+#: view:account.move:account_move_line_usability.view_move_form_width
+msgid "account_move_line_usability_class"
+msgstr "account_move_line_usability_class"
+
+#. module: account_move_line_usability
+#: view:account.move:account_move_line_usability.view_move_form_width
+msgid "bottom"
+msgstr "bottom"
 
