@@ -90,21 +90,24 @@ class account_invoice(models.Model):
         super(account_invoice, self).finalize_invoice_move_lines(move_lines)
         totlines = False
         amount = 0
-        for line in move_lines:
-            if line[2].get('date_maturity', False):
-                amount += (line[2]['credit'] > 0 and line[2]['credit'] or
-                           line[2]['debit'])
         if self.payment_term:
+            for line in move_lines:
+                if line[2].get('date_maturity', False):
+                    amount += (line[2]['credit'] > 0 and line[2]['credit'] or
+                               line[2]['debit'])
             totlines = self.payment_term.compute(
                 amount, self.date_invoice or False)[0]
-        for line in move_lines:
             if totlines:
-                for pay_line in totlines:
-                    if line[2].get('date_maturity', False) == pay_line[0] and \
-                            (line[2]['credit'] == pay_line[1] or
-                             line[2]['debit'] == pay_line[1]):
-                        line[2].update({'payment_term_type': pay_line[2]})
-                        totlines.remove(pay_line)
+                for line in move_lines:
+                    for pay_line in totlines:
+                        if line[2].get('date_maturity', False) == pay_line[0] \
+                                and (line[2]['credit'] == pay_line[1] or
+                                     line[2]['debit'] == pay_line[1]):
+                            line[2].update({
+                                'payment_term_type': pay_line[2] if
+                                pay_line[2] else self.payment_term.type
+                            })
+                            totlines.remove(pay_line)
         return move_lines
 
 
