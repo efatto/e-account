@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-20 15:59+0000\n"
-"PO-Revision-Date: 2018-02-20 15:59+0000\n"
+"POT-Creation-Date: 2018-03-29 14:41+0000\n"
+"PO-Revision-Date: 2018-03-29 14:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,18 +17,13 @@ msgstr ""
 
 #. module: account_due_list_report_qweb
 #: view:website:account_due_list_report_qweb.duelist_qweb
-msgid "Credit"
-msgstr "Debiti"
-
-#. module: account_due_list_report_qweb
-#: view:website:account_due_list_report_qweb.duelist_qweb
 msgid "DUE LIST"
 msgstr "SCADENZARIO"
 
 #. module: account_due_list_report_qweb
-#: view:website:account_due_list_report_qweb.duelist_qweb
-msgid "Debit"
-msgstr "Crediti"
+#: field:report.account_due_list_report_qweb.duelist_qweb,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
 
 #. module: account_due_list_report_qweb
 #: view:website:account_due_list_report_qweb.duelist_qweb
@@ -44,6 +39,16 @@ msgstr "ID"
 #: view:website:account_due_list_report_qweb.duelist_qweb
 msgid "Invoice"
 msgstr "Fattura"
+
+#. module: account_due_list_report_qweb
+#: field:report.account_due_list_report_qweb.duelist_qweb,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: account_due_list_report_qweb
+#: view:website:account_due_list_report_qweb.duelist_qweb
+msgid "Maturity Residual"
+msgstr "Saldo"
 
 #. module: account_due_list_report_qweb
 #: view:website:account_due_list_report_qweb.duelist_qweb
