@@ -10,7 +10,8 @@ class AccountInvoice(models.Model):
 
     agents = fields.Many2many(
         comodel_name='res.partner',
-        domain=[('agent', '=', True)]
+        domain=[('agent', '=', True)],
+        string='Update agents'
     )
 
     @api.multi
