@@ -8,12 +8,13 @@ from openerp import models, api, fields
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
+    @api.depends('partner_id')
     def _get_commercial_partner_id(self):
-        for partner in self.partner_id:
-            current_partner = partner
+        for invoice in self:
+            current_partner = invoice.partner_id
             while not current_partner.is_company and current_partner.parent_id:
                 current_partner = current_partner.parent_id
-            self.commercial_partner_id = current_partner
+            invoice.commercial_partner_id = current_partner
 
     commercial_partner_id = fields.Many2one(
         'res.partner', string='Commercial Entity',
