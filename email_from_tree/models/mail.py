@@ -36,7 +36,8 @@ class MailComposeMessage(models.TransientModel):
             )
             if not template_id:
                 raise exceptions.ValidationError(_('No template found!'))
-            if self._context.get('default_template_id', False) == template_id[1]:
+            if self._context.get('default_template_id', False) == template_id[
+                    1]:
                 attachment_ids = []
                 for obj in self.env[self._context['active_model']].browse(
                         self._context['active_ids']):
@@ -67,5 +68,6 @@ class MailComposeMessage(models.TransientModel):
                                     'type': 'binary'
                                 })
                             attachment_ids += [attachment_id.id]
-                values[values.keys()[0]].update({'attachment_ids': attachment_ids})
+                values[values.keys()[0]].update({
+                    'attachment_ids': attachment_ids})
         return values
