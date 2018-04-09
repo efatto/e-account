@@ -26,6 +26,14 @@ openerp.account_move_line_search_usability = function (instance) {
             this.set_user_groups();
         },
 
+        search_credit: function() {
+            var self = this;
+            debugger;
+            last_domain = self.last_domain;
+            last_domain.push(['account_id.type', '=', 'receivable']);
+            self.do_search(last_domain, self.last_context, self.last_group_by);
+        },
+
         start: function(){
             var tmp = this._super.apply(this, arguments);
             var self = this;
@@ -72,6 +80,9 @@ openerp.account_move_line_search_usability = function (instance) {
             this.$el.parent().find('.oe_account_select_date_to').change(function() {
                     self.current_date_to = this.value === '' ? null : this.value;
                     self.do_search(self.last_domain, self.last_context, self.last_group_by);
+                });
+            this.$el.parent().find(".oe_account_credit").click(function() {
+                    self.search_credit();
                 });
         },
 
