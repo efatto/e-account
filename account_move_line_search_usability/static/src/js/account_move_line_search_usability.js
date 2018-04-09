@@ -25,6 +25,22 @@ openerp.account_move_line_search_usability = function (instance) {
             this.options.addable = false;
             this.set_user_groups();
             this.account_credit = false;
+            this.account_debit = false;
+        },
+
+        search_debit: function() {
+            var self = this;
+            last_domain = self.last_domain;
+            if (this.account_debit === false) {
+                this.account_debit = true;
+                last_domain.push(['account_id.type', '=', 'payable']);
+                self.$el.parent().find(".oe_account_debit").removeClass('oe_highlight').removeAttr("oe_highlight");
+            } else {
+                this.account_debit = false;
+                self.$el.parent().find(".oe_account_debit").addClass("oe_highlight").attr("oe_highlight", "");
+                last_domain.splice(last_domain.indexOf(['account_id.type', '=', 'payable']));
+            }
+            self.do_search(last_domain, self.last_context, self.last_group_by);
         },
 
         search_credit: function() {
@@ -91,6 +107,9 @@ openerp.account_move_line_search_usability = function (instance) {
                 });
             this.$el.parent().find(".oe_account_credit").click(function() {
                     self.search_credit();
+                });
+            this.$el.parent().find(".oe_account_debit").click(function() {
+                    self.search_debit();
                 });
         },
 
