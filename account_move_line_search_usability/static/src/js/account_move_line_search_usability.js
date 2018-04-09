@@ -24,13 +24,21 @@ openerp.account_move_line_search_usability = function (instance) {
             this.current_date_to = null;
             this.options.addable = false;
             this.set_user_groups();
+            this.account_credit = false;
         },
 
         search_credit: function() {
             var self = this;
-            debugger;
             last_domain = self.last_domain;
-            last_domain.push(['account_id.type', '=', 'receivable']);
+            if (this.account_credit === false) {
+                this.account_credit = true;
+                last_domain.push(['account_id.type', '=', 'receivable']);
+                self.$el.parent().find(".oe_account_credit").removeClass('oe_highlight').removeAttr("oe_highlight");
+            } else {
+                this.account_credit = false;
+                self.$el.parent().find(".oe_account_credit").addClass("oe_highlight").attr("oe_highlight", "");
+                last_domain.splice(last_domain.indexOf(['account_id.type', '=', 'receivable']));
+            }
             self.do_search(last_domain, self.last_context, self.last_group_by);
         },
 
