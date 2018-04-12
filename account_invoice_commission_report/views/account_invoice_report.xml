@@ -81,6 +81,10 @@
                     <td class="right_with_line_bold"><span t-esc="tot_amount_base" t-esc-options='{"widget": "monetary", "display_currency": "docs[0].company_id.currency_id"}'/></td>
                     <td class="right_with_line_bold"><span t-esc="tot_amount_commission" t-esc-options='{"widget": "monetary", "display_currency": "docs[0].company_id.currency_id"}'/></td>
                 </tr>
+                <tr>
+                    <td colspan="5" class="left_with_line_bold">TOTAL COMMISSION</td>
+                    <td class="right_with_line_bold"><span t-esc="tot_amount_commission" t-esc-options='{"widget": "monetary", "display_currency": "docs[0].company_id.currency_id"}'/></td>
+                </tr>
             </tbody>
         </table>
     </div>
