@@ -26,7 +26,8 @@ class AccountReportQweb(models.AbstractModel):
         month = year = False
         if fields.Date.from_string(from_date).month == \
                 fields.Date.from_string(to_date).month:
-            month = datetime.strftime(fields.Date.from_string(from_date), '%B').upper()
+            month = datetime.strftime(fields.Date.from_string(
+                from_date), '%B').upper()
             year = datetime.strftime(fields.Date.from_string(from_date), '%Y')
         docargs = {
             'doc_ids': self._ids,
@@ -35,7 +36,7 @@ class AccountReportQweb(models.AbstractModel):
             'docs': self.env[report.model].browse(self._ids),
             'month': month,
             'year': year,
-            'agent': agents[0].upper(),
+            'agent': agents[0].name.upper(),
         }
         return report_obj.render(
             'account_invoice_commission_report.report_account_invoice',

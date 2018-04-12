@@ -2,20 +2,23 @@
 <openerp>
 <data>
 
-<template id="report_account_invoice">
-    <t t-call="report.external_layout">
-     <style type="text/css">
+<template id="account_invoice_commission_report.commission_layout">
+    <t t-set="company" t-value="res_company" />
+    <t t-call="report.external_layout_header" />
+    <t t-raw="0" />
+</template>
+
+<template id="account_invoice_commission_report.report_account_invoice">
+    <style type="text/css">
+        p {
+            font-size: 11px;
+            margin-bottom: 0px;
+            }
         .left_with_line {
-            text-align:left; vertical-align:text-top; border-top:1px solid #A1A1A1; padding:5px;
+            text-align:left; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px;
         }
         .right_with_line {
-            text-align:right; vertical-align:text-top; border-top:1px solid #A1A1A1; padding:5px;
-        }
-        .left_with_line {
-            text-align:left; vertical-align:text-top; padding:5px;
-        }
-        .right_with_line {
-            text-align:right; vertical-align:text-top; padding:5px;
+            text-align:right; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px;
         }
         .left_with_line_bottom {
             text-align:left; vertical-align:text-top; border-bottom:1px solid #A1A1A1; padding:5px;
@@ -29,19 +32,31 @@
         .right_with_line_bold {
             text-align:right; vertical-align:text-top; padding:5px; font-weight: bold;
         }
-
         .first_th_row {
-            border-style:solid;border-width:1px;border-color:#A1A1A1; background: #fff;
+            text-align:center; border-style:solid; border-collapse:collapse; border-width:1px; border-color:#A1A1A1; background: #fff; padding:6px;
         }
-     </style>
-     <div class="page">
+        .commission_title {
+            font-size: 15px;
+            font-weight: bold;
+            padding-bottom:3px;
+            margin-bottom:5px;
+            }
+    </style>
+    <t t-call="report.html_container">
+    <t t-call="account_invoice_commission_report.commission_layout">
+    <div class="page">
+        <div id="commission_title">
+            <p class="commission_title">
+                Report Invoice Commission
+            </p>
+        </div>
         <table class="table" cellspacing="0">
             <thead>
                 <tr class="first_th_row">
-                    <td colspan="6" style="padding:10;">Report Invoice Commission <span t-esc="agent"/></td>
+                    <td colspan="6" class="first_th_row"><span t-esc="agent"/></td>
                 </tr>
                 <tr class="first_th_row">
-                    <td colspan="6" style="padding:10;">Month: <span t-esc="month"/></td>
+                    <td colspan="6" class="first_th_row"><span t-esc="month"/></td>
                 </tr>
                 <tr style="page-break-inside: avoid">
                     <th class="left_with_line">INVOICE N.</th>
@@ -53,19 +68,34 @@
                 </tr>
             </thead>
             <tbody>
+                <t t-set="tot_amount_untaxed" t-value="0" />
+                <t t-set="tot_amount_base" t-value="0" />
+                <t t-set="tot_amount_commission" t-value="0" />
                 <t t-foreach="docs" t-as="o">
                     <tr>
                         <td class="left_with_line"><span t-field="o.number"/></td>
-                        <td class="left_with_line_bold"><div style="page-break-inside: avoid" t-field="o.date_invoice"/></td>
+                        <td class="left_with_line"><div style="page-break-inside: avoid" t-field="o.date_invoice"/></td>
                         <td class="left_with_line"><span t-field="o.partner_id.name"/></td>
                         <td class="right_with_line"><span t-field="o.amount_untaxed"/></td>
                         <td class="right_with_line"><span t-field="o.commission_base_total"/></td>
                         <td class="right_with_line"><span t-field="o.commission_total"/></td>
+                        <t t-set="tot_amount_untaxed" t-value="tot_amount_untaxed + o.amount_untaxed" />
+                        <t t-set="tot_amount_base" t-value="tot_amount_base + o.commission_base_total" />
+                        <t t-set="tot_amount_commission" t-value="tot_amount_commission + o.commission_total" />
                     </tr>
                 </t>
+                <tr>
+                    <td class="left_with_line">TOTAL</td>
+                    <td class="left_with_line"></td>
+                    <td class="left_with_line"></td>
+                    <td class="right_with_line"><span t-esc="tot_amount_untaxed"/></td>
+                    <td class="right_with_line"><span t-esc="tot_amount_base"/></td>
+                    <td class="right_with_line"><span t-esc="tot_amount_commission"/></td>
+                </tr>
             </tbody>
         </table>
-     </div>
+    </div>
+    </t>
     </t>
 </template>     
 
