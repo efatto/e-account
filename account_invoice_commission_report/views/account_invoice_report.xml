@@ -16,26 +16,21 @@
         .right_with_line {
             text-align:right; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px;
         }
-        .left_with_line_bottom {
-            text-align:left; vertical-align:text-top; border-bottom:1px solid #A1A1A1; padding:5px;
-        }
-        .right_with_line_bottom {
-            text-align:right; vertical-align:text-top; border-bottom:1px solid #A1A1A1; padding:5px;
-        }
         .left_with_line_bold {
-            text-align:left; vertical-align:text-top; padding:5px; font-weight: bold;
+            text-align:left; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px; font-weight: bold;
         }
         .right_with_line_bold {
-            text-align:right; vertical-align:text-top; padding:5px; font-weight: bold;
+            text-align:right; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px; font-weight: bold;
         }
         .first_th_row {
-            text-align:center; border-style:solid; border-collapse:collapse; border-width:1px; border-color:#A1A1A1; background: #fff;
+            text-align:center; border:1px solid #A1A1A1; border-collapse:collapse; background: #fff;
         }
         .commission_title {
             font-size: 15px;
             font-weight: bold;
             padding-bottom:3px;
             margin-bottom:5px;
+            text-align:center;
             }
     </style>
     <t t-call="report.html_container">
@@ -54,13 +49,13 @@
         </div>
         <table class="table" cellspacing="0">
             <thead>
-                <tr class="first_th_row" style="page-break-inside: avoid">
-                    <th class="left_with_line">INVOICE N.</th>
-                    <th class="left_with_line">DATE</th>
-                    <th class="left_with_line">PARTNER</th>
-                    <th class="right_with_line">INVOICE</th>
-                    <th class="right_with_line">NET INVOICE</th>
-                    <th class="right_with_line">COMMISSION</th>
+                <tr class="first_th_row">
+                    <th class="left_with_line_bold">INVOICE N.</th>
+                    <th class="left_with_line_bold">DATE</th>
+                    <th class="left_with_line_bold">PARTNER</th>
+                    <th class="right_with_line_bold">INVOICE</th>
+                    <th class="right_with_line_bold">NET INVOICE</th>
+                    <th class="right_with_line_bold">COMMISSION</th>
                 </tr>
             </thead>
             <tbody>
@@ -81,9 +76,7 @@
                     </tr>
                 </t>
                 <tr>
-                    <td class="left_with_line_bold">TOTAL</td>
-                    <td class="left_with_line_bold"></td>
-                    <td class="left_with_line_bold"></td>
+                    <td colspan="3" class="left_with_line_bold">TOTAL</td>
                     <td class="right_with_line_bold"><span t-esc="tot_amount_untaxed" t-esc-options='{"widget": "monetary", "display_currency": "docs[0].company_id.currency_id"}'/></td>
                     <td class="right_with_line_bold"><span t-esc="tot_amount_base" t-esc-options='{"widget": "monetary", "display_currency": "docs[0].company_id.currency_id"}'/></td>
                     <td class="right_with_line_bold"><span t-esc="tot_amount_commission" t-esc-options='{"widget": "monetary", "display_currency": "docs[0].company_id.currency_id"}'/></td>
