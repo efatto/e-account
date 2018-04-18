@@ -10,6 +10,7 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def action_move_create(self):
+        reg_date = fields.Date.today()
         for inv in self:
             date_invoice = inv.date_invoice
             reg_date = inv.registration_date
@@ -50,6 +51,7 @@ class AccountInvoice(models.Model):
         super(AccountInvoice, self).action_move_create()
 
         for inv in self:
+            inv.move_id.write({'date': reg_date})
             for line in inv.move_id.line_id:
                 line.write({
                     'ref': inv.supplier_invoice_number and
