@@ -519,7 +519,18 @@ class Parser(report_sxw.rml_parse):
                         self.pool['account.invoice.line'])):
                     if self._is_printable_invoice_line_tax(
                             line.invoice_line_tax_id):
-                        total_goods_amount += line.price_subtotal
+                        if self._check_installed_module(
+                                'sale_advance_invoice_progress'):
+                            if not line.advance_invoice_id:
+                                total_goods_amount += line.price_subtotal
+                                continue
+                        elif self._check_installed_module(
+                                'sale_advance_invoice_progress'):
+                            if not line.product_id.downpayment:
+                                total_goods_amount += line.price_subtotal
+                                continue
+                        else:
+                            total_goods_amount += line.price_subtotal
                 else:
                     # if self._is_printable_invoice_line_tax(
                     #         line.tax_id): useful if report is compatible
