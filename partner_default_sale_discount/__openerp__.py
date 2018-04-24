@@ -12,6 +12,7 @@
     'website': 'https://www.tecnativa.com',
     'depends': [
         'sale',
+        'discount_complex',
     ],
     'data': [
         'views/res_partner_view.xml',

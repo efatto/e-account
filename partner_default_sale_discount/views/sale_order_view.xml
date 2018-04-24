@@ -11,7 +11,10 @@
             <field name="partner_shipping_id" position="after">
                 <button string="Update discount to %:" name="sale_discount_update"
                         type="object" attrs="{'invisible':[('state','not in',['draft',])]}"/>
-                <field name="default_sale_discount" attrs="{'invisible':[('state','not in',['draft',])]}" nolabel="1"/>
+                <field name="default_sale_discount"
+                       attrs="{'invisible':[('state','not in',['draft',])]}" nolabel="1"/>
+                <field name="default_sale_complex_discount"
+                       attrs="{'invisible':[('state','not in',['draft',])]}"/>
             </field>
         </field>
     </record>

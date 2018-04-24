@@ -11,6 +11,11 @@
                         attrs="{'invisible': ['|', ('customer', '=', False), ('parent_id', '!=', False)]}"
                         groups="sale.group_discount_per_so_line"
                 />
+                <field
+                        name="default_sale_complex_discount"
+                        attrs="{'invisible': ['|', ('customer', '=', False), ('parent_id', '!=', False)]}"
+                        groups="sale.group_discount_per_so_line"
+                />
             </field>
         </field>
     </record>
