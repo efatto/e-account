@@ -52,6 +52,7 @@ class Parser(report_sxw.rml_parse):
             'get_group_tax': self._get_group_tax,
             'is_printable_invoice_line_tax': self.
                 _is_printable_invoice_line_tax,
+            'has_complex_discount': self._has_complex_discount,
         })
         self.cache = {}
 
@@ -604,3 +605,10 @@ class Parser(report_sxw.rml_parse):
                     line.base_code_id.notprintable):
                 return True
         return False
+
+    def _has_complex_discount(self, lines):
+        res = False
+        if self._check_installed_module('discount_complex'):
+            if lines.filtered('complex_discount'):
+                res = True
+        return res
