@@ -28,6 +28,7 @@
     'depends': [
         'partner_default_sale_discount',
         'service_type',
+        'discount_complex',
     ],
     'data': [
     ],

@@ -17,3 +17,4 @@ class SaleOrder(models.Model):
                     'other', 'contribution', 'discount', 'transport']
             ):
                 line.discount = order.default_sale_discount
+                line.complex_discount = order.default_sale_complex_discount
