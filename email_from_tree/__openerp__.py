@@ -29,7 +29,6 @@
     'depends': [
         'account',
         'report',
-        'document',
         'sale',
     ],
     'data': [
