@@ -18,11 +18,12 @@
 #
 
 {
-    'name': 'Account fiscal position note not more translate',
+    'name': 'Account fiscal position note not more translate DEPRECATED',
     'version': '8.0.1.0.0',
     'category': 'Account',
     'license': 'AGPL-3',
-    'description': """Account fiscal position note not more translate""",
+    'description': """Account fiscal position note not more translate
+        INSTEAD UNINSTALL UNUSED""",
     'author': "Sergio Corato",
     'website': 'http://www.efatto.it',
     'depends': [
