@@ -294,20 +294,15 @@ class Parser(report_sxw.rml_parse):
                                         0].ddt_number
                                     rental_ddt_date = order_line.order_id.\
                                         ddt_ids[0].date
-                                    pick_type_in = self.pool[
-                                        'ir.model.data'].\
+                                    pick_type_in = self.pool['ir.model.data'].\
                                         get_object_reference(
-                                        self.cr, self.uid,
-                                        'stock', 'picking_type_in')
-                                    if pick_type_in:
-                                        pick_type_in_id = pick_type_in \
-                                            and pick_type_in[1] or False
-                                    if pick_type_in_id:
-                                        return_pick_id = [
-                                            x for x in
-                                            order_line.order_id.picking_ids if
-                                            x.picking_type_id.id ==
-                                            pick_type_in_id]
+                                            self.cr, self.uid,
+                                            'stock', 'picking_type_in')[1]
+                                    return_pick_id = [
+                                        x for x in
+                                        order_line.order_id.picking_ids if
+                                        x.picking_type_id.id ==
+                                        pick_type_in]
                                     if return_pick_id and \
                                             return_pick_id[0].date_done:
                                         return_pick_date = \
