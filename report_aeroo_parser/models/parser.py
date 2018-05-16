@@ -264,14 +264,13 @@ class Parser(report_sxw.rml_parse):
         for line in invoice_lines:
             rental_ddt = rental_ddt_date = return_pick_date = ddt = False
             if line.origin:
-                if picking_preparation_ids:
-                    for picking_preparation in picking_preparation_ids:
-                        for picking in picking_preparation.picking_ids:
-                            if picking.name == line.origin or \
-                                    picking.origin == line.origin:
-                                ddt_id = picking_preparation.id
-                                ddt = picking_preparation.ddt_number
-                                ddt_date = picking_preparation.date
+                for picking_preparation in picking_preparation_ids:
+                    for picking in picking_preparation.picking_ids:
+                        if picking.name == line.origin or \
+                                picking.origin == line.origin:
+                            ddt_id = picking_preparation.id
+                            ddt = picking_preparation.ddt_number
+                            ddt_date = picking_preparation.date
                 if not ddt:
                     sale_order = line.origin
                     sale_order_id = self.pool['sale.order'].search(
