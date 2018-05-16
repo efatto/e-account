@@ -152,44 +152,36 @@ class Parser(report_sxw.rml_parse):
         return invoice.amount_total
 
     def _desc_nocode(self, string):
-        return re.compile('\[.*\]\ ').sub('', string)
+        return re.compile('\[.*\] ').sub('', string)
 
     @staticmethod
     def get_description(self, ddt_name, ddt_date, order_name, order_date,
-                        client_order_ref, ddt_id, sale_orders, mrp_repairs,
-                        mrp_repairs_onsite):
+                        client_order_ref, ddt_id, mrp_name, mrp_date,
+                        mrp_machine, mrp_frame, mrp_onsite_name,
+                        mrp_onsite_date, mrp_onsite_machine, mrp_onsite_frame):
         description = []
-
+        if order_date:
+            order_date = self._convert_datetime_to_date_tz(order_date)
+        if ddt_date:
+            ddt_date = datetime.strptime(ddt_date, DEFAULT_SERVER_DATE_FORMAT)
         if ddt_name:
-            if ddt_date:
-                ddt_date = datetime.strptime(
-                    ddt_date, DEFAULT_SERVER_DATE_FORMAT)
             description.append(
-                _('Our Ref. Picking %s dated %s. %s %s') % (
+                _('Our Ref. Picking %s dated %s. %s %s %s')
+                % (
                     ddt_name,
                     ddt_date.strftime("%d/%m/%Y") if ddt_date else '',
-                    ' '.join([
-                        (_('Your Order %s ref. %s dated %s ') % (
-                            sale_orders[ddt_id][x]['name'],
-                            sale_orders[ddt_id][x]['ref'],
-                            sale_orders[ddt_id][x]['date'],
-                        )) for x in sale_orders[ddt_id]])
-                    if sale_orders and ddt_id else '',
-                    ' '.join([
-                        (_('Ref. Our Order %s dated %s. Machine: %s frame %s'
-                           ) % (
-                            mrp_repairs[ddt_id][x]['name'],
-                            mrp_repairs[ddt_id][x]['date'],
-                            mrp_repairs[ddt_id][x]['machine'],
-                            mrp_repairs[ddt_id][x]['frame'],
-                        )) for x in mrp_repairs[ddt_id]])
-                    if mrp_repairs and ddt_id else '',
+                    (_('Our ref. %s dated %s.'
+                       ) % (order_name, order_date)
+                     ) if order_name and not mrp_name else '',
+                    (_('Your Ref. %s.') % client_order_ref
+                     ) if client_order_ref and ddt_id else '',
+                    (_('Ref. Our Order %s dated %s. Machine: %s frame %s.'
+                       ) % (mrp_name, mrp_date, mrp_machine, mrp_frame)
+                     ) if mrp_name else '',
                 )
             )
 
         elif order_name:
-            if order_date:
-                order_date = self._convert_datetime_to_date_tz(order_date)
             description.append(
                 _('Our Ref. Order %s %s %s %s') % (
                     order_name,
@@ -197,13 +189,10 @@ class Parser(report_sxw.rml_parse):
                     order_date else '',
                     (_('.Your Ref. %s') % client_order_ref) if
                     client_order_ref else '',
-                    ' '.join([
-                        (_(' dated %s. Machine: %s frame %s') % (
-                            mrp_repairs_onsite[order_name][x]['date'],
-                            mrp_repairs_onsite[order_name][x]['machine'],
-                            mrp_repairs_onsite[order_name][x]['frame'],
-                        )) for x in mrp_repairs_onsite[order_name]])
-                    if mrp_repairs_onsite else '',
+                    (_(' dated %s. Machine: %s frame %s') % (
+                        mrp_onsite_date,
+                        mrp_onsite_machine, mrp_onsite_frame)
+                     ) if mrp_onsite_name else '',
                 ))
 
         return '\n'.join(description)
@@ -211,58 +200,21 @@ class Parser(report_sxw.rml_parse):
     def _convert_datetime_to_date_tz(self, date):
         to_zone = tz.gettz(self.localcontext['tz'])
         from_zone = tz.tzutc()
-        date_tz = datetime.strptime(date, DEFAULT_SERVER_DATETIME_FORMAT
-            ).replace(tzinfo=from_zone).astimezone(
-                to_zone).strftime("%d/%m/%Y")
+        date_tz = datetime.strptime(
+            date, DEFAULT_SERVER_DATETIME_FORMAT
+                ).replace(tzinfo=from_zone).astimezone(
+                    to_zone).strftime("%d/%m/%Y")
         return date_tz
 
     def _get_invoice_tree(self, invoice_lines, picking_preparation_ids):
         invoice = keys = {}
-        ddt = sale_order = ddt_date = sale_order_date = client_order_ref = \
-            ddt_id = False
-        sale_orders = {}
-        mrp_repairs = {}
-        mrp_repairs_onsite = {}
-        if picking_preparation_ids:
-            for picking_preparation in picking_preparation_ids:
-                for picking in picking_preparation.picking_ids:
-                    ddt_id = picking_preparation
-                    if ddt_id.id not in sale_orders:
-                        sale_orders[ddt_id.id] = {}
-                    if picking.sale_id and picking.sale_id.id \
-                            not in sale_orders[ddt_id.id]:
-                        sale_orders[ddt_id.id][
-                            picking.sale_id.id] = {
-                            'name': picking.sale_id.name,
-                            'date': self._convert_datetime_to_date_tz(
-                                picking.sale_id.date_order),
-                            'ref': picking.sale_id.client_order_ref or ''
-                        }
-                    # search mrp with out_picking_id
-                    if self._check_installed_module('mrp_repair_management'):
-                        if ddt_id.id not in mrp_repairs:
-                            mrp_repairs[ddt_id.id] = {}
-                        mrp = False
-                        mrp_id = self.pool['mrp.repair'].search(
-                            self.cr, self.uid, [
-                                ('out_picking_id', '=', picking.id)
-                            ])
-                        if mrp_id:
-                            mrp = self.pool['mrp.repair'].browse(
-                                self.cr, self.uid, mrp_id
-                            )
-                        if mrp and mrp.id not in mrp_repairs[ddt_id.id]:
-                            mrp_repairs[ddt_id.id][mrp.id] = {
-                                'name': mrp.name,
-                                'date': self._convert_datetime_to_date_tz(
-                                    mrp.date),
-                                'machine': mrp.machine_id.name,
-                                'frame': mrp.machine_id.frame if
-                                mrp.machine_id.frame else 'n.d.',
-                            }
+        ddt_date = client_order_ref = ddt_id = False
 
         for line in invoice_lines:
-            rental_ddt = rental_ddt_date = return_pick_date = ddt = False
+            rental_ddt = rental_ddt_date = return_pick_date = ddt = key = \
+                sale_order = sale_order_date = mrp_name = mrp_date = \
+                mrp_machine = mrp_frame = mrp_onsite_name = mrp_onsite_date = \
+                mrp_onsite_machine = mrp_onsite_frame = False
             if line.origin:
                 for picking_preparation in picking_preparation_ids:
                     for picking in picking_preparation.picking_ids:
@@ -271,89 +223,103 @@ class Parser(report_sxw.rml_parse):
                             ddt_id = picking_preparation.id
                             ddt = picking_preparation.ddt_number
                             ddt_date = picking_preparation.date
+                            sale_order = picking.origin
+                            if self._check_installed_module(
+                                    'mrp_repair_management'):
+                                mrp_id = self.pool['mrp.repair'].search(
+                                    self.cr, self.uid, [
+                                        ('out_picking_id', '=', picking.id)
+                                    ])
+                                if mrp_id:
+                                    mrp = self.pool['mrp.repair'].browse(
+                                        self.cr, self.uid, mrp_id
+                                    )
+                                    mrp_name = mrp.name
+                                    mrp_date = self.\
+                                        _convert_datetime_to_date_tz(
+                                            mrp.date)
+                                    mrp_machine = mrp.machine_id.name
+                                    mrp_frame = mrp.machine_id.frame if \
+                                        mrp.machine_id.frame else 'n.d.'
+                            break
                 if not ddt:
+                    # invoice not created from shipment, origin is sale order
                     sale_order = line.origin
-                    sale_order_id = self.pool['sale.order'].search(
-                        self.cr, self.uid, [
-                            ('name', '=', line.origin),
-                            ('company_id', '=', line.company_id.id)
-                        ], limit=1)
-                    if sale_order_id:
-                        sale_order_obj = self.pool['sale.order'].browse(
-                            self.cr, self.uid, sale_order_id
-                        )
-                        sale_order_date = sale_order_obj.date_order
-                        client_order_ref = sale_order_obj.client_order_ref
-                        if self._check_installed_module('sale_rental_machine'):
-                            # add sale rental data if exists
-                            for order_line in sale_order_obj.order_line:
-                                if order_line.rental_type and \
-                                        order_line.order_id.ddt_ids:
-                                    rental_ddt = order_line.order_id.ddt_ids[
-                                        0].ddt_number
-                                    rental_ddt_date = order_line.order_id.\
-                                        ddt_ids[0].date
-                                    pick_type_in = self.pool['ir.model.data'].\
-                                        get_object_reference(
-                                            self.cr, self.uid,
-                                            'stock', 'picking_type_in')[1]
-                                    return_pick_id = [
-                                        x for x in
-                                        order_line.order_id.picking_ids if
-                                        x.picking_type_id.id ==
-                                        pick_type_in]
-                                    if return_pick_id and \
-                                            return_pick_id[0].date_done:
-                                        return_pick_date = \
-                                            self._convert_datetime_to_date_tz(
-                                                return_pick_id[0].date_done)
-                    #
-                    # search mrp without out_picking_id (onsite)
-                    if self._check_installed_module('mrp_repair_management'):
-                        mrp_onsite = False
-                        mrp_onsite_id = self.pool['mrp.repair'].search(
-                            self.cr, self.uid, [
-                                ('name', '=', line.origin)
-                            ])
-                        if sale_order not in mrp_repairs_onsite:
-                            mrp_repairs_onsite[sale_order] = {}
+                sale_order_id = self.pool['sale.order'].search(
+                    self.cr, self.uid, [
+                        ('name', '=', sale_order),
+                        ('company_id', '=', line.company_id.id)
+                    ], limit=1)
+                if sale_order_id:
+                    sale_order_obj = self.pool['sale.order'].browse(
+                        self.cr, self.uid, sale_order_id
+                    )
+                    sale_order_date = sale_order_obj.date_order
+                    client_order_ref = sale_order_obj.client_order_ref
+                    if self._check_installed_module('sale_rental_machine'):
+                        # add sale rental data if exists
+                        for order_line in sale_order_obj.order_line:
+                            if order_line.rental_type and \
+                                    order_line.order_id.ddt_ids:
+                                rental_ddt = order_line.order_id.ddt_ids[
+                                    0].ddt_number
+                                rental_ddt_date = order_line.order_id.\
+                                    ddt_ids[0].date
+                                pick_type_in = self.pool['ir.model.data'].\
+                                    get_object_reference(
+                                        self.cr, self.uid,
+                                        'stock', 'picking_type_in')[1]
+                                return_pick_id = [
+                                    x for x in
+                                    order_line.order_id.picking_ids if
+                                    x.picking_type_id.id ==
+                                    pick_type_in]
+                                if return_pick_id and \
+                                        return_pick_id[0].date_done:
+                                    return_pick_date = \
+                                        self._convert_datetime_to_date_tz(
+                                            return_pick_id[0].date_done)
 
-                        if mrp_onsite_id:
-                            mrp_onsite = self.pool['mrp.repair'].browse(
-                                self.cr, self.uid, mrp_onsite_id
-                            )
-                        if mrp_onsite and mrp_onsite.id \
-                                not in mrp_repairs_onsite[sale_order]:
-                            mrp_repairs_onsite[sale_order][mrp_onsite.id
-                            ] = {
-                                'name': mrp_onsite.name,
-                                'date': self._convert_datetime_to_date_tz(
-                                    mrp_onsite.date),
-                                'machine': mrp_onsite.machine_id.name,
-                                'frame': mrp_onsite.machine_id.frame if
-                                mrp_onsite.machine_id.frame else 'n.d.',
-                            }
+                # search mrp without out_picking_id (onsite)
+                if self._check_installed_module('mrp_repair_management'):
+                    mrp_onsite_id = self.pool['mrp.repair'].search(
+                        self.cr, self.uid, [
+                            ('name', '=', line.origin)
+                        ])
+                    if mrp_onsite_id:
+                        mrp_onsite = self.pool['mrp.repair'].browse(
+                            self.cr, self.uid, mrp_onsite_id
+                        )
+                        mrp_onsite_name = mrp_onsite.name
+                        mrp_onsite_date = self._convert_datetime_to_date_tz(
+                                mrp_onsite.date)
+                        mrp_onsite_machine = mrp_onsite.machine_id.name
+                        mrp_onsite_frame = mrp_onsite.machine_id.frame if \
+                            mrp_onsite.machine_id.frame else 'n.d.'
             # Order lines by date and by ddt, so first create date_ddt key:
             if ddt:
+                # this row has ddt and possibly sale_order
                 if ddt in keys:
                     key = keys[ddt]
                 else:
-                    key = "{0}_{1}".format(ddt_date, ddt)
+                    key = "{0}_{1}_{2}_{3}".format(ddt_date, ddt,
+                                                   sale_order_date, sale_order)
             elif sale_order:
+                # this row has only sale order
                 if sale_order in keys:
                     key = keys[sale_order]
                 else:
-                    key = "{0}_{1}".format(sale_order_date, sale_order)
-            else:
-                key = False
+                    key = "{0}_{1}_{2}_{3}".format(ddt_date, ddt,
+                                                   sale_order_date, sale_order)
 
             if key in invoice:
                 invoice[key]['lines'].append(line)
             else:
                 description = self.get_description(
                     self, ddt, ddt_date, sale_order, sale_order_date,
-                    client_order_ref, ddt_id, sale_orders, mrp_repairs,
-                    mrp_repairs_onsite)
+                    client_order_ref, ddt_id, mrp_name, mrp_date, mrp_machine,
+                    mrp_frame, mrp_onsite_name, mrp_onsite_date,
+                    mrp_onsite_machine, mrp_onsite_frame)
                 if rental_ddt and rental_ddt_date:
                     date = datetime.strptime(
                         rental_ddt_date, DEFAULT_SERVER_DATE_FORMAT)
