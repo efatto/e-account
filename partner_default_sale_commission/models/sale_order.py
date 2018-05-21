@@ -47,3 +47,19 @@ class SaleOrder(models.Model):
                 'default_sale_commission_id':
                     partner_id.default_sale_commission_id.id})
         return res
+
+
+class SaleOrderLineAgent(models.Model):
+    _inherit = "sale.order.line.agent"
+
+    @api.multi
+    def name_get(self):
+        res = []
+        for record in self:
+            name = "%s: %s" % (record.agent.name, record.commission.name)
+            res.append((record.id, name))
+        return res
+
+    @api.depends('agent', 'commission')
+    def _compute_display_name(self):
+        return super(SaleOrderLineAgent, self)._compute_display_name()
