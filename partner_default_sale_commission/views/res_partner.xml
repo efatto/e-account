@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+    <record id="view_partner_form_default_commission" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="sale_commission.view_partner_form_agent"/>
+        <field name="arch" type="xml">
+            <field name="agents" position="after">
+                <field name="default_sale_commission_id"
+                       attrs="{'invisible': ['|', ('customer', '=', False), ('parent_id', '!=', False)]}"
+                />
+            </field>
+        </field>
+    </record>
+  </data>
+</openerp>
