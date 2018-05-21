@@ -10,5 +10,4 @@ class ResPartner(models.Model):
 
     default_sale_commission_id = fields.Many2one(
         comodel_name="sale.commission",
-        string="Default commission",
-        company_dependent=True)
+        string="Default commission")
