@@ -22,7 +22,9 @@
     'version': '8.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'This module .',
+    'description': 'This module fix context in sale order line when '
+                   'sale_commission module is installed with '
+                   'sale_order_line_dates module.',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
