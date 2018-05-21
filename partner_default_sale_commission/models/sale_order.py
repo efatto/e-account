@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-from openerp import api, fields, models, exceptions, _
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in root directory
+##############################################################################
+from openerp import api, fields, models
 
 
 class SaleOrderLine(models.Model):
