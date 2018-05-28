@@ -18,4 +18,4 @@ class AccountVoucher(models.Model):
 class AccountVoucherLine(models.Model):
     _inherit = 'account.voucher.line'
 
-    _order = 'date_original'
+    _order = 'date_due'
