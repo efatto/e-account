@@ -81,8 +81,12 @@ class Parser(report_sxw.rml_parse):
                 if obj.bank_riba_id:
                     bank = obj.bank_riba_id
             if not bank:
-                if obj.commercial_partner_id.bank_riba_id:
-                    bank = obj.commercial_partner_id.bank_riba_id
+                if model == 'account.invoice':
+                    if obj.commercial_partner_id.bank_riba_id:
+                        bank = obj.commercial_partner_id.bank_riba_id
+                else:
+                    if obj.partner_id.bank_riba_id:
+                        bank = obj.partner_id.bank_riba_id
         return bank if bank else []
 
     def _get_bank(self, model='account.invoice'):
@@ -107,11 +111,17 @@ class Parser(report_sxw.rml_parse):
                 if obj.partner_bank_id:
                     bank = obj.partner_bank_id
             if not bank:
-                if obj.commercial_partner_id.company_bank_id:
-                    bank = obj.commercial_partner_id.company_bank_id
-                elif obj.commercial_partner_id.bank_ids:
-                    bank = obj.commercial_partner_id.bank_ids[0]
-                elif obj.company_id.bank_ids and not \
+                if model == 'account.invoice':
+                    if obj.commercial_partner_id.company_bank_id:
+                        bank = obj.commercial_partner_id.company_bank_id
+                    elif obj.commercial_partner_id.bank_ids:
+                        bank = obj.commercial_partner_id.bank_ids[0]
+                else:
+                    if obj.partner_id.company_bank_id:
+                        bank = obj.partner_id.company_bank_id
+                    elif obj.partner_id.bank_ids:
+                        bank = obj.partner_id.bank_ids[0]
+                if not bank and obj.company_id.bank_ids and not \
                         self.pool['ir.config_parameter'].get_param(
                         self.cr, self.uid, 'report.not.print.default.bank',
                         default=False):
