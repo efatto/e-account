@@ -10,7 +10,8 @@
                 <field name="agents" position="attributes">
                     <attribute name="attrs">{'required': [
                         ('parent_id', '=', False),
-                        ('customer', '=', True)]}
+                        ('customer', '=', True),
+                        ('agent', '=', False)]}
                     </attribute>
                 </field>
             </field>
