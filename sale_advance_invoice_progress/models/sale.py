@@ -8,12 +8,6 @@ import time
 from datetime import datetime
 
 
-class AccountInvoiceLine(models.Model):
-    _inherit = "account.invoice.line"
-
-    advance_invoice_id = fields.Many2one('account.invoice', 'Advance invoice')
-
-
 class SaleAdvancePaymentInv(models.TransientModel):
     _inherit = "sale.advance.payment.inv"
 
