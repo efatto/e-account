@@ -32,7 +32,6 @@
     ],
     'data': [
         'views/sale.xml',
-        'views/invoice.xml',
     ],
     'installable': True
 }
