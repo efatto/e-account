@@ -27,6 +27,7 @@
     'license': 'AGPL-3',
     'depends': [
         'account',
+        'account_bank',
         'account_invoice_entry_date',
         'account_invoice_supplier_number_info',
     ],
