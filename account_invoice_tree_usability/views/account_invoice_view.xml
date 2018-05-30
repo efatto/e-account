@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record model="ir.ui.view" id="view_account_invoice_tree_usability">
+        <field name="name">view.account.invoice.tree.usability</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='number']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='date_invoice']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="number"/>
+                <field name="date_invoice"/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='registration_date']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='date_due']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='residual']" position="before">
+                <field name="date_due"/>
+                <field name="payment_term"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_account_invoice_supplier_tree_usability">
+        <field name="name">view.account.invoice.supplier.tree.usability</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account_invoice_supplier_number_info.view_account_invoice_supplier_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_invoice']" position="replace"/>
+            <xpath expr="//field[@name='date_due']" position="replace"/>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="date_invoice"/>
+                <field name="reference"/>
+                <field name="date_due"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='residual']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="residual"/>
+            </xpath>
+        </field>
+    </record>
+
+  </data>
+</openerp>
