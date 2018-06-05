@@ -45,7 +45,7 @@
             <xpath expr="//field[@name='residual']" position="replace">
             </xpath>
             <xpath expr="//field[@name='state']" position="after">
-                <field name="residual"/>
+                <field name="residual" sum="Total Residual"/>
                 <field name="date_due"/>
                 <field name="payment_term"/>
             </xpath>
