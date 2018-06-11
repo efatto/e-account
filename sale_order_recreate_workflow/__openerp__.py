@@ -22,6 +22,8 @@
     'name': "Sale order recreate workflow",
     'version': '8.0.1.0.0',
     'category': 'Sale Management',
+    'description': 'Add ability to reset the workflow of sale order '
+                   'setting to draft.',
     'author': 'Sergio Corato',
     'website': 'https://efatto.it',
     'license': 'AGPL-3',
