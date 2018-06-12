@@ -14,7 +14,8 @@ class SaleOrder(models.Model):
         for order in self:
             for line in order.order_line.filtered(
                 lambda x: x.product_id.service_type not in [
-                    'other', 'contribution', 'discount', 'transport']
+                    'other', 'contribution', 'discount', 'transport'] and
+                    not x.product_id.categ_id.no_discount
             ):
                 line.discount = order.default_sale_discount
                 line.complex_discount = order.default_sale_complex_discount

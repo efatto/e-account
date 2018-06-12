@@ -26,9 +26,10 @@
     'author': 'Sergio Corato',
     'website': 'https://www.efatto.it',
     'depends': [
-        'partner_default_sale_discount',
-        'service_type',
         'discount_complex',
+        'partner_default_sale_discount',
+        'product_category_nodiscount',
+        'service_type',
     ],
     'data': [
     ],
