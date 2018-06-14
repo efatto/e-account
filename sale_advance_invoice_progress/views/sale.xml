@@ -12,7 +12,11 @@
                    <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
                     type="action" class="oe_highlight" groups="base.group_user"
                     attrs="{'invisible': [('state', 'not in', ['manual','progress']),]}"
-                />
+                   />
+                   <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+                    type="action" groups="base.group_user"
+                    attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('invoiced', '=', True)]}"
+                   />
                 </xpath>
                  <xpath expr="//page[@string='Other Information']" position="after">
                     <page string="Invoices">
