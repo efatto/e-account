@@ -132,13 +132,14 @@ class Parser(report_sxw.rml_parse):
         return bank if bank else []
 
     def _get_total_tax_fiscal(self, tax_line):
-        invoice = self.pool['account.invoice'].browse(self.cr, self.uid, self.ids[0])
-        amount_withholding = 0.0
+        invoice = self.pool['account.invoice'].browse(
+            self.cr, self.uid, self.ids[0])
+        amount_excluded = 0.0
         for line in tax_line:
-            if line.tax_code_id.notprintable:
-                amount_withholding += line.tax_amount
-        if amount_withholding != 0.0:
-            return invoice.amount_tax - amount_withholding
+            if line.tax_code_id.exclude_from_registries:
+                amount_excluded += line.tax_amount
+        if amount_excluded != 0.0:
+            return invoice.amount_tax - amount_excluded
         return invoice.amount_tax
 
     def _get_total_fiscal(self, tax_line):
