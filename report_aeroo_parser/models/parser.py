@@ -143,24 +143,25 @@ class Parser(report_sxw.rml_parse):
         return invoice.amount_tax
 
     def _get_total_fiscal(self, tax_line):
-        invoice = self.pool['account.invoice'].browse(self.cr, self.uid, self.ids[0])
-        amount_withholding = 0.0
-        for line in tax_line:
-            if line.tax_code_id.notprintable:
-                amount_withholding += line.tax_amount
-        if amount_withholding != 0.0:
-            return invoice.amount_total - amount_withholding
-        return invoice.amount_total
-
-    def _get_initial_residual(self, tax_line):
-        invoice = self.pool['account.invoice'].browse(self.cr, self.uid, self.ids[0])
+        invoice = self.pool['account.invoice'].browse(
+            self.cr, self.uid, self.ids[0])
         amount_excluded = 0.0
         for line in tax_line:
             if line.tax_code_id.exclude_from_registries:
                 amount_excluded += line.tax_amount
         if amount_excluded != 0.0:
-            return invoice.amount_total + amount_excluded
+            return invoice.amount_total - amount_excluded
         return invoice.amount_total
+
+    def _get_initial_residual(self, tax_line):
+        invoice = self.pool['account.invoice'].browse(
+            self.cr, self.uid, self.ids[0])
+        tax_amount = 0.0
+        for line in tax_line:
+            tax_amount += line.tax_amount
+        if tax_amount != 0.0:
+            return invoice.amount_untaxed + tax_amount
+        return invoice.residual
 
     def _desc_nocode(self, string):
         return re.compile('\[.*\] ').sub('', string)
