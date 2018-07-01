@@ -350,7 +350,14 @@ class Parser(report_sxw.rml_parse):
             else:
                 return 'ZZZ'
 
-        return OrderedDict(sorted(invoice.items(), key=get_key)).values()
+        res = OrderedDict(sorted(invoice.items(), key=get_key)).values()
+        if self.pool['ir.config_parameter'].get_param(
+                self.cr, self.uid, 'report.invoice_order_products',
+                default=False):
+            for group in invoice:
+                invoice[group]['lines'].sort(
+                    key=lambda r: r.product_id.default_code or r.name or 'zzz')
+        return res
 
     def _get_ddt_tree(self, sppp_line_ids):
         # group sppp lines by sale order if present
@@ -383,19 +390,26 @@ class Parser(report_sxw.rml_parse):
                             sale_order_date.strftime("%d/%m/%Y"),
                             ' - ' + order_ref if order_ref else '',
                         )
-                else: # if there is move_id but not origin
+                else:  # if there is move_id but not origin
                     key = False
-            else: # if there is not move_id
+            else:  # if there is not move_id
                 key = False
             if key in order: # append subsequent lines
                 order[key]['lines'].append(line)
-            else: # create line
+            else:  # create line
                 order[key] = {
                     'description': description,
                     'lines': [line]}
 
-        return OrderedDict(
+        res = OrderedDict(
             sorted(order.items(), key=lambda t: t[0])).values()
+        if self.pool['ir.config_parameter'].get_param(
+                self.cr, self.uid, 'report.sppp_order_products',
+                default=False):
+            for group in order:
+                order[group]['lines'].sort(
+                    key=lambda r: r.product_id.default_code or r.name or 'zzz')
+        return res
 
     @staticmethod
     def _get_group_tax(tax_lines):
