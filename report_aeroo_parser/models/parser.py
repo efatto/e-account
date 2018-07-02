@@ -135,32 +135,46 @@ class Parser(report_sxw.rml_parse):
         invoice = self.pool['account.invoice'].browse(
             self.cr, self.uid, self.ids[0])
         amount_excluded = 0.0
+        amount_sp = 0.0
+        amount_tax = invoice.amount_tax
+        tax_sign = (-1 if invoice.type in ['out_refund', 'in_refund'] else 1)
+        if self._check_installed_module('l10n_it_split_payment'):
+            amount_sp = invoice.amount_sp
         for line in tax_line:
             if line.tax_code_id.exclude_from_registries:
                 amount_excluded += line.tax_amount
         if amount_excluded != 0.0:
-            return invoice.amount_tax - amount_excluded
-        return invoice.amount_tax
+            return amount_tax - (amount_excluded * tax_sign) + amount_sp
+        return amount_tax + amount_sp
 
     def _get_total_fiscal(self, tax_line):
         invoice = self.pool['account.invoice'].browse(
             self.cr, self.uid, self.ids[0])
         amount_excluded = 0.0
+        amount_sp = 0.0
+        amount_total = invoice.amount_total
+        tax_sign = (-1 if invoice.type in ['out_refund', 'in_refund'] else 1)
+        if self._check_installed_module('l10n_it_split_payment'):
+            amount_sp = invoice.amount_sp
         for line in tax_line:
             if line.tax_code_id.exclude_from_registries:
                 amount_excluded += line.tax_amount
         if amount_excluded != 0.0:
-            return invoice.amount_total - amount_excluded
-        return invoice.amount_total
+            return amount_total - (amount_excluded * tax_sign) + amount_sp
+        return amount_total + amount_sp
 
     def _get_initial_residual(self, tax_line):
         invoice = self.pool['account.invoice'].browse(
             self.cr, self.uid, self.ids[0])
         tax_amount = 0.0
+        amount_sp = 0.0
+        tax_sign = (-1 if invoice.type in ['out_refund', 'in_refund'] else 1)
+        if self._check_installed_module('l10n_it_split_payment'):
+            amount_sp = invoice.amount_sp
         for line in tax_line:
             tax_amount += line.tax_amount
         if tax_amount != 0.0:
-            return invoice.amount_untaxed + tax_amount
+            return invoice.amount_untaxed + (tax_amount * tax_sign) - amount_sp
         return invoice.residual
 
     def _desc_nocode(self, string):
