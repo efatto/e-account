@@ -26,7 +26,7 @@
                     <field name="payment_term" invisible="context.get('type') == 'in_invoice'" groups="account.view_payment_term"/>
                 </field>
                 <field name="date_due" position="after">
-                    <field name="bank_riba_id" invisible="context.get('type') == 'in_invoice'" groups="account.view_payment_term"/>
+                    <field name="actual_bank_riba_id" invisible="context.get('type') == 'in_invoice'" groups="account.view_payment_term"/>
                 </field>
             </field>
         </record>
@@ -38,7 +38,7 @@
             <field name="type">search</field>
             <field name="arch" type="xml">
                 <field name="period_id" position="after">
-                    <field name="bank_riba_id" invisible="context.get('type') == 'in_invoice'" groups="account.view_payment_term"/>
+                    <field name="actual_bank_riba_id" invisible="context.get('type') == 'in_invoice'" groups="account.view_payment_term"/>
                     <field name="payment_term" widget="selection" invisible="context.get('type') == 'in_invoice'" groups="account.view_payment_term"/>
                 </field>
             </field>
