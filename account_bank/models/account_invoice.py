@@ -1,37 +1,21 @@
 # -*- coding: utf-8 -*-
-#
-#
-#    Copyright (C) 2015 SimplERP srl (<http://www.simplerp.it>).
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-#
-from openerp.osv import fields, orm
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in root directory
+##############################################################################
+from openerp import models, fields, api
 
 
-class account_invoice(orm.Model):
+class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    _columns = {
-        'bank_riba_id': fields.many2one('res.bank', 'Bank for ri.ba.'),
-    }
+    bank_riba_id = fields.Many2one('res.bank', 'Bank for ri.ba.')
 
+    @api.cr_uid_ids_context
     def onchange_partner_id(
             self, cr, uid, ids, type, partner_id, date_invoice=False,
             payment_term=False, partner_bank_id=False, company_id=False,
             context=None):
-        result = super(account_invoice, self).onchange_partner_id(
+        result = super(AccountInvoice, self).onchange_partner_id(
             cr, uid, ids, type, partner_id, date_invoice, payment_term,
             partner_bank_id, company_id, context)
 
@@ -39,4 +23,6 @@ class account_invoice(orm.Model):
             cr, uid, partner_id, context)
         if partner.bank_riba_id:
             result['value']['bank_riba_id'] = partner.bank_riba_id.id
+        else:
+            result['value']['bank_riba_id'] = False
         return result

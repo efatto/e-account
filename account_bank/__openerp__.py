@@ -3,6 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2014 Didotech SRL (<http://www.didotech.com>).
+#    Copyright (C) 2015-2018 Sergio Corato
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,8 +24,8 @@
     'name': 'Bank for riba and payment in partner',
     'version': '8.0.1.0.0',
     'category': 'Localisation',
-    'author': 'Didotech SRL, SimplERP srl',
-    'website': 'http://www.simplerp.it',
+    'author': 'Didotech SRL, Sergio corato',
+    'website': 'https://efatto.it',
     'description': 'Bank for riba and payment in partner',
     'license': 'AGPL-3',
     "depends": [
