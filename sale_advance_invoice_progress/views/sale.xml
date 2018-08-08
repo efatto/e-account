@@ -33,7 +33,14 @@
                             </group>
                         </group>
                         <group string="Refunded invoice lines">
-                            <field name="refunded_invoice_line_ids" nolabel="1"/>
+                            <field name="refunded_invoice_line_ids" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="invoice_id"/>
+                                    <field name="account_id"/>
+                                    <field name="price_subtotal_signed" sum="Total"/>
+                                </tree>
+                            </field>
                         </group>
                         <group string="Advance Invoices">
                             <field name="advance_invoice_ids" context="{'form_view_ref': 'account.invoice_form'}" nolabel="1"/>

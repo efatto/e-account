@@ -153,11 +153,20 @@ class SaleOrder(models.Model):
                 order.advance_invoice_tag = _(u'(No advance invoice yet)')
 
             order.advance_amount = sum(
-                x.amount_untaxed for x in order.advance_invoice_ids)
+                x.amount_untaxed for x in order.advance_invoice_ids if x.type
+                == 'out_invoice') - sum(
+                x.amount_untaxed for x in order.advance_invoice_ids if x.type
+                == 'out_refund')
             order.advance_amount_total = sum(
-                x.amount_total for x in order.advance_invoice_ids)
+                x.amount_total for x in order.advance_invoice_ids if x.type
+                == 'out_invoice') - sum(
+                x.amount_total for x in order.advance_invoice_ids if x.type
+                == 'out_refund')
             order.advance_residual = sum(
-                x.residual for x in order.advance_invoice_ids)
+                x.residual for x in order.advance_invoice_ids if x.type
+                == 'out_invoice') - sum(
+                x.residual for x in order.advance_invoice_ids if x.type
+                == 'out_refund')
             order.advance_percentage = \
                 order.advance_amount / order.amount_untaxed * 100 if \
                 order.advance_amount and order.amount_untaxed else 0.0
@@ -167,7 +176,11 @@ class SaleOrder(models.Model):
                     , ('invoice_id.state', 'in', ['open', 'paid'])
                 ])
             order.advance_refunded_amount = sum(
-                x.price_subtotal for x in order.refunded_invoice_line_ids
+                x.price_subtotal for x in order.refunded_invoice_line_ids if
+                x.invoice_id.type == 'out_invoice'
+            ) - sum(
+                x.price_subtotal for x in order.refunded_invoice_line_ids if
+                x.invoice_id.type == 'out_refund'
             )
             order.amount_residual = order.amount_total - \
                 order.advance_amount_total + order.advance_residual
