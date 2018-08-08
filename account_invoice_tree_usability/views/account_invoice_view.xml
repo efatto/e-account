@@ -6,7 +6,7 @@
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="account.invoice_tree"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='bank_riba_id']" position="attributes">
+            <xpath expr="//field[@name='actual_bank_riba_id']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
             <xpath expr="//field[@name='number']" position="replace"/>
