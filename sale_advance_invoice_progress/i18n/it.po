@@ -55,6 +55,11 @@ msgid "Advance invoice"
 msgstr "Fattura di acconto"
 
 #. module: sale_advance_invoice_progress
+#: field:account.invoice.line,price_subtotal_signed:0
+msgid "Price Subtotal Signed"
+msgstr "Importo"
+
+#. module: sale_advance_invoice_progress
 #: view:sale.order:sale_advance_invoice_progress.view_order_form_advance_invoice
 msgid "Create Invoice"
 msgstr "Crea fattura"
