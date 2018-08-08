@@ -46,7 +46,17 @@
                             <field name="advance_invoice_ids" context="{'form_view_ref': 'account.invoice_form'}" nolabel="1"/>
                         </group>
                         <group string="Invoices from Order">
-                            <field name="from_line_invoice_ids" context="{'form_view_ref': 'account.invoice_form'}" nolabel="1"/>
+                            <field name="from_line_invoice_ids" context="{'form_view_ref': 'account.invoice_form'}" nolabel="1">
+                                <tree>
+                                    <field name="number"/>
+                                    <field name="date_invoice"/>
+                                    <field name="origin"/>
+                                    <field name="state"/>
+                                    <field name="amount_untaxed_signed" sum="Total Untaxed"/>
+                                    <field name="amount_total_signed" sum="Total Amount"/>
+                                    <field name="residual_signed" sum="Total Residual"/>
+                                </tree>
+                            </field>
                         </group>
                     </page>
                 </xpath>

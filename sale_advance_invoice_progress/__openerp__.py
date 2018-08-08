@@ -29,6 +29,7 @@
     'depends': [
         'sale',
         'sale_advance_invoice_product',
+        'res_partner_account_refund_sign',
     ],
     'data': [
         'views/sale.xml',
