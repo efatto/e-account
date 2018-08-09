@@ -331,3 +331,17 @@ msgstr "altro"
 msgid "transport"
 msgstr "trasporto"
 
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
+msgid "Carrier's Signature"
+msgstr "Firma Corriere"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
+msgid "Driver's Signature"
+msgstr "Firma Conducente"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
+msgid "Recipient's Signature"
+msgstr "Firma Destinatario"

@@ -41,6 +41,9 @@
     <span>Tax vat 22%</span>
     <span>Amount before taxes</span>
     <span>Payment terms</span>
+    <span>Carrier signature</span>
+    <span>Driver signature</span>
+    <span>Recipient signature</span>
 </template>
 
 
