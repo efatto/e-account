@@ -20,9 +20,13 @@ class SaleOrder(models.Model):
             for line in order.order_line:
                 agents = []
                 for agent in order.agents:
+                    commission_id = agent.commission
+                    if order.partner_id.default_sale_commission_id:
+                        commission_id = order.partner_id.\
+                            default_sale_commission_id
                     vals = {
                         'agent': agent.id,
-                        'commission': agent.commission.id,
+                        'commission': commission_id.id,
                     }
                     vals['display_name'] = self.env[
                         'account.invoice.line.agent'] \
