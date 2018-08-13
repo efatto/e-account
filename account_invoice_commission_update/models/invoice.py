@@ -21,9 +21,13 @@ class AccountInvoice(models.Model):
             for line in inv.invoice_line:
                 agents = []
                 for agent in inv.agents:
+                    commission_id = agent.commission
+                    if inv.partner_id.default_sale_commission_id:
+                        commission_id = inv.partner_id.\
+                            default_sale_commission_id
                     vals = {
                         'agent': agent.id,
-                        'commission': agent.commission.id,
+                        'commission': commission_id.id,
                     }
                     vals['display_name'] = self.env[
                         'account.invoice.line.agent'] \

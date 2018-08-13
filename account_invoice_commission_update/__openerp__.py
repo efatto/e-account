@@ -29,6 +29,7 @@
     'depends': [
         'account',
         'account_journal_advance',
+        'partner_default_sale_commission',
         'service_type',
         'sale_commission',
     ],
