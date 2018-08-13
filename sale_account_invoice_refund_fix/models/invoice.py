@@ -33,9 +33,12 @@ class AccountInvoice(models.Model):
                     % line.origin_invoice_line_id.id)
                 sale_order_line_ids = self._cr.fetchall()
                 if sale_order_line_ids:
-                    sale_order_lines = self.env['sale.order.line'].browse(
-                        sale_order_line_ids[0])
-                    for sale_order_line in sale_order_lines:
+                    sale_order_lines = self.env[
+                        'sale.order.line'].sudo().browse(
+                            sale_order_line_ids[0])
+                    for sale_order_line in sale_order_lines.filtered(
+                        lambda x: x.company_id == line.company_id
+                    ):
                         sale_order_line.write(
                             {'invoice_lines': [(4, line.id)]})
                         sale_order_line.order_id.write(
