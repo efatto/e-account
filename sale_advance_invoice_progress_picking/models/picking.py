@@ -70,7 +70,9 @@ class StockPicking(models.Model):
                                 'account.invoice.line'].copy(
                                 cr, uid, preline.id, {
                                     'invoice_id': invoice_id.id,
-                                    'price_unit': - return_amount,
+                                    'price_unit': return_amount *
+                                    (-1 if advance_invoice.type
+                                     == 'out_invoice' else +1),
                                     'advance_invoice_id': advance_invoice.id,
                                     'sequence': 0,
                                     'name': (_('Ref. %s nr. %s ') % (
