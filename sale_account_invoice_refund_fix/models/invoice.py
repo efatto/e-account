@@ -31,14 +31,10 @@ class AccountInvoice(models.Model):
                     'SELECT * from sale_order_line_invoice_rel '
                     'where invoice_id= %s'
                     % line.origin_invoice_line_id.id)
-                sale_order_line_ids = self._cr.fetchall()
-                if sale_order_line_ids:
-                    sale_order_lines = self.env[
-                        'sale.order.line'].sudo().browse(
-                            sale_order_line_ids[0])
-                    for sale_order_line in sale_order_lines.filtered(
-                        lambda x: x.company_id == line.company_id
-                    ):
+                sale_order_rels = self._cr.fetchall()
+                for sale_order_rel in sale_order_rels:
+                    for sale_order_line in self.env['sale.order.line'].browse(
+                            sale_order_rel[0]):
                         sale_order_line.write(
                             {'invoice_lines': [(4, line.id)]})
                         sale_order_line.order_id.write(
