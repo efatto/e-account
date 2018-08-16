@@ -11,6 +11,7 @@ class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
     @api.multi
+    @api.depends('price_subtotal')
     def _get_price_subtotal_signed(self):
         sign = +1
         for line in self:
