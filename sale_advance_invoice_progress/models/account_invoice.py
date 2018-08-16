@@ -13,11 +13,10 @@ class AccountInvoiceLine(models.Model):
     @api.multi
     @api.depends('price_subtotal')
     def _get_price_subtotal_signed(self):
-        sign = +1
         for line in self:
-            if line.invoice_id.type in ['out_refund', 'in_refund']:
-                sign = -1
-            line.price_subtotal_signed = line.price_subtotal * sign
+            line.price_subtotal_signed = line.price_subtotal * (
+                -1 if line.invoice_id.type in ['out_refund', 'in_refund'] else
+                1)
 
     advance_invoice_id = fields.Many2one('account.invoice', 'Advance invoice')
     price_subtotal_signed = fields.Float(compute=_get_price_subtotal_signed)
