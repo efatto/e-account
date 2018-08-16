@@ -79,9 +79,11 @@ class SaleOrderLineMakeInvoice(models.TransientModel):
                     inv_line_id = self.pool['account.invoice.line'].copy(
                         cr, uid, preline.id, {
                             'invoice_id': res,
-                            'price_unit': - order_invoice[res][order.id] *
+                            'price_unit': order_invoice[res][order.id] *
                             order.advance_percentage / 100 *
-                            preline.price_subtotal / order.advance_amount,
+                            preline.price_subtotal / order.advance_amount *
+                            (-1 if advance_invoice.type == 'out_invoice'
+                             else +1),
                             'advance_invoice_id': advance_invoice.id,
                         })
             #
@@ -258,7 +260,8 @@ class SaleOrder(models.Model):
                     inv_line_id = obj_invoice_line.copy(
                         cr, uid, preline.id, {
                             'invoice_id': False,
-                            'price_unit': -preline.price_unit,
+                            'price_unit': preline.price_unit *
+                            (-1 if preinv.type == 'out_invoice' else +1),
                             'advance_invoice_id': preinv.id,
                             'sequence': 0,
                             'name': (_('Ref. Advance Invoice n. %s dated %s') %
