@@ -38,5 +38,5 @@
         'views/company.xml',
         'views/report_invoice.xml',
     ],
-    'installable': True
+    'installable': False
 }

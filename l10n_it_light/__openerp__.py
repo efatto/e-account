@@ -44,5 +44,5 @@
         'data/l10n_chart_it_generic.xml',
         'data/payment_data.xml',
     ],
-    "installable": True,
+    'installable': False,
 }

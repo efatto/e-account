@@ -32,5 +32,5 @@ Check if exists an equal previous registered invoice.
     ],
     "data": [
     ],
-    "installable": True
+    'installable': False
 }

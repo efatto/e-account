@@ -35,5 +35,5 @@
         'views/report_vatperiodendstatement.xml',
         'views/account_view.xml',
     ],
-    'installable': True
+    'installable': False
 }

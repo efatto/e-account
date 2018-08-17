@@ -32,5 +32,5 @@
     'data': [
         'views/delivery_carrier_view.xml',
     ],
-    'installable': True
+    'installable': False
 }

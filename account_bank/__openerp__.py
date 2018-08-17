@@ -38,5 +38,5 @@
         'views/partner_view.xml',
         'views/sale_order_report.xml',
     ],
-    "installable": True
+    'installable': False
 }

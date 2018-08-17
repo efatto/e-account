@@ -32,5 +32,5 @@
     'data': [
         'views/partner_subaccount_view.xml',
     ],
-    'installable': True,
+    'installable': False,
 }

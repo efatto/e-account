@@ -32,5 +32,5 @@
         'report/due_list_report.xml',
         'report/report.xml',
     ],
-    'installable': True
+    'installable': False
 }

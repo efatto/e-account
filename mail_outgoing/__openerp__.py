@@ -37,5 +37,5 @@ Fix mail:
         'views/mail_outgoing_views.xml',
     ],
     "active": False,
-    "installable": True
+    'installable': False
 }

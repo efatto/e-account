@@ -32,5 +32,5 @@
     'data': [
         'views/hr_attendance_import.xml',
     ],
-    'installable': True,
+    'installable': False,
 }

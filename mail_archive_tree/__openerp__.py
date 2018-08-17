@@ -31,5 +31,5 @@
     'data': [
         'views/mail.xml',
     ],
-    'installable': True
+    'installable': False
 }

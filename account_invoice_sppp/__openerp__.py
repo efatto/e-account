@@ -30,5 +30,5 @@
     'data': [
         'views/invoice.xml',
     ],
-    'installable': True
+    'installable': False
 }

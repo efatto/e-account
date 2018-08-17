@@ -37,5 +37,5 @@
         'views/sale_order.xml',
         'views/purchase_order.xml',
     ],
-    'installable': True
+    'installable': False
 }

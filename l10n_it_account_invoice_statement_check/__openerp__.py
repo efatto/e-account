@@ -31,5 +31,5 @@
     'data': [
         'views/invoice_statement.xml',
     ],
-    'installable': True
+    'installable': False
 }

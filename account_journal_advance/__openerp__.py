@@ -34,5 +34,5 @@
         'views/account_journal_view.xml',
         'views/product.xml',
     ],
-    'installable': True
+    'installable': False
 }

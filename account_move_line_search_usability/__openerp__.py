@@ -15,5 +15,5 @@
     'qweb': [
         'static/src/xml/account_move_line_search_usability.xml',
     ],
-    'installable': True,
+    'installable': False,
 }

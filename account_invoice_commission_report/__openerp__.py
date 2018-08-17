@@ -35,5 +35,5 @@
         'views/account_invoice_report_mail.xml',
         'views/account_invoice_report.xml',
     ],
-    'installable': True
+    'installable': False
 }

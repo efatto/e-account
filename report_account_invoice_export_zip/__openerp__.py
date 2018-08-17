@@ -36,5 +36,5 @@
         'security/ir.model.access.csv',
         'views/report.xml',
     ],
-    'installable': True
+    'installable': False
 }

@@ -33,5 +33,5 @@
     'data': [
         'views/hr_timesheet.xml',
     ],
-    'installable': True,
+    'installable': False,
 }
