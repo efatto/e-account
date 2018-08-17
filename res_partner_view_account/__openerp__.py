@@ -35,5 +35,5 @@
     'data': [
         'views/partner_account_view.xml',
     ],
-    'installable': True
+    'installable': False
 }
