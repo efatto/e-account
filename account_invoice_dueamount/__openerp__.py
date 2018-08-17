@@ -33,5 +33,5 @@
         'security/ir.model.access.csv',
         'views/account_invoice_view.xml',
     ],
-    'installable': True
+    'installable': False
 }
