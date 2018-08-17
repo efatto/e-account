@@ -20,6 +20,7 @@ class AccountInvoiceLine(models.Model):
 
     advance_invoice_id = fields.Many2one('account.invoice', 'Advance invoice')
     price_subtotal_signed = fields.Float(compute=_get_price_subtotal_signed)
+    invoice_number = fields.Char(related='invoice_id.number')
 
 
 class AccountInvoice(models.Model):

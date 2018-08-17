@@ -60,6 +60,11 @@ msgid "Price Subtotal Signed"
 msgstr "Importo"
 
 #. module: sale_advance_invoice_progress
+#: field:account.invoice.line,invoice_number:0
+msgid "Invoice Number"
+msgstr "Numero Fattura"
+
+#. module: sale_advance_invoice_progress
 #: view:sale.order:sale_advance_invoice_progress.view_order_form_advance_invoice
 msgid "Create Invoice"
 msgstr "Crea fattura"

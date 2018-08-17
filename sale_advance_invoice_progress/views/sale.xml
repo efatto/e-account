@@ -36,7 +36,7 @@
                             <field name="refunded_invoice_line_ids" nolabel="1">
                                 <tree>
                                     <field name="name"/>
-                                    <field name="invoice_id"/>
+                                    <field name="invoice_number"/>
                                     <field name="account_id"/>
                                     <field name="price_subtotal_signed" sum="Total"/>
                                 </tree>
