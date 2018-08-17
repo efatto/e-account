@@ -28,6 +28,7 @@
     'website': 'http://www.efatto.it',
     'depends': [
         'account_analytic_analysis',
+        'account_analytic_sal',
     ],
     'data': [
         'views/account.xml',
