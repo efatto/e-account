@@ -2,7 +2,7 @@
 ##############################################################################
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
-from openerp import models, api, fields
+from odoo import models, api, fields
 
 
 class ResPartner(models.Model):
@@ -11,13 +11,13 @@ class ResPartner(models.Model):
     @api.multi
     def show_receivable_account(self):
         self.ensure_one()
-        account_id = self.property_account_receivable.id
+        account_id = self.property_account_receivable_id.id
         return self.common_show_account(self.ids[0], account_id)
 
     @api.multi
     def show_payable_account(self):
         self.ensure_one()
-        account_id = self.property_account_payable.id
+        account_id = self.property_account_payable_id.id
         return self.common_show_account(self.ids[0], account_id)
 
     def common_show_account(self, partner_id, account_id):
@@ -36,10 +36,10 @@ class ResPartner(models.Model):
         for partner in self:
             partner.journal_item_count = amlo.search_count([
                 ('partner_id', '=', partner.id),
-                ('account_id', '=', partner.property_account_receivable.id)])
+                ('account_id', '=', partner.property_account_receivable_id.id)])
             partner.payable_journal_item_count = amlo.search_count([
                 ('partner_id', '=', partner.id),
-                ('account_id', '=', partner.property_account_payable.id)])
+                ('account_id', '=', partner.property_account_payable_id.id)])
 
     journal_item_count = fields.Integer(
         compute='_compute_journal_item_count',
