@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #
-#    Copyright (C) 2017 Sergio Corato
+#    Copyright (C) 2017-2018 Sergio Corato
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -19,11 +19,18 @@
 #
 {
     'name': 'Account move line usability',
-    'version': '8.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Accounting & Finance',
     'author': 'Sergio Corato',
-    'description': 'Set zero for credit if put a value in debit and viceversa',
-    'website': 'http://www.efatto.it',
+    'description': '''
+Solve some usability issue in account move line:
+------------------------------------------------
+* set credit accordingly to debit and viceversa,
+* add filter from_date and to_date,
+* set minimum width for account fields,
+* set next line with balance value.
+''',
+    'website': 'https://efatto.it',
     'license': 'AGPL-3',
     'depends': [
         'account',
@@ -32,5 +39,5 @@
         'views/css.xml',
         'views/account.xml',
     ],
-    'installable': False
+    'installable': True,
 }

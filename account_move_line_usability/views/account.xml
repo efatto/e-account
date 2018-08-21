@@ -2,23 +2,21 @@
 <openerp>
     <data>
         <record model="ir.ui.view" id="view_move_form_width">
-              <field name="name">account.move.form.width</field>
               <field name="model">account.move</field>
               <field name="inherit_id" ref="account.view_move_form"/>
               <field name="arch" type="xml">
-                  <xpath expr="//page[@string='Journal Items']/field[@name='line_id']/tree" position="attributes">
+                  <xpath expr="//field[@name='line_ids']/tree" position="attributes">
                       <attribute name="class">account_move_line_usability_class</attribute>
                       <attribute name="editable">bottom</attribute>
                   </xpath>
-                  <xpath expr="//page[@string='Journal Items']/field[@name='line_id']/tree/field[@name='name']" position="replace">
+                  <xpath expr="//field[@name='line_ids']/tree/field[@name='account_id']" position="replace">
                   </xpath>
-                  <xpath expr="//page[@string='Journal Items']/field[@name='line_id']/tree/field[@name='partner_id']" position="after">
-                      <field name="name"/>
+                  <xpath expr="//field[@name='line_ids']/tree/field[@name='name']" position="after">
+                      <field name="account_id" domain="[('company_id', '=', parent.company_id), ('deprecated', '=', False)]"/>
                   </xpath>
               </field>
         </record>
         <record id="view_account_move_line_filter_date_from_date_to" model="ir.ui.view">
-            <field name="name">account.move.line.filter.date.from.date.to</field>
             <field name="model">account.move.line</field>
             <field name="inherit_id" ref="account.view_account_move_line_filter"/>
             <field name="arch" type="xml">
@@ -27,11 +25,9 @@
                     <field name="date_from" filter_domain="[('date','&gt;=',self)]"/>
                     <field name="date_to" filter_domain="[('date','&lt;=',self)]"/>
                 </field>
-                <filter string="Unbalanced" position="after">
-                    <filter string="Receivable" domain="[('account_id.type','=','receivable')]"/>
-                    <filter string="Payable" domain="[('account_id.type','=','payable')]"/>
-                    <filter string="Income" domain="[('account_id.user_type.code','=','income')]"/>
-                    <filter string="Expense" domain="[('account_id.user_type.code','=','expense')]"/>
+                <filter position="inside">
+                    <filter string="Receivable" domain="[('account_id.internal_type','=','receivable')]"/>
+                    <filter string="Payable" domain="[('account_id.internal_type','=','payable')]"/>
                     <filter string="Current Month" name="current_month"
                             domain="[('date', '&gt;=', (context_today()).strftime('%%Y-%%m-01'))]"/>
                     <filter string="Last Month" name="last_month"
