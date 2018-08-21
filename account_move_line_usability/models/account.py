@@ -2,13 +2,11 @@
 ##############################################################################
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
-from openerp import models, fields, api, _
+from odoo import models, fields, api, _
 
 
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
-
-    name = fields.Text('Name', required=True)
 
     @api.onchange('credit')
     def _credit_onchange(self):
@@ -20,11 +18,7 @@ class AccountMoveLine(models.Model):
         if self.debit and self.credit:
             self.credit = 0
 
-    user_type = fields.Many2one(
-            related='account_id.user_type',
-            relation='account.account',
-            string='Account user type',
-            store=False)
+    name = fields.Text('Name', required=True)
     date_from = fields.Date(
         compute=lambda *a, **k: {},
         string="Date from")
@@ -36,9 +30,14 @@ class AccountMoveLine(models.Model):
     def default_get(self, fields):
         data = super(AccountMoveLine, self).default_get(fields)
         if data:
-            if 'partner_id' in data:
-                data['partner_id'] = False
-            if 'name' in data and self.env['ir.config_parameter'].get_param(
-                    'account.move.line.not.copy.name'):
-                data['name'] = False
+            debit = credit = 0
+            for x in self._context['line_ids']:
+                debit += x[2]['debit']
+            for x in self._context['line_ids']:
+                credit += x[2]['credit']
+            balance = credit - debit
+            if balance > 0:
+                data['debit'] = balance
+            elif balance < 0:
+                data['credit'] = abs(balance)
         return data
