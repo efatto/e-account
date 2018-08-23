@@ -29,7 +29,7 @@ class AccountMoveLine(models.Model):
     @api.model
     def default_get(self, fields):
         data = super(AccountMoveLine, self).default_get(fields)
-        if data:
+        if data and self._context.get('line_ids', False):
             debit = credit = 0
             for x in self._context['line_ids']:
                 debit += x[2]['debit']
