@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-  <data>
+<odoo>
+    <data>
         <record id="view_invoice_form_mail" model="ir.ui.view">
-            <field name="name">account.invoice.form.mail</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
@@ -14,5 +13,5 @@
                 </xpath>
             </field>
         </record>
-  </data>
-</openerp>
+    </data>
+</odoo>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #
-#    Copyright (C) 2017 Sergio Corato
+#    Copyright (C) 2017-2018 Sergio Corato
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -18,12 +18,12 @@
 #
 #
 {
-    'name': 'Account invoice mail',
-    'version': '8.0.1.0.0',
+    'name': 'Account invoice mail button visibility',
+    'version': '10.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'Button to send mail for invoice always visible.',
-    'website': 'http://www.efatto.it',
+    'description': 'Set button to send mail for invoice always visible.',
+    'website': 'https://efatto.it',
     'license': 'AGPL-3',
     'depends': [
         'account',
@@ -31,5 +31,5 @@
     'data': [
         'views/account_invoice_view.xml',
     ],
-    'installable': False
+    'installable': True,
 }
