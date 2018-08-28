@@ -1,16 +1,13 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        <record id="view_partner_form_bank" model="ir.ui.view">
-            <field name="name">res.parner.form.bank</field>
+        <record id="partner_view_buttons_company_bank_id" model="ir.ui.view">
             <field name="model">res.partner</field>
-            <field name="inherit_id" ref="account.view_partner_property_form"/>
+            <field name="inherit_id" ref="account.partner_view_buttons"/>
             <field name="arch" type="xml">
-                <field name="bank_ids" position="before">
-                    <group>
-                        <field name="company_bank_id" domain="[('company_id', '=', company_id), ('state', '=', 'iban')]" />
-                    </group>
-                </field>
+                <xpath expr="//group[@name='container_row_2']/group[@name='banks']/field[@name='currency_id']" position="before">
+                    <field name="company_bank_id" domain="[('company_id', '=', company_id), ('acc_type', '=', 'iban')]" />
+                </xpath>
             </field>
         </record>
     </data>

@@ -25,25 +25,25 @@ class AccountInvoice(models.Model):
                       ('partner_id.bank_riba_id.name', 'ilike', arg)]
         return [('id', 'in', self.search(domain).ids)]
 
-    bank_riba_id = fields.Many2one('res.bank', 'Bank for ri.ba.')
+    bank_riba_id = fields.Many2one(
+        'res.bank', 'Bank for ri.ba.',
+        readonly=True, states={'draft': [('readonly', False)]})
     actual_bank_riba_id = fields.Many2one(
         'res.bank', compute=_get_actual_bank_riba_id,
         search=_search_actual_bank_riba_id,
         string='Bank for ri.ba.')
 
-    @api.cr_uid_ids_context
-    def onchange_partner_id(
-            self, cr, uid, ids, type, partner_id, date_invoice=False,
-            payment_term=False, partner_bank_id=False, company_id=False,
-            context=None):
-        result = super(AccountInvoice, self).onchange_partner_id(
-            cr, uid, ids, type, partner_id, date_invoice, payment_term,
-            partner_bank_id, company_id, context)
-
-        partner = self.pool['res.partner'].browse(
-            cr, uid, partner_id, context)
-        if partner.bank_riba_id:
-            result['value']['bank_riba_id'] = partner.bank_riba_id.id
+    @api.onchange('partner_id', 'company_id')
+    def _onchange_partner_id_bank(self):
+        company_id = self.company_id.id
+        p = self.partner_id if not company_id else self.partner_id.\
+            with_context(force_company=company_id)
+        if p.bank_riba_id:
+            self.bank_riba_id = p.bank_riba_id
         else:
-            result['value']['bank_riba_id'] = False
-        return result
+            self.bank_riba_id = False
+        if p.company_bank_id:
+            self.partner_bank_id = p.company_bank_id
+        else:
+            self.partner_bank_id = False
+

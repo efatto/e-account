@@ -22,21 +22,20 @@
 
 {
     'name': 'Bank for riba and payment in partner',
-    'version': '8.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Localisation',
-    'author': 'Didotech SRL, Sergio corato',
+    'author': 'Didotech SRL, SimplERP SRL, Sergio Corato',
     'website': 'https://efatto.it',
-    'description': 'Bank for riba and payment in partner',
+    'description': 'Add bank for riba and payment in partner and invoice',
     'license': 'AGPL-3',
     "depends": [
         'account',
         'sale',
     ],
     "data": [
-        'security/security.xml',
         'views/account_invoice_view.xml',
         'views/partner_view.xml',
-        'views/sale_order_report.xml',
+        # 'views/sale_order_report.xml',
     ],
-    'installable': False
+    'installable': True,
 }
