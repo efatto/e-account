@@ -10,6 +10,9 @@
                 <field name="product_uom_qty" position="attributes">
                     <attribute name="sum">Total</attribute>
                 </field>
+                <field name="qty_to_invoice" position="attributes">
+                    <attribute name="sum">Total</attribute>
+                </field>
             </field>
         </record>
 
@@ -23,7 +26,8 @@
                     <filter icon="terp-dialog-close" string="Draft" domain="[('state','=','draft')]" name="sale_order_draft" help="Quotation order lines"/>
                     <filter icon="terp-accessories-archiver" string="Shipped" domain="[('state','=','done')]" name="unshipped" help="Sales Order Lines that are in 'done' state"/>
                     <separator/>
-                    <filter icon="terp-dolar_ok!" string="Uninvoiced" name="uninvoiced" domain="[('invoiced','&lt;&gt;', 1),('state','&lt;&gt;','draft'),('state','&lt;&gt;','cancel')]" help="Sales Order Lines that are confirmed, done or in exception state and haven't yet been invoiced"/>
+                    <filter icon="terp-dolar_ok!" string="Uninvoiced" name="uninvoiced" domain="[('qty_to_invoice','&lt;&gt;', 0),('state','&lt;&gt;','draft'),('state','&lt;&gt;','cancel')]"
+                            help="Sales Order Lines that are confirmed, done or in exception state and haven't yet been invoiced"/>
                     <separator/>
                     <filter string="My Sales Order Lines" icon="terp-personal" domain="[('salesman_id','=',uid)]" help="My Sales Order Lines"/>
                     <field name="order_id"/>
@@ -58,7 +62,9 @@
               </p>
             </field>
         </record>
-      <menuitem id="menu_invoicing_sales_order_lines" parent="base.menu_invoiced" action="action_order_line_tree2" sequence="10" groups="sale.group_invoice_so_lines"/>
+      <menuitem id="menu_invoicing_sales_order_lines" parent="sale.menu_sale_invoicing"
+                action="action_order_line_tree2" sequence="10"
+                groups="account.group_account_invoice"/>
 
   </data>
 </openerp>
