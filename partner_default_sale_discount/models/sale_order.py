@@ -10,9 +10,12 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     default_sale_discount = fields.Float(
+        related="partner_id.commercial_partner_id.default_sale_discount",
         string="Default sales discount (%)")
     default_sale_complex_discount = fields.Char(
-        'Complex Discount',
+        related="partner_id.commercial_partner_id."
+                "default_sale_complex_discount",
+        string='Complex Discount',
         size=32,
         help='E.g.: 15.5+5, or 50+10+3.5')
 

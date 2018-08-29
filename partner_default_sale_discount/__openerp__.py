@@ -4,12 +4,13 @@
 
 {
     'name': 'Default sales discount per partner',
-    'version': '8.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Partner Management',
     'license': 'AGPL-3',
-    'author': 'Tecnativa,'
-              'Odoo Community Association (OCA)',
-    'website': 'https://www.tecnativa.com',
+    'author': 'Tecnativa, '
+              'Odoo Community Association (OCA), '
+              'Sergio Corato',
+    'website': 'https://efatto.it',
     'depends': [
         'sale',
         'discount_complex',
@@ -18,5 +19,5 @@
         'views/res_partner_view.xml',
         'views/sale_order_view.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
