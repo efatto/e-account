@@ -35,7 +35,7 @@
     "data": [
         'views/account_invoice_view.xml',
         'views/partner_view.xml',
-        # 'views/sale_order_report.xml',
+        'views/sale_order_report.xml',
     ],
     'installable': True,
 }

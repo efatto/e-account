@@ -11,7 +11,5 @@
         <xpath expr="//t/div[@class='page']/div[@id='informations']/div[@t-if='doc.date_order']/p[@t-field='doc.date_order']" position="replace">
             <p t-field="doc.date_order" t-field-options='{"format": "d MMMM y"}'/>
         </xpath>
-        <xpath expr="//t/div[@class='page']/div[@id='informations']/div[@t-if='doc.payment_term_id']" position="replace">
-        </xpath>
     </template>
 </odoo>
