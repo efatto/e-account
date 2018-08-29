@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #
-#    Copyright (C) 2017 Sergio Corato
+#    Copyright (C) 2017-2018 Sergio Corato
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -19,11 +19,11 @@
 #
 {
     'name': 'Sale order line menu usability',
-    'version': '8.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'This module add menu for uninvoiced order lines.',
-    'website': 'http://www.efatto.it',
+    'website': 'https://efatto.it',
     'license': 'AGPL-3',
     'depends': [
         'sale',
@@ -31,5 +31,5 @@
     'data': [
         'views/sale.xml',
     ],
-    'installable': False
+    'installable': True,
 }
