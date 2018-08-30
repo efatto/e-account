@@ -35,14 +35,14 @@ class SaleOrder(models.Model):
         self.default_sale_discount = net
 
     @api.multi
-    def onchange_partner_id(self, part):
-        res = super(SaleOrder, self).onchange_partner_id(part)
-        if part:
-            partner_id = self.env['res.partner'].browse(part)
-            res['value'].update(
-                {'default_sale_discount': partner_id.default_sale_discount,
-                 'default_sale_complex_discount': partner_id.
-                     default_sale_complex_discount})
+    @api.onchange('partner_id')
+    def onchange_partner_id(self):
+        res = super(SaleOrder, self).onchange_partner_id()
+        if self.partner_id:
+            self.update({
+                'default_sale_discount': self.partner_id.default_sale_discount,
+                'default_sale_complex_discount': self.partner_id.
+                default_sale_complex_discount})
         return res
 
     @api.model
