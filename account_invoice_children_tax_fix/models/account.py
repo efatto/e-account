@@ -37,25 +37,4 @@ class AccountTax(models.Model):
                 if abs(tax_difference) != 0.0:
                     tax['amount'] = tax['amount'] + tax_difference
                 tax_difference = 0.0
-                if tax.get('balance', False):
-                    ind_tax = tax_list[abs(tax_list.index(tax) - 1)]
-                    ind_tax_obj = self.browse(ind_tax['id'])
-                    base_ind = float(Decimal(
-                        str(total_original * ind_tax_obj.amount)).quantize(
-                            Decimal('1.' + precision * '0'),
-                            rounding=ROUND_HALF_UP))
-                    base_ded = float(Decimal(
-                        str(total_original - base_ind)).quantize(Decimal(
-                            '1.' + precision * '0'), rounding=ROUND_HALF_UP))
-                    tax_total = float(Decimal(
-                        str(tax['balance'])).quantize(Decimal(
-                            '1.' + precision * '0'), rounding=ROUND_HALF_UP))
-                    if tax_total > tax['amount'] + ind_tax['amount']:
-                        rounding_amount = tax_total - (
-                            tax['amount'] + ind_tax['amount'])
-                        ind_tax['amount'] += rounding_amount
-                    ind_tax['price_unit'] = round(
-                        base_ind / quantity, precision)
-                    tax['price_unit'] = round(
-                        base_ded / quantity, precision)
         return res
