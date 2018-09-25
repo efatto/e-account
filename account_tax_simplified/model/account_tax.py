@@ -152,7 +152,7 @@ class AccountTax(models.Model):
             vals.update({'base_sign': -1, 'tax_sign': -1,
                          'ref_base_sign': 1, 'ref_tax_sign': 1})
 
-        if not tax.base_code_id:
+        if not tax.base_code_id and not tax.parent_id:
             if not vals.get('account_base_tax_code_id', False) and \
                     not tax.account_base_tax_code_id:
                 raise Warning(_("Base Tax Code parent must be set."))
