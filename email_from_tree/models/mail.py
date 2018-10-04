@@ -20,10 +20,10 @@ class MailComposeMessage(models.TransientModel):
         )
         report_name = False
         template = False
-        if self._context['active_model'] == 'account.invoice':
+        if self._context.get('active_model', False) == 'account.invoice':
             report_name = 'account.report_invoice'
             template = 'email_template_invoice_from_tree'
-        elif self._context['active_model'] == 'sale.order':
+        elif self._context.get('active_model', False) == 'sale.order':
             report_name = 'sale.report_saleorder'
             template = 'email_template_sale_from_tree'
         if report_name and template:
