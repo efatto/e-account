@@ -46,6 +46,8 @@ class StockPicking(models.Model):
                                 break
                 total_return_amount = 0
                 for sale_id in order_invoiced_amount.keys():
+                    if sale_id.advance_amount == 0.0:
+                        continue
                     for advance_invoice in sale_id.advance_invoice_ids:
                         if advance_invoice.state == 'cancel':
                             return False
