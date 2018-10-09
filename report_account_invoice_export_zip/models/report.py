@@ -43,11 +43,11 @@ class WizardAccountInvoiceExport(models.TransientModel):
             report = ir_actions_report.search([
                 ('report_name', '=', report_name)
             ], limit=1)
-            attachment_ids = []
+            attachments = []
             for obj in self.env[self._context['active_model']].browse(
                     self._context['active_ids']):
                 attachment_obj = self.env['ir.attachment']
-                if report:
+                if report and obj.type in ['out_invoice', 'out_refund']:
                     (result, format) = openerp.report.render_report(
                         self._cr, self._uid, [obj.id],
                         report.report_name,
@@ -64,7 +64,7 @@ class WizardAccountInvoiceExport(models.TransientModel):
                             obj.partner_id.name,
                             obj.number if self._context['active_model'] ==
                             'account.invoice' else obj.name)
-                        attachment_id = attachment_obj.create({
+                        att = attachment_obj.create({
                                 'name': file_name,
                                 'datas': result,
                                 'datas_fname': file_name,
@@ -72,16 +72,21 @@ class WizardAccountInvoiceExport(models.TransientModel):
                                 'res_id': obj.id,
                                 'type': 'binary'
                             })
-                        attachment_ids += [attachment_id]
+                        attachments += [att]
+                else:
+                    atts = self.env['ir.attachment'].search([
+                        ('res_model', '=', obj._name),
+                        ('res_id', '=', obj.id)])
+                    attachments += [atts]
 
             path = os.path.join(config['data_dir'], "filestore",
                                 self.env.cr.dbname)
             compression = zipfile.ZIP_STORED
             zf = zipfile.ZipFile("RAWs.zip", mode="w")
-            for attachment_id in attachment_ids:
-                file_name = attachment_id.store_fname
+            for attachment in attachments:
+                file_name = attachment.store_fname
                 zf.write(os.path.join(path, file_name),
-                         attachment_id.name.replace('/', '_'),
+                         attachment.name.replace('/', '_'),
                          compress_type=compression)
             zf.close()
             data = open("RAWs.zip", 'rb').read()
