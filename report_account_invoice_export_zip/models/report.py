@@ -77,7 +77,8 @@ class WizardAccountInvoiceExport(models.TransientModel):
                     atts = self.env['ir.attachment'].search([
                         ('res_model', '=', obj._name),
                         ('res_id', '=', obj.id)])
-                    attachments += [atts]
+                    if atts:
+                        attachments += [atts]
 
             path = os.path.join(config['data_dir'], "filestore",
                                 self.env.cr.dbname)
