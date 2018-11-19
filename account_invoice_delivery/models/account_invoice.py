@@ -12,6 +12,10 @@ class AccountInvoice(models.Model):
         "delivery.carrier",
         string="Delivery Method",
         help="Complete this field to add delivery cost to invoice.")
+    delivery_carrier_id = fields.Many2one(
+        "delivery.carrier",
+        string="Delivery Method",
+        help="Complete this field to add delivery cost to invoice.")
 
     @api.cr_uid_ids_context
     def onchange_partner_id(
@@ -28,7 +32,7 @@ class AccountInvoice(models.Model):
                 cr, uid, partner_id, context).property_delivery_carrier.id
             # TDE NOTE: not sure the aded 'if dtype' is valid
             if dtype:
-                res['value']['carrier_id'] = dtype
+                res['value']['delivery_carrier_id'] = dtype
         return res
 
     @api.multi
@@ -37,7 +41,7 @@ class AccountInvoice(models.Model):
         for invoice in self:
             line_ids = invoice.invoice_line.filtered(
                 lambda x: x.is_delivery and
-                          x.product_id == x.invoice_id.carrier_id.product_id
+                          x.product_id == x.invoice_id.delivery_carrier_id.product_id
             )
             line_ids.unlink()
 
@@ -47,7 +51,7 @@ class AccountInvoice(models.Model):
         self._delivery_unset()
         line_ids = []
         for invoice in self:
-            grid_id = invoice.carrier_id.grid_get(invoice.address_shipping_id.id)
+            grid_id = invoice.delivery_carrier_id.grid_get(invoice.address_shipping_id.id)
             if not grid_id:
                 raise exceptions.ValidationError(
                     _('No grid matching for this carrier!'))

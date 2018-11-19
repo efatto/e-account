@@ -19,11 +19,11 @@
 #
 {
     'name': 'Account invoice delivery',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.1.0',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'This module add delivery calculation for invoice.',
-    'website': 'http://www.efatto.it',
+    'website': 'https://efatto.it',
     'license': 'AGPL-3',
     'depends': [
         'account_journal_advance',

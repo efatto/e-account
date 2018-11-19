@@ -21,7 +21,7 @@ msgid "Add in Quote"
 msgstr "Aggiungi o aggiorna in fattura"
 
 #. module: account_invoice_delivery
-#: help:account.invoice,carrier_id:0
+#: help:account.invoice,delivery_carrier_id:0
 msgid "Complete this field to add delivery cost to invoice."
 msgstr "Completa questo campo per aggiungere i costi di consegna in fattura."
 
@@ -31,7 +31,7 @@ msgid "Delivery Grid"
 msgstr "Griglia di Distribuzione"
 
 #. module: account_invoice_delivery
-#: field:account.invoice,carrier_id:0
+#: field:account.invoice,delivery_carrier_id:0
 msgid "Delivery Method"
 msgstr "Metodo di Consegna"
 
