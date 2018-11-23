@@ -16,7 +16,7 @@
                     type="object" attrs="{'invisible':[('state','not in',['draft',])]}"/>
                 <field name="default_sale_discount"
                     attrs="{'invisible':[('state','not in',['draft',])]}" nolabel="1"
-                    style="margin-left: 10px; width: inherit;"/>
+                    style="margin-left: 8px; width: inherit;"/>
             </field>
         </field>
     </record>
