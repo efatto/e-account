@@ -224,7 +224,7 @@ class StatementDebitAccountLine(orm.Model):
     _inherit = 'statement.debit.account.line'
     _columns = {
         'amount_base': fields.float(
-            'Amount base', digits_compute=dp.get_precision('Account')),
+            'Amount base', digits=dp.get_precision('Account')),
     }
 
 
@@ -232,7 +232,7 @@ class StatementCreditAccountLine(orm.Model):
     _inherit = 'statement.credit.account.line'
     _columns = {
         'amount_base': fields.float(
-            'Amount base', digits_compute=dp.get_precision('Account')),
+            'Amount base', digits=dp.get_precision('Account')),
     }
 
 
