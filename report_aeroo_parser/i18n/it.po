@@ -61,6 +61,11 @@ msgstr "Indirizzo di fatturazione"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
+msgid "Billing"
+msgstr "Fatturazione"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
 msgid "Code"
 msgstr "Codice"
 
@@ -178,6 +183,11 @@ msgstr "Termini di pagamento"
 #: field:account.invoice.line,price_unit_net:0
 msgid "Price unit net"
 msgstr "Prezzo netto"
+
+#. module: report_aeroo_parser
+#: field:account.invoice.line,price_unit_net:0
+msgid "Unit amount"
+msgstr "Prezzo unitario"
 
 #. module: report_aeroo_parser
 #: field:account.invoice,print_hide_uom:0

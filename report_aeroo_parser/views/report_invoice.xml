@@ -5,6 +5,7 @@
 
 <template id="report_invoice">
     <span>Billing address</span>
+    <span>Billing</span>
     <span>Shipping location</span>
     <span>Shipping address</span>
     <span>Balance due</span>
@@ -28,6 +29,7 @@
     <span>NET AMOUNT</span>
     <span>Total</span>
     <span>Amount</span>
+    <span>Unit amount</span>
     <span>Total Untaxed</span>
     <span>VAT #</span>
     <span>VAT</span>
