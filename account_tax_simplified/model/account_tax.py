@@ -156,9 +156,7 @@ class AccountTax(models.Model):
             if not vals.get('account_base_tax_code_id', False) and \
                     not tax.account_base_tax_code_id and \
                     not vals.get('base_code_id', False):
-                if not tax.tax_code_id or tax.tax_code_id and \
-                        not tax.tax_code_id.exclude_from_registries:
-                    raise Warning(_("Base Tax Code parent must be set."))
+                raise Warning(_("Base Tax Code parent must be set."))
             elif not vals.get('base_code_id', False):
                 # missing base tax, so create it
                 parent_base_tax_code = tax.account_base_tax_code_id or \
