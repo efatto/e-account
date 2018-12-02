@@ -31,6 +31,7 @@
         'account',
         'base_vat',
         'account_vat_period_end_statement',
+        'l10n_configurable',
     ],
     'data': [
         'data/account_tax_view.xml',
