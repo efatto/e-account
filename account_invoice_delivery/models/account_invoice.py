@@ -8,10 +8,6 @@ from openerp import models, api, fields, exceptions, _
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    carrier_id = fields.Many2one(
-        "delivery.carrier",
-        string="Delivery Method",
-        help="Complete this field to add delivery cost to invoice.")
     delivery_carrier_id = fields.Many2one(
         "delivery.carrier",
         string="Delivery Method",
