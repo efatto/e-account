@@ -1,16 +1,32 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_invoice_goods_service_amount
+#	* account_invoice_goods_amount
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-04 16:00+0000\n"
-"PO-Revision-Date: 2017-11-04 16:00+0000\n"
+"POT-Creation-Date: 2018-12-13 09:26+0000\n"
+"PO-Revision-Date: 2018-12-13 09:26+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: account_invoice_goods_amount
+#: field:account.invoice,invoice_goods_amount:0
+msgid "Goods and service amount"
+msgstr "Totale beni e servizi"
+
+#. module: account_invoice_goods_amount
+#: model:ir.model,name:account_invoice_goods_amount.model_account_invoice
+msgid "Invoice"
+msgstr "Fattura"
+
+#. module: account_invoice_goods_amount
+#: help:account.invoice,invoice_goods_amount:0
+msgid "This amount exclude invoice line without product or with downpayment product type."
+msgstr "Questo importo esclude le righe fattura senza prodotto o con prodotto di tipo downpayment."
+
