@@ -28,6 +28,7 @@
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
+        'account',
     ],
     'data': [
         'views/partner.xml',
