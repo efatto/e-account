@@ -9,6 +9,7 @@ import base64
 import openerp
 import zipfile
 import os
+import tempfile
 
 
 class AccountInvoiceAttachment(models.Model):
@@ -48,7 +49,7 @@ class WizardAccountInvoiceExport(models.TransientModel):
                     self._context['active_ids']):
                 attachment_obj = self.env['ir.attachment']
                 if report and obj.type in ['out_invoice', 'out_refund']:
-                    (result, format) = openerp.report.render_report(
+                    (result, report_format) = openerp.report.render_report(
                         self._cr, self._uid, [obj.id],
                         report.report_name,
                         {'model': obj._name},
@@ -83,14 +84,15 @@ class WizardAccountInvoiceExport(models.TransientModel):
             path = os.path.join(config['data_dir'], "filestore",
                                 self.env.cr.dbname)
             compression = zipfile.ZIP_STORED
-            zf = zipfile.ZipFile("RAWs.zip", mode="w")
+            temp = tempfile.mktemp(suffix='.zip')
+            zf = zipfile.ZipFile(temp, mode="w")
             for attachment in attachments:
                 file_name = attachment.store_fname
                 zf.write(os.path.join(path, file_name),
                          attachment.name.replace('/', '_'),
                          compress_type=compression)
             zf.close()
-            data = open("RAWs.zip", 'rb').read()
+            data = open(temp, 'rb').read()
             export_report_name = self.export_report_name or 'Zip export report'
             attach_vals = {
                 'name': export_report_name + '.zip',
