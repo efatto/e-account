@@ -9,11 +9,9 @@
     'name': 'Italian Localization - Fattura elettronica fix telefono',
     'version': '8.0.1.0.0',
     'category': 'Localization/Italy',
-    'summary': 'Emissione fatture elettroniche',
-    'author': 'Davide Corio, Agile Business Group, Innoviu,'
-              'Odoo Community Association (OCA)',
-    'website': 'https://github.com/OCA/l10n-italy/tree/8.0/'
-               'l10n_it_fatturapa_out_phone',
+    'summary': 'Emissione fatture elettroniche fix telefono',
+    'author': 'Sergio Corato',
+    'website': 'https://efatto.it',
     'license': 'LGPL-3',
     "depends": [
         'l10n_it_fatturapa_out',
