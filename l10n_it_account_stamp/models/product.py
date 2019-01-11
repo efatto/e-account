@@ -15,6 +15,12 @@ class ProductTemplate(models.Model):
                 raise exceptions.ValidationError(
                     _("The product %s must be a stamp to set apply taxes!")
                     % template.name)
+            for tax in template.stamp_apply_tax_ids:
+                if not tax.base_code_id:
+                    raise exceptions.ValidationError(
+                        _("Tax %s must have base code to compute stamp "
+                          "applicability" % tax.name)
+                    )
 
     stamp_apply_tax_ids = fields.Many2many(
         'account.tax',

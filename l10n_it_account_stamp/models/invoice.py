@@ -41,17 +41,21 @@ class AccountInvoice(models.Model):
         else:
             self.tax_stamp = False
 
+    def _get_stamp_product(self, inv):
+        stamp_product_id = self.env.user.with_context(
+            lang=inv.partner_id.lang).company_id.tax_stamp_product_id
+        if not stamp_product_id:
+            raise exceptions.Warning(
+                _('Missing tax stamp product in company settings!')
+            )
+        return stamp_product_id
+
     @api.multi
     def add_tax_stamp_line(self):
         for inv in self:
             if not inv.tax_stamp:
                 raise exceptions.Warning(_("Tax stamp is not applicable"))
-            stamp_product_id = self.env.user.with_context(
-                lang=inv.partner_id.lang).company_id.tax_stamp_product_id
-            if not stamp_product_id:
-                raise exceptions.Warning(
-                    _('Missing tax stamp product in company settings!')
-                )
+            stamp_product_id = self._get_stamp_product(inv)
             for l in inv.invoice_line:
                 if l.product_id and l.product_id.is_stamp:
                     raise exceptions.Warning(_(
@@ -79,7 +83,7 @@ class AccountInvoice(models.Model):
 
     def is_tax_stamp_line_present(self):
         for l in self.invoice_line:
-            if l.product_id and l.product_id.is_stamp:
+            if l.is_stamp_line:
                 return True
         return False
 
@@ -129,26 +133,23 @@ class AccountInvoice(models.Model):
                     posted = True
                     inv.move_id.state = 'draft'
                 line_model = self.env['account.move.line']
-                stamp_product_id = self.env.user.with_context(
-                    lang=inv.partner_id.lang).company_id.tax_stamp_product_id
-                if not stamp_product_id:
-                    raise exceptions.Warning(
-                        _('Missing tax stamp product in company settings!')
-                    )
+                stamp_product_id = self._get_stamp_product(inv)
                 income_vals, expense_vals = self._build_tax_stamp_lines(
                     stamp_product_id)
                 income_vals['move_id'] = inv.move_id.id
                 expense_vals['move_id'] = inv.move_id.id
+                period_id = inv.move_id.period_id.id
                 line_model.with_context(
-                    check_move_validity=False
+                    check_move_validity=False,
+                    period_id=period_id,
                 ).create(income_vals)
                 line_model.with_context(
-                    check_move_validity=False
+                    check_move_validity=False,
+                    period_id=period_id,
                 ).create(expense_vals)
                 if posted:
                     inv.move_id.state = 'posted'
         return res
-
 
 class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
