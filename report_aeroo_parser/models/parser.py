@@ -168,13 +168,17 @@ class Parser(report_sxw.rml_parse):
             self.cr, self.uid, self.ids[0])
         tax_amount = 0.0
         amount_sp = 0.0
+        amount_wt = 0.0
         tax_sign = (-1 if invoice.type in ['out_refund', 'in_refund'] else 1)
         if self._check_installed_module('l10n_it_split_payment'):
             amount_sp = invoice.amount_sp
+        if self._check_installed_module('l10n_it_withholding_tax'):
+            amount_wt = invoice.withholding_tax_amount
         for line in tax_line:
             tax_amount += line.tax_amount
         if tax_amount != 0.0:
-            return invoice.amount_untaxed + (tax_amount * tax_sign) - amount_sp
+            return invoice.amount_untaxed + (tax_amount * tax_sign) \
+                - amount_sp - amount_wt
         return invoice.residual
 
     def _desc_nocode(self, string):
