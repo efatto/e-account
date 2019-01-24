@@ -28,6 +28,7 @@ class Parser(report_sxw.rml_parse):
             'invoice_tree': self._get_invoice_tree,
             'invoice_move_lines': self._get_invoice_move_lines,
             'ddt_tree': self._get_ddt_tree,
+            'picking_tree': self._get_picking_tree,
             'desc_nocode': self._desc_nocode,
             'total_fiscal': self._get_total_fiscal,
             'total_tax_fiscal': self._get_total_tax_fiscal,
@@ -375,6 +376,15 @@ class Parser(report_sxw.rml_parse):
             for group in invoice:
                 invoice[group]['lines'].sort(
                     key=lambda r: r.product_id.default_code or r.name or 'zzz')
+        return res
+
+    def _get_picking_tree(self, lines):
+        if self.pool['ir.config_parameter'].get_param(
+                self.cr, self.uid, 'report.sppp_order_products',
+                default=False):
+            res = lines.sorted(
+                key=lambda r: r.product_id.default_code or r.name or 'zzz',
+                reverse=True)
         return res
 
     def _get_ddt_tree(self, sppp_line_ids):
