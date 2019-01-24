@@ -382,10 +382,10 @@ class Parser(report_sxw.rml_parse):
         if self.pool['ir.config_parameter'].get_param(
                 self.cr, self.uid, 'report.sppp_order_products',
                 default=False):
-            res = lines.sorted(
+            lines = lines.sorted(
                 key=lambda r: r.product_id.default_code or r.name or 'zzz',
                 reverse=True)
-        return res
+        return lines
 
     def _get_ddt_tree(self, sppp_line_ids):
         # group sppp lines by sale order if present
