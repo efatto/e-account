@@ -2,7 +2,7 @@
 #
 #
 #    Copyright (C) 2016 SimplERP srl (<http://www.simplerp.it>).
-#    Copyright (C) 2017 Sergio Corato
+#    Copyright (C) 2017-2019 Sergio Corato
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -20,10 +20,10 @@
 #
 {
     'name': 'End year vat statement',
-    'version': '8.0.1.3.0',
+    'version': '10.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'website': 'http://www.efatto.it',
+    'website': 'https://efatto.it',
     'license': 'AGPL-3',
     'description': 'End year vat statement',
     'depends': [
@@ -31,9 +31,9 @@
         'l10n_it_account',
     ],
     'data': [
-        'views/reports.xml',
-        'views/report_vatperiodendstatement.xml',
+        # 'views/reports.xml',
+        # 'views/report_vatperiodendstatement.xml',
         'views/account_view.xml',
     ],
-    'installable': False
+    'installable': True
 }
