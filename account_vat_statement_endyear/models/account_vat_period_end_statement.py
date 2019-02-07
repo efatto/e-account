@@ -209,7 +209,6 @@ class VatPeriodEndStatementReport(report_sxw.rml_parse):
                             'vat_deductible']
                         result[tax]['vat_undeductible'] += value[
                             'vat_undeductible']
-                        result[tax]['code'] += value['code']
                         result[tax]['tax_code_name'] += value['tax_code_name']
                     else:
                         result[tax] = {
