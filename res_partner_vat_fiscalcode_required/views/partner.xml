@@ -7,10 +7,14 @@
 			<field name="model">res.partner</field>
             <field name="inherit_id" ref="l10n_it_fiscalcode.view_partner_form_fiscalcode_data"/>
 			<field name="arch" type="xml">
+                <field name="fiscalcode" position="after">
+                    <field name="country_code" invisible="1"/>
+                </field>
                 <field name="fiscalcode" position="attributes">
                     <attribute name="attrs">{'required': [
                         ('parent_id', '=', False),
-                        ('vat', '=', False)]}
+                        ('vat', '=', False),
+                        ('country_code', '=', 'IT')]}
                     </attribute>
                 </field>
             </field>
@@ -21,10 +25,14 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base_vat.view_partner_form"/>
             <field name="arch" type="xml">
+                <field name="vat" position="after">
+                    <field name="country_code" invisible="1"/>
+                </field>
                 <field name="vat" position="attributes">
                     <attribute name="attrs">{'required': [
                         ('parent_id', '=', False),
-                        ('fiscalcode', '=', False)]}
+                        ('fiscalcode', '=', False),
+                        ('country_code', '=', 'IT')]}
                     </attribute>
                 </field>
             </field>
