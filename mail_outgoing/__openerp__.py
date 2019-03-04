@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'mail_outgoing',
-    'version': '4.0.0.0',
+    'version': '8.0.1.0.0',
     'category': 'Social Network',
     'description': """
 Fix mail:
