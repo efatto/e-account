@@ -19,7 +19,7 @@
 #
 {
     'name': 'Aeroo custom parser',
-    'version': '8.1.0.0.0',
+    'version': '8.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato - Efatto.it, Didotech Srl',
     'website': 'http://www.efatto.it',
