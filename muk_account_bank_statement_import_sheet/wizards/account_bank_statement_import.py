@@ -24,6 +24,7 @@ class AccountBankStatementImport(models.TransientModel):
         ('\t', "Tab"),
         (' ', "Space")
     ], string="Separator")
+    bank_date_format = fields.Char('Date format')
 
     @staticmethod
     def _check_csv(data_file, filename):
@@ -61,6 +62,7 @@ class AccountBankStatementImport(models.TransientModel):
                     bank_end_line_to_exclude = bank_account.bank_end_line_to_exclude
                     bank_column_header = bank_account.bank_column_header
                     bank_separator = bank_account.bank_separator
+                    bank_date_format = bank_account.bank_date_format
             import_wizard = self.env[
                 'account.bank.statement.import.ex.wizard'].create({
                     'res_model': "account.bank.statement.line",
@@ -70,13 +72,15 @@ class AccountBankStatementImport(models.TransientModel):
                     'bank_end_line_to_exclude': bank_end_line_to_exclude,
                     'bank_column_header': bank_column_header,
                     'bank_separator': bank_separator,
+                    'bank_date_format': bank_date_format,
             })
             ctx = dict(self.env.context)
             ctx['wizard_id'] = import_wizard.id
-            ctx['bank_init_line_to_exclude'] = bank_init_line_to_exclude
-            ctx['bank_end_line_to_exclude'] = bank_end_line_to_exclude
-            ctx['bank_column_header'] = bank_column_header
-            ctx['bank_separator'] = bank_separator
+            # ctx['bank_init_line_to_exclude'] = bank_init_line_to_exclude
+            # ctx['bank_end_line_to_exclude'] = bank_end_line_to_exclude
+            # ctx['bank_column_header'] = bank_column_header
+            # ctx['separator'] = bank_separator
+            # ctx['date_format'] = bank_date_format
             return {
                 'type': 'ir.actions.client',
                 'tag': 'import_bank_statement',

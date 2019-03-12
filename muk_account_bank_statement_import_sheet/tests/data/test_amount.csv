@@ -1,4 +1,4 @@
-date;name;amount;balance
+date;nome;amount;balance
 02.01.18;INIT BALANCE;;5000
 03.01.18;STATEMENT 01;4662;9662
 03.01.18;STATEMENT 02;4445;14107

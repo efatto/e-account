@@ -11,7 +11,7 @@
     "version": "10.0.3.1.0",
     "category": "Accounting",
     "license": "AGPL-3",
-    "website": "https://efatto.it",
+    "website": "https://mukit.at",
     "author": "MuK IT",
     "contributors": [
         "Mathias Markl <mathias.markl@mukit.at>, "

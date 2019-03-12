@@ -30,12 +30,12 @@
                 <li>Microsoft Office Excel (.XLSX)</li>
                 <li>Open  Document Spreadsheet (.ODS)</li>
             </xpath>
-            <xpath expr="//ul[@id='statement_format']" position="after">
-                <field name="bank_init_line_to_exclude"/>
-                <field name="bank_end_line_to_exclude"/>
-                <field name="bank_column_header"/>
-                <field name="bank_separator"/>
-            </xpath>
+            <!--<xpath expr="//ul[@id='statement_format']" position="after">-->
+                <!--<field name="bank_init_line_to_exclude"/>-->
+                <!--<field name="bank_end_line_to_exclude"/>-->
+                <!--<field name="bank_column_header"/>-->
+                <!--<field name="bank_separator"/>-->
+            <!--</xpath>-->
         </field>
     </record>
 

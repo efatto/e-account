@@ -31,131 +31,150 @@ class AccountBankStatementImportExWizard(models.TransientModel):
         ('\t', "Tab"),
         (' ', "Space")
     ], string="Separator")
+    bank_date_format = fields.Char('Date format')
 
     @api.multi
     def parse_preview(self, options, count=10):
+        if self.bank_date_format:
+            options['date_format'] = self.bank_date_format
         if self.bank_separator:
             options['separator'] = self.bank_separator
         return super(AccountBankStatementImportExWizard, self).parse_preview(
             options, count=count)
 
-    # date:Data Registrazione:date,name:Descrizione:char,amount:Importo (EUR):monetary
-    @api.model
-    def get_fields(self, model, depth=2):
-        res = []
+    def _match_headers(self, rows, fields, options):
+        res = super(AccountBankStatementImportExWizard, self)._match_headers(
+            rows, fields, options)
         if self.bank_column_header:
-            column_list = self.bank_column_header.split(',')
-            for col in column_list:
-                col_field, col_name, col_type = col.split(':')
-                res.append({
-                    'id': col_field,
-                    'name': col_field,
-                    'string': col_name,
-                    'required': True,
-                    'fields': [],
-                    'type': col_type,
-                })
-        else:
-            res = [{
-                'id': 'date',
-                'name': 'date',
-                'string': 'Date',
-                'required': True,
-                'fields': [],
-                'type': 'date'
-            }, {
-                'id': 'name',
-                'name': 'name',
-                'string': 'Label',
-                'required': True,
-                'fields': [],
-                'type': 'char'
-            }, {
-                'id': 'partner_name',
-                'name': 'partner_name',
-                'string': 'Partner Name',
-                'required': False,
-                'fields': [],
-                'type': 'char'
-            }, {
-                'id': 'partner_id',
-                'name': 'partner_id',
-                'string': 'Partner',
-                'required': False,
-                'fields': [{
-                    'id': 'partner_id',
-                    'name': 'id',
-                    'string': 'External ID',
-                    'required': False,
-                    'fields': [],
-                    'type': 'id'
-                }, {
-                    'id': 'partner_id',
-                    'name': '.id',
-                    'string': 'Database ID',
-                    'required': False,
-                    'fields': [],
-                    'type': 'id'
-                }],
-                'type': 'many2one'
-            }, {
-                'id': 'ref',
-                'name': 'ref',
-                'string': 'Reference',
-                'required': False,
-                'fields': [],
-                'type': 'char'
-            }, {
-                'id': 'note',
-                'name': 'note',
-                'string': 'Notes',
-                'required': False,
-                'fields': [],
-                'type': 'text'
-            }, {
-                'id': 'amount',
-                'name': 'amount',
-                'string': 'Amount',
-                'required': False,
-                'fields': [],
-                'type': 'monetary'
-            }, {
-                'id': 'amount_currency',
-                'name': 'amount_currency',
-                'string': 'Amount Currency',
-                'required': False,
-                'fields': [],
-                'type': 'monetary'
-            }, {
-                'id': 'currency_id',
-                'name': 'currency_id',
-                'string': 'Currency',
-                'required': False,
-                'fields': [{
-                    'id': 'currency_id',
-                    'name': 'id',
-                    'string': 'External ID',
-                    'required': False,
-                    'fields': [],
-                    'type': 'id'
-                }, {
-                    'id': 'currency_id',
-                    'name': '.id',
-                    'string': 'Database ID',
-                    'required': False,
-                    'fields': [],
-                    'type': 'id'
-                }],
-                'type': 'many2one'
-            }, {
-                'id': 'balance',
-                'name': 'balance',
-                'string': 'Cumulative Balance',
-                'required': False,
-                'fields': [],
-                'type': 'monetary',
-            }]
+            #todo get column names from bank and use for match
+            sep = ';'
+            if ',' in self.bank_column_header:
+                sep = ','
+            headers = self.bank_column_header.split(sep)
+            res = headers, {
+                index: [field['name'] for field in
+                        self._match_header(header, fields,
+                                           options)] or None
+                for index, header in enumerate(headers)
+            }
         return res
+
+    # @api.model
+    # def get_fields(self, model, depth=2):
+    #     res = []
+    #     if self.bank_column_header:
+    #         column_list = self.bank_column_header.split(',')
+    #         for col in column_list:
+    #             db_field, db_name, col_name, col_type = col.split(':')
+    #             res.append({
+    #                 'id': db_field,
+    #                 'name': col_name,
+    #                 'string': db_name,
+    #                 'required': True,
+    #                 'fields': [],
+    #                 'type': col_type,
+    #             })
+    #     else:
+    #         res = [{
+    #             'id': 'date',
+    #             'name': 'date',
+    #             'string': 'Date',
+    #             'required': True,
+    #             'fields': [],
+    #             'type': 'date'
+    #         }, {
+    #             'id': 'name',
+    #             'name': 'nome',
+    #             'string': 'Label',
+    #             'required': True,
+    #             'fields': [],
+    #             'type': 'char'
+    #         }, {
+    #             'id': 'partner_name',
+    #             'name': 'partner_name',
+    #             'string': 'Partner Name',
+    #             'required': False,
+    #             'fields': [],
+    #             'type': 'char'
+    #         }, {
+    #             'id': 'partner_id',
+    #             'name': 'partner_id',
+    #             'string': 'Partner',
+    #             'required': False,
+    #             'fields': [{
+    #                 'id': 'partner_id',
+    #                 'name': 'id',
+    #                 'string': 'External ID',
+    #                 'required': False,
+    #                 'fields': [],
+    #                 'type': 'id'
+    #             }, {
+    #                 'id': 'partner_id',
+    #                 'name': '.id',
+    #                 'string': 'Database ID',
+    #                 'required': False,
+    #                 'fields': [],
+    #                 'type': 'id'
+    #             }],
+    #             'type': 'many2one'
+    #         }, {
+    #             'id': 'ref',
+    #             'name': 'ref',
+    #             'string': 'Reference',
+    #             'required': False,
+    #             'fields': [],
+    #             'type': 'char'
+    #         }, {
+    #             'id': 'note',
+    #             'name': 'note',
+    #             'string': 'Notes',
+    #             'required': False,
+    #             'fields': [],
+    #             'type': 'text'
+    #         }, {
+    #             'id': 'amount',
+    #             'name': 'amount',
+    #             'string': 'Amount',
+    #             'required': False,
+    #             'fields': [],
+    #             'type': 'monetary'
+    #         }, {
+    #             'id': 'amount_currency',
+    #             'name': 'amount_currency',
+    #             'string': 'Amount Currency',
+    #             'required': False,
+    #             'fields': [],
+    #             'type': 'monetary'
+    #         }, {
+    #             'id': 'currency_id',
+    #             'name': 'currency_id',
+    #             'string': 'Currency',
+    #             'required': False,
+    #             'fields': [{
+    #                 'id': 'currency_id',
+    #                 'name': 'id',
+    #                 'string': 'External ID',
+    #                 'required': False,
+    #                 'fields': [],
+    #                 'type': 'id'
+    #             }, {
+    #                 'id': 'currency_id',
+    #                 'name': '.id',
+    #                 'string': 'Database ID',
+    #                 'required': False,
+    #                 'fields': [],
+    #                 'type': 'id'
+    #             }],
+    #             'type': 'many2one'
+    #         }, {
+    #             'id': 'balance',
+    #             'name': 'balance',
+    #             'string': 'Cumulative Balance',
+    #             'required': False,
+    #             'fields': [],
+    #             'type': 'monetary',
+    #         }]
+    #     return res
 
     def _parse_float(self, value):
         return float(value) if value else 0.0

@@ -12,6 +12,7 @@
                         <field name="end_line_to_exclude"/>
                         <field name="column_header"/>
                         <field name="separator"/>
+                        <field name="date_format"/>
                     </group>
                 </field>
             </field>
@@ -28,6 +29,7 @@
                     <field name="bank_end_line_to_exclude"/>
                     <field name="bank_column_header"/>
                     <field name="bank_separator"/>
+                    <field name="bank_date_format"/>
                 </field>
                 
             </field>

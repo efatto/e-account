@@ -21,6 +21,7 @@ class ResBank(models.Model):
         ('\t', "Tab"),
         (' ', "Space")
     ], string="Separator")
+    date_format = fields.Char('Date format')
 
 
 class ResPartnerBank(models.Model):
@@ -41,6 +42,7 @@ class ResPartnerBank(models.Model):
         ('\t', "Tab"),
         (' ', "Space")
     ], string="Separator")
+    bank_date_format = fields.Char('Date format')
 
     @api.onchange('bank_id')
     def onchange_bank_id(self):
@@ -49,15 +51,4 @@ class ResPartnerBank(models.Model):
             self.bank_end_line_to_exclude = self.bank_id.end_line_to_exclude
             self.bank_column_header = self.bank_id.column_header
             self.bank_separator = self.bank_id.separator
-
-
-class AccountBankStatement(models.Model):
-    _inherit = 'account.bank.statement'
-
-    def default_get(self, vals):
-        bank = self.env["account.bank.statement"].browse(
-            vals.get('statement_id'))
-        if bank.bank_init_lines_to_exclude:
-            pass
-        if bank.last_lines_to_exclude:
-            pass
+            self.bank_date_format = self.bank_id.date_format
