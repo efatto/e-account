@@ -90,12 +90,22 @@ class AccountBankStatementImport(models.TransientModel):
                 csv_iterator = csv.reader(
                     StringIO(csv_data),
                     delimiter=str(bank_account.bank_separator))
+                rows = 0
+                if bank_account.bank_end_line_to_exclude:
+                    csv_iterator1 = csv.reader(
+                        StringIO(csv_data),
+                        delimiter=str(bank_account.bank_separator))
+                    rows = len(list(csv_iterator1))
                 i = 0
                 for row in csv_iterator:
                     i += 1
                     if i == 1:
                         new_rows.append(row)
                         continue
+                    if bank_account.bank_end_line_to_exclude and \
+                            bank_account.bank_end_line_to_exclude == (
+                            rows + 1 - i):
+                        break
                     debit_val = False
                     credit_val = False
                     if row[debit_col_pos].strip() != '':
