@@ -8,7 +8,7 @@
 {
     "name": "Pre-configurable Import CSV/XLS/XLSX/ODS Bank Statement",
     "summary": """Bank Statement Import Wizard""",
-    "version": "10.0.1.0.0",
+    "version": "10.0.1.1.0",
     "category": "Accounting",
     "license": "AGPL-3",
     "website": "https://efatto.it",
