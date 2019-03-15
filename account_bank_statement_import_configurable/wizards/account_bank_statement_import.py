@@ -57,10 +57,6 @@ class AccountBankStatementImport(models.TransientModel):
                     self._context['journal_id']).bank_account_id
                 if bank_account:
                     values.update({
-                        'bank_init_line_to_exclude': bank_account.
-                        bank_init_line_to_exclude,
-                        'bank_end_line_to_exclude': bank_account.
-                        bank_end_line_to_exclude,
                         'bank_column_header': bank_account.bank_column_header,
                         'separator': bank_account.bank_separator,
                         'date_format': bank_account.bank_date_format,
@@ -106,6 +102,9 @@ class AccountBankStatementImport(models.TransientModel):
                             bank_account.bank_end_line_to_exclude == (
                             rows + 1 - i):
                         break
+                    if bank_account.bank_init_line_to_exclude and \
+                            bank_account.bank_init_line_to_exclude >= i:
+                        continue
                     debit_val = False
                     credit_val = False
                     if row[debit_col_pos].strip() != '':
