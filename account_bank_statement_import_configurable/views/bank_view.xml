@@ -15,6 +15,8 @@
                     <field name="date_format"/>
                     <field name="float_thousand_separator"/>
                     <field name="float_decimal_separator"/>
+                    <field name="debit_column_pos"/>
+                    <field name="credit_column_pos"/>
                 </group>
             </field>
         </field>
@@ -34,6 +36,8 @@
                 <field name="bank_date_format"/>
                 <field name="bank_float_thousand_separator"/>
                 <field name="bank_float_decimal_separator"/>
+                <field name="bank_debit_column_pos"/>
+                <field name="bank_credit_column_pos"/>
             </field>
         </field>
     </record>

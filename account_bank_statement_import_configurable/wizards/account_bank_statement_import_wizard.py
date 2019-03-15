@@ -18,8 +18,8 @@ class AccountBankStatementImportExWizard(models.TransientModel):
     _name = "account.bank.statement.import.ex.wizard"
     _inherit = "base_import.import"
 
-    bank_init_line_to_exclude = fields.Integer('Initial lines to exclude')
-    bank_end_line_to_exclude = fields.Integer('End lines to exclude')
+    # bank_init_line_to_exclude = fields.Integer('Initial lines to exclude')
+    # bank_end_line_to_exclude = fields.Integer('End lines to exclude')
     bank_column_header = fields.Char(
         'Column header', help='List of column headers separated by "," '
                               'and with this format: '

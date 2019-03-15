@@ -31,6 +31,8 @@ class ResBank(models.Model):
         ('.', "Dot"),
     ], string="Decimal separator")
     date_format = fields.Char('Date format')
+    debit_column_pos = fields.Integer('Debit column position')
+    credit_column_pos = fields.Integer('Credit column position')
 
 
 class ResPartnerBank(models.Model):
@@ -60,6 +62,8 @@ class ResPartnerBank(models.Model):
         ('.', "Dot"),
     ], string="Decimal separator")
     bank_date_format = fields.Char('Date format')
+    bank_debit_column_pos = fields.Integer('Debit column position')
+    bank_credit_column_pos = fields.Integer('Credit column position')
 
     @api.onchange('bank_id')
     def onchange_bank_id(self):
@@ -73,3 +77,5 @@ class ResPartnerBank(models.Model):
                 self.bank_id.float_thousand_separator
             self.bank_float_decimal_separator = \
                 self.bank_id.float_decimal_separator
+            self.bank_debit_column_pos = self.bank_id.debit_column_pos
+            self.bank_credit_column_pos = self.bank_id.credit_column_pos

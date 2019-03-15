@@ -4,10 +4,17 @@
 
 import os
 import base64
+import csv
 import logging
+import tempfile
 
 from odoo import api, models, fields
 from odoo.tools.mimetypes import guess_mimetype
+
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
 
 _logger = logging.getLogger(__name__)
 
@@ -43,11 +50,8 @@ class AccountBankStatementImport(models.TransientModel):
             self._check_xls(self.data_file, self.filename) or \
             self._check_xlsx(self.data_file, self.filename) or \
                 self._check_ods(self.data_file, self.filename):
-            values = {
-                'res_model': "account.bank.statement.line",
-                'file_name': self.filename,
-                'file': base64.b64decode(self.data_file),
-            }
+            values = {}
+            bank_account = False
             if self._context['active_model'] == 'account.journal':
                 bank_account = self.env['account.journal'].browse(
                     self._context['journal_id']).bank_account_id
@@ -65,6 +69,65 @@ class AccountBankStatementImport(models.TransientModel):
                         'float_decimal_separator': bank_account.
                         bank_float_decimal_separator,
                     })
+
+            # todo change on-the-fly file csv to drop init-end lines
+            # todo move amount in 2nd column of values to the 1st with - sign
+            if bank_account and bank_account.bank_debit_column_pos and \
+                    bank_account.bank_credit_column_pos:
+                debit_col_pos = bank_account.bank_debit_column_pos
+                credit_col_pos = bank_account.bank_credit_column_pos
+                first_column = (credit_col_pos < debit_col_pos
+                               ) and credit_col_pos or debit_col_pos
+                last_column = (credit_col_pos > debit_col_pos
+                               ) and credit_col_pos or debit_col_pos
+                new_rows = []
+                csv_data = base64.b64decode(self.data_file)
+                # encoding = self.options.get('encoding', 'utf-8')
+                # if encoding != 'utf-8':
+                #     # csv module expect utf-8,
+                #     # see http://docs.python.org/2/library/csv.html
+                #     csv_data = csv_data.decode(encoding).encode('utf-8')
+                csv_iterator = csv.reader(
+                    StringIO(csv_data),
+                    delimiter=str(bank_account.bank_separator))
+                i = 0
+                for row in csv_iterator:
+                    i += 1
+                    if i == 1:
+                        new_rows.append(row)
+                        continue
+                    debit_val = False
+                    credit_val = False
+                    if row[debit_col_pos].strip() != '':
+                        debit_val = float(
+                            row[debit_col_pos].strip(
+                                ).replace('.', '').replace(',', '.'))
+                    if row[credit_col_pos].strip() != '':
+                        credit_val = float(
+                            row[credit_col_pos].strip(
+                                ).replace('.', '').replace(',', '.'))
+                    if credit_val:
+                        debit_val = credit_val * -1
+                    if debit_val:
+                        new_row = row[:first_column]
+                        new_row.append(str(debit_val).replace('.', ','))
+                        new_row += row[last_column+1:]
+                        new_rows.append(new_row)
+
+                fp = StringIO()
+                writer = csv.writer(fp, quoting=csv.QUOTE_ALL,
+                                    delimiter=str(bank_account.bank_separator))
+                writer.writerows(new_rows)
+                fp.seek(0)
+                data = fp.read()
+                fp.close()
+                self.data_file = base64.b64encode(data)
+
+            values.update({
+                'res_model': "account.bank.statement.line",
+                'file_name': self.filename,
+                'file': base64.b64decode(self.data_file),
+            })
             import_wizard = self.env[
                 'account.bank.statement.import.ex.wizard'].create(values)
             ctx = dict(self.env.context)
