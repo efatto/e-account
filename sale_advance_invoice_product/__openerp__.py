@@ -18,7 +18,7 @@
 #
 #
 {
-    'name': 'Sale advance invoice product required',
+    'name': 'Sale advance invoice product required DEPRECATED',
     'version': '8.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
@@ -32,5 +32,5 @@
     'data': [
         'views/sale.xml',
     ],
-    'installable': True
+    'installable': False
 }
