@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #
-#    Copyright (C) 2017 Sergio Corato
+#    Copyright (C) 2017-2019 Sergio Corato
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -19,12 +19,13 @@
 #
 {
     'name': 'Sale advance invoice extension with SAL',
-    'version': '8.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'Add ability to get description from sale order during'
-                   ' advance invoice creation, with contract SAL.',
-    'website': 'http://www.efatto.it',
+    'description': 'Add ability to get description from SAL of contract during'
+                   ' advance invoice creation. Link to SAL on analytic account'
+                   '.',
+    'website': 'https://efatto.it',
     'license': 'AGPL-3',
     'depends': [
         'sale_advance_invoice',
@@ -33,5 +34,5 @@
     'data': [
         'views/sale.xml',
     ],
-    'installable': False
+    'installable': True
 }
