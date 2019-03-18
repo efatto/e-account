@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-# For copyright and license notices, see __openerp__.py file in root directory
-##############################################################################
-from openerp import models, fields, api, _
+
+from odoo import models, fields, api, _
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
@@ -14,15 +12,6 @@ class SaleAdvancePaymentInv(models.TransientModel):
             self._context['active_id']).order_line
         return line_ids
 
-    @api.model
-    def _get_advance_product(self):
-        line_ids = self.env['sale.order'].browse(
-            self._context['active_id']).order_line
-        if line_ids and line_ids[0].product_id:
-            return line_ids[0].product_id
-        else:
-            return super(SaleAdvancePaymentInv, self)._get_advance_product()
-
     order_line_ids = fields.Many2many(
         comodel_name='sale.order.line',
         relation='advance_sale_order_line_rel',
@@ -31,30 +20,14 @@ class SaleAdvancePaymentInv(models.TransientModel):
         default=_get_order_lines,
         help='Select order lines to print details in invoice'
     )
-    product_id = fields.Many2one(
-        default=_get_advance_product,
-    )
 
     @api.multi
-    def create_invoices(self):
-        """ create invoices for the active sales orders """
-        if self.advance_payment_method in ('fixed', 'percentage'):
-            inv_ids = []
-            for sale_id, inv_values in self._prepare_advance_invoice_vals():
-                inv_ids.append(self._create_invoices(inv_values, sale_id))
-            for inv in self.env['account.invoice'].browse(inv_ids):
-                if self.order_line_ids:
-                    description = ''
-                    for line in self.order_line_ids:
-                        description += ('\n' + line.name)
-                for invoice_line in inv.invoice_line:
-                    invoice_line.name = \
-                        self.with_context({
-                          'lang': inv.partner_id.lang}
-                        )._translate_advance(percentage=True) % (
-                            self.amount) + description
-            if self._context.get('open_invoices', False):
-                return self.open_invoices(inv_ids)
-            return {'type': 'ir.actions.act_window_close'}
-        else:
-            return super(SaleAdvancePaymentInv, self).create_invoices()
+    def _create_invoice(self, order, so_line, amount):
+        invoice = super(SaleAdvancePaymentInv, self)._create_invoice(
+            order, so_line, amount)
+        if self.advance_payment_method in ('fixed', 'percentage') \
+                and self.order_line_ids:
+            description = '\n'.join(self.order_line_ids.mapped('name'))
+            for invoice_line in invoice.invoice_line_ids:
+                invoice_line.name = '%s \n%s' % (invoice_line.name, description)
+        return invoice

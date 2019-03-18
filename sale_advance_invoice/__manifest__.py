@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#
-#    Copyright (C) 2017 Sergio Corato
+#    Copyright (C) 2017-2019 Sergio Corato
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -18,20 +17,19 @@
 #
 #
 {
-    'name': 'Sale advance invoice description from lines',
-    'version': '8.0.1.0.0',
+    'name': 'Sale advance invoice description from sale order lines',
+    'version': '10.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Add ability to select order lines to print details in the'
                    'invoice',
-    'website': 'http://www.efatto.it',
+    'website': 'https://efatto.it',
     'license': 'AGPL-3',
     'depends': [
         'sale',
-        'sale_advance_invoice_product',
     ],
     'data': [
         'views/sale.xml',
     ],
-    'installable': False
+    'installable': True,
 }
