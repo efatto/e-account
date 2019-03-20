@@ -6,7 +6,6 @@ import os
 import base64
 import csv
 import logging
-import tempfile
 
 from odoo import api, models, fields
 from odoo.tools.mimetypes import guess_mimetype
@@ -70,8 +69,9 @@ class AccountBankStatementImport(models.TransientModel):
             # todo move amount in 2nd column of values to the 1st with - sign
             if bank_account and bank_account.bank_debit_column_pos and \
                     bank_account.bank_credit_column_pos:
-                debit_col_pos = bank_account.bank_debit_column_pos
+                abi_reason_column_pos = bank_account.bank_abi_reason_column_pos
                 credit_col_pos = bank_account.bank_credit_column_pos
+                debit_col_pos = bank_account.bank_debit_column_pos
                 first_column = (credit_col_pos < debit_col_pos
                                ) and credit_col_pos or debit_col_pos
                 last_column = (credit_col_pos > debit_col_pos
@@ -97,6 +97,9 @@ class AccountBankStatementImport(models.TransientModel):
                     i += 1
                     if i == 1:
                         new_rows.append(row)
+                        continue
+                    if abi_reason_column_pos \
+                            and not row[abi_reason_column_pos]:
                         continue
                     if bank_account.bank_end_line_to_exclude and \
                             bank_account.bank_end_line_to_exclude == (

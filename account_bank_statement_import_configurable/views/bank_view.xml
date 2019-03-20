@@ -17,6 +17,7 @@
                     <field name="float_decimal_separator"/>
                     <field name="debit_column_pos"/>
                     <field name="credit_column_pos"/>
+                    <field name="abi_reason_column_pos"/>
                 </group>
             </field>
         </field>
@@ -38,6 +39,7 @@
                 <field name="bank_float_decimal_separator"/>
                 <field name="bank_debit_column_pos"/>
                 <field name="bank_credit_column_pos"/>
+                <field name="bank_abi_reason_column_pos"/>
             </field>
         </field>
     </record>
