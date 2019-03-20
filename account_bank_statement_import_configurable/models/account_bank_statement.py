@@ -33,7 +33,7 @@ class ResBank(models.Model):
     date_format = fields.Char('Date format')
     debit_column_pos = fields.Integer('Debit column position')
     credit_column_pos = fields.Integer('Credit column position')
-    abi_reason_column_pos = fields.Integer('ABI reason')
+    abi_reason_column_pos = fields.Integer('ABI reason position')
 
 
 class ResPartnerBank(models.Model):
@@ -65,7 +65,7 @@ class ResPartnerBank(models.Model):
     bank_date_format = fields.Char('Date format')
     bank_debit_column_pos = fields.Integer('Debit column position')
     bank_credit_column_pos = fields.Integer('Credit column position')
-    bank_abi_reason_column_pos = fields.Integer('ABI reason')
+    bank_abi_reason_column_pos = fields.Integer('ABI reason position')
 
     @api.onchange('bank_id')
     def onchange_bank_id(self):
