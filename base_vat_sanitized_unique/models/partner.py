@@ -12,7 +12,7 @@ class ResPartner(models.Model):
     @api.multi
     def vat_onchange(self):
         for p in self:
-            if p.vat:
+            if p.vat and not p.parent_id:
                 duplicated_partner_ids = self.env['res.partner'].search([
                     ('sanitized_vat', '=', p.vat.upper().replace(' ', '')),
                     ('id', '!=', p.id),
