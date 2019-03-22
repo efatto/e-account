@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-<openerp>
-  <data>
+<odoo>
+
     <record id="sale_form_update_default_discount" model="ir.ui.view">
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
@@ -20,5 +20,5 @@
             </field>
         </field>
     </record>
-  </data>
-</openerp>
+
+</odoo>
