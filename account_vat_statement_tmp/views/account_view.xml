@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="view_account_tax_tmp" model="ir.ui.view">
+            <field name="name">account.tax.tmp</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="model">account.tax</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="vat_statement_account_id"/>
+                </field>
+
+            </field>
+        </record>
+
+    </data>
+</openerp>
