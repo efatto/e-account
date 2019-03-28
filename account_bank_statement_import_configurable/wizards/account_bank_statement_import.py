@@ -6,6 +6,8 @@ import os
 import base64
 import csv
 import logging
+import itertools
+import operator
 
 from odoo import api, models, fields
 from odoo.tools.mimetypes import guess_mimetype
@@ -16,6 +18,35 @@ except ImportError:
     from StringIO import StringIO
 
 _logger = logging.getLogger(__name__)
+
+
+class Import(models.TransientModel):
+    _inherit = 'base_import.import'
+
+    @api.model
+    def _convert_import_data(self, fields, options):
+        data, import_fields = super(
+            Import, self)._convert_import_data(fields, options)
+
+        if self._context.get('init_line_to_exclude'):
+            indices = [index for index, field in enumerate(fields) if
+                       field]
+            if len(indices) == 1:
+                mapper = lambda row: [row[indices[0]]]
+            else:
+                mapper = operator.itemgetter(*indices)
+            rows_to_import = self._read_file(options)
+            init_line_to_exclude = self._context['init_line_to_exclude']
+            if options.get('headers'):
+                init_line_to_exclude -= 1
+            rows_to_import = itertools.islice(
+                rows_to_import, init_line_to_exclude, None)
+            data = [
+                list(row) for row in itertools.imap(mapper, rows_to_import)
+                if any(row)
+            ]
+
+        return data, import_fields
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -152,6 +183,8 @@ class AccountBankStatementImport(models.TransientModel):
                     bank_float_thousand_separator,
                     'float_decimal_separator': bank_account.
                     bank_float_decimal_separator,
+                    'init_line_to_exclude': bank_account.
+                    bank_init_line_to_exclude,
                 })
             return {
                 'type': 'ir.actions.client',
