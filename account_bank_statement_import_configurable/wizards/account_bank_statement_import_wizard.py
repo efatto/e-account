@@ -40,7 +40,6 @@ class AccountBankStatementImportExWizard(models.TransientModel):
         ('.', "Dot"),
     ], string="Decimal separator")
     date_format = fields.Char('Date format')
-    init_line_to_exclude = fields.Integer('Initial line to exclude')
 
     @api.multi
     def parse_preview(self, options, count=10):

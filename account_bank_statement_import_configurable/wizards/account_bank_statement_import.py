@@ -45,6 +45,8 @@ class Import(models.TransientModel):
                 list(row) for row in itertools.imap(mapper, rows_to_import)
                 if any(row)
             ]
+            if self._context.get('end_line_to_exclude'):
+                data = data[:-self._context['end_line_to_exclude']]
 
         return data, import_fields
 
@@ -185,6 +187,8 @@ class AccountBankStatementImport(models.TransientModel):
                     bank_float_decimal_separator,
                     'init_line_to_exclude': bank_account.
                     bank_init_line_to_exclude,
+                    'end_line_to_exclude': bank_account.
+                        bank_end_line_to_exclude,
                 })
             return {
                 'type': 'ir.actions.client',
