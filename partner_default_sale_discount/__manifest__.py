@@ -4,7 +4,7 @@
 
 {
     'name': 'Default sales discount per partner',
-    'version': '10.0.1.0.0',
+    'version': '10.0.1.1.0',
     'category': 'Partner Management',
     'license': 'AGPL-3',
     'author': 'Tecnativa, '
@@ -16,7 +16,7 @@
         'discount_complex',
     ],
     'data': [
-        # 'views/res_partner_view.xml',
+        'views/res_partner_view.xml',
         'views/sale_order_view.xml',
     ],
     'installable': True,
