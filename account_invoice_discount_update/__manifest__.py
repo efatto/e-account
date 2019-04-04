@@ -19,7 +19,7 @@
 #
 {
     'name': 'Update discount in invoice',
-    'version': '10.0.1.0.0',
+    'version': '10.0.1.0.1',
     'category': 'Invoice Management',
     'license': 'AGPL-3',
     'description': """
