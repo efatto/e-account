@@ -22,4 +22,4 @@ class AccountInvoice(models.Model):
                 if line.product_id:
                     if not line.product_id.downpayment:
                         total += line.price_subtotal
-            self.invoice_goods_amount = total
+            invoice.invoice_goods_amount = total
