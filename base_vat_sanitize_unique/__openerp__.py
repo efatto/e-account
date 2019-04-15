@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Base VAT sanitize unique',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.1.0',
     'category': 'Accounting & Finance',
     'author': 'Sergio Corato',
     'description': 'Sanitize VAT number field for unique consistency',
@@ -29,6 +29,7 @@
     'depends': [
         'account',
         'base_vat_sanitized',
+        'l10n_it_fiscalcode',
     ],
     'data': [
     ],

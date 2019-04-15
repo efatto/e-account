@@ -15,6 +15,7 @@ class ResPartner(models.Model):
                 ('sanitized_vat', '=', vat.upper().replace(' ', '')),
                 ('id', '!=', self.id),
                 ('parent_id', '=', False),
+                ('fiscalcode', '=', self.fiscalcode),
             ])
             if duplicated_partner_ids:
                 raise exceptions.ValidationError(
