@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="0">
+    <data>
         <record id="view_account_tax_tmp" model="ir.ui.view">
             <field name="name">account.tax.tmp</field>
             <field name="inherit_id" ref="account.view_tax_form"/>
@@ -13,6 +13,19 @@
 
             </field>
         </record>
-
+        <record id="view_account_statement_tax_tmp" model="ir.ui.view">
+            <field name="name">account.tax.statement.tmp</field>
+            <field name="inherit_id" ref="account_vat_period_end_statement.view_account_vat_period_end_statement"/>
+            <field name="model">account.vat.period.end.statement</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='debit_vat_account_line_ids']/tree/field[@name='tax_code_id']" position="before">
+                    <field name="tax_id"/>
+                </xpath>
+                <xpath expr="//field[@name='credit_vat_account_line_ids']/tree/field[@name='tax_code_id']" position="before">
+                    <field name="tax_id"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
