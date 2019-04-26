@@ -15,10 +15,10 @@
                             <field name="print_net_price"/>
                             <field name="print_hide_uom"/>
                         </group>
-                        <group>
-                            <field name="print_totals_in_first_page"/>
-                            <field name="print_payment_in_footer"/>
-                        </group>
+<!--                        <group>-->
+<!--                            <field name="print_totals_in_first_page"/>-->
+<!--                            <field name="print_payment_in_footer"/>-->
+<!--                        </group>-->
                     </group>
                 </field>
             </field>
