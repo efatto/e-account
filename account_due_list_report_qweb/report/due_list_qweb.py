@@ -1,32 +1,25 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-# For copyright and license notices, see __openerp__.py file in root directory
-##############################################################################
-from openerp import api, models, fields
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+
+from odoo import api, models, fields
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from datetime import datetime
 
 
 class DueListReportQweb(models.AbstractModel):
     _name = 'report.account_due_list_report_qweb.duelist_qweb'
 
-    @api.multi
-    def render_html(self, data=None):
-        report_obj = self.env['report']
-        report = report_obj._get_report_from_name(
-            'account_due_list_report_qweb.duelist_qweb')
+    @api.model
+    def render_html(self, docids, data=None):
+        docs = self.env['account.move.line'].browse(docids)
         docargs = {
-            'doc_ids': self._ids,
-            'doc_model': report.model,
-            'company': False,
-            'docs': self.env[report.model].browse(self._ids),
-            'get_group': self._get_group(
-                self.env[report.model].browse(self._ids)
-            ),
+            'doc_ids': docids,
+            'doc_model': self.env['account.move.line'],
+            'data': data,
+            'docs': docs,
+            'get_group': self._get_group(docs),
         }
-        return report_obj.render(
-            'account_due_list_report_qweb.duelist_qweb',
-            docargs)
+        return self.env['report'].render(
+            'account_due_list_report_qweb.duelist_qweb', docargs)
 
     def _get_group(self, objects):
         res = {}

@@ -82,18 +82,18 @@
                                         <p><span t-field="line.date_maturity" /></p>
                                     </td>
                                     <td style="width: 4cm;">
-                                        <p><span t-esc="line.invoice.supplier_invoice_number or line.invoice.number" /> -
-                                            <span t-field="line.invoice.date_invoice"/> </p>
+                                        <p><span t-esc="line.invoice_id.reference or line.invoice_id.number" /> -
+                                            <span t-field="line.invoice_id.date_invoice"/> </p>
                                     </td>
                                     <td style="width: 4cm;">
-                                        <p><span t-field="line.invoice.payment_term" /></p>
+                                        <p><span t-field="line.invoice_id.payment_term_id" /></p>
                                     </td>
                                     <td class="text-right" style="width: 2cm;">
-                                        <p><span t-field="line.maturity_residual"
-                                        t-field-options='{"widget": "monetary", "display_currency": "line.move_id.company_id.currency_id"}'/></p>
+                                        <p><span t-field="line.amount_residual"
+                                        t-field-options='{"widget": "monetary", "display_currency": line.move_id.company_id.currency_id}'/></p>
                                     </td>
-                                    <t t-set="tot_amount" t-value="tot_amount + line.maturity_residual" />
-                                     <t t-set="tot_residual" t-value="tot_residual + line.maturity_residual" />
+                                    <t t-set="tot_amount" t-value="tot_amount + line.amount_residual" />
+                                     <t t-set="tot_residual" t-value="tot_residual + line.amount_residual" />
                                 </tr>
                                 <tr>
                                     <td style="width: 5cm;"/>
@@ -102,7 +102,7 @@
                                     <td style="width: 4cm;"><p>Total</p></td>
                                     <td class="text-right" style="width: 2cm;">
                                         <p><span t-esc="tot_residual"
-                                            t-esc-options='{"widget": "monetary", "display_currency": "docs[0].move_id.company_id.currency_id"}'/>
+                                            t-esc-options='{"widget": "monetary", "display_currency": docs[0].move_id.company_id.currency_id}'/>
                                         </p>
                                     </td>
                                 </tr>
@@ -113,7 +113,7 @@
                     </t>
                     <div id="total" class="row with_bord text-right" style="padding: 2px;">
                         <strong><p>TOTAL   <span t-esc="tot_amount"
-                            t-esc-options='{"widget": "monetary", "display_currency": "docs[0].move_id.company_id.currency_id"}'/>
+                            t-esc-options='{"widget": "monetary", "display_currency": docs[0].move_id.company_id.currency_id}'/>
                         </p></strong>
                     </div>
                 </div>

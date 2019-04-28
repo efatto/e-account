@@ -19,10 +19,10 @@
 #
 {
     'name': 'Stampa Scadenzario qweb',
-    'version': '8.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'website': 'http://www.efatto.it',
+    'website': 'https://efatto.it',
     'description': 'Stampa Scadenzario qweb',
     'license': 'AGPL-3',
     'depends': [
@@ -32,5 +32,5 @@
         'report/due_list_report.xml',
         'report/report.xml',
     ],
-    'installable': False
+    'installable': True
 }
