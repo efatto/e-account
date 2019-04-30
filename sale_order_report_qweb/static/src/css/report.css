@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Gotham';
+    font-weight: 300;
+    src: url('Gotham-Book.otf'),
+}
+.g_cell {
+    border-color: grey;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    font-family: 'Gotham';
+    font-size: 8pt;
+    text-align: left;
+}

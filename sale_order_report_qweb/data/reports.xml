@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="report_sale_order_qweb" model="ir.actions.report.xml">
+            <field name="name">Quotation / Order qweb</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">sale.order</field>
+            <field name="report_name">sale_order_report_qweb.report_saleorder</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="tml_source">file</field>
+            <field name="attachment"/>
+            <field name="attachment_use" eval="0"/>
+        </record>
+        <record model="ir.values" id="sale_order_qweb_report_action">
+            <field name="name">Stampa ordine qweb</field>
+            <field name="key">action</field>
+            <field name="key2">client_print_multi</field>
+            <field name="model">sale.order</field>
+            <field name="value" eval="'ir.actions.report.xml,' + str(ref('report_sale_order_qweb'))"/>
+        </record>
+    </data>
+</openerp>
