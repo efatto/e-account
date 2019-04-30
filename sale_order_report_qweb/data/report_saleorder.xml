@@ -4,7 +4,7 @@
     <template id="report.external_layout_header">
         <div class="header">
             <div class="row">
-                <div class="col-xs-6 g_cell" id="logo">
+                <div class="col-xs-6" id="logo">
                     <img t-attf-src="data:image/*;base64,{{company.logo}}" style="max-height:30px;"/>
                 </div>
                 <div class="col-xs-2 g_cell">
