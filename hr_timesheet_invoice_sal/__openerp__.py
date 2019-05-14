@@ -27,7 +27,6 @@
     'author': 'Sergio Corato',
     'website': 'http://www.efatto.it',
     'depends': [
-        'hr_timesheet_invoice',
         'account_analytic_sal',
     ],
     'data': [
