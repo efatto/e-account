@@ -46,6 +46,7 @@
     <span>Carrier signature</span>
     <span>Driver signature</span>
     <span>Recipient signature</span>
+    <span>Amount to be deducted</span>
 </template>
 
 
