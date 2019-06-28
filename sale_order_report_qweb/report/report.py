@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from openerp import api, models, fields
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
-from datetime import datetime
 
 
 class SaleOrderReportQweb(models.AbstractModel):
@@ -26,7 +24,7 @@ class SaleOrderReportQweb(models.AbstractModel):
             'sale_order_report_qweb.sale_order_qweb',
             docargs)
 
-    def _get_invoice_address(self, objects, model='account.invoice'):
+    def _get_invoice_address(self, objects):
         for sale_order in objects:
             res = sale_order.partner_id
             for address in sale_order.partner_id.child_ids:
