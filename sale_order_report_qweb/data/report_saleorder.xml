@@ -74,20 +74,22 @@
                     </div>
                     <p/>
                     <div class="row">
-                        <div class="col-xs-5 g_cell">
+                        <div class="col-xs-5">
                             <t t-as="address_id" t-foreach="address_invoice_id[0]">
                                 <div t-if="address_id != o.partner_id">
-                                    <strong>REGISTERED OFFICE:</strong>
-                                    <div t-if="o.partner_id.name"><span t-field="o.partner_id.name"/></div>
-                                    <div>
-                                        <span t-if="o.partner_id.street"><span t-field="o.partner_id.street"/> </span>
-                                        <span t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/> </span>
-                                    </div>
-                                    <div>
-                                        <span t-if="o.partner_id.zip"><span t-field="o.partner_id.zip"/> </span>
-                                        <span t-if="o.partner_id.city"><span t-field="o.partner_id.city"/> </span>
-                                        <span t-if="o.partner_id.state_id">(<span t-field="o.partner_id.state_id.code"/>) </span>
-                                        <span t-if="o.partner_id.country_id"><span t-field="o.partner_id.country_id.name"/> </span>
+                                    <div class="g_cell">
+                                        <strong>REGISTERED OFFICE:</strong>
+                                        <div t-if="o.partner_id.name"><span t-field="o.partner_id.name"/></div>
+                                        <div>
+                                            <span t-if="o.partner_id.street"><span t-field="o.partner_id.street"/> </span>
+                                            <span t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/> </span>
+                                        </div>
+                                        <div>
+                                            <span t-if="o.partner_id.zip"><span t-field="o.partner_id.zip"/> </span>
+                                            <span t-if="o.partner_id.city"><span t-field="o.partner_id.city"/> </span>
+                                            <span t-if="o.partner_id.state_id">(<span t-field="o.partner_id.state_id.code"/>) </span>
+                                            <span t-if="o.partner_id.country_id"><span t-field="o.partner_id.country_id.name"/> </span>
+                                        </div>
                                     </div>
                                 </div>
                             </t>
@@ -196,10 +198,6 @@
                 </div>
 
                 <p t-field="o.note" />
-                <p t-if="o.payment_term.note">
-                    <strong>Payment Term:</strong>
-                    <span t-field="o.payment_term.note"/>
-                </p>
             </div>
         </span>
     </template>
