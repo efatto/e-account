@@ -129,33 +129,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <h2>
-                    <span t-if="o.state not in ['draft','sent']">Order N° </span>
-                    <span t-if="o.state in ['draft','sent']">Quotation N° </span>
-                    <span t-field="o.name"/>
-                </h2>
-
-                <div class="row mt32 mb32" id="informations">
-                    <div t-if="o.client_order_ref" class="col-xs-3">
-                        <strong>Your Reference:</strong>
-                        <p t-field="o.client_order_ref"/>
-                    </div>
-                    <div t-if="o.date_order" class="col-xs-3">
-                        <strong t-if="o.state not in ['draft','sent']">Date Ordered:</strong>
-                        <strong t-if="o.state in ['draft','sent']">Quotation Date:</strong>
-                        <p t-field="o.date_order"/>
-                    </div>
-                    <div t-if="o.user_id.name" class="col-xs-3">
-                        <strong>Salesperson:</strong>
-                        <p t-field="o.user_id.name"/>
-                    </div>
-                    <div t-if="o.payment_term" class="col-xs-3">
-                        <strong>Payment Term:</strong>
-                        <p t-field="o.payment_term"/>
-                    </div>
-                </div>
 
                 <table class="table table-condensed">
                     <thead>
@@ -227,7 +200,7 @@
                     <strong>Payment Term:</strong>
                     <span t-field="o.payment_term.note"/>
                 </p>
-                <div class="oe_structure"/>
+            </div>
         </span>
     </template>
 
