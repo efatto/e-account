@@ -25,7 +25,6 @@
                 </div>
             </div>
             <p/>
-            <p/>
             <div class="row" style="font-size: 8px;">
                 <div class="col-xs-5">
                     <t t-if="not company.custom_footer">
@@ -40,6 +39,11 @@
                     </t>
                 </div>
             </div>
+            <p/>
+        </div>
+    </template>
+    <template id="report.external_layout_footer">
+        <div class="footer">
         </div>
     </template>
     <template id="sale_order_report_qweb.report_saleorder_document">
@@ -109,6 +113,20 @@
                                 </span>
                                     VAT #: <span t-field="o.partner_id.vat"/>
                             </span>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size: 8px;">
+                        <div class="col-xs-5">
+                            <div t-if="o.payment_term">Payment terms: <span t-field="o.payment_term.name"/></div>
+                            <t t-foreach="get_bank" t-as="bank">
+                                BANK <span t-field="bank.bank_name"/>
+                                IBAN <span t-field="bank.iban"/> - BIC/SWIFT <span t-field="bank.bank_bic"/>
+                            </t>
+                            <div t-if="check_installed_module('l10n_it_ricevute_bancarie_ext')">
+                                <t t-foreach="get_bank_riba" t-as="bank_riba">
+                                    Appoggio RI.BA.: <span t-field="bank_riba.name"/> - ABI: <span t-field="bank_riba.abi"/> CAB: <span t-field="bank_riba.cab"/>
+                                </t>
+                            </div>
                         </div>
                     </div>
                 </div>
