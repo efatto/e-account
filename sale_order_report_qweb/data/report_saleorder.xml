@@ -196,8 +196,26 @@
                         </table>
                     </div>
                 </div>
-
-                <p t-field="o.note" />
+                <div style="font-size: 8px;">
+                    <p t-field="o.note" />
+                    <t t-if="o.incoterm">
+                         TRANSPORT: <span t-field="o.incoterm.name"/>
+                    </t>
+                    <t t-if="check_installed_module('delivery')">
+                        <t t-if="o.carrier_id">
+                            <span t-field="o.carrier_id.name"/>
+                        </t>
+                    </t>
+                    <div t-field="o.fiscal_position.note"/>
+                    <t t-if="check_installed_module('account_fiscal_position_rule_partner')">
+                        <t t-if="o.account_fiscal_position_rule_id">
+                            Come da vs. dichiarazione di intento n° <span t-field="o.account_fiscal_position_rule_id.name"/> del
+                            <span t-field="o.account_fiscal_position_rule_id.date_issue" t-field-options="date"/>
+                            ricevuta in data <span t-field="o.account_fiscal_position_rule_id.date_reception" t-field-options="date"/>
+                            e protocollata al n° <span t-field="o.account_fiscal_position_rule_id.number_protocol"/>.
+                        </t>
+                    </t>
+                </div>
             </div>
         </span>
     </template>
