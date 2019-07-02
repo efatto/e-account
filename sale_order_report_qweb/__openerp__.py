@@ -26,7 +26,6 @@
     'license': 'AGPL-3',
     'depends': [
         'sale',
-        'sale_order_price_unit_net',
         'sale_order_report_hide_prices',
     ],
     'data': [
