@@ -14,8 +14,10 @@
                         t-field-options='{"format": "dd/MM/yyyy"}' />
                 </div>
                 <div class="col-xs-3 g_cell">
-                    <strong><t t-if="o.state == 'draft'">QUOTATION</t>
-                            <t t-if="o.state != 'draft'">ORDER</t></strong><br/>
+                    <strong>
+                        <span t-if="o.state not in ['draft','sent']">ORDER </span>
+                        <span t-if="o.state in ['draft','sent']">QUOTATION </span>
+                    </strong><br/>
                     <span t-field="o.name"/>
                 </div>
                 <div class="col-xs-1 g_cell">
