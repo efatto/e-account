@@ -18,10 +18,10 @@
 #
 {
     'name': 'Qweb sale order report',
-    'version': '8.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato - Efatto.it',
-    'website': 'http://www.efatto.it',
+    'website': 'https://efatto.it',
     'description': 'Qweb sale order report',
     'license': 'AGPL-3',
     'depends': [

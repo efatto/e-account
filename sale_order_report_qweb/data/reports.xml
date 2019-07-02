@@ -1,13 +1,11 @@
 <?xml version="1.0"?>
-<openerp>
-    <data>
-        <report
-            string="Quotation / Order qweb"
-            id="print_report_sale_order_qweb"
-            model="sale.order"
-            report_type="qweb-pdf"
-            name="sale_order_report_qweb.sale_order_qweb"
-            file="sale_order_report_qweb.sale_order_qweb"
-        />
-    </data>
-</openerp>
+<odoo>
+    <report
+        string="Quotation / Order qweb"
+        id="print_report_sale_order_qweb"
+        model="sale.order"
+        report_type="qweb-pdf"
+        name="sale_order_report_qweb.sale_order_qweb"
+        file="sale_order_report_qweb.sale_order_qweb"
+    />
+</odoo>

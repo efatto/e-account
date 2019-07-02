@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
-        <template id="minimal_layout_inherit" inherit_id="report.minimal_layout">
-              <xpath expr="//head" position="inside">
-                     <link rel='stylesheet' href="/sale_order_report_qweb/static/src/css/report.css"/>
-              </xpath>
-        </template>
-    </data>
-</openerp>
+<odoo>
+    <template id="sale_order_reportqweb" name="sale_order_reportqweb pdf assets" inherit_id="report.assets_common">
+        <xpath expr="." position="inside">
+            <link href="/sale_order_report_qweb/static/src/css/report.css" rel="stylesheet"/>
+        </xpath>
+    </template>
+</odoo>
