@@ -1,0 +1,177 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* sale_order_report_qweb
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-30 15:18+0000\n"
+"PO-Revision-Date: 2019-06-30 15:18+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "- ABI:"
+msgstr "- ABI:"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "- BIC/SWIFT"
+msgstr "- BIC/SWIFT"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Amount"
+msgstr "Importo"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Appoggio RI.BA.:"
+msgstr "Appoggio RI.BA.:"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "BANK"
+msgstr "BANCA"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "BILLING ADDRESS:"
+msgstr "INDIRIZZO DI FATTURAZIONE:"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "C.F. :"
+msgstr "C.F. :"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "CAB:"
+msgstr "CAB:"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Code"
+msgstr "Codice"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Come da vs. dichiarazione di intento n°"
+msgstr "Come da vs. dichiarazione di intento n°"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Discount %"
+msgstr "Sconto %"
+
+#. module: sale_order_report_qweb
+#: field:report.sale_order_report_qweb.sale_order_qweb,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "IBAN"
+msgstr "IBAN"
+
+#. module: sale_order_report_qweb
+#: field:report.sale_order_report_qweb.sale_order_qweb,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: sale_order_report_qweb
+#: field:report.sale_order_report_qweb.sale_order_qweb,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Net Amount"
+msgstr "Importo Netto"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Payment terms:"
+msgstr "Termini di pagamento:"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Q.ty"
+msgstr "Q.tà"
+
+#. module: sale_order_report_qweb
+#: model:ir.actions.report.xml,name:sale_order_report_qweb.print_report_sale_order_qweb
+msgid "Quotation / Order qweb"
+msgstr "Preventivo / Ordine qweb"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "REGISTERED OFFICE:"
+msgstr "SEDE LEGALE:"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "SHIPPING ADDRESS:"
+msgstr "INDIRIZZO DI CONSEGNA:"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "TRANSPORT:"
+msgstr "TRASPORTO:"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Taxes"
+msgstr "Imposte"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Total"
+msgstr "Totale"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Total Amount"
+msgstr "Totale"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "Total Without Taxes"
+msgstr "Imponibile"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "VAT"
+msgstr "IVA"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "VAT #:"
+msgstr "P.IVA:"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "del"
+msgstr "del"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "e protocollata al n°"
+msgstr "e protocollata al n°"
+
+#. module: sale_order_report_qweb
+#: view:website:sale_order_report_qweb.report_saleorder_document
+msgid "ricevuta in data"
+msgstr "ricevuta in data"
+
