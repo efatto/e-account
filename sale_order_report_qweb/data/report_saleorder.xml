@@ -9,12 +9,13 @@
                 </div>
                 <div class="col-xs-1"/>
                 <div class="col-xs-2 g_cell">
-                    <strong>DATA</strong><br/>
+                    <strong>DATE</strong><br/>
                     <span t-field="o.date_order"
                         t-field-options='{"format": "dd/MM/yyyy"}' />
                 </div>
                 <div class="col-xs-3 g_cell">
-                    <strong>PREVENTIVO</strong><br/>
+                    <strong><t t-if="o.state == 'draft'">QUOTATION</t>
+                            <t t-if="o.state != 'draft'">ORDER</t></strong><br/>
                     <span t-field="o.name"/>
                 </div>
                 <div class="col-xs-1 g_cell">
@@ -196,7 +197,7 @@
                             <td class="text-right">
                                 <t t-if="not o.print_hide_prices">
                                     <t t-foreach="l.tax_id" t-as="tax">
-                                        <span t-esc="'%.0f'%(tax.amount * 100)"/>
+                                        <span t-esc="'%.0f'%(tax.amount * 100)"/> %
                                     </t>
                                 </t>
                             </td>
