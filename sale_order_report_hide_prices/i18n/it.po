@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* sale_order_report_aeroo_hide_prices
+#	* sale_order_report_hide_prices
 #
 msgid ""
 msgstr ""
@@ -15,8 +15,12 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: sale_order_report_aeroo_hide_prices
+#. module: sale_order_report_hide_prices
 #: field:sale.order,print_hide_prices:0
 msgid "Hide prices in report?"
 msgstr "Nascondi i prezzi nella stampa?"
 
+#. module: sale_order_report_hide_prices
+#: field:sale.order,print_hide_product_code:0
+msgid "Hide product code in report?"
+msgstr "Nascondi i codici prodotto nella stampa?"
