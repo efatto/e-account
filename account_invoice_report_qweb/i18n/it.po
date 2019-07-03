@@ -1,0 +1,177 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_invoice_report_qweb
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-30 15:18+0000\n"
+"PO-Revision-Date: 2019-06-30 15:18+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "- ABI:"
+msgstr "- ABI:"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "- BIC/SWIFT"
+msgstr "- BIC/SWIFT"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Amount"
+msgstr "Importo"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Appoggio RI.BA.:"
+msgstr "Appoggio RI.BA.:"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "BANK"
+msgstr "BANCA"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "BILLING ADDRESS:"
+msgstr "INDIRIZZO DI FATTURAZIONE:"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "C.F. :"
+msgstr "C.F. :"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "CAB:"
+msgstr "CAB:"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Code"
+msgstr "Codice"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Come da vs. dichiarazione di intento n°"
+msgstr "Come da vs. dichiarazione di intento n°"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Discount %"
+msgstr "Sconto %"
+
+#. module: account_invoice_report_qweb
+#: field:report.account_invoice_report_qweb.account_invoice_qweb,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "IBAN"
+msgstr "IBAN"
+
+#. module: account_invoice_report_qweb
+#: field:report.account_invoice_report_qweb.account_invoice_qweb,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: account_invoice_report_qweb
+#: field:report.account_invoice_report_qweb.account_invoice_qweb,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Net Amount"
+msgstr "Importo Netto"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Payment terms:"
+msgstr "Termini di pagamento:"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Q.ty"
+msgstr "Q.tà"
+
+#. module: account_invoice_report_qweb
+#: model:ir.actions.report.xml,name:account_invoice_report_qweb.print_report_account_invoice_qweb
+msgid "Invoice qweb report"
+msgstr "Fattura qweb"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "REGISTERED OFFICE:"
+msgstr "SEDE LEGALE:"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "SHIPPING ADDRESS:"
+msgstr "INDIRIZZO DI CONSEGNA:"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "TRANSPORT:"
+msgstr "TRASPORTO:"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Taxes"
+msgstr "Imposte"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Total"
+msgstr "Totale"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Total Amount"
+msgstr "Totale"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Total Without Taxes"
+msgstr "Imponibile"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "VAT"
+msgstr "IVA"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "VAT #:"
+msgstr "P.IVA:"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "del"
+msgstr "del"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "e protocollata al n°"
+msgstr "e protocollata al n°"
+
+#. module: account_invoice_report_qweb
+#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+msgid "ricevuta in data"
+msgstr "ricevuta in data"
+
