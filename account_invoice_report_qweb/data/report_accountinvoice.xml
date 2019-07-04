@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-<data>
-    <template id="account_invoice_report_qweb.external_layout">
-    <!-- Multicompany -->
-    <t t-if="o and 'company_id' in o">
-        <t t-set="company" t-value="o.company_id"></t>
-    </t>
-    <t t-if="not o or not 'company_id' in o">
-        <t t-set="company" t-value="res_company"></t>
-    </t>
+<odoo>
+    <template id="external_layout">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
 
-    <t t-call="account_invoice_report_qweb.external_layout_header" />
-    <t t-raw="0" />
-<!--    <t t-call="report.external_layout_footer" />-->
+        <t t-call="account_invoice_report_qweb.external_layout_header" />
+        <t t-raw="0" />
+    <!--    <t t-call="report.external_layout_footer" />-->
     </template>
-    <template id="account_invoice_report_qweb.external_layout_header">
+    <template id="external_layout_header">
         <div class="header">
             <div class="row">
                 <div class="col-xs-5" id="logo">
-                    <img t-attf-src="data:image/*;base64,{{company.logo}}" style="max-height:30px;"/>
+                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 30px;"/>
                 </div>
                 <div class="col-xs-1"/>
                 <div class="col-xs-2 g_cell">
@@ -33,8 +35,8 @@
                         <span t-if="o.state == 'proforma2'"> PROFORMA</span>
                     </strong><br/>
                     Nr. <span t-if="o.number"><span t-field="o.number"/></span>
-                    <t t-if="check_installed_module('account_invoice_proforma') and o.state == 'proforma2'">
-                        <span t-field="o.proforma_number"/>
+                    <t t-if="check_installed_module('account_invoice_pro_forma_sequence') and o.state == 'proforma2'">
+                        <span t-field="o.pro_forma_number"/>
                     </t>
                 </div>
                 <div class="col-xs-1 g_cell">
@@ -64,7 +66,8 @@
     </template>
 
     <template id="account_invoice_report_qweb.report_accountinvoice_document">
-        <span t-call="account_invoice_report_qweb.external_layout">
+        <t t-call="account_invoice_report_qweb.external_layout">
+            <t t-set="doc" t-value="doc.with_context({'lang':doc.partner_id.lang})" />
             <div class="page">
                 <div class="oe_structure"/>
                     <div class="row">
@@ -73,19 +76,19 @@
                         <div class="col-xs-1">
                         </div>
                         <div class="col-xs-6 g_cell">
-                            <t t-if="check_installed_module('account_invoice_shipping_address') and o.print_shipping_address">
-                            <span t-if="o.address_shipping_id and o.address_shipping_id != o.partner_id">
+                            <t t-if="check_installed_module('account_invoice_shipping_address') and doc.print_shipping_address">
+                            <span t-if="doc.partner_shipping_id and doc.partner_shipping_id != doc.partner_id">
                                 <strong>SHIPPING ADDRESS:</strong>
-                                <div t-if="o.address_shipping_id.name"><span t-field="o.address_shipping_id.name"/></div>
+                                <div t-if="doc.partner_shipping_id.name"><span t-field="doc.partner_shipping_id.name"/></div>
                                 <div>
-                                    <span t-if="o.address_shipping_id.street"><span t-field="o.address_shipping_id.street"/> </span>
-                                    <span t-if="o.address_shipping_id.street2"><span t-field="o.address_shipping_id.street2"/> </span>
+                                    <span t-if="doc.partner_shipping_id.street"><span t-field="doc.partner_shipping_id.street"/> </span>
+                                    <span t-if="doc.partner_shipping_id.street2"><span t-field="doc.partner_shipping_id.street2"/> </span>
                                 </div>
                                 <div>
-                                    <span t-if="o.address_shipping_id.zip"><span t-field="o.address_shipping_id.zip"/> </span>
-                                    <span t-if="o.address_shipping_id.city"><span t-field="o.address_shipping_id.city"/> </span>
-                                    <span t-if="o.address_shipping_id.state_id">(<span t-field="o.address_shipping_id.state_id.code"/>) </span>
-                                    <span t-if="o.address_shipping_id.country_id"><span t-field="o.address_shipping_id.country_id.name"/> </span>
+                                    <span t-if="doc.partner_shipping_id.zip"><span t-field="doc.partner_shipping_id.zip"/> </span>
+                                    <span t-if="doc.partner_shipping_id.city"><span t-field="doc.partner_shipping_id.city"/> </span>
+                                    <span t-if="doc.partner_shipping_id.state_id">(<span t-field="doc.partner_shipping_id.state_id.code"/>) </span>
+                                    <span t-if="doc.partner_shipping_id.country_id"><span t-field="doc.partner_shipping_id.country_id.name"/> </span>
                                 </div>
                             </span>
                             </t>
@@ -95,19 +98,19 @@
                     <div class="row">
                         <div class="col-xs-5">
                             <t t-as="address_id" t-foreach="address_invoice_id[0]">
-                                <div t-if="address_id != o.partner_id">
+                                <div t-if="address_id != doc.partner_id">
                                     <div class="g_cell">
                                         <strong>REGISTERED OFFICE:</strong>
-                                        <div t-if="o.partner_id.name"><span t-field="o.partner_id.name"/></div>
+                                        <div t-if="doc.partner_id.name"><span t-field="doc.partner_id.name"/></div>
                                         <div>
-                                            <span t-if="o.partner_id.street"><span t-field="o.partner_id.street"/> </span>
-                                            <span t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/> </span>
+                                            <span t-if="doc.partner_id.street"><span t-field="doc.partner_id.street"/> </span>
+                                            <span t-if="doc.partner_id.street2"><span t-field="doc.partner_id.street2"/> </span>
                                         </div>
                                         <div>
-                                            <span t-if="o.partner_id.zip"><span t-field="o.partner_id.zip"/> </span>
-                                            <span t-if="o.partner_id.city"><span t-field="o.partner_id.city"/> </span>
-                                            <span t-if="o.partner_id.state_id">(<span t-field="o.partner_id.state_id.code"/>) </span>
-                                            <span t-if="o.partner_id.country_id"><span t-field="o.partner_id.country_id.name"/> </span>
+                                            <span t-if="doc.partner_id.zip"><span t-field="doc.partner_id.zip"/> </span>
+                                            <span t-if="doc.partner_id.city"><span t-field="doc.partner_id.city"/> </span>
+                                            <span t-if="doc.partner_id.state_id">(<span t-field="doc.partner_id.state_id.code"/>) </span>
+                                            <span t-if="doc.partner_id.country_id"><span t-field="doc.partner_id.country_id.name"/> </span>
                                         </div>
                                     </div>
                                 </div>
@@ -130,23 +133,24 @@
                                         <span t-if="address_id.state_id">(<span t-field="address_id.state_id.code"/>) </span>
                                         <span t-if="address_id.country_id"><span t-field="address_id.country_id.name"/> </span>
                                     </div>
-                                    <span t-if="o.commercial_partner_id.fiscalcode">
-                                        C.F. : <span t-field="o.commercial_partner_id.fiscalcode"/>
+                                    <span t-if="doc.commercial_partner_id.fiscalcode">
+                                        C.F. : <span t-field="doc.commercial_partner_id.fiscalcode"/>
                                     </span>
-                                        VAT #: <span t-field="o.commercial_partner_id.vat"/>
+                                        VAT #: <span t-field="doc.commercial_partner_id.vat"/>
                                 </span>
                             </t>
                         </div>
                     </div>
                     <div class="row" style="font-size: 8px;">
                         <div class="col-xs-5">
-                            <div t-if="o.payment_term">Payment terms:
-                                <div t-if="o.payment_term.note"><span t-field="o.payment_term.note"/></div>
-                                <div t-if="not o.payment_term.note"><span t-field="o.payment_term.name"/></div>
+                            <div t-if="doc.payment_term_id">Payment terms:
+                                <div t-if="doc.payment_term_id.note"><span t-field="doc.payment_term_id.note"/></div>
+                                <div t-if="not doc.payment_term_id.note"><span t-field="doc.payment_term_id.name"/></div>
                             </div>
                             <t t-foreach="get_bank" t-as="bank">
                                 BANK <span t-field="bank.bank_name"/>
-                                IBAN <span t-field="bank.iban"/> - BIC/SWIFT <span t-field="bank.bank_bic"/>
+<!--                                IBAN <span t-field="bank.iban"/>-->
+                                - BIC/SWIFT <span t-field="bank.bank_bic"/>
                             </t>
                             <div t-if="check_installed_module('l10n_it_ricevute_bancarie_ext')">
                                 <t t-foreach="get_bank_riba" t-as="bank_riba">
@@ -163,15 +167,15 @@
                             <th>Description</th>
                             <th class="text-right">Q.ty</th>
                             <th class="text-right">
-                                Amount <span t-field="o.currency_id.symbol"/>
+                                Amount <span t-field="doc.currency_id.symbol"/>
                             </th>
                             <th>Discount %</th>
                             <th>VAT</th>
-                            <th class="text-right">Total Amount <span t-field="o.currency_id.symbol"/></th>
+                            <th class="text-right">Total Amount <span t-field="doc.currency_id.symbol"/></th>
                         </tr>
                    </thead>
                    <tbody class="invoice_tbody">
-                        <tr t-foreach="o.invoice_line" t-as="l">
+                        <tr t-foreach="doc.invoice_line_ids" t-as="l">
                             <td>
                                 <t t-if="l.product_id.code">
                                     <span t-field="l.product_id.code"/>
@@ -188,7 +192,7 @@
                             <td class="text-right">
                                 <t t-if="l.quantity != 0.0">
                                     <span t-field="l.quantity"/>
-                                    <span t-field="l.uos_id"/>
+                                    <span t-field="l.uom_id"/>
                                 </t>
                             </td>
                             <td class="text-right">
@@ -202,7 +206,7 @@
                                 </t>
                             </td>
                             <td class="text-right">
-                                <t t-foreach="l.invoice_line_tax_id" t-as="tax">
+                                <t t-foreach="l.invoice_line_tax_ids" t-as="tax">
                                     <span t-esc="'%.0f'%(tax.amount * 100)"/> %
                                 </t>
                             </td>
@@ -221,49 +225,49 @@
                             <tr class="border-black">
                                 <td><strong>Total Without Taxes</strong></td>
                                 <td class="text-right">
-                                    <span t-field="o.amount_untaxed"
-                                        t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                    <span t-field="doc.amount_untaxed"
+                                        t-field-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Taxes</td>
                                 <td class="text-right">
-                                    <span t-field="o.amount_tax"
-                                        t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                    <span t-field="doc.amount_tax"
+                                        t-field-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                 </td>
                             </tr>
                             <tr class="border-black">
                                 <td><strong>Total</strong></td>
                                 <td class="text-right">
-                                    <span t-field="o.amount_total"
-                                        t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                    <span t-field="doc.amount_total"
+                                        t-field-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div style="font-size: 8px;">
-                    <p t-field="o.comment" />
-                    <div t-field="o.fiscal_position.note"/>
+                    <p t-field="doc.comment" />
+                    <div t-field="doc.fiscal_position_id.note"/>
                     <t t-if="check_installed_module('account_fiscal_position_rule_partner')">
-                        <t t-if="o.account_fiscal_position_rule_id">
-                            Come da vs. dichiarazione di intento n° <span t-field="o.account_fiscal_position_rule_id.name"/> del
-                            <span t-field="o.account_fiscal_position_rule_id.date_issue" t-field-options="date"/>
-                            ricevuta in data <span t-field="o.account_fiscal_position_rule_id.date_reception" t-field-options="date"/>
-                            e protocollata al n° <span t-field="o.account_fiscal_position_rule_id.number_protocol"/>.
+                        <t t-if="doc.account_fiscal_position_rule_id">
+                            Come da vs. dichiarazione di intento n° <span t-field="doc.account_fiscal_position_rule_id.name"/> del
+                            <span t-field="odoc.account_fiscal_position_rule_id.date_issue" t-field-options="date"/>
+                            ricevuta in data <span t-field="doc.account_fiscal_position_rule_id.date_reception" t-field-options="date"/>
+                            e protocollata al n° <span t-field="doc.account_fiscal_position_rule_id.number_protocol"/>.
                         </t>
                     </t>
                 </div>
             </div>
-        </span>
+        </t>
     </template>
 
     <template id="account_invoice_qweb">
         <t t-call="report.html_container">
-            <t t-foreach="doc_ids" t-as="doc_id">
-                <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'account_invoice_report_qweb.report_accountinvoice_document')"/>
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="account_invoice_report_qweb.report_accountinvoice_document" t-lang="doc.partner_id.lang"/>
             </t>
         </t>
     </template>
-</data>
-</openerp>
+
+</odoo>

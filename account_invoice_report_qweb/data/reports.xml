@@ -1,13 +1,11 @@
 <?xml version="1.0"?>
-<openerp>
-    <data>
-        <report
-            string="Invoice qweb report"
-            id="print_report_account_invoice_qweb"
-            model="account.invoice"
-            report_type="qweb-pdf"
-            name="account_invoice_report_qweb.account_invoice_qweb"
-            file="account_invoice_report_qweb.account_invoice_qweb"
-        />
-    </data>
-</openerp>
+<odoo>
+    <report
+        string="Invoice qweb report"
+        id="print_report_account_invoice_qweb"
+        model="account.invoice"
+        report_type="qweb-pdf"
+        name="account_invoice_report_qweb.account_invoice_qweb"
+        file="account_invoice_report_qweb.account_invoice_qweb"
+    />
+</odoo>

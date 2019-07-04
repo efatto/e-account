@@ -1,32 +1,29 @@
 # -*- coding: utf-8 -*-
 
-from openerp import api, models, fields
+from odoo import api, models, fields
 
 
 class AccountInvoiceReportQweb(models.AbstractModel):
     _name = 'report.account_invoice_report_qweb.account_invoice_qweb'
 
     @api.multi
-    def render_html(self, data=None):
-        report_obj = self.env['report']
-        report = report_obj._get_report_from_name(
-            'account_invoice_report_qweb.account_invoice_qweb')
+    def render_html(self, docids, data=None):
         docargs = {
-            'doc_ids': self._ids,
-            'doc_model': report.model,
+            'doc_ids': docids,
+            'doc_model': 'account.invoice',
             'company': False,
-            'docs': self.env[report.model].browse(self._ids),
+            'docs': self.env['account.invoice'].browse(docids),
             'address_invoice_id': self._get_invoice_address(
-                self.env[report.model].browse(self._ids)),
+                self.env['account.invoice'].browse(docids)),
             'get_bank_riba': self._get_bank_riba(
-                self.env[report.model].browse(self._ids)),
+                self.env['account.invoice'].browse(docids)),
             'get_bank': self._get_bank(
-                self.env[report.model].browse(self._ids)),
+                self.env['account.invoice'].browse(docids)),
             'check_installed_module': self._check_installed_module,
         }
-        return report_obj.render(
+        return self.env['report'].render(
             'account_invoice_report_qweb.account_invoice_qweb',
-            docargs)
+            values=docargs)
 
     def _get_invoice_address(self, objects):
         for account_invoice in objects:
@@ -39,13 +36,13 @@ class AccountInvoiceReportQweb(models.AbstractModel):
     def _get_bank_riba(self, objects):
         for account_invoice in objects:
             has_bank = bank = False
-            if account_invoice.payment_term:
-                if account_invoice.payment_term.line_ids:
-                    for pt_line in account_invoice.payment_term.line_ids:
+            if account_invoice.payment_term_id:
+                if account_invoice.payment_term_id.line_ids:
+                    for pt_line in account_invoice.payment_term_id.line_ids:
                         if pt_line.type == 'RB':
                             has_bank = True
                             break
-                if account_invoice.payment_term.type == 'RB':
+                if account_invoice.payment_term_id.type == 'RB':
                     has_bank = True
             if has_bank:
                 if account_invoice.partner_id.bank_riba_id:
@@ -58,16 +55,16 @@ class AccountInvoiceReportQweb(models.AbstractModel):
                 [('company_id', '=', account_invoice.company_id.id)],
                 order='sequence', limit=1)
             has_bank = bank = False
-            if account_invoice.payment_term:
-                if account_invoice.payment_term.line_ids:
-                    for pt_line in account_invoice.payment_term.line_ids:
+            if account_invoice.payment_term_id:
+                if account_invoice.payment_term_id.line_ids:
+                    for pt_line in account_invoice.payment_term_id.line_ids:
                         if pt_line.type != 'RB' or not pt_line.type:
                             has_bank = True
                             break
-                elif account_invoice.payment_term.type != 'RB' \
-                        or not account_invoice.payment_term.type:
+                elif account_invoice.payment_term_id.type != 'RB' \
+                        or not account_invoice.payment_term_id.type:
                     has_bank = True
-            if has_bank or not account_invoice.payment_term:
+            if has_bank or not account_invoice.payment_term_id:
                 if account_invoice.partner_id.company_bank_id:
                     bank = account_invoice.partner_id.company_bank_id
                 elif account_invoice.partner_id.bank_ids:
