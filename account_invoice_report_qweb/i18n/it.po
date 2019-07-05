@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-30 15:18+0000\n"
-"PO-Revision-Date: 2019-06-30 15:18+0000\n"
+"POT-Creation-Date: 2019-07-05 10:15+0000\n"
+"PO-Revision-Date: 2019-07-05 10:15+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,99 +16,131 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "- ABI:"
 msgstr "- ABI:"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "- BIC/SWIFT"
 msgstr "- BIC/SWIFT"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.external_layout_header
+msgid "/ Credit Note"
+msgstr "/ Nota di Credito"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.external_layout_header
+msgid "/ Invoice"
+msgstr "/ Fattura"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.external_layout_header
+msgid "<br/>\n"
+"                    Nr."
+msgstr "<br/>\n"
+"                    N."
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
+msgid "<strong>BILLING ADDRESS:</strong>"
+msgstr "<strong>BILLING ADDRESS:</strong>"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.external_layout_header
+msgid "<strong>DATE</strong><br/>"
+msgstr "<strong>Data</strong><br/>"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.external_layout_header
+msgid "<strong>PAG.</strong><br/>"
+msgstr "<strong>PAG.</strong><br/>"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
+msgid "<strong>REGISTERED OFFICE:</strong>"
+msgstr "<strong>SEDE LEGALE:</strong>"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
+msgid "<strong>SHIPPING ADDRESS:</strong>"
+msgstr "<strong>INDIRIZZO DI CONSEGNA:</strong>"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
+msgid "<strong>Total Without Taxes</strong>"
+msgstr "<strong>Totale imponibile</strong>"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
+msgid "<strong>Total</strong>"
+msgstr "<strong>Totale</strong>"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "Amount"
 msgstr "Importo"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "Appoggio RI.BA.:"
 msgstr "Appoggio RI.BA.:"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "BANK"
 msgstr "BANCA"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
-msgid "BILLING ADDRESS:"
-msgstr "INDIRIZZO DI FATTURAZIONE:"
-
-#. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "C.F. :"
 msgstr "C.F. :"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "CAB:"
 msgstr "CAB:"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "Code"
 msgstr "Codice"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "Come da vs. dichiarazione di intento n°"
 msgstr "Come da vs. dichiarazione di intento n°"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "Description"
 msgstr "Descrizione"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "Discount %"
 msgstr "Sconto %"
 
 #. module: account_invoice_report_qweb
-#: field:report.account_invoice_report_qweb.account_invoice_qweb,display_name:0
+#: model:ir.model.fields,field_description:account_invoice_report_qweb.field_report_account_invoice_report_qweb_account_invoice_qweb_display_name
 msgid "Display Name"
-msgstr "Display Name"
+msgstr "Visualizza Nome"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
-msgid "IBAN"
-msgstr "IBAN"
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.external_layout_header
+msgid "Fattura"
+msgstr "Fattura"
 
 #. module: account_invoice_report_qweb
-#: field:report.account_invoice_report_qweb.account_invoice_qweb,id:0
+#: model:ir.model.fields,field_description:account_invoice_report_qweb.field_report_account_invoice_report_qweb_account_invoice_qweb_id
 msgid "ID"
 msgstr "ID"
 
 #. module: account_invoice_report_qweb
-#: field:report.account_invoice_report_qweb.account_invoice_qweb,__last_update:0
-msgid "Last Modified on"
-msgstr "Last Modified on"
-
-#. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
-msgid "Net Amount"
-msgstr "Importo Netto"
-
-#. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
-msgid "Payment terms:"
-msgstr "Termini di pagamento:"
-
-#. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
-msgid "Q.ty"
-msgstr "Q.tà"
+#: model:ir.model,name:account_invoice_report_qweb.model_account_invoice
+msgid "Invoice"
+msgstr "Fattura"
 
 #. module: account_invoice_report_qweb
 #: model:ir.actions.report.xml,name:account_invoice_report_qweb.print_report_account_invoice_qweb
@@ -116,62 +148,82 @@ msgid "Invoice qweb report"
 msgstr "Fattura qweb"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
-msgid "REGISTERED OFFICE:"
-msgstr "SEDE LEGALE:"
+#: model:ir.model.fields,field_description:account_invoice_report_qweb.field_report_account_invoice_report_qweb_account_invoice_qweb___last_update
+msgid "Last Modified on"
+msgstr "Data di ultima modifica"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
-msgid "SHIPPING ADDRESS:"
-msgstr "INDIRIZZO DI CONSEGNA:"
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.external_layout_header
+msgid "Nota di credito"
+msgstr "Nota di credito"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
-msgid "TRANSPORT:"
-msgstr "TRASPORTO:"
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.external_layout_header
+msgid "PROFORMA"
+msgstr "PROFORMA"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Payment terms:"
+msgstr "Termini di pagamento:"
+
+#. module: account_invoice_report_qweb
+#: model:ir.model.fields,field_description:account_invoice_report_qweb.field_account_invoice_print_hide_uom
+msgid "Print hide uom"
+msgstr "Nascondi U.M. nella stampa"
+
+#. module: account_invoice_report_qweb
+#: model:ir.model.fields,field_description:account_invoice_report_qweb.field_account_invoice_print_net_price
+msgid "Print net price"
+msgstr "Stampa prezzi netti"
+
+#. module: account_invoice_report_qweb
+#: model:ir.model.fields,field_description:account_invoice_report_qweb.field_account_invoice_print_shipping_address
+msgid "Print shipping address"
+msgstr "Stampa indirizzo di consegna"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
+msgid "Q.ty"
+msgstr "Q.tà"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "Taxes"
 msgstr "Imposte"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
-msgid "Total"
-msgstr "Totale"
-
-#. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "Total Amount"
-msgstr "Totale"
+msgstr "Importo totale"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
-msgid "Total Without Taxes"
-msgstr "Imponibile"
-
-#. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "VAT"
 msgstr "IVA"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "VAT #:"
 msgstr "P.IVA:"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "del"
 msgstr "del"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "e protocollata al n°"
 msgstr "e protocollata al n°"
 
 #. module: account_invoice_report_qweb
-#: view:website:account_invoice_report_qweb.report_accountinvoice_document
+#: model:ir.model,name:account_invoice_report_qweb.model_report_account_invoice_report_qweb_account_invoice_qweb
+msgid "report.account_invoice_report_qweb.account_invoice_qweb"
+msgstr "report.account_invoice_report_qweb.account_invoice_qweb"
+
+#. module: account_invoice_report_qweb
+#: model:ir.ui.view,arch_db:account_invoice_report_qweb.report_accountinvoice_document
 msgid "ricevuta in data"
 msgstr "ricevuta in data"
 
