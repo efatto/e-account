@@ -35,13 +35,15 @@ class SaleOrderReportQweb(models.AbstractModel):
     def _get_bank_riba(self, objects):
         for sale_order in objects:
             has_bank = bank = False
+            riba_pm_id = self.env.ref(
+                'l10n_it_fiscal_payment_term.fatturapa_mp12')
             if sale_order.payment_term_id:
                 if sale_order.payment_term_id.line_ids:
                     for pt_line in sale_order.payment_term_id.line_ids:
-                        if pt_line.type == 'RB':
+                        if pt_line.fatturapa_pm_id == riba_pm_id:
                             has_bank = True
                             break
-                if sale_order.payment_term_id.type == 'RB':
+                if sale_order.payment_term_id.fatturapa_pm_id == riba_pm_id:
                     has_bank = True
             if has_bank:
                 if sale_order.partner_id.bank_riba_id:
@@ -50,6 +52,8 @@ class SaleOrderReportQweb(models.AbstractModel):
 
     def _get_bank(self, objects):
         for sale_order in objects:
+            riba_pm_id = self.env.ref(
+                'l10n_it_fiscal_payment_term.fatturapa_mp12')
             company_bank_ids = self.env['res.partner.bank'].search(
                 [('company_id', '=', sale_order.company_id.id)],
                 order='sequence', limit=1)
@@ -57,11 +61,13 @@ class SaleOrderReportQweb(models.AbstractModel):
             if sale_order.payment_term_id:
                 if sale_order.payment_term_id.line_ids:
                     for pt_line in sale_order.payment_term_id.line_ids:
-                        if pt_line.type != 'RB' or not pt_line.type:
+                        if not pt_line.fatturapa_pm_id\
+                                or pt_line.fatturapa_pm_id != riba_pm_id:
                             has_bank = True
                             break
-                elif sale_order.payment_term_id.type != 'RB' \
-                        or not sale_order.payment_term_id.type:
+                elif not sale_order.payment_term_id.fatturapa_pm_id\
+                        or sale_order.payment_term_id.fatturapa_pm_id \
+                        != riba_pm_id:
                     has_bank = True
             if has_bank or not sale_order.payment_term_id:
                 if sale_order.partner_id.company_bank_id:

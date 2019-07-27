@@ -158,13 +158,13 @@
                             <th class="text-right">Q.ty</th>
                             <th class="text-right">
                                 <t t-if="not doc.print_hide_prices">
-                                    Amount <span t-field="doc.pricelist_id.currency_id.symbol"/>
+                                    Amount
                                 </t>
                             </th>
                             <th groups="sale.group_discount_per_so_line">Discount %</th>
                             <t t-if="check_installed_module('sale_order_price_unit_net')">
                                 <t t-if="not doc.print_hide_prices">
-                                    <th class="text-right">Net Amount <span t-field="doc.pricelist_id.currency_id.symbol"/></th>
+                                    <th class="text-right">Net Amount</th>
                                 </t>
                             </t>
                             <th>
@@ -172,7 +172,7 @@
                                     VAT
                                 </t>
                             </th>
-                            <th class="text-right">Total Amount <span t-field="doc.pricelist_id.currency_id.symbol"/></th>
+                            <th class="text-right">Total Amount</th>
                         </tr>
                    </thead>
                    <tbody class="sale_tbody">
@@ -196,18 +196,18 @@
                             </td>
                             <td class="text-right">
                                 <t t-if="not doc.print_hide_prices and l.price_unit != 0.0">
-                                    <span t-esc="'%.2f'%(l.price_unit)"/>
+                                    <span t-field="l.price_unit" t-field-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
                                 </t>
                             </td>
                             <td class="text-right">
                                 <t t-if="not doc.print_hide_prices and l.discount != 0.00">
-                                    <span t-esc="'%.1f'%(l.discount)"/>
+                                    <span t-field="l.discount"/>
                                 </t>
                             </td>
                             <t t-if="check_installed_module('sale_order_price_unit_net')">
                                 <t t-if="not doc.print_hide_prices and l.product_uom_qty != 0.0">
                                     <td class="text-right">
-                                        <span t-esc="'%.2f'%(l.sale_price_unit_net)"/>
+                                        <span t-field="l.sale_price_unit_net" t-field-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
                                     </td>
                                 </t>
                             </t>
@@ -219,8 +219,8 @@
                                 </t>
                             </td>
                             <td class="text-right">
-                                <t t-if="not doc.print_hide_prices and l.product_uom_qty != 0.0">
-                                    <span t-esc="'%.2f'%(l.price_subtotal)"/>
+                                <t t-if="not doc.print_hide_prices and l.product_uom_qty != 0.00">
+                                    <span t-field="l.price_subtotal" t-field-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
                                 </t>
                             </td>
                         </tr>

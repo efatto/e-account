@@ -18,7 +18,7 @@
 #
 {
     'name': 'Qweb sale order report',
-    'version': '10.0.1.0.0',
+    'version': '10.0.1.0.1',
     'category': 'other',
     'author': 'Sergio Corato - Efatto.it',
     'website': 'https://efatto.it',
@@ -27,6 +27,7 @@
     'depends': [
         'sale',
         'sale_order_report_hide_prices',
+        'l10n_it_fiscal_payment_term',
     ],
     'data': [
         'data/report_view.xml',
