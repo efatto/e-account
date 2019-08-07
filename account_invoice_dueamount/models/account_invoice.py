@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-# For copyright and license notices, see __openerp__.py file in root directory
-##############################################################################
 from odoo import models, api, fields, exceptions, _
+from odoo.tools import float_compare
 import copy
 
 
@@ -41,7 +39,7 @@ class AccountInvoice(models.Model):
             # check total amount lines == invoice.amount_total
             for dueamount_line in self.dueamount_line_ids:
                 total_dueamount += dueamount_line.amount
-            if total_dueamount != self.amount_total:
+            if float_compare(total_dueamount, self.amount_total, 2) != 0:
                 raise exceptions.ValidationError(
                     _('Total amount of due amount lines must be equal to '
                       'invoice total amount %d') % self.amount_total)
