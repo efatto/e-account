@@ -18,7 +18,7 @@
 #
 {
     'name': 'Qweb account invoice report',
-    'version': '10.0.1.0.1',
+    'version': '10.0.1.0.2',
     'category': 'other',
     'author': 'Sergio Corato - Efatto.it',
     'website': 'https://efatto.it',
