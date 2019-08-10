@@ -162,12 +162,10 @@
                             <th>Code</th>
                             <th>Description</th>
                             <th class="text-right">Q.ty</th>
-                            <th class="text-right">
-                                Amount <span t-field="o.currency_id.symbol"/>
-                            </th>
+                            <th class="text-right">Amount</th>
                             <th>Discount %</th>
                             <th>VAT</th>
-                            <th class="text-right">Total Amount <span t-field="o.currency_id.symbol"/></th>
+                            <th class="text-right">Total Amount</th>
                         </tr>
                    </thead>
                    <tbody class="invoice_tbody">
@@ -193,12 +191,12 @@
                             </td>
                             <td class="text-right">
                                 <t t-if="l.price_unit != 0.0">
-                                    <span t-esc="'%.2f'%(l.price_unit)"/>
+                                    <span t-field="l.price_unit" t-field-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                 </t>
                             </td>
                             <td class="text-right">
                                 <t t-if="l.discount != 0.00">
-                                    <span t-esc="'%.1f'%(l.discount)"/>
+                                    <span t-esc="'%.2f'%(l.discount)"/>
                                 </t>
                             </td>
                             <td class="text-right">
@@ -208,7 +206,7 @@
                             </td>
                             <td class="text-right">
                                 <t t-if="l.price_subtotal != 0.0">
-                                    <span t-esc="'%.2f'%(l.price_subtotal)"/>
+                                    <span t-field="l.price_subtotal" t-field-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                 </t>
                             </td>
                         </tr>
