@@ -3,7 +3,7 @@
 # License LGPL-3 - See http://www.gnu.org/licenses/lgpl
 {
     'name': 'Account invoice due amount',
-    'version': '10.0.1.0.1',
+    'version': '10.0.1.0.2',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'This module add optional custom due amount field, '
