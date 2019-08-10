@@ -3,6 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
 from openerp import models, api, fields, exceptions, _
+from openerp.tools import float_compare
 import copy
 
 
@@ -40,10 +41,10 @@ class AccountInvoice(models.Model):
             # check total amount lines == invoice.amount_total
             for dueamount_line in self.dueamount_line:
                 total_dueamount += dueamount_line.amount
-            if total_dueamount != self.amount_total:
+            if float_compare(total_dueamount, self.amount_total, 2) != 0:
                 raise exceptions.ValidationError(
                     _('Total amount of due amount lines must be equal to '
-                      'invoice total amount %d') % self.amount_total)
+                      'invoice total amount %.2f') % self.amount_total)
 
             dueamount_ids = self.dueamount_line.ids
             maturity_move_lines = [
