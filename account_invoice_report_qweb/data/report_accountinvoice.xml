@@ -164,7 +164,7 @@
                             <th class="text-right">Q.ty</th>
                             <th class="text-right">Amount</th>
                             <th>Discount %</th>
-                            <th>VAT</th>
+                            <th>VAT %</th>
                             <th class="text-right">Total Amount</th>
                         </tr>
                    </thead>
@@ -201,7 +201,7 @@
                             </td>
                             <td class="text-right">
                                 <t t-foreach="l.invoice_line_tax_id" t-as="tax">
-                                    <span t-esc="'%.0f'%(tax.amount * 100)"/> %
+                                    <span t-esc="'%.0f'%(tax.amount * 100)"/>
                                 </t>
                             </td>
                             <td class="text-right">
