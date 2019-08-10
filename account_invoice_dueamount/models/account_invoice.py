@@ -42,7 +42,7 @@ class AccountInvoice(models.Model):
             if float_compare(total_dueamount, self.amount_total, 2) != 0:
                 raise exceptions.ValidationError(
                     _('Total amount of due amount lines must be equal to '
-                      'invoice total amount %d') % self.amount_total)
+                      'invoice total amount %.2f') % self.amount_total)
 
             dueamount_ids = self.dueamount_line_ids.ids
             maturity_move_lines = [
