@@ -191,7 +191,7 @@
                             </td>
                             <td class="text-right">
                                 <t t-if="l.price_unit != 0.0">
-                                    <span t-field="l.price_unit" t-field-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <span t-field="l.price_unit" t-field-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                 </t>
                             </td>
                             <td class="text-right">
@@ -206,7 +206,7 @@
                             </td>
                             <td class="text-right">
                                 <t t-if="l.price_subtotal != 0.0">
-                                    <span t-field="l.price_subtotal" t-field-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <span t-field="l.price_subtotal" t-field-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                 </t>
                             </td>
                         </tr>
