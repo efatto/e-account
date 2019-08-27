@@ -7,15 +7,15 @@ from odoo import models, fields, api
 class ResBank(models.Model):
     _inherit = "res.bank"
 
-    init_line_to_exclude = fields.Integer('Initial lines to exclude')
-    end_line_to_exclude = fields.Integer('End lines to exclude')
+    init_line_to_exclude = fields.Integer(
+        'Initial lines to exclude', help='All initial rows to be excluded, '
+                                         'including headers.')
+    end_line_to_exclude = fields.Integer(
+        'End lines to exclude', help='All last rows to be excluded.')
     column_header = fields.Char(
-        'Column header', help='List of column headers separated by "," '
-                              'and with this format: '
-                              'column_field:column_name:column_type'
-                              'Where column_field is the db field, '
-                              'column_name is the csv field '
-                              'and column type is the db type.')
+        'Column header', help='List of column headers separated by ;. '
+        'Example: date;;label;amount; for a csv with this columns: '
+        'Date <omitted> Description Amount <omitted>')
     separator = fields.Selection([
         (',', "Comma"),
         (';', "Semicolon"),
@@ -30,24 +30,31 @@ class ResBank(models.Model):
         (',', "Comma"),
         ('.', "Dot"),
     ], string="Decimal separator")
-    date_format = fields.Char('Date format')
-    debit_column_pos = fields.Integer('Debit column position')
-    credit_column_pos = fields.Integer('Credit column position')
-    abi_reason_column_pos = fields.Integer('ABI reason position')
+    date_format = fields.Char(
+        'Date format', help='In EU usually can be set as "%d/%m/%Y".')
+    debit_column_pos = fields.Integer(
+        'Debit column position', help='Optional if values are splitted in '
+                                      'debit and credit.')
+    credit_column_pos = fields.Integer(
+        'Credit column position', help='Optional if values are splitted in '
+                                       'debit and credit.')
+    abi_reason_column_pos = fields.Integer(
+        'ABI reason position', help='Optional if there is ABI reason column,'
+                                    'this will be imported in ref column.')
 
 
 class ResPartnerBank(models.Model):
     _inherit = "res.partner.bank"
 
-    bank_init_line_to_exclude = fields.Integer('Initial lines to exclude')
-    bank_end_line_to_exclude = fields.Integer('End lines to exclude')
+    bank_init_line_to_exclude = fields.Integer(
+        'Initial lines to exclude', help='All initial rows to be excluded, '
+                                         'including headers.')
+    bank_end_line_to_exclude = fields.Integer(
+        'End lines to exclude', help='All last rows to be excluded.')
     bank_column_header = fields.Char(
-        'Column header', help='List of column headers separated by "," '
-                              'and with this format: '
-                              'column_field:column_name:column_type'
-                              'Where column_field is the db field, '
-                              'column_name is the csv field '
-                              'and column type is the db type.')
+        'Column header', help='List of column headers separated by ;. '
+        'Example: date;;label;amount; for a csv with this columns: '
+        'Date <omitted> Description Amount <omitted>')
     bank_separator = fields.Selection([
         (',', "Comma"),
         (';', "Semicolon"),
@@ -62,10 +69,17 @@ class ResPartnerBank(models.Model):
         (',', "Comma"),
         ('.', "Dot"),
     ], string="Decimal separator")
-    bank_date_format = fields.Char('Date format')
-    bank_debit_column_pos = fields.Integer('Debit column position')
-    bank_credit_column_pos = fields.Integer('Credit column position')
-    bank_abi_reason_column_pos = fields.Integer('ABI reason position')
+    bank_date_format = fields.Char(
+        'Date format', help='In EU usually can be set as "%d/%m/%Y".')
+    bank_debit_column_pos = fields.Integer(
+        'Debit column position', help='Optional if values are splitted in '
+                                      'debit and credit.')
+    bank_credit_column_pos = fields.Integer(
+        'Credit column position', help='Optional if values are splitted in '
+                                       'debit and credit.')
+    bank_abi_reason_column_pos = fields.Integer(
+        'ABI reason position', help='Optional if there is ABI reason column,'
+                                    'this will be imported in ref column.')
 
     @api.onchange('bank_id')
     def onchange_bank_id(self):
