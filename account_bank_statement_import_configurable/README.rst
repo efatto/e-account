@@ -21,7 +21,7 @@ Use the dashboard in the accounting module:
 
 **Example of csv format used for this configuration:**
 
-.. figure:: /account_bank_statement_import_configurable/static/description/2.example.csv.png
+.. figure:: /account_bank_statement_import_configurable/static/description/2.example.xls.csv.png
    :alt: CSV example
    :align: center
 
