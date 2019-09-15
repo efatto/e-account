@@ -84,7 +84,7 @@ class SaleOrderReportQweb(models.AbstractModel):
 
     def _check_installed_module(self, module):
         res = False
-        if self.env['ir.module.module'].search(
+        if self.env['ir.module.module'].sudo().search(
                 [('name', '=', module), ('state', '=', 'installed')]):
             res = True
         return res
