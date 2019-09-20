@@ -5,7 +5,7 @@
 {
     'name': 'ITA - Fattura elettronica - dati extra in righe',
     "summary": "Modulo per inserimento dati per connessioni con altri ERP",
-    "version": "8.0.1.0.0",
+    "version": "8.0.1.0.1",
     "development_status": "Beta",
     "category": "Hidden",
     'website': 'https://efatto.it',
