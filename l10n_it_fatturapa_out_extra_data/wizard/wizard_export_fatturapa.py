@@ -18,8 +18,8 @@ class WizardExportFatturapa(models.TransientModel):
         # add VAT
         dati_gestionali = AltriDatiGestionaliType()
         tax_description = line.invoice_line_tax_id[0].description
-        dati_gestionali.TipoDato = tax_description[:10]
-        dati_gestionali.RiferimentoTesto = 'VAT'
+        dati_gestionali.RiferimentoTesto = tax_description[:60]
+        dati_gestionali.TipoDato = 'VAT'
         dati_gestionali_list.append(dati_gestionali)
         # add category
         if line.product_id:
@@ -27,8 +27,15 @@ class WizardExportFatturapa(models.TransientModel):
             while categ_id.parent_id:
                 categ_id = categ_id.parent_id
             dati_gestionali = AltriDatiGestionaliType()
-            dati_gestionali.TipoDato = categ_id.name[:10]
-            dati_gestionali.RiferimentoTesto = 'CAT'
+            dati_gestionali.RiferimentoTesto = categ_id.name[:60]
+            dati_gestionali.TipoDato = 'CAT'
+            dati_gestionali_list.append(dati_gestionali)
+        # add advance_invoice_id - returned advance invoice ref
+        if line.advance_invoice_id:
+            dati_gestionali = AltriDatiGestionaliType()
+            dati_gestionali.RiferimentoTesto = line.advance_invoice_id.number[
+                :60]
+            dati_gestionali.TipoDato = 'ACC'
             dati_gestionali_list.append(dati_gestionali)
 
         # get dettagliolinea for actual row
