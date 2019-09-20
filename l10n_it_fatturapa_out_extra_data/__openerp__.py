@@ -17,5 +17,6 @@
     "auto_install": False,
     "depends": [
         "l10n_it_fatturapa_out",
+        "sale_account_invoice_advance",
     ],
 }
