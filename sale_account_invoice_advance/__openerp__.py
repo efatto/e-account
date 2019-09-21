@@ -10,7 +10,7 @@
     'website': 'https://efatto.it',
     'license': 'LGPL-3',
     'depends': [
-        'account',
+        'l10n_it_fiscal_document_type',
         'sale',
     ],
     'data': [
