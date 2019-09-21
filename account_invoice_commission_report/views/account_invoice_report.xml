@@ -11,19 +11,19 @@
 <template id="account_invoice_commission_report.report_account_invoice">
     <style type="text/css">
         .left_with_line {
-            text-align:left; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px;
+            text-align:left; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px; font-size: 10px;
         }
         .right_with_line {
-            text-align:right; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px;
+            text-align:right; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px; font-size: 10px;
         }
         .left_with_line_bold {
-            text-align:left; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px; font-weight: bold;
+            text-align:left; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px; font-weight: bold; font-size: 10px;
         }
         .right_with_line_bold {
-            text-align:right; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px; font-weight: bold;
+            text-align:right; vertical-align:text-top; border-collapse:collapse; border:1px solid #A1A1A1; padding:5px; font-weight: bold; font-size: 10px;
         }
         .first_th_row {
-            text-align:center; border:1px solid #A1A1A1; border-collapse:collapse; background: #fff;
+            text-align:center; border:1px solid #A1A1A1; border-collapse:collapse; background: #fff; font-size: 10px;
         }
         .commission_title {
             font-size: 15px;
