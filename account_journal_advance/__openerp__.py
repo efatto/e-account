@@ -19,7 +19,7 @@
 #
 {
     'name': 'Account journal advance',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.0.1',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'This module add description for advance in account '
@@ -28,6 +28,7 @@
     'license': 'AGPL-3',
     'depends': [
         'account',
+        'l10n_it_fiscal_document_type',
         'sale',
     ],
     'data': [

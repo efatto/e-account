@@ -32,6 +32,10 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 for sale_id, inv_values in self._prepare_advance_invoice_vals():
                     inv_ids.append(self._create_invoices(inv_values, sale_id))
                 # add logic to change journal if it is downpayment
+                fiscal_document_type_id = self.env[
+                    'fiscal.document.type'].search([
+                        ('code', '=', 'TD02')
+                    ])
                 for inv in self.env['account.invoice'].browse(inv_ids):
                     if self.product_id.downpayment:
                         journal_id = self.env['account.journal'].search([
@@ -40,6 +44,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         if journal_id:
                             inv.write({'journal_id': journal_id.id})
                             inv.button_reset_taxes()
+                        if fiscal_document_type_id:
+                            inv.write({'fiscal_document_type_id':
+                                       fiscal_document_type_id.id})
                 # end
                 if self._context.get('open_invoices', False):
                     return self.open_invoices(inv_ids)
