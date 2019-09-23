@@ -12,7 +12,6 @@
     'license': 'LGPL-3',
     'depends': [
         'l10n_it_fiscal_document_type',
-        'sale',
     ],
     'data': [
         'views/account.xml',
