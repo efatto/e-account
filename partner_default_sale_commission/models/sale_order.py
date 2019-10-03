@@ -46,9 +46,39 @@ class SaleOrder(models.Model):
                     partner_id.default_sale_commission_id.id})
         return res
 
+    @api.multi
+    def compute_amount_commission(self):
+        self.ensure_one()
+        for line in self.order_line.mapped('agents'):
+            line.amount = 0.0
+            if (not line.sale_line.product_id.commission_free and
+                    line.commission):
+                l = line.sale_line
+                subtotal = l.tax_id.compute_all(
+                    (l.price_unit * (1 - (l.discount or 0.0) / 100.0)),
+                    l.product_uom_qty, l.product_id, l.order_id.partner_id)
+
+                if line.commission.amount_base_type == 'net_amount':
+                    subtotal = subtotal['total']
+                else:
+                    subtotal = subtotal['total_included']
+                if line.commission.commission_type == 'fixed':
+                    line.amount = subtotal * (line.commission.fix_qty / 100.0)
+                else:
+                    line.amount = line.commission.calculate_section(subtotal)
+
+    @api.multi
+    def action_button_confirm(self):
+        for order in self:
+            order.compute_amount_commission()
+        res = super(SaleOrder, self).action_button_confirm()
+        return res
+
 
 class SaleOrderLineAgent(models.Model):
     _inherit = "sale.order.line.agent"
+
+    amount = fields.Float(compute=False, store=True)
 
     @api.multi
     def name_get(self):

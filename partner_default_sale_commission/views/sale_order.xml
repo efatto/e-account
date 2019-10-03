@@ -10,6 +10,9 @@
                 <field name="default_sale_commission_id"
                        attrs="{'invisible':[('state','not in',['draft',])]}"/>
             </field>
+            <field name="pricelist_id" position="after">
+                <button string="Compute commission" name="compute_amount_commission" type="object"/>
+            </field>
         </field>
     </record>
   </data>
