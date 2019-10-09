@@ -79,15 +79,3 @@ class SaleOrderLineAgent(models.Model):
     _inherit = "sale.order.line.agent"
 
     amount = fields.Float(compute=False, store=True)
-
-    @api.multi
-    def name_get(self):
-        res = []
-        for record in self:
-            name = "%s: %s" % (record.agent.name, record.commission.name)
-            res.append((record.id, name))
-        return res
-
-    @api.depends('agent', 'commission')
-    def _compute_display_name(self):
-        return super(SaleOrderLineAgent, self)._compute_display_name()
