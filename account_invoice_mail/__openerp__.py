@@ -19,10 +19,11 @@
 #
 {
     'name': 'Account invoice mail',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.0.1',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'Button to send mail for invoice always visible.',
+    'description': 'Button to send mail for invoice always visible.'
+                   'Add field "Invoice Email" for simpler management.',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
@@ -30,6 +31,7 @@
     ],
     'data': [
         'views/account_invoice_view.xml',
+        'views/res_partner_view.xml',
     ],
     'installable': True
 }
