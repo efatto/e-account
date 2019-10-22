@@ -15,22 +15,26 @@ class ResPartner(models.Model):
     def on_change_email_invoice(self):
         for partner in self:
             if partner.email_invoice:
-                try:
-                    validate_email(
-                        partner.email_invoice, check_deliverability=True)
-                except EmailSyntaxError as error:
-                    raise exceptions.ValidationError(
-                        _("That does not seem to be an email address. \n %s"
-                          % str(error)),
-                    )
-                except EmailUndeliverableError as error:
-                    raise exceptions.ValidationError(
-                        _("That does not seem to be a deliverable email"
-                          " address. \n %s"
-                          % str(error)),
-                    )
-                except Exception as error:
-                    raise exceptions.ValidationError(
-                        _("An error occurred validating email address. \n %s"
-                          % str(error)),
-                    )
+                self.validate_email(partner.email_invoice)
+
+    @staticmethod
+    def validate_email(email):
+        try:
+            validate_email(
+                email, check_deliverability=True)
+        except EmailSyntaxError as error:
+            raise exceptions.ValidationError(
+                _("That does not seem to be an email address. \n %s"
+                  % str(error)),
+            )
+        except EmailUndeliverableError as error:
+            raise exceptions.ValidationError(
+                _("That does not seem to be a deliverable email"
+                  " address. \n %s"
+                  % str(error)),
+            )
+        except Exception as error:
+            raise exceptions.ValidationError(
+                _("An error occurred validating email address. \n %s"
+                  % str(error)),
+            )

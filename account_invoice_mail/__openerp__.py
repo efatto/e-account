@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 {
     'name': 'Account invoice mail',
-    'version': '8.0.1.0.1',
+    'version': '8.0.1.1.0',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Button to send mail for invoice always visible.'
