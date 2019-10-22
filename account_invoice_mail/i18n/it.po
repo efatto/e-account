@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_invoice_mail
-#: field:res.partner,invoice_email:0
+#: field:res.partner,email_invoice:0
 msgid "Invoice Email"
 msgstr "Email Fatturazione"
 

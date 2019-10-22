@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <field name="email" position="before">
-                    <field name="invoice_email" class="oe_bold" widget="email"
+                    <field name="email_invoice" widget="email"
                         attrs="{'required': [
                             ('parent_id', '=', False),
                             ('email', '=', False),

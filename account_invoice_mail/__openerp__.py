@@ -23,7 +23,7 @@
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Button to send mail for invoice always visible.'
-                   'Add field "Invoice Email" for simpler management.',
+                   'Add field Invoice Email for simpler management.',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
@@ -33,5 +33,10 @@
         'views/account_invoice_view.xml',
         'views/res_partner_view.xml',
     ],
+    'external_dependencies': {
+        'python': [
+            'email_validator',
+        ],
+    },
     'installable': True
 }
