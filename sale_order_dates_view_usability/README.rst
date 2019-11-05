@@ -9,6 +9,10 @@ Questo modulo:
 * modifica la vista calendario degli ordini per basarsi sulla data di richiesta
 * evidenzia nel calendario gli ordini in base alla data di richiesta (rosso<=0gg,
   arancione<=4gg, giallo<=7gg, verde>7gg)
+* avere degli alert per gli ordini in scadenza (da decidere: a -4gg? altri?):
+  creato modulo reminder_saleorder
+  TODO: da creare modulo per auto-aggiungere i reminder agli ordini e poi
+        rimuoverli dopo il completamento
 
 **questo comporta che se la data richiesta viene modificata successivamente alla
   conferma, sarà diversa dalle date nelle righe dell'SO e negli OUT, ma non ci
@@ -24,7 +28,3 @@ Quindi in pratica:
     1. dalla data richiesta -4gg con un massimo di 7 gg. ogni venerdì mattina
     2. lista di tutti gli ordini segnalati e non per la produzione (vedi ordini
        per natale / pre fiera)
-* TODO avere degli alert che 'saltino fuori' solo per quelli in scadenza (da
-  decidere: a -4gg? altri?): creare un modulo sulla base di reminder_phonecall
-
-
