@@ -29,10 +29,13 @@
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
+        'calendar',
         'sale_order_dates',
         'sale_order_line_date',
+        'web_widget_color',
     ],
     'data': [
+        'views/calendar.xml',
         'views/sale_order_view.xml',
     ],
     'installable': True

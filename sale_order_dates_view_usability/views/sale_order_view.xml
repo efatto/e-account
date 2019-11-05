@@ -28,7 +28,7 @@
                 <field name="requested_date" position="after">
                     <field name="date_confirm"/>
                 </field>
-                <field name="committment_date" position="attributes">
+                <field name="commitment_date" position="attributes">
                     <attribute name="invisible">True</attribute>
                 </field>
             </field>
@@ -43,6 +43,7 @@
                     <calendar string="Sales Orders" color="state" date_start="requested_date">
                         <field name="partner_id"/>
                         <field name="amount_total"/>
+                        <field name="requested_date"/>
                     </calendar>
                 </calendar>
             </field>
