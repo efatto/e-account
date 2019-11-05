@@ -19,15 +19,18 @@
 #
 {
     'name': 'Sale order dates view usability',
-    'version': '8.0.1.0.0',
+    'version': '8.0.2.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'This module move sale order ref in tree view after '
-                   'partner.',
+                   'partner, compute requested date on date of confirmation + '
+                   '"sale_default_lead_days" if present in parameters and '
+                   'change calendar view basing it on date requested.',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
         'sale_order_dates',
+        'sale_order_line_date',
     ],
     'data': [
         'views/sale_order_view.xml',

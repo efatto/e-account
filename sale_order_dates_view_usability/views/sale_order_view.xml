@@ -6,7 +6,6 @@
             <field name="arch" type="xml">
                 <field name="amount_total" position="before">
                     <field name="requested_date"/>
-                    <field name="commitment_date"/>
                 </field>
             </field>
         </record>
@@ -17,8 +16,32 @@
             <field name="arch" type="xml">
                 <field name="amount_total" position="before">
                     <field name="requested_date"/>
-                    <field name="commitment_date"/>
                 </field>
+            </field>
+        </record>
+
+        <record id="view_sale_orderfor_view" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_dates.view_sale_orderfor" />
+            <field name="arch" type="xml">
+                <field name="requested_date" position="after">
+                    <field name="date_confirm"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_sale_order_calendar_inh" model="ir.ui.view">
+            <field name="name">sale.order.calendar.inh</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sale_order_calendar"/>
+            <field name="arch" type="xml">
+                <calendar position="replace">
+                    <calendar string="Sales Orders" color="state" date_start="requested_date">
+                        <field name="partner_id"/>
+                        <field name="amount_total"/>
+                    </calendar>
+                </calendar>
             </field>
         </record>
 
