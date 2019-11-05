@@ -19,16 +19,16 @@
 #
 {
     'name': 'Compatibility date on sale order and commission',
-    'version': '8.0.1.0.0',
+    'version': '8.0.2.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'This module fix context in sale order line when '
                    'sale_commission module is installed with '
-                   'sale_order_line_dates module.',
+                   'sale_order_line_date module.',
     'website': 'http://www.efatto.it',
     'license': 'AGPL-3',
     'depends': [
-        "sale_order_line_dates",
+        "sale_order_line_date",
         'sale_commission',
     ],
     'data': [
