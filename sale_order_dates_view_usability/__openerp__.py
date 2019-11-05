@@ -32,7 +32,6 @@
         'calendar',
         'sale_order_dates',
         'sale_order_line_date',
-        'web_widget_color',
     ],
     'data': [
         'views/calendar.xml',
