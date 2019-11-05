@@ -28,6 +28,9 @@
                 <field name="requested_date" position="after">
                     <field name="date_confirm"/>
                 </field>
+                <field name="committment_date" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
             </field>
         </record>
 
