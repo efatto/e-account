@@ -54,8 +54,21 @@ class Parser(report_sxw.rml_parse):
             'is_printable_invoice_line_tax': self.
                 _is_printable_invoice_line_tax,
             'has_complex_discount': self._has_complex_discount,
+            'myset': self.myset,
+            'myget': self.myget,
+            'storage': {}
         })
         self.cache = {}
+
+    def myset(self, pair):
+        if isinstance(pair, dict):
+            self.localcontext['storage'].update(pair)
+        return False
+
+    def myget(self, key):
+        if key in self.localcontext['storage'] and self.localcontext['storage'][key]:
+            return self.localcontext['storage'][key]
+        return False
 
     def _get_invoice_address(self, model='account.invoice'):
         obj = self.pool[model].browse(self.cr, self.uid, self.ids[0])
