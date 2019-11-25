@@ -3,8 +3,16 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 import logging
 from psycopg2 import IntegrityError
+from openupgradelib import openupgrade
 
 _logger = logging.getLogger(__name__)
+
+xmlids_to_rename = [
+    ("sale_order_line_dates.sale_order_requested_date_form_view",
+     "sale_order_line_date.sale_order_requested_date_form_view"),
+    ("sale_order_line_dates.sale_order_line_ext_tree_view",
+     "sale_order_line_date.sale_order_line_ext_tree_view"),
+]
 
 
 def migrate(cr, version):
@@ -22,3 +30,5 @@ def migrate(cr, version):
         _logger.warn("Updated dependency installed module.")
     except IntegrityError:
         _logger.info("Unable to update dependency")
+
+    openupgrade.rename_xmlids(cr, xmlids_to_rename)
