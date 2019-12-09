@@ -54,24 +54,37 @@ class Parser(report_sxw.rml_parse):
             'is_printable_invoice_line_tax': self.
                 _is_printable_invoice_line_tax,
             'has_complex_discount': self._has_complex_discount,
-            'setvar': self.setvar,
-            'getvar': self.getvar,
-            'sumvar': self.sumvar,
+            'setvar': self._setvar,
+            'getvar': self._getvar,
+            'sumvar': self._sumvar,
             'storage': {},
+            'gettextbytag': self._gettextbytag,
         })
         self.cache = {}
 
-    def setvar(self, key, value):
-        if key and value:
+    def _gettextbytag(self, tag, fullstr):
+        if fullstr and tag:
+            start = fullstr.find(tag) + len(tag)
+            if start >= 0:
+                end = fullstr.find('\n', start)
+                if end <= start:
+                    return fullstr[start:]
+                else:
+                    return fullstr[start:end]
+
+        return ""
+
+    def _setvar(self, key, value=0):
+        if key:
             self.localcontext['storage'].update({key: value})
         return False
 
-    def sumvar(self, key, value=1, ret=True):
+    def _sumvar(self, key, value=1, ret=True):
         if key in self.localcontext['storage'] and self.localcontext['storage'][key]:
             self.localcontext['storage'][key] += value
         return ret and self.localcontext['storage'][key] or False
 
-    def getvar(self, key):
+    def _getvar(self, key):
         if key in self.localcontext['storage'] and self.localcontext['storage'][key]:
             return self.localcontext['storage'][key]
         return False
