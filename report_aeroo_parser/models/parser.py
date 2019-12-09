@@ -56,14 +56,20 @@ class Parser(report_sxw.rml_parse):
             'has_complex_discount': self._has_complex_discount,
             'setvar': self.setvar,
             'getvar': self.getvar,
-            'storage': {}
+            'sumvar': self.sumvar,
+            'storage': {},
         })
         self.cache = {}
 
-    def setvar(self, pair):
-        if isinstance(pair, dict):
-            self.localcontext['storage'].update(pair)
+    def setvar(self, key, value):
+        if key and value:
+            self.localcontext['storage'].update({key: value})
         return False
+
+    def sumvar(self, key, value=1, ret=True):
+        if key in self.localcontext['storage'] and self.localcontext['storage'][key]:
+            self.localcontext['storage'][key] += value
+        return ret and self.localcontext['storage'][key] or False
 
     def getvar(self, key):
         if key in self.localcontext['storage'] and self.localcontext['storage'][key]:
