@@ -51,8 +51,7 @@ class Parser(report_sxw.rml_parse):
             'transform_forbidden_word': self._transform_forbidden_word,
             'get_product_code': self._get_product_code,
             'get_group_tax': self._get_group_tax,
-            'is_printable_invoice_line_tax': self.
-                _is_printable_invoice_line_tax,
+            'is_printable_invoice_line_tax': self._is_printable_invoice_line_tax,
             'has_complex_discount': self._has_complex_discount,
             'setvar': self._setvar,
             'getvar': self._getvar,
