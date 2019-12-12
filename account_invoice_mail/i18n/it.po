@@ -41,13 +41,9 @@ msgstr "Email Fatturazione"
 
 #. module: account_invoice_mail
 #: help:res.partner,email_invoice:0
-msgid "One single email or a list of email separated by \",\""
-msgstr "Una singola email o una lista di email separate da \",\""
-
-#. module: account_invoice_mail
 #: view:res.partner:account_invoice_mail.view_partner_form
-msgid "One single email or a list of email separated by ','"
-msgstr "Una singola email o una lista di email separate da ','"
+msgid "One single email or a list of email separated by ,"
+msgstr "Una singola email o una lista di email separate da ,"
 
 #. module: account_invoice_mail
 #: model:ir.model,name:account_invoice_mail.model_res_partner

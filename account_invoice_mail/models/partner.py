@@ -9,7 +9,7 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     email_invoice = fields.Char(
-        'Invoice Email', help='One single email or a list of email separated by ","')
+        'Invoice Email', help='One single email or a list of email separated by ,')
 
     @api.multi
     @api.constrains('email_invoice')
