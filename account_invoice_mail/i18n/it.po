@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-16 09:03+0000\n"
-"PO-Revision-Date: 2019-10-16 09:03+0000\n"
+"POT-Creation-Date: 2019-12-12 16:25+0000\n"
+"PO-Revision-Date: 2019-12-12 16:25+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,38 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_invoice_mail
+#: code:addons/account_invoice_mail/models/partner.py:45
+#, python-format
+msgid "An error occurred validating email address. \n"
+" %s"
+msgstr "È stato rilevato un errore validando l'email. \n"
+" %s"
+
+#. module: account_invoice_mail
+#: model:ir.model,name:account_invoice_mail.model_mail_compose_message
+msgid "Email composition wizard"
+msgstr "Procedura guidata composizione email"
+
+#. module: account_invoice_mail
+#: code:addons/account_invoice_mail/models/mail_compose_message.py:15
+#, python-format
+msgid "Email missing!"
+msgstr "Email mancante!"
+
+#. module: account_invoice_mail
 #: field:res.partner,email_invoice:0
 msgid "Invoice Email"
 msgstr "Email Fatturazione"
+
+#. module: account_invoice_mail
+#: help:res.partner,email_invoice:0
+msgid "One single email or a list of email separated by \",\""
+msgstr "Una singola email o una lista di email separate da \",\""
+
+#. module: account_invoice_mail
+#: view:res.partner:account_invoice_mail.view_partner_form
+msgid "One single email or a list of email separated by ','"
+msgstr "Una singola email o una lista di email separate da ','"
 
 #. module: account_invoice_mail
 #: model:ir.model,name:account_invoice_mail.model_res_partner
@@ -26,12 +55,18 @@ msgid "Partner"
 msgstr "Partner"
 
 #. module: account_invoice_mail
-#: view:account.invoice:account_invoice_mail.view_invoice_form_mail
-msgid "{'invisible':['|',('sent','=',False),('state', 'in', ['draft', 'cancel'])]}"
-msgstr "{'invisible':['|',('sent','=',False),('state', 'in', ['draft', 'cancel'])]}"
+#: code:addons/account_invoice_mail/models/partner.py:40
+#, python-format
+msgid "That does not seem to be a deliverable email address. \n"
+" %s"
+msgstr "Questo non sembra essere un indirizzo email valido. \n"
+" %s"
 
 #. module: account_invoice_mail
-#: view:account.invoice:account_invoice_mail.view_invoice_form_mail
-msgid "{'invisible':['|',('sent','=',True),('state', 'in', ['draft', 'cancel'])]}"
-msgstr "{'invisible':['|',('sent','=',True),('state', 'in', ['draft', 'cancel'])]}"
+#: code:addons/account_invoice_mail/models/partner.py:34
+#, python-format
+msgid "That does not seem to be an email address. \n"
+" %s"
+msgstr "Questo non sembra essere un indirizzo email. \n"
+" %s"
 

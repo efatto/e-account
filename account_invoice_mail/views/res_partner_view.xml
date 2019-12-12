@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <field name="email" position="before">
                     <field name="email_invoice" widget="email"
+                        placeholder="One single email or a list of email separated by ','"
                         attrs="{'required': [
                             ('parent_id', '=', False),
                             ('email', '=', False),

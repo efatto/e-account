@@ -15,6 +15,11 @@ class MailComposeMessage(models.TransientModel):
                     _('Email missing!')
                 )
             for partner in self.partner_ids:
-                partner.validate_email(partner.email)
+                if ',' in partner.email.replace(' ', ''):
+                    for mail in partner.email.replace(' ', '').split(','):
+                        if len(mail) > 2:
+                            partner.validate_email(mail)
+                else:
+                    partner.validate_email(partner.email)
 
         return super(MailComposeMessage, self).send_mail()
