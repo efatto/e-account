@@ -30,7 +30,6 @@
         'report_aeroo',
         'stock',
         'l10n_it_ddt',
-        'report_branding',
         'service_type',
     ],
     'data': [
