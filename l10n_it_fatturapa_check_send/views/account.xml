@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record id="view_account_period_form_disable" model="ir.ui.view">
+        <field name="name">account.period.form.disable</field>
+        <field name="model">account.period</field>
+        <field name="inherit_id" ref="account.view_account_period_form"/>
+        <field name="arch" type="xml">
+            <field name="special" position="after">
+                <field name="disable_send_foreign_invoice"/>
+            </field>
+        </field>
+    </record>
+</data>
+</openerp>

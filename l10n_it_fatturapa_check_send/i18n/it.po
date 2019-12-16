@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_it_fatturapa_check_send
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-16 15:38+0000\n"
+"PO-Revision-Date: 2019-12-16 15:38+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_it_fatturapa_check_send
+#: model:ir.model,name:l10n_it_fatturapa_check_send.model_account_period
+msgid "Account period"
+msgstr "Periodo contabile"
+
+#. module: l10n_it_fatturapa_check_send
+#: field:account.period,disable_send_foreign_invoice:0
+msgid "Disable send foreign invoice"
+msgstr "Disabilita invio e-fatture estere"
+
+#. module: l10n_it_fatturapa_check_send
+#: model:ir.model,name:l10n_it_fatturapa_check_send.model_fatturapa_attachment_out
+msgid "E-invoice Export File"
+msgstr "File esportazione E-fattura"
+
+#. module: l10n_it_fatturapa_check_send
+#: model:ir.model,name:l10n_it_fatturapa_check_send.model_wizard_fatturapa_send_pec
+msgid "Wizard to send multiple e-invoice PEC"
+msgstr "Procedura per invio multiplo e-fatture via PEC"
+
+#. module: l10n_it_fatturapa_check_send
+#: code:addons/l10n_it_fatturapa_check_send/models/fatturapa.py:21
+#: code:addons/l10n_it_fatturapa_check_send/models/fatturapa.py:36
+#, python-format
+msgid "You can only send files for Italian partners for %s period."
+msgstr "Puoi solo spedire e-fatture Italiane per il periodo %s."
+
