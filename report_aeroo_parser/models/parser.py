@@ -5,13 +5,17 @@
 
 import time
 import re
+import tempfile
 from openerp import _
 from openerp.report import report_sxw
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from datetime import datetime
 from dateutil import tz
-from collections import defaultdict, Mapping, OrderedDict
+from collections import OrderedDict
+from docutils.core import publish_string
+from docutils.writers.odf_odt import Writer
+
 try:
     import cStringIO as StringIO
 except ImportError:
@@ -56,10 +60,24 @@ class Parser(report_sxw.rml_parse):
             'setvar': self._setvar,
             'getvar': self._getvar,
             'sumvar': self._sumvar,
-            'storage': {},
+            'listvar': self._listvar,
+            'storage': OrderedDict(),
             'gettextbytag': self._gettextbytag,
+            'rst_odt': self._rst_odt,
         })
         self.cache = {}
+
+    def _listvar(self):
+        return self.localcontext['storage']
+
+    def _rst_odt(self, text):
+        temp_file = tempfile.NamedTemporaryFile(
+            suffix='.odt', prefix='aeroo-report-', delete=False)
+        writer = Writer()
+        doc = publish_string(text, writer=writer)
+        temp_file.write(doc)
+        temp_file.close()
+        return temp_file.name
 
     def _gettextbytag(self, tag, fullstr):
         if fullstr and tag:
