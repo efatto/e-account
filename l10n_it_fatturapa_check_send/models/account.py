@@ -8,4 +8,4 @@ from openerp import fields, models
 class AccountPeriod(models.Model):
     _inherit = "account.period"
 
-    disable_send_foreign_invoice = fields.Boolean()
+    disable_send_foreign_invoice = fields.Boolean(default=True)
