@@ -492,7 +492,7 @@ class Parser(report_sxw.rml_parse):
     @staticmethod
     def _get_group_tax(tax_lines):
         tax_group = {}
-        for tax_line in tax_lines:
+        for tax_line in tax_lines.sorted(key=lambda x: x.base, reverse=True):
             if tax_line.name not in tax_group and \
                     not(tax_line.tax_code_id.notprintable or
                         tax_line.base_code_id.notprintable):
