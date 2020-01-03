@@ -1,0 +1,82 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_due_list_report_qweb
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-29 14:41+0000\n"
+"PO-Revision-Date: 2018-03-29 14:41+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_due_list_report_qweb
+#: view:website:account_due_list_report_qweb.duelist_qweb
+msgid "DUE LIST"
+msgstr "SCADENZARIO"
+
+#. module: account_due_list_report_qweb
+#: field:report.account_due_list_report_qweb.duelist_qweb,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: account_due_list_report_qweb
+#: view:website:account_due_list_report_qweb.duelist_qweb
+msgid "Due Date"
+msgstr "Scadenza"
+
+#. module: account_due_list_report_qweb
+#: field:report.account_due_list_report_qweb.duelist_qweb,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: account_due_list_report_qweb
+#: view:website:account_due_list_report_qweb.duelist_qweb
+msgid "Invoice"
+msgstr "Fattura"
+
+#. module: account_due_list_report_qweb
+#: field:report.account_due_list_report_qweb.duelist_qweb,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: account_due_list_report_qweb
+#: view:website:account_due_list_report_qweb.duelist_qweb
+msgid "Maturity Residual"
+msgstr "Saldo"
+
+#. module: account_due_list_report_qweb
+#: view:website:account_due_list_report_qweb.duelist_qweb
+msgid "Partner"
+msgstr "Partner"
+
+#. module: account_due_list_report_qweb
+#: view:website:account_due_list_report_qweb.duelist_qweb
+msgid "Payment"
+msgstr "Pagamento"
+
+#. module: account_due_list_report_qweb
+#: model:ir.actions.report.xml,name:account_due_list_report_qweb.print_due_list_qweb
+msgid "Print Due List"
+msgstr "Stampa Scadenzario"
+
+#. module: account_due_list_report_qweb
+#: view:website:account_due_list_report_qweb.duelist_qweb
+msgid "Settlement of"
+msgstr "Scadenze del"
+
+#. module: account_due_list_report_qweb
+#: view:website:account_due_list_report_qweb.duelist_qweb
+msgid "TOTAL"
+msgstr "TOTALE COMPLESSIVO   "
+
+#. module: account_due_list_report_qweb
+#: view:website:account_due_list_report_qweb.duelist_qweb
+msgid "Total"
+msgstr "Totale"
+
