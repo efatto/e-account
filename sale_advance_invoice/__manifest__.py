@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#
-#    Copyright (C) 2018 Sergio Corato.
+#    Copyright (C) 2017-2019 Sergio Corato
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -18,19 +17,19 @@
 #
 #
 {
-    'name': 'Stampa Scadenzario qweb',
+    'name': 'Sale advance invoice description from sale order lines',
     'version': '10.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
+    'description': 'Add ability to select order lines to print details in the'
+                   'invoice',
     'website': 'https://efatto.it',
-    'description': 'Stampa Scadenzario qweb',
     'license': 'AGPL-3',
     'depends': [
-        'account_due_list',
+        'sale',
     ],
     'data': [
-        'report/due_list_report.xml',
-        'report/report.xml',
+        'views/sale.xml',
     ],
-    'installable': True
+    'installable': True,
 }
