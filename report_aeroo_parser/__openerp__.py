@@ -30,7 +30,6 @@
         'report_aeroo',
         'stock',
         'l10n_it_ddt',
-        'service_type',
     ],
     'data': [
         'views/invoice.xml',
