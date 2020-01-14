@@ -13,7 +13,7 @@ class MailThread(models.AbstractModel):
         # get from message mail_from
         # check if is of a partner
         # check if exist a project with this partner
-        # assign the task (if is a task) to this project
+        # assign the task (if is a task) to this project and to the manager of project
         for model, thread_id, custom_values, user_id, alias in routes or ():
             if model == 'project.task':
                 email_from = message_dict.get('from')
@@ -29,5 +29,6 @@ class MailThread(models.AbstractModel):
                         if project_id:
                             self.env[model].browse(res).write({
                                 'project_id': project_id.id,
+                                'user_id': project_id.user_id.id,
                             })
         return res
