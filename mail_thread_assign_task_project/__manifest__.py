@@ -1,0 +1,17 @@
+# Copyright 2020 Sergio Corato <https://github.com/sergiocorato>
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+{
+    'name': 'Assign task created from mail message to project',
+    'version': '12.0.1.0.0',
+    'category': 'other',
+    'author': 'Sergio Corato',
+    'description': 'If exists a project for a mail received with project.task '
+                   'fallback model in email smtp server, it will be assigned to '
+                   'this.',
+    'website': 'https://efatto.it',
+    'license': 'LGPL-3',
+    'depends': [
+        'mail',
+    ],
+    'installable': True
+}
