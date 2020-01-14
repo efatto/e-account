@@ -7,7 +7,9 @@
     'author': 'Sergio Corato',
     'description': 'If exists a project for a mail received with project.task '
                    'fallback model in email smtp server, it will be assigned to '
-                   'this.',
+                   'this. '
+                   'N.B.: This module is useful only if you have a single project for '
+                   'customer!',
     'website': 'https://efatto.it',
     'license': 'LGPL-3',
     'depends': [
