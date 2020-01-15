@@ -64,6 +64,7 @@ class Parser(report_sxw.rml_parse):
             'storage': OrderedDict(),
             'gettextbytag': self._gettextbytag,
             'rst_odt': self._rst_odt,
+            'get_report_name': self._get_report_name,
         })
         self.cache = {}
 
@@ -678,3 +679,12 @@ class Parser(report_sxw.rml_parse):
             if lines.filtered('complex_discount'):
                 res = True
         return res
+
+    def _get_report_name(self):
+        report_id = self.pool['ir.actions.report.xml'].search(
+            self.cr, self.uid, [('report_name', '=', self.name)])
+        if report_id:
+            report = self.pool['ir.actions.report.xml'].browse(
+                self.cr, self.uid, report_id)
+            return report.name
+        return False
