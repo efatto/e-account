@@ -27,8 +27,9 @@ class MailThread(models.AbstractModel):
                             ('partner_id', '=', commercial_partner.id)
                         ], limit=1)
                         if project_id:
-                            self.env[model].browse(res).write({
-                                'project_id': project_id.id,
-                                'user_id': project_id.user_id.id,
-                            })
+                            task = self.env['project.task'].browse(res)
+                            if not task.project_id:
+                                task.write({'project_id': project_id.id})
+                            if not task.user_id:
+                                task.write({'user_id': project_id.user_id.id})
         return res
