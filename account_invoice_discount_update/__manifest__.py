@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 {
     'name': 'Update discount in invoice',
-    'version': '12.0.1.0.1',
+    'version': '12.0.1.0.2',
     'category': 'Invoice Management',
     'license': 'AGPL-3',
     'description': """
