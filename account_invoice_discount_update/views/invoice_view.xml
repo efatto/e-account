@@ -10,7 +10,7 @@
                <button string="Update discount to:" name="invoice_discount_update"
                    type="object"
                    attrs="{'invisible': [('state', 'not in', ['draft','proforma','proforma2'])]}"
-                   help='Update discount in invoice line of type product and consumable to % input.'/>
+                   help="Update discount in invoice line of type product and consumable to % input."/>
                <field name="discount"
                    attrs="{'invisible': [('state', 'not in', ['draft','proforma','proforma2'])]}"
                    nolabel="1" style="margin-left: 8px; width: inherit;"/>
