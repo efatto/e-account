@@ -3,7 +3,7 @@
 
 {
     'name': 'Sale advance invoice description from sale order lines',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Add ability to select order lines to print details in the'
