@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-23 17:15+0000\n"
-"PO-Revision-Date: 2018-02-23 17:15+0000\n"
+"POT-Creation-Date: 2020-01-25 14:01+0000\n"
+"PO-Revision-Date: 2020-01-25 14:01+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_invoice_discount_update
-#: field:account.invoice,discount:0
+#: model:ir.model.fields,field_description:account_invoice_discount_update.field_account_invoice_discount
 msgid "Discount"
 msgstr "Sconto"
 
@@ -26,12 +26,13 @@ msgid "Invoice"
 msgstr "Fattura"
 
 #. module: account_invoice_discount_update
-#: view:account.invoice:account_invoice_discount_update.invoice_form_update_discount
+#: model_terms:ir.ui.view,arch_db:account_invoice_discount_update.invoice_form_update_discount
 msgid "Update discount in invoice line of type product and consumable to % input."
 msgstr "Aggiorna lo sconto nelle righe fattura di tipo prodotto o consumabile alla % indicata."
 
 #. module: account_invoice_discount_update
-#: view:account.invoice:account_invoice_discount_update.invoice_form_update_discount
+#: model_terms:ir.ui.view,arch_db:account_invoice_discount_update.invoice_form_update_discount
 msgid "Update discount to:"
-msgstr "Aggiorna lo sconto al:"
+msgstr ""
+
 
