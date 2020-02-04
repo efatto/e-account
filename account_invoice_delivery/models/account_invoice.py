@@ -137,3 +137,23 @@ class DeliveryGrid(models.Model):
                     _("Selected product in the delivery method doesn't fulfill"
                       " any of the delivery grid(s) criteria."))
             return price
+
+    # override only to remove raise
+    def get_price_from_picking(self, cr, uid, id, total, weight, volume, quantity, context=None):
+        grid = self.browse(cr, uid, id, context=context)
+        price = 0.0
+        ok = False
+        price_dict = {'price': total, 'volume':volume, 'weight': weight, 'wv':volume*weight, 'quantity': quantity}
+        for line in grid.line_ids:
+            test = eval(line.type+line.operator+str(line.max_value), price_dict)
+            if test:
+                if line.price_type=='variable':
+                    price = line.list_price * price_dict[line.variable_factor]
+                else:
+                    price = line.list_price
+                ok = True
+                break
+        # if not ok:
+        #     raise osv.except_osv(_("Unable to fetch delivery method!"), _("Selected product in the delivery method doesn't fulfill any of the delivery grid(s) criteria."))
+
+        return price

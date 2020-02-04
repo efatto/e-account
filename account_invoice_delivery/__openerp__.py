@@ -19,7 +19,7 @@
 #
 {
     'name': 'Account invoice delivery',
-    'version': '8.0.1.1.0',
+    'version': '8.0.1.1.1',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'This module add delivery calculation for invoice.',
