@@ -1,12 +1,16 @@
-# -*- coding: utf-8 -*-
-##############################################################################
-# For copyright and license notices, see __openerp__.py file in root directory
-##############################################################################
 from odoo import models, fields, api, _
 
 
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
+
+    @api.onchange('partner_id')
+    def _partner_id_onchange(self):
+        if self.partner_id:
+            if self.partner_id.customer:
+                self.account_id = self.partner_id.property_account_receivable_id
+            elif self.partner_id.supplier:
+                self.account_id = self.partner_id.property_account_payable_id
 
     @api.onchange('credit')
     def _credit_onchange(self):
