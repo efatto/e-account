@@ -42,8 +42,10 @@
                 <xpath expr="//group[@name='technical']/field[@name='origin']" position="attributes">
                     <attribute name="groups">base.group_user</attribute>
                 </xpath>
-                <field name="partner_shipping_id" position="attributes">
-                    <attribute name="domain">['|', ('id', '=', partner_id), ('parent_id', '=', partner_id)]</attribute>
+                <xpath expr="//group[@name='sales_person']/field[@name='client_order_ref']" position="replace">
+                </xpath>
+                <field name="confirmation_date" position="after">
+                    <field name="client_order_ref"/>
                 </field>
             </field>
         </record>
