@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-07 07:29+0000\n"
-"PO-Revision-Date: 2017-06-07 07:29+0000\n"
+"POT-Creation-Date: 2020-02-24 08:37+0000\n"
+"PO-Revision-Date: 2020-02-24 08:37+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,4 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-
+#. module: sale_order_view_usability
+#: model_terms:ir.ui.view,arch_db:sale_order_view_usability.view_order_tree_usability
+#: model_terms:ir.ui.view,arch_db:sale_order_view_usability.view_quotation_tree_usability
+msgid "Total Tax Excluded"
+msgstr "Totale Imponibile"
