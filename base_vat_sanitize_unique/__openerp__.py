@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Base VAT sanitize unique',
-    'version': '8.0.1.1.0',
+    'version': '8.0.1.1.1',
     'category': 'Accounting & Finance',
     'author': 'Sergio Corato',
     'description': 'Sanitize VAT number field for unique consistency',
