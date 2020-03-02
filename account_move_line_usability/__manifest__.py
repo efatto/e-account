@@ -3,7 +3,7 @@
 
 {
     'name': 'Account move line usability',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'category': 'Accounting & Finance',
     'author': 'Sergio Corato',
     'description': '''
@@ -25,4 +25,5 @@ Solve some usability issue in account move line:
         'views/account.xml',
     ],
     'installable': True,
+    'pre_init_hook': 'pre_init_hook',
 }
