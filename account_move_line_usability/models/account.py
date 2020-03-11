@@ -36,9 +36,9 @@ class AccountMoveLine(models.Model):
         if data and self._context.get('line_ids', False):
             debit = credit = 0
             for x in self._context['line_ids']:
-                debit += x[2]['debit']
+                debit += x[2]['debit'] if x[2] and x[2].get('debit') else 0
             for x in self._context['line_ids']:
-                credit += x[2]['credit']
+                credit += x[2]['credit'] if x[2] and x[2].get('credit') else 0
             balance = credit - debit
             if balance > 0:
                 data['debit'] = balance
