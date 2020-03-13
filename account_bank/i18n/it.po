@@ -1,13 +1,13 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #	* account_bank
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.1\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 21:33+0000\n"
-"PO-Revision-Date: 2014-12-03 21:33+0000\n"
+"POT-Creation-Date: 2020-03-13 17:30+0000\n"
+"PO-Revision-Date: 2020-03-13 17:30+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,35 +16,26 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_bank
-#: sql_constraint:account.invoice:0
-msgid "Invoice Number must be unique per Company!"
-msgstr "Nell'azienda il numero fattura dev'essere univoco!"
+#: model_terms:ir.ui.view,arch_db:account_bank.report_saleorder_document_bank
+msgid "<strong>Bank:</strong>"
+msgstr "<strong>Banca:</strong>"
 
 #. module: account_bank
-#: field:res.partner,company_bank_id:0
-msgid "Company bank for Bank Transfer"
-msgstr "Banca aziendale per i bonifici"
-
-#. module: account_bank
-#: field:account.invoice,bank_riba_id:0
-#: field:res.partner,bank_riba_id:0
+#: model:ir.model.fields,field_description:account_bank.field_res_partner__bank_riba_id
+#: model:ir.model.fields,field_description:account_bank.field_res_users__bank_riba_id
 msgid "Bank for ri.ba."
 msgstr "Banca Appoggio Ri.Ba."
 
 #. module: account_bank
-#: sql_constraint:res.partner:0
-msgid "Codice Fornitore Univoco"
-msgstr "Codice Fornitore Univoco"
+#: model:ir.model.fields,field_description:account_bank.field_res_partner__company_bank_id
+#: model:ir.model.fields,field_description:account_bank.field_res_users__company_bank_id
+msgid "Company bank for Bank Transfer"
+msgstr "Banca aziendale per i bonifici"
 
 #. module: account_bank
-#: sql_constraint:res.partner:0
-msgid "Codice Cliente Univoco"
-msgstr "Codice Cliente Univoco"
-
-#. module: account_bank
-#: sql_constraint:res.partner:0
-msgid "Error! Specified VAT Number already exists for any other registered partner."
-msgstr "Errore! Esiste già un partner con la stessa P.IVA."
+#: model:ir.model,name:account_bank.model_res_partner
+msgid "Contact"
+msgstr "Partner"
 
 #. module: account_bank
 #: model:ir.model,name:account_bank.model_account_invoice
@@ -52,12 +43,18 @@ msgid "Invoice"
 msgstr "Fattura"
 
 #. module: account_bank
-#: model:ir.model,name:account_bank.model_res_partner
-msgid "Partner"
-msgstr "Partner"
+#: model:ir.model.fields,field_description:account_bank.field_account_invoice__bank_riba_id
+msgid "Invoice bank for ri.ba."
+msgstr "Banca in fattura per ri.ba."
 
 #. module: account_bank
-#: view:website:sale.report_saleorder_document
-msgid "Bank:"
-msgstr "Appoggio bancario:"
+#: model:ir.model.fields,field_description:account_bank.field_account_invoice__actual_bank_riba_id
+msgid "Invoice or partner bank for ri.ba."
+msgstr "Banca in fattura o partner per ri.ba."
+
+#. module: account_bank
+#: model:ir.model.fields,help:account_bank.field_res_partner__company_bank_id
+#: model:ir.model.fields,help:account_bank.field_res_users__company_bank_id
+msgid "One of my company bank for payment to be received by partner"
+msgstr "Una delle banche aziendali per i pagamenti da ricevere dai partner"
 
