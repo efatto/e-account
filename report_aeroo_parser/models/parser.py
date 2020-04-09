@@ -446,16 +446,21 @@ class Parser(report_sxw.rml_parse):
             if line.move_id:
                 # if there is origin get order name and date
                 if line.move_id.origin:
-                    sale_order_name = line.move_id.origin
                     sale_order_id = order_obj.search(
-                        self.cr, self.uid, [('name', '=', sale_order_name)])
+                        self.cr, self.uid, [('name', '=', line.move_id.origin)])
+                    if not sale_order_id:
+                        sale_order_id = order_obj.search(
+                            self.cr, self.uid, [
+                                ('name', '=', line.move_id.group_id.name)])
                     if sale_order_id:
                         sale_order = order_obj.browse(
                             self.cr, self.uid, sale_order_id[0])
+                        sale_order_name = sale_order.name
                         order_date = sale_order.date_order
                         order_ref = sale_order.client_order_ref
                     else:
                         order_date = datetime.now().strftime('%Y-%m-%d')
+                        sale_order_name = line.move_id.origin
                     sale_order_date = datetime.strptime(
                         order_date[:10], DEFAULT_SERVER_DATE_FORMAT)
                     if sale_order_name in keys:
