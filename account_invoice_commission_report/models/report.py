@@ -26,8 +26,8 @@ class AccountReportQweb(models.AbstractModel):
                     invoice_multi_agent_ids.mapped('number'))
             else:
                 raise exceptions.ValidationError(
-                    'Invoice must be filtered by only 1 customer and the customer must '
-                    'have only 1 agent to print commission report.')
+                    'Invoice must be filtered by only '
+                    '1 agent to print commission report.')
         from_date = min(invoice_ids.mapped('date_invoice'))
         to_date = max(invoice_ids.mapped('date_invoice'))
         month = year = False
