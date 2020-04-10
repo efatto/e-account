@@ -19,7 +19,7 @@
 #
 {
     'name': 'Account invoice commission report',
-    'version': '8.0.1.0.1',
+    'version': '8.0.1.0.2',
     'category': 'other',
     'author': 'Sergio Corato',
     'website': 'http://www.efatto.it',
