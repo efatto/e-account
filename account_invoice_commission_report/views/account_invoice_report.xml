@@ -64,7 +64,7 @@
                     <t t-set="tot_amount_base" t-value="0" />
                     <t t-set="tot_amount_commission" t-value="0" />
                     <t t-foreach="docs" t-as="o">
-                        <tr t-if="o.partner_id.agents[0] == agent">
+                        <tr t-if="o.partner_id.agents and o.partner_id.agents[0] == agent">
                             <td class="left_with_line"><span t-field="o.number"/></td>
                             <td class="left_with_line"><div style="page-break-inside: avoid" t-field="o.date_invoice"/></td>
                             <td class="left_with_line"><span t-field="o.partner_id.name"/></td>
@@ -76,6 +76,9 @@
                             <t t-set="tot_amount_untaxed" t-value="tot_amount_untaxed + o.amount_untaxed" />
                             <t t-set="tot_amount_base" t-value="tot_amount_base + sum(x.price_subtotal_signed for x in o.invoice_line if not x.commission_free and not x.advance_invoice_id)" />
                             <t t-set="tot_amount_commission" t-value="tot_amount_commission + sum(x.price_subtotal_signed * x.invoice_id.partner_id.agents[0].commission.fix_qty/100.0 for x in o.invoice_line if not x.commission_free and not x.advance_invoice_id)" />
+                        </tr>
+                        <tr t-else="">
+                            Missing agent in partner
                         </tr>
                     </t>
                     <tr>
