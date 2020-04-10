@@ -77,9 +77,6 @@
                             <t t-set="tot_amount_base" t-value="tot_amount_base + sum(x.price_subtotal_signed for x in o.invoice_line if not x.commission_free and not x.advance_invoice_id)" />
                             <t t-set="tot_amount_commission" t-value="tot_amount_commission + sum(x.price_subtotal_signed * x.invoice_id.partner_id.agents[0].commission.fix_qty/100.0 for x in o.invoice_line if not x.commission_free and not x.advance_invoice_id)" />
                         </tr>
-                        <tr t-else="">
-                            Missing agent in partner
-                        </tr>
                     </t>
                     <tr>
                         <td colspan="3" class="left_with_line_bold">TOTAL</td>
