@@ -16,6 +16,19 @@ class AccountReportQweb(models.AbstractModel):
             'account_invoice_commission_report.report_account_invoice')
         invoice_ids = self.env['account.invoice'].browse(self._ids)
         agents = invoice_ids.mapped('partner_id.agents')
+        if len(agents) != 1:
+            invoice_multi_agent_ids = invoice_ids.filtered(
+                lambda x: len(x.partner_id.agents) > 1)
+            if invoice_multi_agent_ids:
+                raise exceptions.ValidationError(
+                    'Partner %s have more than 1 agent!' %
+                    invoice_multi_agent_ids.mapped('partner_id.name'))
+            invoice_without_agent_ids = invoice_ids.filtered(
+                lambda x: len(x.partner_id.agents) == 0)
+            if invoice_without_agent_ids:
+                raise exceptions.ValidationError(
+                    'Partner %s have no agent!' %
+                    invoice_without_agent_ids.mapped('partner_id.name'))
         from_date = min(invoice_ids.mapped('date_invoice'))
         to_date = max(invoice_ids.mapped('date_invoice'))
         month = False
