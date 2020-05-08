@@ -5,7 +5,7 @@
     'version': '12.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'Mode date_order for quotation in header for better visibility',
+    'description': 'Move date_order for quotation in header for better visibility',
     'website': 'https://efatto.it',
     'license': 'LGPL-3',
     'depends': [
