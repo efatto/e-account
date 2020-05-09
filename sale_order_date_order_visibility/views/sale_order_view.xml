@@ -4,9 +4,11 @@
     <field name="model">sale.order</field>
     <field name="inherit_id" ref="sale.view_order_form"/>
     <field name="arch" type="xml">
-        <field name="sale_order" position="replace"></field>
         <field name="validity_date" position="before">
-            <field name="date_order"/>
+            <field name="date_order" position="move"/>
+        </field>
+        <field name="date_order" position="attributes">
+            <attribute name="attrs">{'invisible': False}</attribute>
         </field>
     </field>
 </record>
