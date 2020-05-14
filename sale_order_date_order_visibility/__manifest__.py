@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 {
     'name': 'Sale order date visibility',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Move date_order for quotation in header for better visibility',
