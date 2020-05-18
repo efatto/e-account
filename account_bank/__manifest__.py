@@ -12,6 +12,7 @@
     "depends": [
         "account",
         "sale",
+        "l10n_it_ricevute_bancarie",
     ],
     "data": [
         "views/account_invoice_view.xml",
