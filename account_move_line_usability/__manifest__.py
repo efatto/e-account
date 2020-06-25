@@ -19,7 +19,7 @@
 #
 {
     'name': 'Account move line usability',
-    'version': '10.0.1.0.0',
+    'version': '10.0.1.0.1',
     'category': 'Accounting & Finance',
     'author': 'Sergio Corato',
     'description': '''
