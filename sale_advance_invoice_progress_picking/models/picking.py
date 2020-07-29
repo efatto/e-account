@@ -35,7 +35,7 @@ class StockPicking(models.Model):
                 for line in invoice_lines:
                     for picking_id in picking_ids:
                         if picking_id.name == line.origin or \
-                                picking_id.origin == line.origin:
+                                line.origin and line.origin in picking_id.origin:
                             if picking_id.sale_id not in order_invoiced_amount:
                                 order_invoiced_amount[picking_id.sale_id] = \
                                     line.price_subtotal
