@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="closing_journal_ce" model="account.journal">
+        <field name="name">Chiusura conti economici</field>
+        <field name="type">general</field>
+        <field name="code">CHCE</field>
+        <field name="update_posted">True</field>
+    </record>
+
+    <record id="closing_journal_sp" model="account.journal">
+        <field name="name">Chiusura conti patrimoniali</field>
+        <field name="type">general</field>
+        <field name="code">CHPA</field>
+        <field name="update_posted">True</field>
+    </record>
+
+    <record id="closing_journal_up" model="account.journal">
+        <field name="name">Utile/perdita d'esercizio</field>
+        <field name="type">general</field>
+        <field name="code">CHUP</field>
+        <field name="update_posted">True</field>
+    </record>
+
+    <record id="first_opening_journal" model="account.journal">
+        <field name="name">Prima apertura azienda</field>
+        <field name="type">general</field>
+        <field name="code">FOPJ</field>
+        <field name="update_posted">True</field>
+    </record>
+
+</odoo>
