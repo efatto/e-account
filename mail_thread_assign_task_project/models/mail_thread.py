@@ -32,4 +32,6 @@ class MailThread(models.AbstractModel):
                                 task.write({'project_id': project_id.id})
                             if not task.user_id:
                                 task.write({'user_id': project_id.user_id.id})
+                            if not task.partner_id:
+                                task.write({'partner_id': commercial_partner.id})
         return res
