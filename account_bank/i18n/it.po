@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_bank
+#	* account_bank_company_partner
 #
 msgid ""
 msgstr ""
@@ -14,47 +14,3 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: account_bank
-#: model_terms:ir.ui.view,arch_db:account_bank.report_saleorder_document_bank
-msgid "<strong>Bank:</strong>"
-msgstr "<strong>Banca:</strong>"
-
-#. module: account_bank
-#: model:ir.model.fields,field_description:account_bank.field_res_partner__bank_riba_id
-#: model:ir.model.fields,field_description:account_bank.field_res_users__bank_riba_id
-msgid "Bank for ri.ba."
-msgstr "Banca Appoggio Ri.Ba."
-
-#. module: account_bank
-#: model:ir.model.fields,field_description:account_bank.field_res_partner__company_bank_id
-#: model:ir.model.fields,field_description:account_bank.field_res_users__company_bank_id
-msgid "Company bank for Bank Transfer"
-msgstr "Banca aziendale per i bonifici"
-
-#. module: account_bank
-#: model:ir.model,name:account_bank.model_res_partner
-msgid "Contact"
-msgstr "Partner"
-
-#. module: account_bank
-#: model:ir.model,name:account_bank.model_account_invoice
-msgid "Invoice"
-msgstr "Fattura"
-
-#. module: account_bank
-#: model:ir.model.fields,field_description:account_bank.field_account_invoice__bank_riba_id
-msgid "Invoice bank for ri.ba."
-msgstr "Banca in fattura per ri.ba."
-
-#. module: account_bank
-#: model:ir.model.fields,field_description:account_bank.field_account_invoice__actual_bank_riba_id
-msgid "Invoice or partner bank for ri.ba."
-msgstr "Banca in fattura o partner per ri.ba."
-
-#. module: account_bank
-#: model:ir.model.fields,help:account_bank.field_res_partner__company_bank_id
-#: model:ir.model.fields,help:account_bank.field_res_users__company_bank_id
-msgid "One of my company bank for payment to be received by partner"
-msgstr "Una delle banche aziendali per i pagamenti da ricevere dai partner"
-

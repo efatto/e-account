@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <odoo>
-    <record id="partner_view_buttons_company_bank_id" model="ir.ui.view">
+    <record id="view_partner_form_company_bank_id" model="ir.ui.view">
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//group/field[@name='bank_ids']" position="before">
                 <group colspan="4" col="2">
-                    <field name="company_bank_id" domain="[('company_id', '=', company_id), ('acc_type', '=', 'iban')]" />
+                    <field name="property_company_bank_id" domain="[('company_id', '=', company_id), ('acc_type', '=', 'iban')]" />
                 </group>
             </xpath>
         </field>
