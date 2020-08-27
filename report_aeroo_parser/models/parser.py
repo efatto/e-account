@@ -425,7 +425,8 @@ class Parser(report_sxw.rml_parse):
                 default=False):
             for group in invoice:
                 invoice[group]['lines'].sort(
-                    key=lambda r: r.product_id.default_code or r.name or 'zzz')
+                    key=lambda r: r.product_id.default_code or r.name or 'zzz',
+                    reverse=True)
         return res
 
     def _get_picking_tree(self, lines):
