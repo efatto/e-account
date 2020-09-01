@@ -9,7 +9,7 @@
     "description": "Add company dependent bank in partner",
     "license": "LGPL-3",
     "depends": [
-        "base",
+        "base_iban",
     ],
     "data": [
         "views/partner_view.xml",
