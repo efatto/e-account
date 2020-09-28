@@ -145,8 +145,8 @@ class Parser(report_sxw.rml_parse):
             self.cr, self.uid, self.ids[0])
         company_bank_ids = self.pool['res.partner.bank'].search(
             self.cr, self.uid,
-            [('company_id', '=', obj.company_id.id)],
-            order='sequence', limit=1)
+            [('company_id', '=', obj.company_id.id),
+             ('footer', '=', True)], order='sequence')
         has_bank = bank = False
         if obj.payment_term:
             if obj.payment_term.line_ids:
@@ -179,7 +179,7 @@ class Parser(report_sxw.rml_parse):
                     if company_bank_ids:
                         company_banks = self.pool['res.partner.bank'].browse(
                             self.cr, self.uid, company_bank_ids)
-                        bank = company_banks[0]
+                        bank = company_banks
         return bank if bank else []
 
     def _get_total_tax_fiscal(self, tax_line):
