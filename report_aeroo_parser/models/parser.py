@@ -31,6 +31,7 @@ class Parser(report_sxw.rml_parse):
             'time': time,
             'invoice_tree': self._get_invoice_tree,
             'invoice_move_lines': self._get_invoice_move_lines,
+            'get_product_list': self._get_product_list,
             'ddt_tree': self._get_ddt_tree,
             'picking_tree': self._get_picking_tree,
             'desc_nocode': self._desc_nocode,
@@ -286,6 +287,30 @@ class Parser(report_sxw.rml_parse):
                 ).replace(tzinfo=from_zone).astimezone(
                     to_zone).strftime("%d/%m/%Y")
         return date_tz
+
+    def _get_product_list(self, invoice_lines):
+        # return a recordset of product unique for prefix and material
+        product_ids = invoice_lines.mapped('product_id').filtered(
+            lambda z: z.type != 'service'
+        )
+        duplicated_product_ids = []
+        checked_product_ids = []
+        for product in product_ids:
+            checked_product_ids.append(product.id)
+            partial_ids = product_ids.filtered(
+                lambda x: x.id not in checked_product_ids
+                and x.product_tmpl_id in product_ids.mapped('product_tmpl_id')
+            )
+            codes = partial_ids.filtered(
+                lambda y: y.id not in checked_product_ids
+                and y.product_tmpl_id == product.product_tmpl_id # and not y.attribute_id.child_ids
+            ).mapped('attribute_value_ids.attribute_id.code')
+            if product.mapped('attribute_value_ids.attribute_id.code')[0] in codes:
+                duplicated_product_ids.append(product.id)
+        product_ids = product_ids.filtered(
+            lambda z: z.id not in duplicated_product_ids
+        )
+        return product_ids
 
     def _get_invoice_tree(self, invoice_lines, picking_preparation_ids):
         invoice = keys = {}
