@@ -301,11 +301,15 @@ class Parser(report_sxw.rml_parse):
                 lambda x: x.id not in checked_product_ids
                 and x.product_tmpl_id in product_ids.mapped('product_tmpl_id')
             )
+            if not partial_ids:
+                continue
             codes = partial_ids.filtered(
                 lambda y: y.id not in checked_product_ids
                 and y.product_tmpl_id == product.product_tmpl_id
                 # and not y.mapped('attribute_value_ids.attribute_id.child_ids')
             ).mapped('attribute_value_ids.attribute_id.code')
+            if not codes:
+                continue
             if product.mapped('attribute_value_ids.attribute_id.code')[0] in codes:
                 duplicated_product_ids.append(product.id)
         product_ids = product_ids.filtered(
