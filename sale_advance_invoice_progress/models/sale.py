@@ -159,6 +159,11 @@ class SaleOrder(models.Model):
                 x not in order.from_line_invoice_ids and
                 x.id not in invoices_not_from_this_order
             )
+            order.other_invoice_ids = self.env['account.invoice'].browse(
+                [x for x in invoices_not_from_this_order if
+                 x not in order.from_line_invoice_ids.ids and
+                 x not in order.advance_invoice_ids.ids]
+            )
             if order.advance_invoice_ids:
                 order.advance_invoice_tag = \
                     str([str(x.number) + '(' + str(x.amount_untaxed) + ')' for
@@ -200,6 +205,10 @@ class SaleOrder(models.Model):
             order.amount_residual = order.amount_total - \
                 order.advance_amount_total + order.advance_residual
 
+    other_invoice_ids = fields.One2many(
+        comodel_name='account.invoice',
+        compute=_get_advance_invoices
+    )
     advance_invoice_ids = fields.One2many(
         comodel_name='account.invoice',
         compute=_get_advance_invoices,
