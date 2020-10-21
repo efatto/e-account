@@ -130,6 +130,18 @@ class SaleOrder(models.Model):
             order.from_line_invoice_ids = invoiced_sale_line_ids.mapped(
                 'invoice_lines.invoice_id'
             )
+            # some order lines can be not linked to this order and not found
+            # so if any of order.invoice_ids are linked to a so in invoice_lines table
+            # has to be excluded from order.advance_invoice_ids
+            invoices_not_from_this_order = []
+            for invoice in order.invoice_ids:
+                if invoice.invoice_line:
+                    self._cr.execute(
+                        'SELECT * from sale_order_line_invoice_rel '
+                        'where invoice_id in %s', (tuple(invoice.invoice_line.ids),))
+                    sale_order_rels = self._cr.fetchall()
+                    if sale_order_rels:
+                        invoices_not_from_this_order.append(invoice.id)
             if order.from_line_invoice_ids:
                 order.from_line_invoice_tag = \
                     str([str(x.number) + '(' + str(
@@ -144,7 +156,8 @@ class SaleOrder(models.Model):
 
             order.advance_invoice_ids = order.invoice_ids.filtered(
                 lambda x: x.state not in ('cancel',) and
-                x not in order.from_line_invoice_ids
+                x not in order.from_line_invoice_ids and
+                x.id not in invoices_not_from_this_order
             )
             if order.advance_invoice_ids:
                 order.advance_invoice_tag = \

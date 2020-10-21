@@ -19,7 +19,7 @@
 #
 {
     'name': 'Sale advance invoice in progress state',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.0.1',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Create invoice even in progress state and add fields '
