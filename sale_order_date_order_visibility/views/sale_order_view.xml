@@ -5,7 +5,13 @@
     <field name="inherit_id" ref="sale.view_order_form"/>
     <field name="arch" type="xml">
         <field name="validity_date" position="before">
+            <field name="client_order_ref" position="move"/>
             <field name="date_order" position="move"/>
+        </field>
+        <field name="validity_date" position="after">
+            <field name="opportunity_id" position="move"/>
+            <field name="analytic_account_id" position="move"/>
+            <field name="project_id" position="move"/>
         </field>
         <field name="date_order" position="attributes">
             <attribute name="attrs">{'invisible': False}</attribute>
