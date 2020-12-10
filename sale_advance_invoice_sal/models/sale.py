@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
+# Copyright 2020 Sergio Corato <https://github.com/sergiocorato>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
@@ -21,8 +22,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
         comodel_name='sale.order',
         default=_get_order
     )
-    project_id = fields.Many2one(
-        related='order_id.project_id'
+    analytic_account_id = fields.Many2one(
+        related='order_id.analytic_account_id'
     )
     sal_id = fields.Many2one(
         comodel_name='account.analytic.sal',
