@@ -15,7 +15,7 @@ class ResCompany(models.Model):
         default=19)
     header_logo_heigth = fields.Float(
         string='Height of header logo (cm)',
-        help='Height will be proportioned to max 3 cm',
+        help='Height will be proportioned to max 4 cm',
         default=3)
     footer_logo = fields.Binary()
     footer_logo_width = fields.Float(
@@ -30,7 +30,7 @@ class ResCompany(models.Model):
     @api.onchange('header_logo_heigth')
     def onchange_logo(self):
         max_width = 19
-        max_height = 3
+        max_height = 4
         if self.header_logo_heigth <= 0:
             self.header_logo_heigth = max_height
         if self.header_logo_width <= 0:
