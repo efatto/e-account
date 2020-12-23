@@ -12,6 +12,7 @@ class ResPartner(models.Model):
                 duplicated_partner_ids = self.env['res.partner'].search([
                     ('sanitized_vat', '=', partner.sanitized_vat),
                     ('id', '!=', partner.id),
+                    ('company_id', '=', partner.company_id.id),
                     ('parent_id', '=', False)])
                 if duplicated_partner_ids:
                     raise exceptions.ValidationError(

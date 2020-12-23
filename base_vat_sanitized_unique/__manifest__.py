@@ -3,7 +3,7 @@
 
 {
     'name': 'Base VAT Sanitized Unique',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'category': 'Accounting & Finance',
     'author': 'Sergio Corato',
     'description': 'Add constrains to sanitized VAT number field for unique'
