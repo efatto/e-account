@@ -16,8 +16,7 @@ class ResPartner(models.Model):
                     ('parent_id', '=', False)])
                 if possible_duplicated_partner_ids:
                     # check if exists multiple partner for the same company
-                    company_ids = possible_duplicated_partner_ids.mapped('company_ids')
-                    for company_id in company_ids:
+                    for company_id in partner.company_ids:
                         duplicated_partner_ids |= \
                             possible_duplicated_partner_ids.filtered(
                                 lambda x: company_id in x.company_ids)
