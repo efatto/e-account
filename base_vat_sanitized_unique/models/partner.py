@@ -23,5 +23,8 @@ class ResPartner(models.Model):
                                 lambda x: company_id in x.company_ids)
                     if duplicated_partner_ids:
                         raise exceptions.ValidationError(
-                            _('This VAT is already registered with %s partners') %
-                            duplicated_partner_ids.mapped('name'))
+                            _('VAT for partner %s is already registered with %s '
+                              'partners') % (
+                                  partner.name,
+                                  duplicated_partner_ids.mapped('name'))
+                        )
