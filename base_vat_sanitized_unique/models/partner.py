@@ -8,13 +8,20 @@ class ResPartner(models.Model):
     @api.multi
     def _check_sanitized_vat(self):
         for partner in self:
+            duplicated_partner_ids = self.env['res.partner']
             if partner.sanitized_vat and not partner.parent_id:
-                duplicated_partner_ids = self.env['res.partner'].search([
+                possible_duplicated_partner_ids = self.env['res.partner'].search([
                     ('sanitized_vat', '=', partner.sanitized_vat),
                     ('id', '!=', partner.id),
-                    ('company_id', '=', partner.company_id.id),
                     ('parent_id', '=', False)])
-                if duplicated_partner_ids:
-                    raise exceptions.ValidationError(
-                        _('This VAT is already registered with %s partners') %
-                        duplicated_partner_ids.mapped('name'))
+                if possible_duplicated_partner_ids:
+                    # check if exists multiple partner for the same company
+                    company_ids = possible_duplicated_partner_ids.mapped('company_ids')
+                    for company_id in company_ids:
+                        duplicated_partner_ids |= \
+                            possible_duplicated_partner_ids.filtered(
+                                lambda x: company_id in x.company_ids)
+                    if duplicated_partner_ids:
+                        raise exceptions.ValidationError(
+                            _('This VAT is already registered with %s partners') %
+                            duplicated_partner_ids.mapped('name'))
