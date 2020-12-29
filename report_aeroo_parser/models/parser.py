@@ -253,7 +253,7 @@ class Parser(report_sxw.rml_parse):
                     ddt_name,
                     ddt_date.strftime("%d/%m/%Y") if ddt_date else '',
                     (_('Our ref. %s %s'
-                       ) % (order_name, 'dated %s' % order_date if order_date else '')
+                       ) % (order_name, _('dated %s') % order_date if order_date else '')
                      ) if order_name and not mrp_name else '',
                     (_('Your Ref. %s.') % client_order_ref
                      ) if client_order_ref and ddt_id else '',
