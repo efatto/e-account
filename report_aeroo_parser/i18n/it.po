@@ -176,7 +176,7 @@ msgstr "Ns. DDT %s del %s. %s %s %s"
 #: code:addons/report_aeroo_parser/models/parser.py:255
 #, python-format
 msgid "Our ref. %s %s"
-msgstr "Ordine %s del %s"
+msgstr "Ordine %s %s"
 
 #. module: report_aeroo_parser
 #: code:addons/report_aeroo_parser/models/parser.py:438
