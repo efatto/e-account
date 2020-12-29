@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-16 15:36+0000\n"
-"PO-Revision-Date: 2018-05-16 15:36+0000\n"
+"POT-Creation-Date: 2020-12-29 17:49+0000\n"
+"PO-Revision-Date: 2020-12-29 17:49+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,25 +16,25 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:329
+#: code:addons/report_aeroo_parser/models/parser.py:440
 #, python-format
 msgid " Date return %s."
 msgstr " Data rientro %s."
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:188
+#: code:addons/report_aeroo_parser/models/parser.py:270
 #, python-format
 msgid " dated %s"
 msgstr " del %s"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:192
+#: code:addons/report_aeroo_parser/models/parser.py:274
 #, python-format
 msgid " dated %s. Machine: %s frame %s"
 msgstr " del %s. Macchina: %s telaio %s"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:190
+#: code:addons/report_aeroo_parser/models/parser.py:272
 #, python-format
 msgid ".Your Ref. %s"
 msgstr ".Vs. Rif. %s"
@@ -51,8 +51,18 @@ msgstr "Imponibile"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
+msgid "Amount to be deducted"
+msgstr "Importo da dedurre"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
 msgid "Balance due"
 msgstr "Saldo"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
+msgid "Billing"
+msgstr "Fatturazione"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
@@ -61,8 +71,8 @@ msgstr "Indirizzo di fatturazione"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
-msgid "Billing"
-msgstr "Fatturazione"
+msgid "Carrier signature"
+msgstr "Firma Corriere"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
@@ -98,6 +108,11 @@ msgstr "Descrizione"
 #: view:website:report_aeroo_parser.report_invoice
 msgid "Discount"
 msgstr "Sconto"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
+msgid "Driver signature"
+msgstr "Firma Conducente"
 
 #. module: report_aeroo_parser
 #: field:res.company,logo_heigth:0
@@ -146,25 +161,25 @@ msgid "Order"
 msgstr "Ordine"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:186
+#: code:addons/report_aeroo_parser/models/parser.py:268
 #, python-format
 msgid "Our Ref. Order %s %s %s %s"
 msgstr "Ordine %s %s %s %s"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:169
+#: code:addons/report_aeroo_parser/models/parser.py:251
 #, python-format
 msgid "Our Ref. Picking %s dated %s. %s %s %s"
 msgstr "Ns. DDT %s del %s. %s %s %s"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:173
+#: code:addons/report_aeroo_parser/models/parser.py:255
 #, python-format
-msgid "Our ref. %s dated %s."
-msgstr "Ordine %s del %s."
+msgid "Our ref. %s %s"
+msgstr "Ordine %s del %s"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:327
+#: code:addons/report_aeroo_parser/models/parser.py:438
 #, python-format
 msgid "Outgo document: %s dated %s.%s"
 msgstr "Documento di consegna: %s del %s.%s"
@@ -183,11 +198,6 @@ msgstr "Termini di pagamento"
 #: field:account.invoice.line,price_unit_net:0
 msgid "Price unit net"
 msgstr "Prezzo netto"
-
-#. module: report_aeroo_parser
-#: field:account.invoice.line,price_unit_net:0
-msgid "Unit amount"
-msgstr "Prezzo unitario"
 
 #. module: report_aeroo_parser
 #: field:account.invoice,print_hide_uom:0
@@ -230,7 +240,12 @@ msgid "RETAIL NET PRICE"
 msgstr "PREZZO"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:178
+#: view:website:report_aeroo_parser.report_invoice
+msgid "Recipient signature"
+msgstr "Firma Destinatario"
+
+#. module: report_aeroo_parser
+#: code:addons/report_aeroo_parser/models/parser.py:260
 #, python-format
 msgid "Ref. Our Order %s dated %s. Machine: %s frame %s."
 msgstr "Rif. Ns. Ordine %s del %s. Macchina: %s telaio %s."
@@ -243,7 +258,7 @@ msgstr "Sede Legale"
 #. module: report_aeroo_parser
 #: model:ir.model,name:report_aeroo_parser.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Linea d'ordine di vendita"
+msgstr "Riga ordine di vendita"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
@@ -282,6 +297,11 @@ msgstr "Totale fattura"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
+msgid "Unit amount"
+msgstr "Prezzo unitario"
+
+#. module: report_aeroo_parser
+#: view:website:report_aeroo_parser.report_invoice
 msgid "UoM"
 msgstr "U.M."
 
@@ -306,7 +326,7 @@ msgid "Width will be proportioned to max 8 cm"
 msgstr "La larghezza sarà parametrata a max 8 cm"
 
 #. module: report_aeroo_parser
-#: code:addons/report_aeroo_parser/models/parser.py:176
+#: code:addons/report_aeroo_parser/models/parser.py:258
 #, python-format
 msgid "Your Ref. %s."
 msgstr "Vs. Rif. %s."
@@ -341,17 +361,3 @@ msgstr "altro"
 msgid "transport"
 msgstr "trasporto"
 
-#. module: report_aeroo_parser
-#: view:website:report_aeroo_parser.report_invoice
-msgid "Carrier's Signature"
-msgstr "Firma Corriere"
-
-#. module: report_aeroo_parser
-#: view:website:report_aeroo_parser.report_invoice
-msgid "Driver's Signature"
-msgstr "Firma Conducente"
-
-#. module: report_aeroo_parser
-#: view:website:report_aeroo_parser.report_invoice
-msgid "Recipient's Signature"
-msgstr "Firma Destinatario"
