@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     'name': 'Sale advance invoice extension with SAL',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Add ability to get description from SAL of contract during '
