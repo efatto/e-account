@@ -15,8 +15,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     @api.onchange('sal_id')
     def _get_sal_percent(self):
-        if self.sal_id:
-            self.amount = self.sal_id.percent_toinvoice
+        if self._count() == 1:
+            if self.sal_id:
+                self.amount = self.sal_id.percent_toinvoice
 
     order_id = fields.Many2one(
         comodel_name='sale.order',
