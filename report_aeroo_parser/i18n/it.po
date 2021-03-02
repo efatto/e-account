@@ -345,7 +345,7 @@ msgstr "costi fissi"
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
 msgid "goods amount"
-msgstr "importo beni"
+msgstr "totale merce"
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
