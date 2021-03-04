@@ -54,6 +54,7 @@ class Parser(report_sxw.rml_parse):
             'get_bank': self._get_bank,
             'get_bank_riba': self._get_bank_riba,
             'transform_forbidden_word': self._transform_forbidden_word,
+            'is_stitching_custom': self._is_stitching_custom,
             'get_product_code': self._get_product_code,
             'get_group_tax': self._get_group_tax,
             'is_printable_invoice_line_tax': self._is_printable_invoice_line_tax,
@@ -678,6 +679,13 @@ class Parser(report_sxw.rml_parse):
                         word.name if word.name else '',
                         word.new_name if word.new_name else '')
         return phrase
+
+    def _is_stitching_custom(self, line):
+        res = False
+        if line.product_id and line.product_id.code:
+            if len(set(line.product_id.attribute_value_ids.mapped('code'))) > 1:
+                res = True
+        return res
 
     def _get_product_code(self, line, pack=False):
         code = ''
