@@ -8,18 +8,34 @@ class ResPartner(models.Model):
     @api.multi
     def _check_sanitized_vat(self):
         for partner in self:
-            duplicated_partner_ids = self.env['res.partner']
             if partner.sanitized_vat and not partner.parent_id:
-                possible_duplicated_partner_ids = self.env['res.partner'].search([
+                domain = [
                     ('sanitized_vat', '=', partner.sanitized_vat),
                     ('id', '!=', partner.id),
-                    ('parent_id', '=', False)])
-                if possible_duplicated_partner_ids:
-                    # check if exists multiple partner for the same company
-                    for company_id in partner.company_ids:
-                        duplicated_partner_ids |= \
-                            possible_duplicated_partner_ids.filtered(
-                                lambda x: company_id in x.company_ids)
+                    ('parent_id', '=', False)]
+                company_ids = partner.company_id
+                if hasattr(partner, 'company_ids'):
+                    # multicompany: if partner have company_ids, check for every company
+                    # that there are no other partner with same VAT in the same company
+                    company_ids = partner.company_ids
+                if hasattr(partner, 'fiscalcode'):
+                    # check for fiscalcode if exists
+                    domain.extend([('fiscalcode', '=', partner.fiscalcode)])
+                if company_ids:
+                    for company in company_ids:
+                        domain.extend([('company_id', '=', company.id)])
+                        duplicated_partner_ids = self.env['res.partner'].search(domain)
+                        if duplicated_partner_ids:
+                            raise exceptions.ValidationError(
+                                _('VAT for partner %s [%s] is already registered in'
+                                  ' %s [%s] partners in company %s')
+                                % (partner.name, partner.id,
+                                   duplicated_partner_ids.mapped('name'),
+                                   duplicated_partner_ids.ids,
+                                   company.name)
+                            )
+                else:
+                    duplicated_partner_ids = self.env['res.partner'].search(domain)
                     if duplicated_partner_ids:
                         raise exceptions.ValidationError(
                             _('VAT for partner %s [%s] is already registered in'
