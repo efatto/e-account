@@ -546,7 +546,8 @@ class Parser(report_sxw.rml_parse):
 
     def _get_invoice_move_lines(self, move_id):
         if move_id.line_id:
-            lines = [line for line in move_id.line_id if line.date_maturity]
+            lines = [line for line in move_id.line_id if line.date_maturity
+                     and (line.credit != 0.0 or line.debit != 0.0)]
             lines.sort(key=lambda r: r.date_maturity)
             return lines
         else:
