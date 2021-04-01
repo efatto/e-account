@@ -36,7 +36,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
     def _create_invoice(self, order, so_line, amount):
         invoice = super(SaleAdvancePaymentInv, self)._create_invoice(
             order, so_line, amount)
-        if order.sal_id:
+        if self.sal_id:
             for invoice_line in invoice.invoice_line_ids:
-                invoice_line.account_analytic_sal_id = order.sal_id
+                invoice_line.account_analytic_sal_id = self.sal_id
         return invoice
