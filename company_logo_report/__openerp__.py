@@ -17,18 +17,14 @@
 #
 #
 {
-    'name': 'Header and footer logo in report',
-    'version': '8.0.1.0.0',
-    'category': 'other',
-    'author': 'Sergio Corato',
-    'website': 'http://www.efatto.it',
-    'description': 'Add logo for header and footer in report.',
-    'license': 'AGPL-3',
-    'depends': [
-        'account',
-    ],
-    'data': [
-        'views/company.xml',
-    ],
-    'installable': True
+    "name": "Header and footer logo in report",
+    "version": "8.0.1.0.0",
+    "category": "other",
+    "author": "Sergio Corato",
+    "website": "http://www.efatto.it",
+    "description": "Add logo for header and footer in report.",
+    "license": "AGPL-3",
+    "depends": ["account",],
+    "data": ["views/company.xml",],
+    "installable": True,
 }
