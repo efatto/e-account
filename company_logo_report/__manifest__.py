@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 #    Copyright (C) 2017 Sergio Corato
 #
@@ -18,7 +17,7 @@
 #
 {
     "name": "Header and footer logo in report",
-    "version": "8.0.1.0.0",
+    "version": "12.0.1.0.0",
     "category": "other",
     "author": "Sergio Corato",
     "website": "http://www.efatto.it",
