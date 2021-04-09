@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-        <record model="ir.ui.view" id="view_company_inherit_form">
-            <field name="inherit_id" ref="base.view_company_form"/>
-            <field name="model">res.company</field>
-            <field name="arch" type="xml">
-                <field name="rml_footer" position="after">
-                    <field name="header_logo" widget="image" img_height="190" img_width="1200"/>
-                    <field name="header_logo_width" />
-                    <field name="header_logo_heigth"/>
-                    <field name="footer_logo" widget="image" img_height="125" img_width="1200"/>
-                    <field name="footer_logo_width" />
-                    <field name="footer_logo_heigth"/>
-                </field>
-            </field>
-        </record>
-
+    <record model="ir.ui.view" id="view_company_form">
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Report Logo" name="report_logo" groups="base.group_system">
+                    <group string="Logo" name="logo">
+                        <field name="header_logo" widget="image" img_height="190" img_width="1200"/>
+                        <field name="footer_logo" widget="image" img_height="125" img_width="1200"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
 </odoo>
