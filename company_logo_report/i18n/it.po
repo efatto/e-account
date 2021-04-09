@@ -1,0 +1,68 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* company_logo_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-29 22:28+0000\n"
+"PO-Revision-Date: 2017-11-29 22:28+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: company_logo_report
+#: model:ir.model,name:company_logo_report.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: company_logo_report
+#: field:res.company,footer_logo:0
+msgid "Footer logo"
+msgstr "Logo piede"
+
+#. module: company_logo_report
+#: field:res.company,header_logo:0
+msgid "Header logo"
+msgstr "Logo testata"
+
+#. module: company_logo_report
+#: field:res.company,footer_logo_heigth:0
+msgid "Height of footer logo (cm)"
+msgstr "Altezza del logo piede (cm)"
+
+#. module: company_logo_report
+#: field:res.company,header_logo_heigth:0
+msgid "Height of header logo (cm)"
+msgstr "Altezza del logo testata (cm)"
+
+#. module: company_logo_report
+#: help:res.company,footer_logo_heigth:0
+msgid "Height will be proportioned to max 2 cm"
+msgstr "L'altezza sarà proporzionata a max 2 cm"
+
+#. module: company_logo_report
+#: help:res.company,header_logo_heigth:0
+msgid "Height will be proportioned to max 3 cm"
+msgstr "L'altezza sarà proporzionata a max 3 cm"
+
+#. module: company_logo_report
+#: field:res.company,footer_logo_width:0
+msgid "Width of footer logo (cm)"
+msgstr "Larghezza del logo piede (cm)"
+
+#. module: company_logo_report
+#: field:res.company,header_logo_width:0
+msgid "Width of header logo (cm)"
+msgstr "Larghezza del logo testata (cm)"
+
+#. module: company_logo_report
+#: help:res.company,footer_logo_width:0
+#: help:res.company,header_logo_width:0
+msgid "Width will be proportioned to max 19 cm"
+msgstr "La larghezza sarà proporzionata a max 19 cm"
+
