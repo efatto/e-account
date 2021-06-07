@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+    <record id="view_order_agent_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.commission.groups.agents</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_commission.view_order_agent_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree//field[@name='agents']" position="replace"/>
+        </field>
+    </record>
+  </data>
+</openerp>
