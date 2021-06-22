@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+        <record id="view_sale_order_active_tree" model="ir.ui.view">
+            <field name="name">sale.order.active.tree</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <tree string="Active Sale Orders" colors="grey:state=='cancel';blue:state in ('waiting_date','manual');red:state in ('invoice_except','shipping_except')">
+                    <field name="name" string="Order Number"/>
+                    <field name="date_order"/>
+                    <field name="date_confirm"/> <!--o pagamento acconto, fare un campo calcolato e stored-->
+                    <field name="partner_id"/>
+                    <field name="requested_date" widget="date"/>
+                    <!--                    requested_date_limit da calcolare con date_confirm o pag acconto + 42 gg-->
+                    <field name="client_order_ref"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                    <button name="open_sale_order_lines" type="object" string="Open Lines"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_sale_order_active" model="ir.actions.act_window">
+            <field name="name">Sale Order Active</field>
+            <field name="res_model">sale.order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sale_order_active_tree"/>
+            <!--<field name="search_view_id" ref="stock.view_move_search"/>-->
+            <field name="domain">[('state', 'not in', ('draft', 'cancel', 'done', 'sent'))]</field>
+        </record>
+
+        <menuitem action="action_sale_order_active" id="menu_sale_order_active"
+            parent="base.menu_sales" groups="base.group_sale_salesman,base.group_sale_manager"
+            sequence="15"/>
+
+  </data>
+</openerp>
