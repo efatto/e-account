@@ -20,7 +20,8 @@ class ResPartner(models.Model):
                     company_ids = partner.company_ids
                 if hasattr(partner, 'fiscalcode'):
                     # check for fiscalcode if exists
-                    domain.extend([('fiscalcode', '=', partner.fiscalcode)])
+                    if partner.fiscalcode:
+                        domain.extend([('fiscalcode', '=', partner.fiscalcode)])
                 if company_ids:
                     for company in company_ids:
                         domain.extend([('company_id', '=', company.id)])
