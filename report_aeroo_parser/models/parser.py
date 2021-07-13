@@ -436,10 +436,8 @@ class Parser(report_sxw.rml_parse):
                     date = datetime.strptime(
                         rental_ddt_date, DEFAULT_SERVER_DATE_FORMAT)
                     description = '\n'.join(
-                        [description, _('Outgo document: %s dated %s.%s') %(
-                            rental_ddt, date.strftime("%d/%m/%Y"),
-                            _(' Date return %s.') % return_pick_date if
-                            return_pick_date else ''
+                        [description, _('Outgo document: %s dated %s.') % (
+                            rental_ddt, date.strftime("%d/%m/%Y")
                         )]
                     )
                 invoice[key] = {'description': description, 'lines': [line]}

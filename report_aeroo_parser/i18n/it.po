@@ -181,8 +181,8 @@ msgstr "Ordine %s %s"
 #. module: report_aeroo_parser
 #: code:addons/report_aeroo_parser/models/parser.py:438
 #, python-format
-msgid "Outgo document: %s dated %s.%s"
-msgstr "Documento di consegna: %s del %s.%s"
+msgid "Outgo document: %s dated %s."
+msgstr "Documento di consegna: %s del %s."
 
 #. module: report_aeroo_parser
 #: view:website:report_aeroo_parser.report_invoice
