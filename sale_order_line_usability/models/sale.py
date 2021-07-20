@@ -7,7 +7,8 @@ from odoo import api, models, fields
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    product_standard_price = fields.Float(related='product_id.standard_price')
+    product_standard_price = fields.Float(
+        string="Product Cost", related='product_id.standard_price')
     move_price_unit = fields.Float(
         string="Move Price Unit", compute='_get_move_price_unit', store=True,
     )
