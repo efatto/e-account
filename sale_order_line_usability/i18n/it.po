@@ -23,7 +23,7 @@ msgstr "Costo utilizzato per la valutazione degli stock al prezzo standard e com
 #. module: sale_order_line_usability
 #: model:ir.model.fields,field_description:sale_order_line_usability.field_sale_order_line__move_price_unit
 msgid "Move Price Unit"
-msgstr "Prezzo Unitario Movimento Magazzino"
+msgstr "Costo Unitario Movimento Magazzino"
 
 #. module: sale_order_line_usability
 #: model:ir.model.fields,field_description:sale_order_line_usability.field_sale_order_line__product_standard_price
