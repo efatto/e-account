@@ -23,7 +23,7 @@ msgstr "Codice"
 #. module: account_invoice_line_usability
 #: model:ir.model.fields,field_description:account_invoice_line_usability.field_account_invoice_line__product_standard_price
 msgid "Cost"
-msgstr "Costo"
+msgstr "Costo Unitario Prodotto"
 
 #. module: account_invoice_line_usability
 #: model:ir.model.fields,help:account_invoice_line_usability.field_account_invoice_line__product_standard_price
