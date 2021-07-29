@@ -26,10 +26,13 @@
     'website': 'https://efatto.it',
     'license': 'AGPL-3',
     'depends': [
+        'l10n_it_simplerp',
         'sale',
+        'sale_advance_invoice_progress',
         'sale_order_line_date',
     ],
     'data': [
+        'security/sale_security.xml',
         'views/sale.xml',
     ],
     'installable': True

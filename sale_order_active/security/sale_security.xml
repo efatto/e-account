@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record id="group_mrp_sale_manager" model="res.groups">
+        <field name="name">Manage MRP Sale</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+</data>
+</openerp>

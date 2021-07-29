@@ -1,23 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-  <data>
+    <data>
 
         <record id="view_sale_order_active_tree" model="ir.ui.view">
             <field name="name">sale.order.active.tree</field>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
-                <tree string="Active Sale Orders" colors="grey:state=='cancel';blue:state in ('waiting_date','manual');red:state in ('invoice_except','shipping_except')">
-                    <field name="name" string="Order Number"/>
-                    <field name="date_order"/>
-                    <field name="date_confirm"/> <!--o pagamento acconto, fare un campo calcolato e stored-->
-                    <field name="partner_id"/>
-                    <field name="requested_date" widget="date"/>
-                    <!--                    requested_date_limit da calcolare con date_confirm o pag acconto + 42 gg-->
-                    <field name="client_order_ref"/>
-                    <field name="user_id"/>
-                    <field name="state"/>
+                <tree editable="top" delete="0" create="0" string="Active Sale Orders" colors="grey:state=='cancel';blue:state in ('waiting_date','manual');red:state in ('invoice_except','shipping_except')">
+                    <field name="name" string="Order Number" readonly="True"/>
+                    <field name="partner_id" readonly="True"/>
+                    <field name="date_order" readonly="True"/>
+                    <field name="payment_date" readonly="True"/>
+                    <field name="requested_date" widget="date" readonly="True"/>
+                    <field name="requested_date_limit"/>
+                    <field name="client_order_ref" readonly="True"/>
+                    <field name="giorgio_note" readonly="True"/>
+                    <field name="fabrizio_note" readonly="True"/>
+                    <field name="chiara_note" readonly="True"/>
+                    <field name="marta_note" readonly="True"/>
+                    <field name="ammne_note" readonly="True"/>
+                    <field name="produz_note" readonly="True"/>
+                    <field name="magaz_note" readonly="True"/>
+                    <field name="state" invisible="1"/>
+                    <field name="user_id" invisible="1"/>
                     <button name="open_sale_order_lines" type="object" string="Open Lines"/>
                 </tree>
+            </field>
+        </record>
+
+        <record id="view_sale_order_active_tree_stock_readonly" model="ir.ui.view">
+            <field name="name">sale.order.active.tree.stock</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_active.view_sale_order_active_tree" />
+            <field name="groups_id" eval="[(6, 0, [ref('stock.group_stock_manager')])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='magaz_note']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_sale_order_active_tree_account_readonly" model="ir.ui.view">
+            <field name="name">sale.order.active.tree.account</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_active.view_sale_order_active_tree" />
+            <field name="groups_id" eval="[(6, 0, [ref('account.group_account_manager')])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ammne_note']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_sale_order_active_tree_mrp_readonly" model="ir.ui.view">
+            <field name="name">sale.order.active.tree.account</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_active.view_sale_order_active_tree" />
+            <field name="groups_id" eval="[(6, 0, [ref('sale_order_active.group_mrp_sale_manager')])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='produz_note']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                </xpath>
             </field>
         </record>
 
@@ -26,9 +67,8 @@
             <field name="res_model">sale.order</field>
             <field name="type">ir.actions.act_window</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree</field>
             <field name="view_id" ref="view_sale_order_active_tree"/>
-            <!--<field name="search_view_id" ref="stock.view_move_search"/>-->
             <field name="domain">[('state', 'not in', ('draft', 'cancel', 'done', 'sent'))]</field>
         </record>
 
@@ -36,5 +76,5 @@
             parent="base.menu_sales" groups="base.group_sale_salesman,base.group_sale_manager"
             sequence="15"/>
 
-  </data>
+    </data>
 </openerp>
