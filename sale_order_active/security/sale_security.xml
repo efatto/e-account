@@ -6,6 +6,23 @@
         <field name="name">Manage MRP Sale</field>
         <field name="category_id" ref="base.module_category_hidden"/>
     </record>
+    <record id="group_ceo_manager" model="res.groups">
+        <field name="name">Manage CEO</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_cto_manager" model="res.groups">
+        <field name="name">Manage CTO</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_sale_ceo_manager" model="res.groups">
+        <field name="name">Manage Sale CEO</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_sale_cto_manager" model="res.groups">
+        <field name="name">Manage Sale CTO</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
 
 </data>
 </openerp>

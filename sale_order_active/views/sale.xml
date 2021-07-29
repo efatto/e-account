@@ -28,13 +28,46 @@
             </field>
         </record>
 
-        <record id="view_sale_order_active_tree_stock_readonly" model="ir.ui.view">
-            <field name="name">sale.order.active.tree.stock</field>
+        <record id="view_sale_order_active_tree_ceo_readonly" model="ir.ui.view">
+            <field name="name">sale.order.active.tree.ceo</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale_order_active.view_sale_order_active_tree" />
-            <field name="groups_id" eval="[(6, 0, [ref('stock.group_stock_manager')])]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('sale_order_active.group_ceo_manager')])]"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='magaz_note']" position="attributes">
+                <xpath expr="//field[@name='giorgio_note']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_sale_order_active_tree_cto_readonly" model="ir.ui.view">
+            <field name="name">sale.order.active.tree.cto</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_active.view_sale_order_active_tree" />
+            <field name="groups_id" eval="[(6, 0, [ref('sale_order_active.group_cto_manager')])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='fabrizio_note']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_sale_order_active_tree_sale_ceo_readonly" model="ir.ui.view">
+            <field name="name">sale.order.active.tree.sale.ceo</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_active.view_sale_order_active_tree" />
+            <field name="groups_id" eval="[(6, 0, [ref('sale_order_active.group_sale_ceo_manager')])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='chiara_note']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_sale_order_active_tree_sale_cto_readonly" model="ir.ui.view">
+            <field name="name">sale.order.active.tree.sale.cto</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_active.view_sale_order_active_tree" />
+            <field name="groups_id" eval="[(6, 0, [ref('sale_order_active.group_sale_cto_manager')])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='marta_note']" position="attributes">
                 <attribute name="readonly">False</attribute>
                 </xpath>
             </field>
@@ -57,6 +90,17 @@
             <field name="groups_id" eval="[(6, 0, [ref('sale_order_active.group_mrp_sale_manager')])]"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='produz_note']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_sale_order_active_tree_stock_readonly" model="ir.ui.view">
+            <field name="name">sale.order.active.tree.stock</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_active.view_sale_order_active_tree" />
+            <field name="groups_id" eval="[(6, 0, [ref('stock.group_stock_manager')])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='magaz_note']" position="attributes">
                 <attribute name="readonly">False</attribute>
                 </xpath>
             </field>
