@@ -6,12 +6,6 @@ from dateutil.relativedelta import relativedelta
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    # (08:57:50) laura@giobagnara.com: accessibile solo dall'utente egli solo può
-    # scrivere , ma tutti leggono, in condivisione
-    # (09:00:19) Sergio@efatto.it: cioè la colonna 'MARTA' deve poter scriverci
-    # solo Marta?
-    # (09:00:24) laura@giobagnara.com: esatto
-
     giorgio_note = fields.Char()
     fabrizio_note = fields.Char()
     chiara_note = fields.Char()
@@ -21,36 +15,38 @@ class SaleOrder(models.Model):
     magaz_note = fields.Char()
     payment_date = fields.Date(
         compute='_compute_payment_date',
-        store=True)
+        store=False)
     requested_date_limit = fields.Date(
         compute='_compute_requested_date_limit',
-        store=True)
+        store=False)
 
     @api.multi
-    @api.depends('advance_invoice_ids')
+    @api.depends('advance_invoice_ids', 'state')
     def _compute_payment_date(self):
         for order in self:
             payment_date = False
-            if order.payment_term.id == self.env.ref(
-                    'l10n_it_simplerp.payment_direct_30_days').id:
-                payment_date = order.date_confirm
-            else:
-                paid_invoices = order.advance_invoice_ids.filtered(
-                    lambda x: x.state == 'paid' and x.payment_ids)
-                if paid_invoices:
-                    payment_date = paid_invoices[0].payment_ids[0].date
+            if order.state not in ['draft', 'cancel', 'done', 'sent']:
+                if order.payment_term.id == self.env.ref(
+                        'l10n_it_simplerp.payment_direct_30_days').id:
+                    payment_date = order.date_confirm
+                else:
+                    paid_invoices = order.advance_invoice_ids.filtered(
+                        lambda x: x.state == 'paid' and x.payment_ids)
+                    if paid_invoices:
+                        payment_date = paid_invoices[0].payment_ids[0].date
             order.payment_date = payment_date
 
     @api.multi
-    @api.depends('payment_date')
+    @api.depends('payment_date', 'state')
     def _compute_requested_date_limit(self):
         for order in self:
-            if order.payment_date:
-                order.requested_date_limit = fields.Datetime.to_string(
-                    fields.Date.from_string(order.payment_date) + relativedelta(days=42)
-                )
-            else:
-                order.requeste_date_limit = False
+            requested_date_limit = False
+            if order.state not in ['draft', 'cancel', 'done', 'sent'
+                                   ] and order.payment_date:
+                requested_date_limit = fields.Datetime.to_string(
+                    fields.Date.from_string(order.payment_date)
+                    + relativedelta(days=42))
+            order.requested_date_limit = requested_date_limit
 
     @api.multi
     def open_sale_order_lines(self):
