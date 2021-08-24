@@ -16,8 +16,9 @@
                 <field name="qty_to_invoice"/>
                 <field name="product_uom" string="Unit of Measure" groups="uom.group_uom"/>
                 <field name="price_subtotal" sum="Total" widget="monetary"/>
-                <field name="product_standard_price"/>
-                <field name="move_price_unit"/>
+                <field name="product_standard_price" invisible="1"/>
+                <field name="move_price_unit" invisible="1"/>
+                <field name="move_price_to_invoice_total" sum="Total Cost To Invoice" widget="monetary"/>
             </tree>
         </field>
     </record>
