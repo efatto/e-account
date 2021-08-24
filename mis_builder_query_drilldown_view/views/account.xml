@@ -10,12 +10,13 @@
                 <field name="account_id" groups="account.group_account_user"/>
                 <field name="quantity"/>
                 <field name="uom_id" groups="uom.group_uom"/>
-                <field name="product_standard_price"/>
-                <field name="move_price_unit"/>
                 <field name="price_unit"/>
                 <field name="discount" groups="base.group_no_one"/>
-                <field name="price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
-                <field name="price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                <field name="price_subtotal" groups="account.group_show_line_subtotals_tax_excluded" sum="Total"/>
+                <field name="price_total" groups="account.group_show_line_subtotals_tax_included" sum="Total"/>
+                <field name="product_standard_price" invisible="1"/>
+                <field name="move_price_unit" invisible="1"/>
+                <field name="move_price_total" sum="Total Cost"/>
                 <field name="currency_id" invisible="1"/>
             </tree>
         </field>
@@ -33,7 +34,7 @@
                 <field name="company_id" groups="base.group_multi_company"/>
                 <field name="unit_amount" sum="Quantity"/>
                 <field name="amount" sum="Total"/>
-                <field name="product_standard_price"/>
+<!--                <field name="product_standard_price"/>-->
             </tree>
         </field>
     </record>

@@ -11,7 +11,7 @@
     "depends": ["mis_builder_analytic_query",
                 "mis_builder_query_drilldown",
                 "account_invoice_line_usability",
-                "account_analytic_line_usability",
+                # "account_analytic_line_usability",
                 "sale_order_line_usability",
                 ],
     "data": ["views/account.xml", "views/sale.xml"],
