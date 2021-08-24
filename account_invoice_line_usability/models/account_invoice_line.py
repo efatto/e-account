@@ -21,5 +21,6 @@ class AccountInvoiceLine(models.Model):
     def _get_move_price_unit(self):
         for line in self:
             line.move_price_unit = max(line.move_line_ids.mapped('price_unit') or [0])
-            line.move_price_total = line.quantity * -1 * max(
-                [abs(line.move_price_unit), abs(line.product_standard_price)])
+            line.move_price_total = line.quantity * (
+                line.move_price_unit if line.move_price_unit != 0.0 else
+                - line.product_standard_price)
