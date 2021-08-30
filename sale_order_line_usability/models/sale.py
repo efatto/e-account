@@ -18,7 +18,8 @@ class SaleOrderLine(models.Model):
     @api.depends('move_ids.price_unit')
     def _get_move_price_unit(self):
         for line in self:
-            line.move_price_unit = max(line.move_ids.mapped('price_unit') or [0])
+            line.move_price_unit = min(
+                [-abs(x.price_unit) for x in line.move_ids] or [0])
             line.move_price_to_invoice_total = line.qty_to_invoice * (
                 line.move_price_unit if line.move_price_unit != 0.0 else
                 - line.product_standard_price)
