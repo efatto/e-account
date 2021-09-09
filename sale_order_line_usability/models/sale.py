@@ -12,7 +12,7 @@ class SaleOrderLine(models.Model):
     move_price_unit = fields.Float(
         string="Move Price Unit", compute='_get_move_price_unit', store=True)
     move_price_to_invoice_total = fields.Float(
-        string="Total Cost To Invoice", compute='_get_move_price_unit', store=True)
+        string="Total Cost To Invoice", compute='_get_move_price_unit', store=False)
 
     @api.multi
     @api.depends('move_ids.price_unit')
@@ -20,6 +20,7 @@ class SaleOrderLine(models.Model):
         for line in self:
             line.move_price_unit = min(
                 [-abs(x.price_unit) for x in line.move_ids] or [0])
-            line.move_price_to_invoice_total = line.qty_to_invoice * (
+            line.move_price_to_invoice_total = (
                 line.move_price_unit if line.move_price_unit != 0.0 else
-                - line.product_standard_price)
+                - line.product_standard_price) / (line.product_qty or 1) * (
+                max([line.qty_delivered, line.product_qty]) - line.qty_invoiced)
