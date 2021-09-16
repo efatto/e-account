@@ -39,11 +39,13 @@ class AccountInvoice(models.Model):
     compute_weight = fields.Boolean(default=True)
     weight = fields.Float(
         compute='_compute_weight',
+        string='TOTAL GROSS WEIGHT (KG)',
         help="The weight is computed when the invoice is done.",
         digits_compute=dp.get_precision('Stock Weight'),
         digits=dp.get_precision('Stock Weight'))
     net_weight = fields.Float(
         compute='_compute_weight',
+        string='TOTAL NET WEIGHT (KG)',
         help="The weight is computed when the invoice is done.",
         digits_compute=dp.get_precision('Stock Weight'),
         digits=dp.get_precision('Stock Weight'))
