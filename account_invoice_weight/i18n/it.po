@@ -32,8 +32,8 @@ msgstr "Fattura"
 
 #. module: account_invoice_weight
 #: field:account.invoice,net_weight:0
-msgid "Net weight"
-msgstr "Peso Netto"
+msgid "TOTAL NET WEIGHT (KG)"
+msgstr "TOTALE PESO NETTO (KG)"
 
 #. module: account_invoice_weight
 #: field:account.invoice,net_weight_custom:0
@@ -106,8 +106,8 @@ msgstr "Volume fattura"
 
 #. module: account_invoice_weight
 #: field:account.invoice,weight:0
-msgid "Weight"
-msgstr "Peso"
+msgid "TOTAL GROSS WEIGHT (KG)"
+msgstr "TOTALE PESO LORDO (KG)"
 
 #. module: account_invoice_weight
 #: view:account.invoice:account_invoice_weight.view_invoice_form_weight
