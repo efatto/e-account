@@ -10,7 +10,7 @@ class SaleOrderLine(models.Model):
     product_standard_price = fields.Float(
         string="Product Cost", related='product_id.standard_price')
     move_price_unit = fields.Float(
-        string="Move Price Unit", compute='_get_move_price_unit', store=True)
+        string="Move Cost Unit", compute='_get_move_price_unit', store=True)
     move_price_to_invoice_total = fields.Float(
         string="Total Cost To Invoice", compute='_get_move_price_unit', store=False)
 
@@ -18,6 +18,7 @@ class SaleOrderLine(models.Model):
     @api.depends('move_ids.price_unit')
     def _get_move_price_unit(self):
         for line in self:
+            # preserve negative values as costs
             line.move_price_unit = min(
                 [-abs(x.price_unit) for x in line.move_ids] or [0])
             line.move_price_to_invoice_total = (
