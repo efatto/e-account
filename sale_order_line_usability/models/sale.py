@@ -22,5 +22,6 @@ class SaleOrderLine(models.Model):
                 [-abs(x.price_unit) for x in line.move_ids] or [0])
             line.move_price_to_invoice_total = (
                 line.move_price_unit if line.move_price_unit != 0.0 else
-                - line.product_standard_price) / (line.product_qty or 1) * (
-                max([line.qty_delivered, line.product_qty]) - line.qty_invoiced)
+                - line.product_standard_price) * (
+                max([line.qty_delivered, line.product_qty]) - line.qty_invoiced
+            )
