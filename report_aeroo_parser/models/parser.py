@@ -469,12 +469,14 @@ class Parser(report_sxw.rml_parse):
         return lines
 
     def _get_date_done(self, sppps):
-        date_string = ''
+        date_done_string = ''
         if sppps:
             date_done = max([x.ddt_date_start or x.date_done for x in sppps])
-            date_string = datetime.strptime(date_done, DEFAULT_SERVER_DATETIME_FORMAT)
-            date_string = date_string.strftime('%m/%Y')
-        return date_string
+            if date_done:
+                date_done_dt = datetime.strptime(
+                    date_done, DEFAULT_SERVER_DATETIME_FORMAT)
+                date_done_string = date_done_dt.strftime('%m/%Y')
+        return date_done_string
 
     def _get_ddt_tree(self, sppp_line_ids):
         # group sppp lines by sale order if present
