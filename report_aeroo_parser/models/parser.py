@@ -67,6 +67,7 @@ class Parser(report_sxw.rml_parse):
             'gettextbytag': self._gettextbytag,
             'rst_odt': self._rst_odt,
             'get_report_name': self._get_report_name,
+            'date_done': self._get_date_done,
         })
         self.cache = {}
 
@@ -466,6 +467,14 @@ class Parser(report_sxw.rml_parse):
                 key=lambda r: r.product_id.default_code or r.name or 'zzz',
                 reverse=True)
         return lines
+
+    def _get_date_done(self, sppps):
+        date_string = ''
+        if sppps:
+            date_done = max([x.ddt_date_start or x.date_done for x in sppps])
+            date_string = datetime.strptime(date_done, DEFAULT_SERVER_DATETIME_FORMAT)
+            date_string = date_string.strftime('%m/%Y')
+        return date_string
 
     def _get_ddt_tree(self, sppp_line_ids):
         # group sppp lines by sale order if present
