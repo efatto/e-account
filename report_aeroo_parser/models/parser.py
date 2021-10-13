@@ -471,10 +471,15 @@ class Parser(report_sxw.rml_parse):
     def _get_date_done(self, sppps):
         date_done_string = ''
         if sppps:
-            date_done = max([x.ddt_date_start or x.date_done or x.date for x in sppps])
-            if date_done:
+            date_done = max([x.ddt_date_start or x.date_done for x in sppps])
+            if not date_done:
+                date_done = max([x.date for x in sppps])
+                date_done_dt = datetime.strptime(
+                    date_done, DEFAULT_SERVER_DATE_FORMAT)
+            else:
                 date_done_dt = datetime.strptime(
                     date_done, DEFAULT_SERVER_DATETIME_FORMAT)
+            if date_done_dt:
                 date_done_string = date_done_dt.strftime('%m/%Y')
         return date_done_string
 
