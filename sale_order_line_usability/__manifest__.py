@@ -8,6 +8,7 @@
     'description': 'Add order line product standard price link.',
     'website': 'https://efatto.it',
     'depends': [
+        'delivery',
         'sale_stock',
     ],
     'data': [
