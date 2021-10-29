@@ -36,5 +36,7 @@ jobs:
         run: oca_install_addons
       - name: Initialize test db
         run: oca_init_test_database
+      - name: Pip install PR
+        run: pip3 install -e "git+https://github.com/sergiocorato/mis-builder@12.0-imp-mis_builder-query-drilldown-filtered#egg=odoo12-addon-mis_builder&subdirectory=setup/mis_builder"
       - name: Run tests
         run: oca_run_tests
