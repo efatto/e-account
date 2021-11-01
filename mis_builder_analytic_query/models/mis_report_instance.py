@@ -17,7 +17,7 @@ class MisReportQuery(models.Model):
     analytic_account_parent_field_id = fields.Many2one(
         "ir.model.fields",
         string="Parent Model Analytic Account",
-        help="Alternative of analytic account on model if not exist",
+        help="Alternative of analytic account on model if not exists",
     )
 
 
