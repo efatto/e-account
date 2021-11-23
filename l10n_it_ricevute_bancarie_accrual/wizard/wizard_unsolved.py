@@ -45,6 +45,7 @@ class RibaUnsolved(models.TransientModel):
                             riba_move_line.move_line_id.invoice_id.move_name,
                             'invoice_number': riba_move_line.move_line_id.\
                             invoice_id.move_name,
+                            'invoice_id': riba_move_line.move_line_id.invoice_id.id,
                             'account_id': distinta_line.partner_id.\
                             property_account_receivable_id.id,
                             'debit': riba_move_line.amount,
