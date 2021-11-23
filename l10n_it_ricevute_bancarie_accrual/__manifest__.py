@@ -2,12 +2,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     'name': 'ITA - Ricevute bancarie con maturazione',
-    'version': '12.0.1.0.1',
+    'version': '12.0.1.0.2',
     'category': 'Accounting',
     'summary': 'Ricevute bancarie con maturazione',
     'author': 'Sergio Corato',
-    'website': 'https://github.com/OCA/l10n-italy/tree/'
-               '12.0/l10n_it_ricevute_bancarie_accrual',
+    'website': 'https://efatto.it',
     'license': 'AGPL-3',
     'depends': [
         'l10n_it_ricevute_bancarie',
