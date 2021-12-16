@@ -337,6 +337,8 @@ class Parser(report_sxw.rml_parse):
                             ddt = picking_preparation.ddt_number
                             ddt_date = picking_preparation.date
                             sale_order = picking.origin
+                            if ':' in sale_order:
+                                sale_order = sale_order.split(':')[0]
                             if self._check_installed_module(
                                     'mrp_repair_management'):
                                 mrp_id = self.pool['mrp.repair'].search(
