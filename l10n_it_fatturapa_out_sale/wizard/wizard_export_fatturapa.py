@@ -20,8 +20,11 @@ class WizardExportFatturapa(models.TransientModel):
             doc_type = 'DatiOrdineAcquisto'
             # if sale_order refer to the whole invoice create only 1 rel doc
             only_one_sale_ref = bool(
-                invoice.picking_ids and len(invoice.mapped('picking_ids.sale_id') == 1)
-                or len(set(invoice.invoice_line_ids.mapped('origin'))) == 1)
+                invoice.picking_ids and len(
+                    invoice.mapped('picking_ids.sale_id')
+                ) == 1
+                or len(set(invoice.invoice_line_ids.mapped('origin'))) == 1
+            )
             if invoice.picking_ids and only_one_sale_ref:
                 doc_data = self.prepareDatiOrdineAcquisto(
                     invoice, invoice.invoice_line_ids[0])
