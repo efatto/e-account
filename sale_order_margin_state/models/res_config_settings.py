@@ -8,7 +8,7 @@ class ResCompany(models.Model):
 
     margin_min = fields.Float(
         string="Minimum margin on order line",
-        default=20.0,
+        default=40.0,
         help="An order line with a margin below this value will be signaled in red."
     )
     margin_max = fields.Float(
