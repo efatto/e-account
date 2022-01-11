@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="minimal_layout" inherit_id="l10n_it_account.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel="stylesheet" href="/account_vat_statement_report/static/src/css/account_vat_statement_report.css"/>
+		</xpath>
+    </template>
+</odoo>

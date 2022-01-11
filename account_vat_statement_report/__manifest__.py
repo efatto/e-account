@@ -12,6 +12,7 @@
         'account_vat_period_end_statement',
     ],
     'data': [
+        'views/report_css.xml',
         'views/report_vatperiodendstatement.xml',
     ],
     'installable': True,

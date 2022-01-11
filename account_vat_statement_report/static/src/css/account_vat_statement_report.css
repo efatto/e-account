@@ -1,0 +1,21 @@
+.table-small {
+    width:100% !important;
+    font-size: 11px !important;
+}
+.table-small th {
+    font-size: 11px !important;
+    page-break-inside: avoid !important;
+}
+.table-small td {
+    font-size: 11px !important;
+    page-break-inside: avoid !important;
+}
+.table-small tr {
+    page-break-inside: avoid !important;
+}
+.tax-codes td {
+    border-bottom: 1px black solid;
+}
+td.text-right {
+    border-top: 1px solid black !important;
+}

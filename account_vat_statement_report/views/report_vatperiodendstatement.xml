@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-	<template id="minimal_layout" inherit_id="l10n_it_account.minimal_layout">
-		<xpath expr="//head" position="inside">
-			<link rel="stylesheet" href="/account_vat_statement_report/static/src/css/vat_statement.scss"/>
-		</xpath>
-    </template>
 <!--
 Document 
  -->
-<template id="account_vat_period_end_statement.report_vatperiodendstatement_document">
+<template id="report_vatperiodendstatement_document">
         <t t-call="l10n_it_account.internal_layout">
 			<div class="article">
                 <!--
@@ -22,13 +16,13 @@ Document
 				    <t t-set="tax_code_amounts" t-value="tax_amounts(period.id, [l.tax_id.id for l in statement.credit_vat_account_line_ids], 'supplier')"/>
 					<t t-set="tax_code_type" t-value="'credit'"/>
 					<t t-set="tax_code_section" t-value="'purchase'"/>
-				    <t t-call="account_vat_period_end_statement.report_vatperiodendstatement_tax_code"/>
+				    <t t-call="account_vat_statement_report.report_vatperiodendstatement_tax_code"/>
 
 					<!-- Sale -->
 				    <t t-set="tax_code_amounts" t-value="tax_amounts(period.id, [l.tax_id.id for l in statement.debit_vat_account_line_ids], 'customer')"/>
 					<t t-set="tax_code_type" t-value="'debit'"/>
 					<t t-set="tax_code_section" t-value="'sale'"/>
-				    <t t-call="account_vat_period_end_statement.report_vatperiodendstatement_tax_code"/>
+				    <t t-call="account_vat_statement_report.report_vatperiodendstatement_tax_code"/>
 			   </t>
 
                	<!--
@@ -40,7 +34,7 @@ Document
 
                 <h3>Total Statement</h3>
 
-            	<table class="table table-condensed">
+            	<table class="table table-small">
 					<!-- tot debit -->
                		<t t-set="vat_accounts" t-value="account_vat_amounts('debit', statement.debit_vat_account_line_ids)"/>
                		<t t-foreach="vat_accounts" t-as="account_id">
@@ -87,7 +81,7 @@ Document
                	-->
                	<t t-set="total_to_pay" t-value="(total_statement)"/>
 				<t t-set="total_interest_statement" t-value="(0)"/>
-              	<table class="table table-condensed">
+              	<table class="table table-small">
                		<!-- previous credit -->
                		<tr>
                         <td/>
@@ -160,7 +154,7 @@ Document
             	<t t-if="statement.payment_ids">
                 	<br/>
 
-            	<table class="table table-condensed">
+            	<table class="table table-small">
                         <t t-foreach="statement.payment_ids" t-as="payment_line">
                            <tr>
                                 <td t-esc="'Importo versato (Estremi del versamento: data '+ payment_line.date.strftime('%d/%m/%Y') + ' - ' +payment_line.journal_id.name+')'" />
@@ -183,21 +177,21 @@ Operazioni UE: Servizi Si Intra, Servizi No Intra, Beni UE, Rev.Charge UE, Cell.
 </template>
 
 <!--
-Tax Code 
+Tax Code
  -->
 <template id="report_vatperiodendstatement_tax_code">
-	
+
 	<t t-set="total_vat" t-value="(0)"/>
 	<t t-set="total_vat_deductible" t-value="(0)"/>
 	<t t-set="total_vat_undeductible" t-value="(0)"/>
     <t t-set="total_base" t-value="(0)"/>
-    
-    
+
+
     <h4>
         <span t-if="(tax_code_section == 'sale')">Sale</span>
         <span t-if="(tax_code_section == 'purchase')">Purchase</span>
     </h4>
-	<table class="table-condensed tax-codes">
+	<table class="table table-small">
 		<thead>
            	<tr class="text-center">
                	<th style="width:15%;">Vat code</th>
@@ -216,7 +210,7 @@ Tax Code
        	</thead>
     	<t t-foreach="tax_code_amounts" t-as="tax_code">
     		<!-- Prepare values -->
-    		<t t-set="code" t-value="(tax_code_amounts[tax_code]['code'])"/>
+    		<t t-set="code" t-value="(tax_code_amounts[tax_code]['description'])"/>
     		<t t-set="tax_code_base" t-value="(tax_code_amounts[tax_code]['base'])"/>
     		<t t-set="tax_code_vat" t-value="(tax_code_amounts[tax_code]['vat'])"/>
     		<t t-set="tax_code_vat_deductible" t-value="(tax_code_amounts[tax_code]['vat_deductible'])"/>
@@ -249,7 +243,7 @@ Tax Code
     		<t t-set="total_vat_deductible" t-value="(total_vat_deductible + tax_code_vat_deductible)"/>
     		<t t-set="total_vat_undeductible" t-value="(total_vat_undeductible + tax_code_vat_undeductible)"/>
     	</t>
-    
+
 		<!-- total -->
 		<tr>
 			<td/>
@@ -270,18 +264,18 @@ Tax Code
 </template>
 
 <!--
-Main 
+Main
  -->
-<!--<template id="account_vat_period_end_statement.report_vatperiodendstatement">-->
-<!--	<t t-call="report.html_container">-->
+<template id="account_vat_period_end_statement.vat_statement">
+	<t t-call="web.html_container">
 
-<!--        <t t-set="title" t-value="'Riepilogo Registri IVA'"/>-->
-<!--        <t t-foreach="doc_ids" t-as="doc_id">-->
-<!--        	<t t-set="statement" t-value="statement(doc_id)"/>-->
-<!--            <t t-set="l10n_it_count_fiscal_page_base" t-value="l10n_it_count_fiscal_page_base(doc_id)"/>-->
-<!--			<t t-call="account_vat_statement_endyear.report_vatperiodendstatement_document"/>-->
-<!--        </t>-->
-<!--    </t>-->
-<!--</template>-->
+        <t t-set="title" t-value="'Liquidazione IVA'"/>
+        <t t-foreach="docs" t-as="statement">
+        	<t t-set="l10n_it_count_fiscal_page_base" t-value="statement.fiscal_page_base"/>
+            <t t-set="l10n_it_count_fiscal_year" t-value="statement.fiscal_year"/>
+			<t t-call="account_vat_statement_report.report_vatperiodendstatement_document"/>
+        </t>
+    </t>
+</template>
 
 </odoo>
