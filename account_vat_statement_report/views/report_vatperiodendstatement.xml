@@ -203,8 +203,8 @@ Tax Code
                		<th style="width:10%;" class="text-right">Undeductible</th>
 				</span>
 				<span t-if="not (tax_code_type == 'credit')">
-					<th style="width:10%;border-bottom:0px !important;background-color:#ffffff;"></th>
-					<th style="width:10%;border-bottom:0px !important;background-color:#ffffff;"></th>
+					<th style="width:10%;border:0px !important;background-color:#ffffff;"></th>
+					<th style="width:10%;border:0px !important;background-color:#ffffff;"></th>
 				</span>
         	</tr>
        	</thead>
@@ -224,8 +224,8 @@ Tax Code
     		</span>
     		<!-- print values  -->
             <tr t-if="tax_code_base or tax_code_vat or tax_code_vat_deductible or tax_code_vat_undeductible">
-    			<td><span t-esc="code"/></td>
-    			<td><span t-esc="tax_code" /></td>
+    			<td class="border-top"><span t-esc="code"/></td>
+    			<td class="border-top"><span t-esc="tax_code" /></td>
     			<td class="text-right"><span t-esc="formatLang(env, tax_code_base)" /></td>
     			<td class="text-right"><span t-esc="formatLang(env, tax_code_vat)" /></td>
     			<span t-if="(tax_code_type == 'credit')">
@@ -233,8 +233,8 @@ Tax Code
     				<td class="text-right"><span t-esc="formatLang(env, tax_code_vat_undeductible)" /></td>
     			</span>
     			<span t-if="not (tax_code_type == 'credit')">
-    				<td style="border-bottom:0px !important;background-color:#ffffff;"></td>
-    				<td style="border-bottom:0px !important;background-color:#ffffff;"></td>
+    				<td style="border:0px !important;background-color:#ffffff;"></td>
+    				<td style="border:0px !important;background-color:#ffffff;"></td>
     			</span>
     		</tr>
     		<!-- sum total  -->
@@ -246,7 +246,7 @@ Tax Code
 
 		<!-- total -->
 		<tr>
-			<td/>
+			<td class="border-top"/>
 			<td class="text-right"><strong>Total</strong></td>
 			<td class="text-right"><strong><span t-esc="formatLang(env, total_base)" /></strong></td>
 			<td class="text-right"><strong><span t-esc="formatLang(env, total_vat)" /></strong></td>
@@ -255,8 +255,8 @@ Tax Code
 				<td class="text-right"><strong><span t-esc="formatLang(env, total_vat_undeductible)" /></strong></td>
 			</span>
 			<span t-if="not (tax_code_type == 'credit')">
-				<td style="border-bottom:0px !important;background-color:#ffffff;"></td>
-				<td style="border-bottom:0px !important;background-color:#ffffff;"></td>
+				<td style="border:0px !important;background-color:#ffffff;"></td>
+				<td style="border:0px !important;background-color:#ffffff;"></td>
 			</span>
 		</tr>
 	</table>
