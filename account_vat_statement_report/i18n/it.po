@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_vat_statement_endyear
+#	* account_vat_statement_report
 #
 msgid ""
 msgstr ""
