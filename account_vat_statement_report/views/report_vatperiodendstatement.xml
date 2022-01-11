@@ -10,7 +10,7 @@ Document
             	Periods detail
             	-->
 				<t t-foreach="statement.date_range_ids" t-as="period">
-					<h3>From <span t-esc="min(statement.mapped('date_range_ids.date_start')).strftime('%d/%m/%Y')"/> to <span t-esc="max(statement.mapped('date_range_ids.date_end')).strftime('%d/%m/%Y')"/></h3>
+					<h3>From <span t-esc="period.date_start.strftime('%d/%m/%Y')"/> to <span t-esc="period.date_end.strftime('%d/%m/%Y')"/></h3>
 
 					<!-- Purchase -->
 				    <t t-set="tax_code_amounts" t-value="tax_amounts(period.id, [l.tax_id.id for l in statement.credit_vat_account_line_ids], 'supplier')"/>
