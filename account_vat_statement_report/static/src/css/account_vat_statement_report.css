@@ -1,20 +1,20 @@
 .table-small {
-    width:100%;
-    font-size: 11px;
-    padding: initial;
+    width:100% !important;
+    font-size: 11px !important;
+    padding: initial !important;
 }
 .table-small th {
-    font-size: 11px;
-    page-break-inside: avoid;
-    padding: initial;
+    font-size: 11px !important;
+    page-break-inside: avoid !important;
+    padding: initial !important;
 }
 .table-small td {
-    font-size: 11px;
-    page-break-inside: avoid;
+    font-size: 11px !important;
+    page-break-inside: avoid !important;
     padding: initial;
 }
 .table-small tr {
-    page-break-inside: avoid;
+    page-break-inside: avoid !important;
     padding: initial;
 }
 .tax-codes td {
