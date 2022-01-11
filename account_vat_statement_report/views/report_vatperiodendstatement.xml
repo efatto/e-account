@@ -2,9 +2,9 @@
 <odoo>
 
 	<template id="minimal_layout" inherit_id="l10n_it_account.minimal_layout">
-            <xpath expr="//head" position="inside">
-                <link rel="stylesheet" href="/account_vat_statement_report/static/src/css/vat_statement.scss"/>
-            </xpath>
+		<xpath expr="//head" position="inside">
+			<link rel="stylesheet" href="/account_vat_statement_report/static/src/css/vat_statement.scss"/>
+		</xpath>
     </template>
 <!--
 Document 
@@ -15,21 +15,21 @@ Document
                 <!--
             	Periods detail
             	-->
-                    <t t-foreach="statement.date_range_ids" t-as="period">
-                           <span>Summary</span> <span t-esc="period.name"/>
+				<t t-foreach="statement.date_range_ids" t-as="period">
+					<h3><span>Summary</span> <span t-esc="period.name"/></h3>
 
-            		<!-- Purchase -->
-                           <t t-set="tax_code_amounts" t-value="tax_amounts(period.id, [l.tax_id.id for l in statement.credit_vat_account_line_ids], 'supplier')"/>
-               		<t t-set="tax_code_type" t-value="'credit'"/>
-               		<t t-set="tax_code_section" t-value="'purchase'"/>
-                           <t t-call="account_vat_period_end_statement.report_vatperiodendstatement_tax_code"/>
+					<!-- Purchase -->
+				    <t t-set="tax_code_amounts" t-value="tax_amounts(period.id, [l.tax_id.id for l in statement.credit_vat_account_line_ids], 'supplier')"/>
+					<t t-set="tax_code_type" t-value="'credit'"/>
+					<t t-set="tax_code_section" t-value="'purchase'"/>
+				    <t t-call="account_vat_period_end_statement.report_vatperiodendstatement_tax_code"/>
 
-               		<!-- Sale -->
-                           <t t-set="tax_code_amounts" t-value="tax_amounts(period.id, [l.tax_id.id for l in statement.debit_vat_account_line_ids], 'customer')"/>
-               		<t t-set="tax_code_type" t-value="'debit'"/>
-               		<t t-set="tax_code_section" t-value="'sale'"/>
-                           <t t-call="account_vat_period_end_statement.report_vatperiodendstatement_tax_code"/>
-                       </t>
+					<!-- Sale -->
+				    <t t-set="tax_code_amounts" t-value="tax_amounts(period.id, [l.tax_id.id for l in statement.debit_vat_account_line_ids], 'customer')"/>
+					<t t-set="tax_code_type" t-value="'debit'"/>
+					<t t-set="tax_code_section" t-value="'sale'"/>
+				    <t t-call="account_vat_period_end_statement.report_vatperiodendstatement_tax_code"/>
+			   </t>
 
                	<!--
             	Total Compentence

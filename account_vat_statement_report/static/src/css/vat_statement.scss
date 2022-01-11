@@ -1,17 +1,19 @@
-table {font-size: xx-small;}
-table th {
-	font-size: xx-small;
-	page-break-inside: avoid;
-}
-table td {
-	font-size: xx-small;
-	page-break-inside: avoid;
+table {font-size: xx-small !important;}
+.table_small {
+    th {
+        font-size: xx-small !important;
+        page-break-inside: avoid !important;
+	}
+    td {
+        font-size: xx-small !important;
+        page-break-inside: avoid !important;
+    }
 }
 tr {
-    page-break-inside: avoid;
+    page-break-inside: avoid !important;
 }
 .tax-codes td {
-    border-bottom: 1px black solid;
+    border-bottom: 1px black solid !important;
 }
 td.text-right {
     border-top: 1px solid black !important;
