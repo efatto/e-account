@@ -5,4 +5,4 @@ from odoo import models
 
 class AccountVatPeriodEndStatement(models.Model):
     _inherit = "account.vat.period.end.statement"
-    order = 'date desc'
+    _order = 'date desc'
