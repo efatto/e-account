@@ -1,7 +1,7 @@
 # Copyright 2022 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    'name': 'Partner button view account moves',
+    'name': 'Partner payment term m2o',
     'version': '12.0.1.0.0',
     'category': 'Accounting & Finance',
     'author': 'Sergio Corato',
