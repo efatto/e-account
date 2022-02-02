@@ -17,6 +17,7 @@ class SaleOrder(models.Model):
             'revision_number': new_rev_number,
             'unrevisioned_name': self.unrevisioned_name,
             'name': self.name,
+            'client_order_ref': self.client_order_ref,
         })
         self.write({
             'state': 'draft',
