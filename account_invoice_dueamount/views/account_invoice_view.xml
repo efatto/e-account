@@ -7,7 +7,7 @@
         <xpath expr="//field[@name='tax_line_ids']" position="before">
             <button name="dueamount_set" string="Compute payments" type="object" states="draft"/>
             <field name="dueamount_line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
-                <tree editable="bottom">
+                <tree editable="bottom" string="Due amount lines">
                     <field name="date"/>
                     <field name="amount" sum="Total amount"/>
                 </tree>
@@ -19,15 +19,19 @@
     <field name="model">account.invoice</field>
     <field name="inherit_id" ref="account.invoice_supplier_form"/>
     <field name="arch" type="xml">
-        <xpath expr="//field[@name='tax_line_ids']" position="before">
+        <xpath expr="//page[@name='other_info']/group" position="inside">
             <group>
-                <button name="dueamount_set" string="Compute payments" type="object" states="draft"/>
-                <field name="dueamount_line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
-                    <tree editable="bottom">
-                        <field name="date"/>
-                        <field name="amount" sum="Total amount"/>
-                    </tree>
-                </field>
+                <group>
+                    <button name="dueamount_set" string="Compute payments" type="object" states="draft"/>
+                </group>
+                <group>
+                    <field name="dueamount_line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}" nolabel="1">
+                        <tree editable="bottom" string="Due amount lines">
+                            <field name="date"/>
+                            <field name="amount" sum="Total amount"/>
+                        </tree>
+                    </field>
+                </group>
             </group>
         </xpath>
     </field>
