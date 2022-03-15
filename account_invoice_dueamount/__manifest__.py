@@ -1,5 +1,5 @@
-# Copyright (C) 2017-2020 Sergio Corato
-# License LGPL-3 - See http://www.gnu.org/licenses/lgpl
+# Copyright 2017-2022 Sergio Corato <https://github.com/sergiocorato>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     'name': 'Account invoice due amount',
     'version': '12.0.1.0.0',
@@ -8,7 +8,7 @@
     'description': 'This module add optional custom due amount field, '
                    'to customize amount and dates of payments.',
     'website': 'https://efatto.it',
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
     'depends': [
         'account',
     ],
