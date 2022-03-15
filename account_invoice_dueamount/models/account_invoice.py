@@ -86,6 +86,7 @@ class AccountInvoice(models.Model):
 class AccountInvoiceDueamountLine(models.Model):
     _name = 'account.invoice.dueamount.line'
     _description = 'Account invoice due amount line'
+    _rec_name = 'date'
 
     amount = fields.Float(required=True)
     date = fields.Date(required=True)
