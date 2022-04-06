@@ -9,7 +9,7 @@
                    'creation.',
     'website': 'https://efatto.it',
     'depends': [
-        'sale',
+        'sale_stock',
     ],
     'data': [
     ],
