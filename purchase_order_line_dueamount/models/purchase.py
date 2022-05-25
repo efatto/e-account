@@ -8,7 +8,7 @@ class PurchaseOrder(models.Model):
     def write(self, vals):
         res = super().write(vals)
         for order in self:
-            if vals.get('payment_term_id'):
+            if vals.get('payment_term_id') or vals.get('date_planned'):
                 for line in order.order_line:
                     line._refresh_dueamount()
         return res
@@ -32,8 +32,11 @@ class PurchaseOrderLine(models.Model):
     @api.multi
     def write(self, vals):
         res = super().write(vals)
-        for line in self:
-            line._refresh_dueamount()
+        if vals.get('price_unit') or vals.get('date_planned') \
+                or vals.get('product_qty') or vals.get('discount') \
+                or vals.get('discount2') or vals.get('discount3'):
+            for line in self:
+                line._refresh_dueamount()
         return res
 
     @api.multi
