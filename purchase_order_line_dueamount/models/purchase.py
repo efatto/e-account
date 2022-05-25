@@ -1,41 +1,67 @@
 from odoo import api, models, fields
 
 
+class PurchaseOrder(models.Model):
+    _inherit = 'purchase.order'
+
+    @api.multi
+    def write(self, vals):
+        res = super().write(vals)
+        for order in self:
+            if vals.get('payment_term_id'):
+                for line in order.order_line:
+                    line._refresh_dueamount()
+        return res
+
+
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
-    dueamount_ids = fields.Many2many(
-        compute='_compute_dueamount_ids',
+    dueamount_ids = fields.One2many(
         comodel_name='purchase.order.line.dueamount',
+        inverse_name='line_id',
         string='Due amount lines',
-        store=True,
     )
 
+    @api.model
+    def create(self, vals):
+        line = super().create(vals)
+        line._refresh_dueamount()
+        return line
+
     @api.multi
-    @api.depends('order_id.payment_term_id', 'date_planned')
-    def _compute_dueamount_ids(self):
-        dueamount_line_obj = self.env['purchase.order.line.dueamount']
+    def write(self, vals):
+        res = super().write(vals)
         for line in self:
-            due_line_ids = []
-            if line.order_id.payment_term_id and line.price_subtotal:
-                totlines = line.order_id.payment_term_id.compute(
-                    line.price_subtotal,
-                    line.date_planned or line.order_id.date_planned or
-                    line.order_id.date_order)[0]
-                for dueline in totlines:
-                    due_line_id = dueamount_line_obj.create({
-                        'date': dueline[0],
-                        'amount': dueline[1],
-                    })
-                    due_line_ids.append(due_line_id.id)
-            else:
+            line._refresh_dueamount()
+        return res
+
+    @api.multi
+    def _refresh_dueamount(self):
+        self.ensure_one()
+        self.dueamount_ids.unlink()
+        dueamount_line_obj = self.env['purchase.order.line.dueamount']
+        due_line_ids = []
+        if self.order_id.payment_term_id and self.price_subtotal:
+            totlines = self.order_id.payment_term_id.compute(
+                self.price_subtotal,
+                self.date_planned or self.order_id.date_planned or
+                self.order_id.date_order)[0]
+            for dueline in totlines:
                 due_line_id = dueamount_line_obj.create({
-                    'date': line.date_planned or line.order_id.date_planned or
-                    line.order_id.date_order,
-                    'amount': line.price_subtotal,
+                    'date': dueline[0],
+                    'amount': dueline[1],
+                    'line_id': self.id,
                 })
                 due_line_ids.append(due_line_id.id)
-            line.dueamount_ids = dueamount_line_obj.browse(due_line_ids)
+        else:
+            due_line_id = dueamount_line_obj.create({
+                'date': self.date_planned or self.order_id.date_planned or
+                self.order_id.date_order,
+                'amount': self.price_subtotal,
+                'line_id': self.id,
+            })
+            due_line_ids.append(due_line_id.id)
 
 
 class PurchaseOrderLineDueamount(models.Model):
@@ -45,3 +71,8 @@ class PurchaseOrderLineDueamount(models.Model):
 
     amount = fields.Float(required=True)
     date = fields.Date(required=True)
+    line_id = fields.Many2one(
+        comodel_name='purchase.order.line',
+        ondelete='cascade',
+        string='Purchase order line',
+    )

@@ -42,7 +42,7 @@ msgstr "Nome Visualizzato"
 
 #. module: purchase_order_line_dueamount
 #: model_terms:ir.ui.view,arch_db:purchase_order_line_dueamount.purchase_order_form
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line__dueamount_ids
+#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line__due__amount_ids
 msgid "Due amount lines"
 msgstr "Importi dovuti"
 
