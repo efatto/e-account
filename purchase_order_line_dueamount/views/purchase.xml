@@ -10,6 +10,8 @@
                         <tree editable="bottom" string="Due amount lines">
                             <field name="date"/>
                             <field name="amount" sum="Total amount"/>
+                            <field name="invoiced_percent"/>
+                            <field name="currency_rate"/>
                         </tree>
                     </field>
                 </page>

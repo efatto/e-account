@@ -74,8 +74,21 @@ class PurchaseOrderLineDueamount(models.Model):
 
     amount = fields.Float(required=True)
     date = fields.Date(required=True)
+    invoiced_percent = fields.Float(
+        compute='_compute_invoiced_percent', store=True
+    )
+    currency_rate = fields.Float(
+        related='line_id.order_id.currency_id.rate'
+    )
     line_id = fields.Many2one(
         comodel_name='purchase.order.line',
         ondelete='cascade',
         string='Purchase order line',
     )
+
+    @api.multi
+    @api.depends('line_id.qty_invoiced', 'line_id.product_qty')
+    def _compute_invoiced_percent(self):
+        for line in self:
+            line.invoiced_percent = line.line_id.qty_invoiced / (
+                line.line_id.product_qty or 1)
