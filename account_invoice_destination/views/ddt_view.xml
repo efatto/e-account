@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="ddt_stock_picking_package_preparation_form_button_weight">
+        <field name="name">ddt.stock.picking.package.preparation.form.destination</field>
+        <field name="model">stock.picking.package.preparation</field>
+        <field name="inherit_id" ref="stock_picking_package_preparation.stock_picking_package_preparation_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_shipping_id" position="after">
+                <field name="address_destination_id"/>
+            </field>
+        </field>
+    </record>
+</data>
+</openerp>

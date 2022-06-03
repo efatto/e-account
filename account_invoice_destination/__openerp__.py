@@ -28,9 +28,13 @@
     'license': 'AGPL-3',
     'depends': [
         'account_invoice_shipping_address',
+        'l10n_it_ddt',
+        'sale',
     ],
     'data': [
         'views/account_invoice_view.xml',
+        'views/ddt_view.xml',
+        'views/sale_order_view.xml',
     ],
     'installable': True
 }
