@@ -11,6 +11,7 @@
     'depends': [
         'account',
         'sale_management',
+        'sale_order_line_date',
     ],
     'data': [
         'security/ir.model.access.csv',
