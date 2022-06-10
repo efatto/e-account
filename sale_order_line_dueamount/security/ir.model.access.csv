@@ -1,0 +1,2 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_sale_order_dueamount_group_user","sale_order_dueamount group_user","model_sale_order_line_dueamount","base.group_user",1,1,1,1
