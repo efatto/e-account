@@ -5,7 +5,7 @@
     "summary": "This module enables recomputation of the invoice on e-invoices values "
                "as if imported with custom precisions, these values will not be "
                "mantained.",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "development_status": "Alpha",
     "category": "Accounting & Finance",
     "website": "https://github.com/OCA/l10n-italy/tree/12.0/"
