@@ -2,15 +2,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import api, fields, models
 from odoo.tools.float_utils import float_round
-import odoo.addons.decimal_precision as dp
-
-
-class EInvoiceLine(models.Model):
-    _inherit = 'einvoice.line'
-
-    unit_price = fields.Float(
-        digits=dp.get_precision('Product Price for XML e-invoices')
-    )
 
 
 class AccountInvoiceLine(models.Model):
@@ -66,6 +57,13 @@ class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
     compute_on_einvoice_values = fields.Boolean()
+
+    @api.onchange('compute_on_einvoice_values')
+    def onchange_compute_on_einvoice_values(self):
+        if self.compute_on_einvoice_values:
+            for line in self.invoice_line_ids:
+                line._compute_price()
+            self._compute_amount()
 
     @api.one
     @api.depends('invoice_line_ids.price_subtotal', 'tax_line_ids.amount',
