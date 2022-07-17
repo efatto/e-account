@@ -85,8 +85,6 @@ class TestInvoiceRecompute(FatturapaCommon):
             line.price_unit = float_round(line.price_unit, price_precision.digits)
             line._compute_price()
         invoice.compute_taxes()
-        invoice.action_invoice_cancel()
-        invoice.action_invoice_draft()
 
         self.assertEqual(
             invoice.e_invoice_validation_message,
@@ -136,12 +134,6 @@ class TestInvoiceRecompute(FatturapaCommon):
             })
         invoice_id = res.get('domain')[0][2][0]
         invoice = self.invoice_model.browse(invoice_id)
-        for line in invoice.invoice_line_ids:
-            # Simulate real behaviour of decimal rounding to precision digits (not found
-            # a method to re-create this behaviour in test)
-            line.price_unit = float_round(line.price_unit, price_precision.digits)
-            line.quantity = float_round(line.quantity, product_precision.digits)
-            line._compute_price()
         self.assertTrue(invoice.compute_on_einvoice_values)
         self.assertEqual(
             invoice.invoice_line_ids[0].name, 'Accisa fino a 120 smc/anno')
@@ -150,33 +142,25 @@ class TestInvoiceRecompute(FatturapaCommon):
         self.assertEqual(
             invoice.invoice_line_ids[0].invoice_line_tax_ids.name,
             '5% e-bill purchase')
-        self.assertEqual(invoice.amount_total, 558.59)  # fixme 558.61
-        self.assertEqual(invoice.amount_tax, 26.65)  # fixme 26.67
+        self.assertEqual(invoice.amount_total, 558.59)
+        self.assertEqual(invoice.amount_tax, 26.65)
         self.assertEqual(invoice.e_invoice_amount_tax, 26.67)
         invoice.action_invoice_cancel()
         invoice.action_invoice_draft()
         invoice.write({'compute_on_einvoice_values': False})
-        for line in invoice.invoice_line_ids:
-            # Simulate real behaviour of decimal rounding to precision digits (not found
-            # a method to re-create this behaviour in test)
-            line.price_unit = float_round(line.price_unit, price_precision.digits)
-            line._compute_price()
         invoice.compute_taxes()
         invoice.onchange_compute_on_einvoice_values()
 
         self.assertEqual(
             invoice.e_invoice_validation_message,
-            "Untaxed amount (532.08) does not match with e-bill untaxed amount (531.94)"
-            ",\nTaxed amount (26.68) does not match with e-bill taxed amount (26.67),"
-            "\nTotal amount (558.76) does not match with e-bill total amount (558.61)."
+            "Taxed amount (26.65) does not match with e-bill taxed amount (26.67),"
+            "\nTotal amount (558.59) does not match with e-bill total amount (558.61)."
         )
 
         invoice.action_cancel()
         invoice.action_invoice_draft()
         invoice.write({'compute_on_einvoice_values': True})
         invoice.compute_taxes()
-        invoice.action_invoice_cancel()
-        invoice.action_invoice_draft()
         invoice.onchange_compute_on_einvoice_values()
         self.assertFalse(invoice.e_invoice_validation_message)
         invoice.action_invoice_open()
