@@ -1,9 +1,7 @@
 from odoo.addons.l10n_it_fatturapa_in.tests.fatturapa_common import (
     FatturapaCommon)
 from odoo.exceptions import ValidationError
-from odoo import api
 from odoo.tools.float_utils import float_round
-import odoo
 
 
 class TestInvoiceRecompute(FatturapaCommon):
@@ -17,12 +15,12 @@ class TestInvoiceRecompute(FatturapaCommon):
         if not self.tax_model.search([
             ('name', '=', '5% e-bill purchase')
         ]):
-            self.env['account.tax'].create({
+            self.env['account.tax'].create([{
                 'name': '5% e-bill purchase',
                 'description': '%5 purch',
                 'amount': 5,
                 'type_tax_use': 'purchase',
-            })
+            }])
 
     def test_00_xml_import_without_custom_precision(self):
         res = self.run_wizard(
