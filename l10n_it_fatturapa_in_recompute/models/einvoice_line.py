@@ -8,5 +8,8 @@ class EInvoiceLine(models.Model):
 
     # set unlimited digits
     unit_price = fields.Float(
-        digits=None
+        digits=(19, 8)
+    )
+    qty = fields.Float(
+        digits=(20, 8)
     )

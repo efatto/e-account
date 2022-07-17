@@ -98,6 +98,7 @@ class TestInvoiceRecompute(FatturapaCommon):
         invoice.action_cancel()
         invoice.action_invoice_draft()
         invoice.write({'compute_on_einvoice_values': True})
+        invoice.compute_taxes()
         invoice.onchange_compute_on_einvoice_values()
         self.assertFalse(invoice.e_invoice_validation_message)
 
@@ -161,8 +162,6 @@ class TestInvoiceRecompute(FatturapaCommon):
             line.price_unit = float_round(line.price_unit, price_precision.digits)
             line._compute_price()
         invoice.compute_taxes()
-        invoice.action_invoice_cancel()
-        invoice.action_invoice_draft()
         invoice.onchange_compute_on_einvoice_values()
 
         self.assertEqual(
@@ -179,14 +178,7 @@ class TestInvoiceRecompute(FatturapaCommon):
         invoice.action_invoice_cancel()
         invoice.action_invoice_draft()
         invoice.onchange_compute_on_einvoice_values()
-        # self.assertFalse(invoice.e_invoice_validation_message)
-        self.assertEqual(
-            invoice.e_invoice_validation_message,
-            "Taxed amount (26.650000000000002) does not match with e-bill taxed amount "
-            "(26.67),\n"
-            "Total amount (558.59) does not match with e-bill total amount (558.61)."
-        )
-        invoice.e_invoice_force_validation = True
+        self.assertFalse(invoice.e_invoice_validation_message)
         invoice.action_invoice_open()
 
         partner = invoice.partner_id
