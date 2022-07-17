@@ -1,1 +1,0 @@
-Nulla da configurare.

@@ -1,1 +1,0 @@
-Con questo modulo è possibile utilizzare i valori della fattura elettronica importata con più decimali rispetto a quelli in uso ordinariamente senza perdita di dati, anche in caso di modifiche sulla fattura.
