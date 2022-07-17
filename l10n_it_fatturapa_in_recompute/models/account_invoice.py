@@ -57,13 +57,6 @@ class AccountInvoice(models.Model):
 
     compute_on_einvoice_values = fields.Boolean()
 
-    @api.onchange('compute_on_einvoice_values')
-    def onchange_compute_on_einvoice_values(self):
-        if self.compute_on_einvoice_values:
-            for line in self.invoice_line_ids:
-                line._compute_price()
-            self._compute_amount()
-
     @api.multi
     def get_taxes_values(self):
         taxes_grouped = super().get_taxes_values()
