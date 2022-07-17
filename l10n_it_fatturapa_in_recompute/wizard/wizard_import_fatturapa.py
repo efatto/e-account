@@ -8,7 +8,8 @@ class WizardImportFatturapa(models.TransientModel):
 
     def set_e_invoice_lines(self, FatturaBody, invoice_data):
         e_invoice_lines = self.env['einvoice.line'].browse()
-        if self.e_invoice_detail_level != '2':  # FIXME or mode == 'link':
+        if self.e_invoice_detail_level != '2' \
+                or self.env.context.get('linked_invoice', False):
             for line in FatturaBody.DatiBeniServizi.DettaglioLinee:
                 e_invoice_lines |= self.create_e_invoice_line(line)
         if e_invoice_lines:
