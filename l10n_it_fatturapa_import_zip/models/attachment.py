@@ -599,9 +599,6 @@ class FatturaPAAttachmentOut(models.Model):
         invoice.process_negative_lines()
         return invoice
 
-    def get_xml_string(self):
-        return self.ir_attachment_id.get_xml_string()
-
     def get_invoice_obj(self, fatturapa_attachment):
         xml_string = fatturapa_attachment.get_xml_string()
         return fatturapa.CreateFromDocument(xml_string)
