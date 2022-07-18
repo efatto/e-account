@@ -257,7 +257,7 @@ class FatturaPAAttachmentOut(models.Model):
         taxes_ids = ir_values.get("product.product", "taxes_id", company_id=company_id)
         def_tax = False
         if taxes_ids:
-            def_tax = account_tax_model.browse(taxes_ids, limit=1)
+            def_tax = account_tax_model.browse(taxes_ids)[0]
         if float(AliquotaIVA) == 0.0 and Natura:
             account_taxes = account_tax_model.search(
                 [
