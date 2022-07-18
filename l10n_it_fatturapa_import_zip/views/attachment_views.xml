@@ -168,14 +168,14 @@
             ref="l10n_it_fatturapa_out.view_fatturapa_out_attachment_form"
         />
         <field name="arch" type="xml">
-            <xpath expr="//div/group[last()]" position="after">
+            <field name="name" position="after">
                 <group
                     string="ZIP import"
                     attrs="{'invisible': [('attachment_import_zip_id', '=', False)]}"
                 >
                     <field name="attachment_import_zip_id" />
                 </group>
-            </xpath>
+            </field>
         </field>
     </record>
 
