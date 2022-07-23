@@ -9,7 +9,9 @@
                    'creation.',
     'website': 'https://efatto.it',
     'depends': [
+        'purchase_stock',
         'sale_stock',
+        'stock_dropshipping',
     ],
     'data': [
     ],
