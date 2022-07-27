@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_riba_distinta_unsettlement_form" model="ir.ui.view">
+        <field name="name">riba.distinta.form</field>
+        <field name="model">riba.distinta</field>
+        <field name="inherit_id" ref="l10n_it_ricevute_bancarie.view_riba_distinta_form"/>
+        <field name="arch" type="xml">
+            <button name="riba_line_settlement" position="after">
+                <button name="riba_line_unsettlement" type="object"
+                    attrs="{'invisible':['|',('type','=','incasso'),('state','!=','paid')]}"
+                    string="Un-mark as Settled" icon="fa-undo"/>
+            </button>
+        </field>
+    </record>
+
+</odoo>
