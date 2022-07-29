@@ -18,8 +18,11 @@ class AccountInvoice(models.Model):
     def dueamount_set(self):
         for invoice in self:
             if invoice.payment_term_id and invoice.amount_total:
-                totlines = invoice.payment_term_id.compute(
-                    invoice.amount_total, invoice.date_invoice or False)[0]
+                # context for compatibility with account_payment_term_partner_holiday
+                totlines = invoice.payment_term_id.with_context(
+                    currency_id=invoice.company_id.currency_id.id,
+                    default_partner_id=invoice.partner_id.id).compute(
+                        invoice.amount_total, invoice.date_invoice or False)[0]
                 dueamount_line_obj = self.env['account.invoice.dueamount.line']
                 due_line_ids = []
                 for line in totlines:
