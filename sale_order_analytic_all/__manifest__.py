@@ -9,7 +9,13 @@
                    'creation.',
     'website': 'https://efatto.it',
     'depends': [
+<<<<<<< HEAD
         'sale_stock',
+=======
+        # 'purchase_stock',
+        'sale_stock',
+        # 'stock_dropshipping',
+>>>>>>> [FIX] comment not-verified import
     ],
     'data': [
     ],
