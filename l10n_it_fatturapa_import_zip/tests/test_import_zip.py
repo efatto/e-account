@@ -3,10 +3,11 @@ import tempfile
 from datetime import datetime
 
 from odoo.modules import get_module_resource
-from odoo.tests.common import TransactionCase
+from odoo.addons.l10n_it_fatturapa_in.tests.fatturapa_common import (
+    FatturapaCommon)
 
 
-class TestImportZIP(TransactionCase):
+class TestImportZIP(FatturapaCommon):
     def setUp(self):
         super(TestImportZIP, self).setUp()
         self.env = self.env(context=dict(self.env.context, tracking_disable=True))
