@@ -165,7 +165,10 @@ class FatturaPAAttachmentImportZIP(models.Model):
                     )
                     .create({})
                 )
-                wizard.importFatturaPA()
+                try:
+                    wizard.importFatturaPA()
+                except:
+                    pass
                 att_in.attachment_import_zip_id = self.id
                 self.env.user.company_id.in_invoice_registration_date = (
                     in_invoice_registration_date
