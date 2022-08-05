@@ -9,6 +9,7 @@ from odoo.tests.common import TransactionCase
 class TestImportZIP(TransactionCase):
     def setUp(self):
         super(TestImportZIP, self).setUp()
+        self.env = self.env(context=dict(self.env.context, tracking_disable=True))
         self.attach_model = self.env["fatturapa.attachment.import.zip"]
         self.cleanPartners()
         arrotondamenti_attivi_account_id = (
