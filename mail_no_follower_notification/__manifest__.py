@@ -14,6 +14,9 @@
     "depends": [
         "mail",
     ],
+    "excludes": [
+        "mail_optional_follower_notification",
+    ],
     "data": [
         "wizard/mail_compose_message_view.xml",
     ],
