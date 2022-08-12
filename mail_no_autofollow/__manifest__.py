@@ -15,5 +15,8 @@
     ],
     'data': [
     ],
+    'excludes': [
+        'mail_optional_autofollow'
+    ],
     'installable': True,
 }
