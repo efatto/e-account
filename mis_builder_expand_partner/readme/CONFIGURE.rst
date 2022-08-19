@@ -1,7 +1,14 @@
-Configure Mis Builder Report as usual.
+Nella query selezionare il campo Partner per l'oggetto di cui si sta configurando la query:
 
-In Accounting > Configuration > MIS Reporting > MIS Report Templates configure only Model Analytic Account if exists, else configure Parent Model and Parent Model Analytic Account:
+.. image:: ../static/description/partner.png
+    :alt: Partner
 
-.. image:: ../static/description/row_view.png
-    :alt: Row view
+Quindi configurare la query collegata nei KPI's:
 
+.. image:: ../static/description/query_collegata.png
+    :alt: Query collegata
+
+e l'espansione automatica dei partner:
+
+.. image:: ../static/description/espandi_partner.png
+    :alt: Espandi i partner

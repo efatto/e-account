@@ -6,7 +6,7 @@ class MisReportQuery(models.Model):
     _inherit = "mis.report.query"
 
     field_partner_id = fields.Many2one(
-        "ir.model.fields", string="Field of type res.partner to group by",
+        "ir.model.fields", string="Partner field to expand by",
     )
 
     @api.multi
@@ -15,5 +15,5 @@ class MisReportQuery(models.Model):
         for mis_report_query in self:
             if mis_report_query.field_partner_id and \
                     len(mis_report_query.field_ids) != 1:
-                raise UserError(_("Report with partner expansion can have "
-                                  "only 1 field selected in query!"))
+                raise UserError(_("Query with partner expansion can have "
+                                  "only 1 field selected!"))
