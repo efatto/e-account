@@ -23,7 +23,7 @@ class AccountTax(models.Model):
             company_id = vals['company_id']
         if self.search([('name', '=', vals['name']),
                         ('company_id', '=', company_id)]):
-            raise Warning(_("Tax name must be unique."))
+            print("Tax name must be unique %s." % vals['name'])
         if vals.get('description', False):
             if self.search([('description', '=', vals['description']),
                             ('company_id', '=', company_id)]):
@@ -156,7 +156,9 @@ class AccountTax(models.Model):
                 if not vals.get('account_base_tax_code_id', False) and \
                         not tax.account_base_tax_code_id and \
                         not vals.get('base_code_id', False):
-                    raise Warning(_("Base Tax Code parent must be set."))
+                    print("Base Tax Code parent must be set %s %s." % (
+                            tax.name,
+                            tax.description))
                 elif not vals.get('base_code_id', False):
                     # missing base tax, so create it
                     parent_base_tax_code = tax.account_base_tax_code_id or \
