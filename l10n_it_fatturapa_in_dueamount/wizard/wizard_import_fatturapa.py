@@ -24,7 +24,7 @@ class WizardImportFatturapa(models.TransientModel):
                                 'amount': dline.ImportoPagamento,
                                 'invoice_id': invoice.id,
                             }])
-                        due_line_ids.append(due_line_id.id)
+                            due_line_ids.append(due_line_id.id)
                 if due_line_ids:
                     invoice.write({
                         'dueamount_line_ids': [(6, 0, due_line_ids)]})
