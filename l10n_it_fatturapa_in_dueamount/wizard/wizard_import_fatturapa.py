@@ -18,11 +18,12 @@ class WizardImportFatturapa(models.TransientModel):
                 details = PaymentLine.DettaglioPagamento or False
                 if details:
                     for dline in details:
-                        due_line_id = dueamount_line_obj.create({
-                            'date': dline.DataScadenzaPagamento or False,
-                            'amount': dline.ImportoPagamento or 0.0,
-                            'invoice_id': invoice.id,
-                        })
+                        if dline.DataScadenzaPagamento and dline.ImportoPagamento:
+                            due_line_id = dueamount_line_obj.create([{
+                                'date': dline.DataScadenzaPagamento,
+                                'amount': dline.ImportoPagamento,
+                                'invoice_id': invoice.id,
+                            }])
                         due_line_ids.append(due_line_id.id)
                 if due_line_ids:
                     invoice.write({
