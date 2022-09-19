@@ -40,6 +40,15 @@ class AccountInvoice(models.Model):
         super(AccountInvoice, self).finalize_invoice_move_lines(move_lines)
         if self.dueamount_line_ids:
             total_dueamount = 0
+            if hasattr(self, 'withholding_tax_amount'):
+                dueamount_line_obj = self.env['account.invoice.dueamount.line']
+                due_line_id = dueamount_line_obj.create([{
+                    'date': self.date_due,
+                    'amount': self.withholding_tax_amount,
+                    'invoice_id': self.id,
+                }])
+                self.write({
+                    'dueamount_line_ids': [(4, due_line_id.id)]})
             # check total amount lines == invoice.amount_total
             for dueamount_line in self.dueamount_line_ids:
                 total_dueamount += dueamount_line.amount
