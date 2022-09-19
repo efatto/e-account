@@ -1,7 +1,7 @@
 # Copyright 2017-2022 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import models, api, fields, exceptions, _
-from odoo.tools import float_compare
+from odoo.tools import float_compare, float_is_zero
 import copy
 
 
@@ -42,13 +42,16 @@ class AccountInvoice(models.Model):
             total_dueamount = 0
             if hasattr(self, 'withholding_tax_amount'):
                 dueamount_line_obj = self.env['account.invoice.dueamount.line']
-                due_line_id = dueamount_line_obj.create([{
-                    'date': self.date_due,
-                    'amount': self.withholding_tax_amount,
-                    'invoice_id': self.id,
-                }])
-                self.write({
-                    'dueamount_line_ids': [(4, due_line_id.id)]})
+                missing_dueamount = self.amount_total - sum(
+                    [x.amount for x in self.dueamount_line_ids])
+                if not float_is_zero(missing_dueamount, 2):
+                    due_line_id = dueamount_line_obj.create([{
+                        'date': self.date_due,
+                        'amount': missing_dueamount,
+                        'invoice_id': self.id,
+                    }])
+                    self.write({
+                        'dueamount_line_ids': [(4, due_line_id.id)]})
             # check total amount lines == invoice.amount_total
             for dueamount_line in self.dueamount_line_ids:
                 total_dueamount += dueamount_line.amount
