@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_fatturapa_out_attachment_form" model="ir.ui.view" >
+        <field name="name">Filter send to SdI button in Electronic Invoice</field>
+        <field name="model">fatturapa.attachment.out</field>
+        <field name="inherit_id" ref="l10n_it_sdi_channel.view_fatturapa_out_attachment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_partner_id']" position="after">
+                <field name="is_pa_sendable" invisible="1"/>
+                <div class="badge-pill badge-danger float-left"
+                     attrs="{'invisible': [('is_pa_sendable', '=', True)]}">Warning: this file is in a format not sendable to Public Administration!</div>
+            </xpath>
+            <xpath expr="//button[@name='send_to_sdi']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('is_pa_sendable', '=', False)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

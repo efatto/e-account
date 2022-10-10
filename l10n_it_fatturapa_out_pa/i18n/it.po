@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_it_fatturapa_out_pa
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-10 13:31+0000\n"
+"PO-Revision-Date: 2022-10-10 13:31+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_it_fatturapa_out_pa
+#: model:ir.model,name:l10n_it_fatturapa_out_pa.model_sdi_channel
+msgid "ES channel"
+msgstr "Canale SdI"
+
+#. module: l10n_it_fatturapa_out_pa
+#: model:ir.model,name:l10n_it_fatturapa_out_pa.model_fatturapa_attachment_out
+msgid "Electronic Invoice"
+msgstr "Fattura elettronica"
+
+#. module: l10n_it_fatturapa_out_pa
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out_pa.field_fatturapa_attachment_out__is_pa_sendable
+msgid "Is Pa Sendable"
+msgstr "È inviabile alla Pubblica Amministrazione"
+
+#. module: l10n_it_fatturapa_out_pa
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out_pa.field_sdi_channel__is_pa_sign_automatic
+msgid "Is Pa Sign Automatic"
+msgstr "Supporta la firma automatica per la Pubblica Amministrazione"
+
+#. module: l10n_it_fatturapa_out_pa
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out_pa.field_fatturapa_attachment_out__is_pa
+msgid "Public administration"
+msgstr "Pubblica amministrazione"
+
+#. module: l10n_it_fatturapa_out_pa
+#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out_pa.view_fatturapa_out_attachment_form
+msgid "Warning: this file is in a format not sendable to Public Administration!"
+msgstr "Attenzione: questo file non è in un formato inviabile alla Pubblica Amministrazione!"
+
