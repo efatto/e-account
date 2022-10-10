@@ -42,5 +42,5 @@ msgstr "Ordine di vendita"
 #: field:sale.order,address_destination_id:0
 #: field:stock.picking.package.preparation,address_destination_id:0
 msgid "TRANSIT WAREHOUSE"
-msgstr "Destinazione Finale"
+msgstr "TRANSIT WAREHOUSE"
 
