@@ -11,5 +11,5 @@ class SaleOrder(models.Model):
 
     address_destination_id = fields.Many2one(
         comodel_name="res.partner",
-        string='Final Destination',
+        string='TRANSIT WAREHOUSE',
         help="Optional destination for extra CEE.")
