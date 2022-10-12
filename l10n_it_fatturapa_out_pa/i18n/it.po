@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-10 13:31+0000\n"
-"PO-Revision-Date: 2022-10-10 13:31+0000\n"
+"POT-Creation-Date: 2022-10-12 10:02+0000\n"
+"PO-Revision-Date: 2022-10-12 10:02+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: l10n_it_fatturapa_out_pa
+#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out_pa.view_fatturapa_out_attachment_form
+msgid "(need login to learning site)"
+msgstr "(necessario login al sito di formazione)"
 
 #. module: l10n_it_fatturapa_out_pa
 #: model:ir.model,name:l10n_it_fatturapa_out_pa.model_sdi_channel
@@ -42,6 +47,13 @@ msgstr "Pubblica amministrazione"
 
 #. module: l10n_it_fatturapa_out_pa
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out_pa.view_fatturapa_out_attachment_form
-msgid "Warning: this file is in a format not sendable to Public Administration!"
-msgstr "Attenzione: questo file non è in un formato inviabile alla Pubblica Amministrazione!"
+msgid "Warning: this file is in a format not sendable to Public Administration!\n"
+"                    How-to sign video"
+msgstr "Attenzione: questo file non è in un formato inviabile alla Pubblica Amministrazione!\n"
+"                    Video con istruzioni per la firma del file"
+
+#. module: l10n_it_fatturapa_out_pa
+#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out_pa.view_fatturapa_out_attachment_form
+msgid "here"
+msgstr "qui"
 
