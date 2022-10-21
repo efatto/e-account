@@ -26,6 +26,10 @@ class MailComposeMessage(models.TransientModel):
         elif self._context.get('active_model', False) == 'sale.order':
             report_name = 'sale.report_saleorder'
             template = 'email_template_sale_from_tree'
+        elif self._context.get('active_model', False) \
+                == 'stock.picking.package.preparation':
+            report_name = 'stock_picking_ddt'
+            template = 'email_template_ddt_from_tree'
         if report_name and template:
             ir_actions_report = self.env['ir.actions.report.xml']
             report = ir_actions_report.search([

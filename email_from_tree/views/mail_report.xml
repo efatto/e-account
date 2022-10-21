@@ -40,6 +40,25 @@
     </div>
             ]]></field>
         </record>
+        <!--DDT Email template -->
+        <record id="email_template_ddt_from_tree" model="email.template">
+            <field name="name">Report DDT by Email</field>
+            <field name="email_from">${(object.company_id.email or 'noreply@localhost')|safe}</field>
+            <field name="subject">DDT Reports</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="stock_picking_package_preparation.model_stock_picking_package_preparation"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+    <p>Hello </p>
+
+    <p>You will find attached DDT reports.</p>
+
+    <p>Thanks</p>
+
+    </div>
+            ]]></field>
+        </record>
 
         <act_window name="Send account invoice reports"
             res_model="mail.compose.message"
@@ -63,6 +82,18 @@
             id="action_send_report_sales"
             view_type="form"
             context="{'default_template_id': ref('email_from_tree.email_template_sale_from_tree'),
+            'default_active_ids': active_ids,}"/>
+
+        <act_window name="Send ddt reports"
+            res_model="mail.compose.message"
+            src_model="stock.picking.package.preparation"
+            view_mode="form"
+            multi="True"
+            target="new"
+            key2="client_action_multi"
+            id="action_send_report_ddt"
+            view_type="form"
+            context="{'default_template_id': ref('email_from_tree.email_template_ddt_from_tree'),
             'default_active_ids': active_ids,}"/>
 
     </data>

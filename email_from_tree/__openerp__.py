@@ -30,6 +30,7 @@
         'account',
         'report',
         'sale',
+        'stock_picking_report_aeroo',
     ],
     'data': [
         'views/mail_report.xml',
