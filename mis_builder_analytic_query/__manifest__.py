@@ -4,7 +4,7 @@
 
 {
     "name": "Mis builder query analytic",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "category": "Reporting",
     "author": "Sergio Corato, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/mis-builder/",
