@@ -14,6 +14,9 @@ class MisReportQuery(models.Model):
     parent_model_id = fields.Many2one(
         "ir.model", string="Parent Model", ondelete="restrict"
     )
+    parent_field_id = fields.Many2one(
+        "ir.model.fields", string="Parent Field", ondelete="restrict"
+    )
     analytic_account_parent_field_id = fields.Many2one(
         "ir.model.fields",
         string="Parent Model Analytic Account",
@@ -39,17 +42,20 @@ class MisReportInstancePeriod(models.Model):
                 if query.analytic_account_field_id:
                     analytic_field_name = query.analytic_account_field_id.name
                 else:
-                    model = self.env[query.model_id.model]
-                    model_fields = model.fields_get()
-                    relation_field_name = False
-                    for field in model_fields:
-                        if (
-                            model_fields[field].get("relation", False)
-                            == query.parent_model_id.model
-                            and model_fields[field].get("type", False) == "many2one"
-                        ):
-                            relation_field_name = field
-                            break
+                    if query.parent_field_id:
+                        relation_field_name = query.parent_field_id.name
+                    else:
+                        model = self.env[query.model_id.model]
+                        model_fields = model.fields_get()
+                        relation_field_name = False
+                        for field in model_fields:
+                            if (
+                                model_fields[field].get("relation", False)
+                                == query.parent_model_id.model
+                                and model_fields[field].get("type", False) == "many2one"
+                            ):
+                                relation_field_name = field
+                                break
                     if not relation_field_name:
                         raise UserError(
                             _(
