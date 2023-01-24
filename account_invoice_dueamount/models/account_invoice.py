@@ -17,12 +17,18 @@ class AccountInvoice(models.Model):
     @api.multi
     def dueamount_set(self):
         for invoice in self:
-            if invoice.payment_term_id and invoice.amount_total:
-                # context for compatibility with account_payment_term_partner_holiday
-                totlines = invoice.payment_term_id.with_context(
-                    currency_id=invoice.company_id.currency_id.id,
-                    default_partner_id=invoice.partner_id.id).compute(
-                        invoice.amount_total, invoice.date_invoice or False)[0]
+            if invoice.amount_total:
+                if invoice.payment_term_id:
+                    # context for compatibility w/ account_payment_term_partner_holiday
+                    totlines = invoice.payment_term_id.with_context(
+                        currency_id=invoice.company_id.currency_id.id,
+                        default_partner_id=invoice.partner_id.id).compute(
+                            invoice.amount_total, invoice.date_invoice or False)[0]
+                else:
+                    totlines = [(
+                        invoice.date_invoice,
+                        invoice.amount_total
+                    )]
                 dueamount_line_obj = self.env['account.invoice.dueamount.line']
                 due_line_ids = []
                 for line in totlines:
