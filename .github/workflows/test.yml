@@ -1,24 +1,44 @@
-name: test Odoo addons
+name: tests
 
 on:
   pull_request:
     branches:
-      - "12.0*"
+      - "14.0*"
   push:
     branches:
-      - "12.0*"
+      - "14.0"
 
 jobs:
-  test:
+  unreleased-deps:
     runs-on: ubuntu-latest
+    name: Detect unreleased dependencies
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          for reqfile in requirements.txt test-requirements.txt ; do
+              if [ -f ${reqfile} ] ; then
+                  result=0
+                  # reject non-comment lines that contain a / (i.e. URLs, relative paths)
+                  grep "^[^#].*/" ${reqfile} || result=$?
+                  if [ $result -eq 0 ] ; then
+                      echo "Unreleased dependencies found in ${reqfile}."
+                      exit 1
+                  fi
+              fi
+          done
+  test:
+    runs-on: ubuntu-22.04
     container: ${{ matrix.container }}
+    name: ${{ matrix.name }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - container: ghcr.io/oca/oca-ci/py3.6-odoo12.0:latest
+          - container: ghcr.io/oca/oca-ci/py3.6-odoo14.0:latest
             makepot: "true"
-          - container: ghcr.io/oca/oca-ci/py3.6-ocb12.0:latest
+            name: test with Odoo
+          - container: ghcr.io/oca/oca-ci/py3.6-ocb14.0:latest
+            name: test with OCB
     services:
       postgres:
         image: postgres:9.6
@@ -36,7 +56,5 @@ jobs:
         run: oca_install_addons
       - name: Initialize test db
         run: oca_init_test_database
-      - name: Pip install PR
-        run: pip3 install -e "git+https://github.com/sergiocorato/mis-builder@12.0-imp-mis_builder-query-drilldown-filtered#egg=odoo12-addon-mis_builder&subdirectory=setup/mis_builder"
       - name: Run tests
         run: oca_run_tests
