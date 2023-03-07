@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_move_tree" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="name">stock.move.tree</field>
+        <field name="priority" eval="999"/>
+        <field name="arch" type="xml">
+            <tree string="Stock Moves" create="false">
+                <field name="picking_id"/>
+                <field name="picking_partner_id"/>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <field name="origin"/>
+                <field name="date"/>
+                <field name="product_id"/>
+                <field name="product_qty" string="Qty"/>
+                <field name="quantity_done"/>
+                <field name="product_uom" string="Unit of Measure" groups="uom.group_uom"/>
+                <field name="price_unit" sum="Total" widget="monetary"/>
+                <field name="state" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
