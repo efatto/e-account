@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_workcenter_productivity_tree" model="ir.ui.view">
+        <field name="model">mrp.workcenter.productivity</field>
+        <field name="name">mrp.workcenter.productivity.tree</field>
+        <field name="priority" eval="999"/>
+        <field name="arch" type="xml">
+            <tree string="Mrp Workcenter Productivity" create="false">
+                <field name="description"/>
+                <field name="production_id"/>
+                <field name="workcenter_id"/>
+                <field name="workorder_id"/>
+                <field name="user_id"/>
+                <field name="loss_id"/>
+                <field name="loss_type"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="duration" sum="Total"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
