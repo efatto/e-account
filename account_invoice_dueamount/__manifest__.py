@@ -7,7 +7,7 @@
     'author': 'Sergio Corato',
     'description': 'This module add optional custom due amount field, '
                    'to customize amount and dates of payments.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
     'license': 'AGPL-3',
     'depends': [
         'account',
