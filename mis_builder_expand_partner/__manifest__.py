@@ -5,7 +5,7 @@
     "version": "12.0.1.0.0",
     "category": "Reporting",
     "author": "Sergio Corato",
-    "website": "https://efatto.it",
+    "website": "https://github.com/sergiocorato/e-account",
     "license": "AGPL-3",
     "summary": "Add ability to expand report to partner",
     "depends": ["mis_builder_query_drilldown"],

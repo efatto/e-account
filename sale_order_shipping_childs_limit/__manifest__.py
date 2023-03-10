@@ -9,7 +9,7 @@
 This module extend sale order views with:
 -----------------------------------------
 * limit domain of shipping partner to partner and its children.''',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
     'license': 'LGPL-3',
     'depends': [
         'sale',

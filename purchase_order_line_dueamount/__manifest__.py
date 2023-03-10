@@ -7,7 +7,8 @@
     'author': 'Sergio Corato',
     'description': 'Add payment datas to purchase order line computed from planned '
                    'date.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
+    'license': 'AGPL-3',
     'depends': [
         'account',
         'purchase',

@@ -6,7 +6,8 @@
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Add analytic line product standard price link.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
+    'license': 'AGPL-3',
     'depends': [
         'account',
     ],

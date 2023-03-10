@@ -7,7 +7,8 @@
     'author': 'Sergio Corato',
     'description': 'Add payment datas to sale order line computed from commitment '
                    'date.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
+    'license': 'AGPL-3',
     'depends': [
         'account',
         'sale_management',

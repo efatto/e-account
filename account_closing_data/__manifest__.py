@@ -4,7 +4,7 @@
     'name': 'Fiscal Year Closing journal data',
     'version': '12.0.1.0.0',
     'author': 'Sergio Corato',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
     'category': 'Generic Modules/Accounting',
     'description': 'Fiscal Year Closing journal data',
     'license': 'AGPL-3',

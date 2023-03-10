@@ -6,7 +6,8 @@
     'category': 'Sale Management',
     'author': 'Sergio Corato',
     'description': 'Show margin even on cancelled sale order lines.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
+    'license': 'AGPL-3',
     'depends': [
         'sale_margin',
     ],

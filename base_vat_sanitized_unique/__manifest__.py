@@ -8,7 +8,7 @@
     'author': 'Sergio Corato',
     'description': 'Add constrains to sanitized VAT number and fiscalcode field for '
                    'unique consistency.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
     'license': 'AGPL-3',
     'depends': [
         'account',

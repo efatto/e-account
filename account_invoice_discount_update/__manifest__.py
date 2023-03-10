@@ -9,7 +9,7 @@
     Add the ability to update discount in all invoice lines with a button.
     """,
     'author': "Sergio Corato",
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
     'depends': [
         'account',
     ],

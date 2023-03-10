@@ -7,7 +7,7 @@
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Add country field to filter in invoice.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
     'license': 'AGPL-3',
     'depends': [
         'account',

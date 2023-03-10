@@ -7,7 +7,7 @@
     "version": "12.0.1.0.1",
     "category": "Reporting",
     "author": "Sergio Corato, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/mis-builder/",
+    "website": "https://github.com/sergiocorato/e-account",
     "license": "AGPL-3",
     "summary": "Add analytic filter to query of mis report",
     "depends": ["mis_builder"],

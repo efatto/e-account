@@ -6,7 +6,8 @@
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Use payments info received in e-invoice to create payments.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
+    'license': 'AGPL-3',
     'depends': [
         'account_invoice_dueamount',
         'l10n_it_fatturapa_in',

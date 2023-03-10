@@ -7,7 +7,8 @@
     'author': 'Sergio Corato',
     'description': 'Move opportunity, project and analytic for quotation in header '
                    'for better visibility.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
+    'license': 'AGPL-3',
     'depends': [
         'sale_crm',
         'sale_timesheet_existing_project',

@@ -5,8 +5,8 @@
     'version': '12.0.1.0.0',
     'summary': 'Add ability to update sale order when creating refund invoices.',
     'category': 'Accounting',
-    'author': 'Sergio Corato - Efatto.it',
-    'website': 'https://efatto.it',
+    'author': 'Sergio Corato',
+    'website': 'https://github.com/sergiocorato/e-account',
     'maintainers': ['sergiocorato'],
     'license': 'AGPL-3',
     'depends': [

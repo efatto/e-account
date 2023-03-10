@@ -6,7 +6,7 @@
     'category': 'Accounting',
     'summary': 'Ricevute bancarie con maturazione',
     'author': 'Sergio Corato',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
     'license': 'AGPL-3',
     'depends': [
         'l10n_it_ricevute_bancarie',

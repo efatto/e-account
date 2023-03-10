@@ -6,7 +6,8 @@
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Add ability to use different intrastat code from sale to purchase.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
+    'license': 'AGPL-3',
     'depends': [
         'l10n_it_intrastat',
     ],
