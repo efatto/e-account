@@ -6,10 +6,10 @@
     'name': 'Partner button view account moves',
     'version': '12.0.1.0.0',
     'category': 'Accounting & Finance',
-    'author': 'Alexis de Lattre - Akretion; Sergio Corato',
+    'author': 'Alexis de Lattre - Akretion, Sergio Corato',
     'description': 'With this module partner will have button with '
                    'only account moves linked to account.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
     'license': 'AGPL-3',
     'depends': [
         'account',
