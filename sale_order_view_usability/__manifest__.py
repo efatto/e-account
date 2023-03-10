@@ -11,7 +11,7 @@ This module extend sale order views with:
 * add sale order ref, origin and total amount in tree view,
 * add sale order ref in form view,
 * show origin field to base user.''',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
     'license': 'LGPL-3',
     'depends': [
         'sale',
