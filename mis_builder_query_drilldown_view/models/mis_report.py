@@ -11,15 +11,21 @@ class MisReportInstance(models.Model):
         res = super().drilldown(arg=arg)
         if arg.get("model", False) == "account.invoice.line":
             res.update({
-                "views": [[self.env.ref(
-                    'mis_builder_query_drilldown_view.view_invoice_line_tree').id,
-                    'list'], [False, 'form']],
+                "views": [
+                    [
+                        self.env.ref(
+                            'mis_builder_query_drilldown_view.view_invoice_line_tree'
+                        ).id, 'list'], [False, 'form']],
             })
         if arg.get("model", False) == "sale.order.line":
             res.update({
-                "views": [[self.env.ref(
-                    'mis_builder_query_drilldown_view.view_order_line_tree').id,
-                           'list'], [False, 'form']],
+                "views": [
+                    [
+                        self.env.ref(
+                            'mis_builder_query_drilldown_view.view_order_line_tree'
+                        ).id, 'list'
+                    ], [False, 'form']
+                ],
             })
         if arg.get("model", False) == "account.analytic.line":
             res.update({
