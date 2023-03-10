@@ -6,7 +6,8 @@
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'Add date order to order line.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
+    'license': 'AGPL-3',
     'depends': [
         'sale',
     ],
