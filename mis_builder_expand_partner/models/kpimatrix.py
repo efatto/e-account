@@ -44,7 +44,6 @@ class KpiMatrix(KpiMatrix):
         self, kpi, col_key, partner_id, vals, drilldown_args, tooltips=True
     ):
         """Set values for a kpi and a column and a detail account.
-    
         Invoke this after declaring the kpi and the column.
         """
         if not partner_id:

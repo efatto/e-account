@@ -29,8 +29,8 @@ class SaleOrder(models.Model):
         account = self.analytic_account_id
         values = {
             'name': '%s - %s' % (
-                self.client_order_ref, self.name) if self.client_order_ref
-                else self.name,
+                self.client_order_ref, self.name
+            ) if self.client_order_ref else self.name,
             'allow_timesheets': True,
             'analytic_account_id': account.id,
             'partner_id': self.partner_id.id,

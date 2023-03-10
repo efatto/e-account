@@ -26,7 +26,6 @@ class RibaUnsolved(models.TransientModel):
         if not active_ids:
             raise UserError(_('No active IDs found'))
         move_model = self.env['account.move']
-        invoice_model = self.env['account.invoice']
         distinta_lines = self.env['riba.distinta.line'].browse(active_ids)
         wizard = self[0]
         if not (wizard.unsolved_journal_id or wizard.bank_account_id):
@@ -43,10 +42,10 @@ class RibaUnsolved(models.TransientModel):
                         (0, 0, {
                             'name': _('Overdue Effects %s') %
                             riba_move_line.move_line_id.invoice_id.move_name,
-                            'invoice_number': riba_move_line.move_line_id.\
+                            'invoice_number': riba_move_line.move_line_id.
                             invoice_id.move_name,
                             'invoice_id': riba_move_line.move_line_id.invoice_id.id,
-                            'account_id': distinta_line.partner_id.\
+                            'account_id': distinta_line.partner_id.
                             property_account_receivable_id.id,
                             'debit': riba_move_line.amount,
                             'credit': 0.0,

@@ -28,7 +28,7 @@ class MisExpressionEvaluator(ExpressionEvaluator):
 
     def replace_exprs_by_partner_id(self, exprs, locals_dict, mis_report):
         partner_ids = set()
-        _data = defaultdict(dict)
+        # _data = defaultdict(dict)
         partner_ids_data = defaultdict(dict)
         for expr in exprs:
             mis_report_queries = list(filter(
@@ -96,4 +96,3 @@ class MisExpressionEvaluator(ExpressionEvaluator):
                 else:
                     drilldown_args.append(None)
             yield partner_id, vals, drilldown_args, name_error
-

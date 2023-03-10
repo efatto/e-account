@@ -1,5 +1,5 @@
 
-from odoo import fields, api, _, models, tools
+from odoo import api, models, tools
 
 
 class MailThread(models.AbstractModel):

@@ -3,6 +3,7 @@
 from odoo import models
 from odoo.tools import float_compare
 
+
 class WizardImportFatturapa(models.TransientModel):
     _inherit = "wizard.import.fatturapa"
 
