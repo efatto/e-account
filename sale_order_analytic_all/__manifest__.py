@@ -20,7 +20,6 @@
 >>>>>>> [FIX] comment not-verified import
 =======
         'sale_stock',
-        'sale_timesheet',
         'sale_timesheet_existing_project',
 >>>>>>> [IMP] create project at SO creation
     ],
