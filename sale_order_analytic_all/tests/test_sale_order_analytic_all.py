@@ -1,5 +1,6 @@
 from odoo.tests import common
 
+
 class TestSaleOrderAnalyticAll(common.SavepointCase):
 
     @classmethod
