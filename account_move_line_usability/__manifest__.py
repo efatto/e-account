@@ -15,7 +15,7 @@ Solve some usability issue in account move line:
 * set next line with balance value,
 * set account accordingly to partner.
 ''',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
     'license': 'AGPL-3',
     'depends': [
         'account',
