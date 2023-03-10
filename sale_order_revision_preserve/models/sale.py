@@ -1,7 +1,7 @@
 # Copyright 2021 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, models, fields
+from odoo import api, models
 
 
 class SaleOrder(models.Model):
@@ -38,5 +38,5 @@ class SaleOrder(models.Model):
 
     @api.multi
     def create_revision(self):
-        res = super().create_revision()
+        super().create_revision()
         return True
