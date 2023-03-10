@@ -8,7 +8,8 @@
     'description': 'This module add logic to store a copy of sale order as revision, '
                    'while the user continue to use the same sale order, to preserve '
                    'chat history and attachments.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
+    'license': 'AGPL-3',
     'depends': [
         'sale_order_revision',
     ],
