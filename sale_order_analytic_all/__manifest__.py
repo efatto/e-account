@@ -8,7 +8,8 @@
     'description': 'Simple module that create analytic account, procurement group and '
                    'project for every order at creation, even without lines. Added '
                    'service later will create task in the same project.',
-    'website': 'https://efatto.it',
+    'website': 'https://github.com/sergiocorato/e-account',
+    'license': 'AGPL-3',
     'depends': [
         'sale_stock',
         'sale_timesheet_existing_project',
