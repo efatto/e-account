@@ -6,7 +6,7 @@
         Set default no autofollow and remove option to choose if you want to
         automatically add new recipients as followers on mail.compose.message""",
     'author': 'Sergio Corato',
-    'website': "https://efatto.it",
+    'website': "https://github.com/sergiocorato/e-account",
     'category': 'Social Network',
     'version': '12.0.1.0.0',
     'license': 'AGPL-3',
