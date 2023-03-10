@@ -43,3 +43,4 @@ class TestSaleOrderAnalyticAll(common.SavepointCase):
         self.assertEqual(sale_order_1.project_id, sol1.project_id)
         self.assertEqual(sol1.project_id.sale_line_id, sol1)
         self.assertEqual(sale_order_1.project_id, sol2.project_id)
+        self.assertEqual(len(sale_order_1.tasks_ids), 1)

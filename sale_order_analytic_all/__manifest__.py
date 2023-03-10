@@ -11,7 +11,6 @@
     'website': 'https://efatto.it',
     'depends': [
         'sale_stock',
-        'sale_timesheet',
         'sale_timesheet_existing_project',
     ],
     'data': [
