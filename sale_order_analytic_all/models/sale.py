@@ -45,7 +45,7 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     def _timesheet_service_generation(self):
-        """Handle task creation with sales order's project."""
+        """Assign created project to sale order line."""
         so_lines = self.filtered(lambda sol: (
             sol.order_id.project_id and
             sol.is_service and
@@ -56,5 +56,4 @@ class SaleOrderLine(models.Model):
                 # assign first sale line to project
                 project.sale_line_id = so_line
             so_line.project_id = project
-            so_line._timesheet_create_task(project=project)
         return super()._timesheet_service_generation()
