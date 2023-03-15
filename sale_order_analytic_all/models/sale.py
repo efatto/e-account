@@ -12,7 +12,11 @@ class SaleOrder(models.Model):
         if not order.analytic_account_id:
             order._create_analytic_account()
         if not order.project_id:
-            order._create_project()
+            # use sudo() as user may not have permission to create the project
+            order.sudo().with_context(
+                default_company_id=order.company_id.id,
+                force_company=order.company_id.id,
+            )._create_project()
         if not order.procurement_group_id:
             group_id = self.env['procurement.group'].create({
                 'name': order.name,
