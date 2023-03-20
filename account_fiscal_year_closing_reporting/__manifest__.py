@@ -4,7 +4,7 @@
 {
     "name": "Fiscal year closing reporting",
     "summary": "Remove fyc moves from account reporting",
-    "version": "12.0.1.0.2",
+    "version": "12.0.1.0.3",
     "category": "Accounting & Finance",
     "website": "https://github.com/sergiocorato/e-efatto",
     "author": "Sergio Corato",
