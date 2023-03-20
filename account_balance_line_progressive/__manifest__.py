@@ -5,7 +5,7 @@
     'version': '12.0.1.0.1',
     'category': 'Accounting',
     'author': "Sergio Corato",
-    'website': 'https://github.com/sergiocorato/e-efatto',
+    'website': 'https://github.com/sergiocorato/e-account',
     'license': 'AGPL-3',
     'depends': [
         'account',
