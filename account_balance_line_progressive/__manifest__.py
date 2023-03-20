@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 {
     'name': 'Account balance line progressive',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'category': 'Accounting',
     'author': "Sergio Corato",
     'website': 'https://github.com/sergiocorato/e-efatto',
