@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-20 15:17+0000\n"
-"PO-Revision-Date: 2021-07-20 15:17+0000\n"
+"POT-Creation-Date: 2023-03-23 13:28+0000\n"
+"PO-Revision-Date: 2023-03-23 13:28+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr "Costo utilizzato per la valutazione degli stock al prezzo standard e com
 
 #. module: sale_order_line_usability
 #: model:ir.model.fields,field_description:sale_order_line_usability.field_sale_order_line__move_price_unit
-msgid "Move Price Unit"
+msgid "Move Cost Unit"
 msgstr "Costo Unitario Movimento Magazzino"
 
 #. module: sale_order_line_usability
@@ -34,4 +34,9 @@ msgstr "Costo Prodotto"
 #: model:ir.model,name:sale_order_line_usability.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Linea d'ordine di vendita"
+
+#. module: sale_order_line_usability
+#: model:ir.model.fields,field_description:sale_order_line_usability.field_sale_order_line__move_price_to_invoice_total
+msgid "Total Cost To Invoice"
+msgstr "Totale Costo Da Fatturare"
 
