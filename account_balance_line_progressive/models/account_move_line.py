@@ -1,7 +1,7 @@
 # Copyright 2019 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class AccountMoveLine(models.Model):
