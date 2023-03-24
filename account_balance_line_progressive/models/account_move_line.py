@@ -8,7 +8,6 @@ class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
     _order = 'date desc, id desc'
 
-    @api.depends('debit', 'credit')
     def _compute_balance_progressive(self):
         tables, where_clause, where_params = self.with_context(
             initial_bal=True)._query_get()
@@ -31,6 +30,7 @@ class AccountMoveLine(models.Model):
                     )
                )
             AND (l2.date < l1.date OR (l2.date = l1.date AND l2.id <= l1.id))
+            JOIN account_move m1 on (m1.id = l2.move_id AND m1.state <> 'draft')
             WHERE l1.id IN %s """
         if where_clause:
             where_clause = 'AND ' + where_clause
