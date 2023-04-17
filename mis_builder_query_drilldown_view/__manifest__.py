@@ -10,7 +10,6 @@
     "summary": "Add drilldown views to mis report",
     "depends": [
         "account_invoice_line_usability",
-        "mis_builder_analytic_query",
         "mis_builder_query_drilldown",
         "mrp",
         "sale_order_line_usability",
