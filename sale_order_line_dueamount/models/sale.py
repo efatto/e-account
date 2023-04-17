@@ -47,7 +47,7 @@ class SaleOrderLine(models.Model):
         due_line_ids = []
         if self.order_id.payment_term_id and self.price_subtotal:
             totlines = self.order_id.payment_term_id.compute(
-                self.price_subtotal,
+                self.price_total,
                 self.commitment_date or self.order_id.commitment_date or
                 self.order_id.date_order)[0]
             for dueline in totlines:
@@ -61,7 +61,7 @@ class SaleOrderLine(models.Model):
             due_line_id = dueamount_line_obj.create({
                 'date': self.commitment_date or self.order_id.commitment_date or
                 self.order_id.date_order,
-                'amount': self.price_subtotal,
+                'amount': self.price_total,
                 'line_id': self.id,
             })
             due_line_ids.append(due_line_id.id)
