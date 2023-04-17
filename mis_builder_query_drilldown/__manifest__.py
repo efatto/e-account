@@ -6,7 +6,7 @@
     "name": "Mis builder drilldown query",
     "version": "12.0.1.0.0",
     "category": "Reporting",
-    "author": "Sergio Corato, Odoo Community Association (OCA)",
+    "author": "Sergio Corato",
     "website": "https://github.com/sergiocorato/e-account",
     "license": "AGPL-3",
     "summary": "Add drilldown to kpi from query of mis report",
