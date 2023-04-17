@@ -45,7 +45,7 @@ class SaleOrderLine(models.Model):
         self.dueamount_ids.unlink()
         dueamount_line_obj = self.env['sale.order.line.dueamount']
         due_line_ids = []
-        if self.order_id.payment_term_id and self.price_subtotal:
+        if self.order_id.payment_term_id and self.price_total:
             totlines = self.order_id.payment_term_id.compute(
                 self.price_total,
                 self.commitment_date or self.order_id.commitment_date or
