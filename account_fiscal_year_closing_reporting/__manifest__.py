@@ -18,5 +18,5 @@
     "data": [
         'wizard/general_ledger_wizard_view.xml',
     ],
-    "auto_install": True,
+    "auto_install": False,
 }
