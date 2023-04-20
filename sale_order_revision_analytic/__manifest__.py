@@ -6,7 +6,7 @@
     'category': 'Sale Management',
     'author': 'Sergio Corato',
     'description': 'The default behaviour of sale order revision create a new analytic '
-                   'account for each revisione. '
+                   'account for each revision. '
                    'This module set the same analytic account on revisioned sale order '
                    'as the original sale order, to do not create duplicated accounts.',
     'website': 'https://github.com/sergiocorato/e-account',
