@@ -8,8 +8,10 @@
             <field name="name" position="after">
                 <field name="client_order_ref"/>
             </field>
-            <xpath expr="//div[hasclass('oe_kanban_bottom_left', 'text-muted')]" position="inside">
-                <span><strong><t t-esc="record.client_order_ref.value"/></strong></span>
+            <xpath expr="//div[hasclass('o_kanban_record_top', 'mb16')]" position="after">
+                <div>
+                    <span><t t-esc="record.client_order_ref.value"/></span>
+                </div>
             </xpath>
         </field>
     </record>
