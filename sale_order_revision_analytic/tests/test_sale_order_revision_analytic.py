@@ -46,6 +46,12 @@ class TestSaleOrderRevision(common.SavepointCase):
         # Create a revision of the Sale Order
         self._revision_sale_order(sale_order_1)
         # check analytic account is the same
-        revision = sale_order_1.current_revision_id
+        if self.env['ir.module.module'].search([
+            ('name', '=', 'sale_order_revision_preserve'),
+            ('state', '=', 'installed'),
+        ]):
+            revision = sale_order_1.old_revision_ids[0]
+        else:
+            revision = sale_order_1.current_revision_id
         self.assertEqual(sale_order_1.analytic_account_id,
                          revision.analytic_account_id)
