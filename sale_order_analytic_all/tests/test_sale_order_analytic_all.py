@@ -44,8 +44,17 @@ class TestSaleOrderAnalyticAll(common.SavepointCase):
         # confirm order without lines
         sale_order_1.action_confirm()
         self.assertEqual(sale_order_1.state, 'sale')
-        # check project is created
-        self.assertTrue(sale_order_1.project_id)
+        # check analytic account and project are created and are unique
+        analytic = self.env['account.analytic.account'].search([
+            ('name', '=', sale_order_1.name)
+        ])
+        self.assertEqual(len(analytic), 1, msg="Contract was not created")
+
+        project = self.env['project.project'].search([
+            ('name', '=', sale_order_1.name)
+        ])
+        self.assertEqual(len(project), 1, msg="Project was not created")
+
         sol1 = self._create_sale_order_line(sale_order_1, self.product, 5)
         sol2 = self._create_sale_order_line(sale_order_1, self.product1, 20)
         # check new lines of type task and service tracking has the
