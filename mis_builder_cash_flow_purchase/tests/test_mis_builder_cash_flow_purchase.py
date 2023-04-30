@@ -5,7 +5,7 @@ from odoo import fields
 from odoo.tools.date_utils import relativedelta
 
 
-class TestPurchaseOrderLineCashflow(SavepointCase):
+class TestMisBuilderCashflowPurchase(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
@@ -67,7 +67,7 @@ class TestPurchaseOrderLineCashflow(SavepointCase):
             self.assertTrue(line.cashflow_line_ids)
             if line.product_id == self.product:
                 self.assertEqual(
-                    sum(line.mapped('cashflow_line_ids.purchase_forecast_balance')),
+                    sum(line.mapped('cashflow_line_ids.purchase_balance_forecast')),
                     line.price_total)
 
     def test_02_purchase_payment_term_cashflow(self):
@@ -87,5 +87,5 @@ class TestPurchaseOrderLineCashflow(SavepointCase):
             self.assertTrue(line.cashflow_line_ids)
             if line.product_id == self.product:
                 self.assertEqual(
-                    sum(line.mapped('cashflow_line_ids.purchase_forecast_balance')),
+                    sum(line.mapped('cashflow_line_ids.purchase_balance_forecast')),
                     line.price_total)

@@ -11,11 +11,11 @@ class PurchaseOrder(models.Model):
     @api.multi
     def write(self, vals):
         res = super().write(vals)
-        for order in self:
+        for purchase_order in self:
             if vals.get('payment_term_id') or vals.get('date_planned') or vals.get(
                 'payment_mode_id'
             ):
-                for line in order.order_line:
+                for line in purchase_order.order_line:
                     line._refresh_cashflow_line()
         return res
 
@@ -26,8 +26,9 @@ class PurchaseOrder(models.Model):
                     record.payment_mode_id.bank_account_link != 'fixed':
                 raise ValidationError(
                     _('Payment mode %s used in purchase orders must be of type fixed.')
-                      % record.payment_mode_id.name
+                    % record.payment_mode_id.name
                 )
+
 
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
@@ -77,7 +78,7 @@ class PurchaseOrderLine(models.Model):
             account_id = account_ids[0]
 
         # check is there is a residual prevision of amount to pay
-        # compute actual value of order row
+        # compute actual value of purchase_order row
         # as price_total do not change if delivered is more than ordered
         # (net unit price row * max between ordered and invoiced qty)
         max_qty = max([self.product_qty, self.qty_received, 1])
@@ -112,9 +113,12 @@ class PurchaseOrderLine(models.Model):
                         i, len(totlines), self.order_id.name),
                     'date': dueline[0],
                     'purchase_balance_currency': dueline[1],
+                    'currency_id': self.order_id.currency_id.id,
                     'balance': 0,
                     'purchase_line_id': self.id,
                     'account_id': account_id.id,
                     'partner_id': self.order_id.partner_id.id,
+                    'res_id': self.id,
+                    'res_model_id': self.env.ref("base.model_ir_model").id,
                 }])
                 cashflow_line_ids.append(due_line_id.id)

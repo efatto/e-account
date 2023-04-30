@@ -8,10 +8,10 @@
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="purchase_line_id"/>
                 <field name="purchase_invoiced_percent"/>
-                <field name="purchase_currency_rate"/>
+                <field name="currency_rate"/>
             </xpath>
             <field name="balance" position="after">
-                <field name="purchase_forecast_balance" sum="Total forecast balance"/>
+                <field name="purchase_balance_forecast" sum="Total forecast balance"/>
             </field>
         </field>
     </record>
@@ -23,10 +23,10 @@
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="purchase_line_id"/>
                 <field name="purchase_invoiced_percent"/>
-                <field name="purchase_currency_rate"/>
+                <field name="currency_rate"/>
             </xpath>
             <field name="balance" position="after">
-                <field name="purchase_forecast_balance" sum="Total forecast balance"/>
+                <field name="purchase_balance_forecast" sum="Total forecast balance"/>
             </field>
         </field>
     </record>
