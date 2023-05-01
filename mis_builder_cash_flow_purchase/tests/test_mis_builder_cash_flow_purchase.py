@@ -88,4 +88,4 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
             if line.product_id == self.product:
                 self.assertEqual(
                     sum(line.mapped('cashflow_line_ids.purchase_balance_forecast')),
-                    line.price_total)
+                    - line.price_total)
