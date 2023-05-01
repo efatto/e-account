@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* purchase_order_line_dueamount
+#	* mis_builder_cash_flow_inheritable
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-24 15:45+0000\n"
-"PO-Revision-Date: 2022-05-24 15:45+0000\n"
+"POT-Creation-Date: 2023-05-01 14:55+0000\n"
+"PO-Revision-Date: 2023-05-01 14:55+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,74 +15,50 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__amount
-msgid "Amount"
-msgstr "Importo"
+#. module: mis_builder_cash_flow_inheritable
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_inheritable.field_mis_cash_flow__balance_currency
+msgid "Balance Currency"
+msgstr "Saldo in valuta"
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__create_uid
-msgid "Created by"
-msgstr "Creato da"
+#. module: mis_builder_cash_flow_inheritable
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_inheritable.field_mis_cash_flow__balance_forecast
+msgid "Balance Forecast"
+msgstr "Saldo previsto"
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__create_date
-msgid "Created on"
-msgstr "Creato il"
+#. module: mis_builder_cash_flow_inheritable
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_inheritable.field_mis_cash_flow__currency_id
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_inheritable.field_mis_cash_flow_forecast_line__currency_id
+msgid "Currency"
+msgstr "Valuta"
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__date
-msgid "Date"
-msgstr "Data"
+#. module: mis_builder_cash_flow_inheritable
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_inheritable.field_mis_cash_flow__invoiced_percent
+msgid "Invoiced Percent"
+msgstr "Fatturato (%)"
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__display_name
-msgid "Display Name"
-msgstr "Nome Visualizzato"
+#. module: mis_builder_cash_flow_inheritable
+#: model:ir.model,name:mis_builder_cash_flow_inheritable.model_mis_cash_flow
+msgid "MIS Cash Flow"
+msgstr "MIS Cash flow"
 
-#. module: purchase_order_line_dueamount
-#: model_terms:ir.ui.view,arch_db:purchase_order_line_dueamount.purchase_order_form
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line__due__amount_ids
-msgid "Due amount lines"
-msgstr "Importi dovuti"
+#. module: mis_builder_cash_flow_inheritable
+#: model:ir.model,name:mis_builder_cash_flow_inheritable.model_mis_cash_flow_forecast_line
+msgid "MIS Cash Flow Forecast Line"
+msgstr "MIS Cash flow riga previsione"
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__id
-msgid "ID"
+#. module: mis_builder_cash_flow_inheritable
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_inheritable.field_mis_cash_flow_forecast_line__res_model
+msgid "Model"
+msgstr "Modello"
+
+#. module: mis_builder_cash_flow_inheritable
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_inheritable.field_mis_cash_flow_forecast_line__res_id
+msgid "Res"
 msgstr ""
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
-
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__write_uid
-msgid "Last Updated by"
-msgstr "Ultima modifica di"
-
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__write_date
-msgid "Last Updated on"
-msgstr "Ultima modifica il"
-
-#. module: purchase_order_line_dueamount
-#: model_terms:ir.ui.view,arch_db:purchase_order_line_dueamount.purchase_order_form
-msgid "Payments"
-msgstr "Pagamenti"
-
-#. module: purchase_order_line_dueamount
-#: model:ir.model,name:purchase_order_line_dueamount.model_purchase_order_line
-msgid "Purchase Order Line"
-msgstr "Riga ordine di acquisto"
-
-#. module: purchase_order_line_dueamount
-#: model:ir.model,name:purchase_order_line_dueamount.model_purchase_order_line_dueamount
-msgid "Purchase order line due amount"
-msgstr "Importo dovuto riga ordine di acquisto"
-
-#. module: purchase_order_line_dueamount
-#: model_terms:ir.ui.view,arch_db:purchase_order_line_dueamount.purchase_order_form
-msgid "Total amount"
-msgstr "Importo totale"
+#. module: mis_builder_cash_flow_inheritable
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_inheritable.field_mis_cash_flow__res_model
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_inheritable.field_mis_cash_flow_forecast_line__res_model_id
+msgid "Res Model"
+msgstr "Modello res"
 
