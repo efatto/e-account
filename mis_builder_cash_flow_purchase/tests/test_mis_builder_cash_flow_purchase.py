@@ -53,7 +53,7 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
 
     def test_01_purchase_no_payment_term_cashflow(self):
         purchase_order = self.env['purchase.order'].create({
-            'partner_id': self.partner.id
+            'partner_id': self.vendor.id,
         })
         self._create_purchase_order_line(
             purchase_order, self.product, 5.0, 13,
@@ -63,12 +63,16 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
             fields.Date.today() + relativedelta(days=70))
         self.assertEqual(
             len(purchase_order.order_line), 2, msg='Order line was not created')
-        for line in purchase_order.order_line:
+        purchase_order.button_confirm()
+        po_lines = purchase_order.order_line.filtered(
+            lambda x: x.product_id == self.product
+        )
+        self.assertEqual(len(po_lines), 1)
+        for line in po_lines:
             self.assertTrue(line.cashflow_line_ids)
-            if line.product_id == self.product:
-                self.assertEqual(
-                    sum(line.mapped('cashflow_line_ids.purchase_balance_forecast')),
-                    line.price_total)
+            self.assertAlmostEqual(
+                sum(line.mapped('cashflow_line_ids.purchase_balance_forecast')),
+                - line.price_total)
 
     def test_02_purchase_payment_term_cashflow(self):
         purchase_order1 = self.env['purchase.order'].create({
@@ -83,9 +87,13 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
             fields.Date.today() + relativedelta(days=70))
         self.assertEqual(
             len(purchase_order1.order_line), 2, msg='Order line was not created')
-        for line in purchase_order1.order_line:
+        purchase_order1.button_confirm()
+        po1_lines = purchase_order1.order_line.filtered(
+            lambda x: x.product_id == self.product
+        )
+        self.assertEqual(len(po1_lines), 1)
+        for line in po1_lines:
             self.assertTrue(line.cashflow_line_ids)
-            if line.product_id == self.product:
-                self.assertEqual(
-                    sum(line.mapped('cashflow_line_ids.purchase_balance_forecast')),
-                    - line.price_total)
+            self.assertAlmostEqual(
+                sum(line.mapped('cashflow_line_ids.purchase_balance_forecast')),
+                - line.price_total)

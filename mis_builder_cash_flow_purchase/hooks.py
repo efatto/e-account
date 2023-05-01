@@ -14,8 +14,7 @@ def create_cashflow_lines(cr, registry):
         i = 0
         for purchase in purchases:
             i += 1
-            for line in purchase.order_line:
-                line._refresh_cashflow_line()
+            purchase.order_line._refresh_cashflow_line()
             _logger.info('Creating cashflow line for purchase order #%s/%s' % (
                 i, i_max
             ))
