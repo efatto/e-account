@@ -107,7 +107,7 @@ class PurchaseOrderLine(models.Model):
                     purchase_balance_total_currency,
                     self.date_planned or self.order_id.date_planned or
                     self.order_id.date_order)[0]
-            for i, dueline in enumerate(totlines):
+            for i, dueline in enumerate(totlines, start=1):
                 due_line_id = cashflow_line_obj.create([{
                     'name': _('Due line #%s/%s of Purchase order %s') % (
                         i, len(totlines), self.order_id.name),
