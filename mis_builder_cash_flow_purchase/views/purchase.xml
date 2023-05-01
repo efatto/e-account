@@ -10,7 +10,6 @@
                         <tree editable="bottom" string="Cash flow lines">
                             <field name="date"/>
                             <field name="currency_id"/>
-                            <field name="currency_rate"/>
                             <field name="purchase_balance_currency" widget="monetary" options="{'currency_field': 'purchase_currency_id'}"/>
                             <field name="purchase_invoiced_percent"/>
                             <field name="purchase_balance_forecast" sum="Total forecast balance"/>
