@@ -9,7 +9,6 @@
             <field name="account_id" position="after">
                 <field name="invoiced_percent"/>
                 <field name="currency_id"/>
-                <field name="currency_rate"/>
                 <field name="balance_currency"/>
                 <field name="balance_forecast"/>
             </field>
@@ -24,7 +23,6 @@
             <field name="move_line_id" position="after">
                 <field name="invoiced_percent"/>
                 <field name="currency_id"/>
-                <field name="currency_rate"/>
                 <field name="balance_currency"/>
                 <field name="balance_forecast"/>
             </field>
