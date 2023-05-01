@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* purchase_order_line_dueamount
+#	* mis_builder_cash_flow_purchase
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-24 15:45+0000\n"
-"PO-Revision-Date: 2022-05-24 15:45+0000\n"
+"POT-Creation-Date: 2023-05-01 14:57+0000\n"
+"PO-Revision-Date: 2023-05-01 14:57+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,74 +15,82 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__amount
-msgid "Amount"
-msgstr "Importo"
-
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__create_uid
-msgid "Created by"
-msgstr "Creato da"
-
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__create_date
-msgid "Created on"
-msgstr "Creato il"
-
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__date
-msgid "Date"
-msgstr "Data"
-
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__display_name
-msgid "Display Name"
-msgstr "Nome Visualizzato"
-
-#. module: purchase_order_line_dueamount
-#: model_terms:ir.ui.view,arch_db:purchase_order_line_dueamount.purchase_order_form
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line__due__amount_ids
-msgid "Due amount lines"
-msgstr "Importi dovuti"
-
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__id
-msgid "ID"
+#. module: mis_builder_cash_flow_purchase
+#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.purchase_order_form
+msgid "Cash flow"
 msgstr ""
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
+#. module: mis_builder_cash_flow_purchase
+#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.purchase_order_form
+msgid "Cash flow lines"
+msgstr "Righe cash flow"
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__write_uid
-msgid "Last Updated by"
-msgstr "Ultima modifica di"
+#. module: mis_builder_cash_flow_purchase
+#: code:addons/mis_builder_cash_flow_purchase/models/purchase.py:119
+#, python-format
+msgid "Due line #%s/%s of Purchase order %s"
+msgstr "Riga cash flow #%s/%s dell'ordine di acquisto %s"
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model.fields,field_description:purchase_order_line_dueamount.field_purchase_order_line_dueamount__write_date
-msgid "Last Updated on"
-msgstr "Ultima modifica il"
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_balance_forecast
+msgid "Forecast balance"
+msgstr "Saldo previsto"
 
-#. module: purchase_order_line_dueamount
-#: model_terms:ir.ui.view,arch_db:purchase_order_line_dueamount.purchase_order_form
-msgid "Payments"
-msgstr "Pagamenti"
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_purchase_order_line__cashflow_line_ids
+msgid "Forecast cashflow line"
+msgstr "Riga saldo previsto"
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model,name:purchase_order_line_dueamount.model_purchase_order_line
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model,name:mis_builder_cash_flow_purchase.model_mis_cash_flow
+msgid "MIS Cash Flow"
+msgstr "MIS Cash flow"
+
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model,name:mis_builder_cash_flow_purchase.model_mis_cash_flow_forecast_line
+msgid "MIS Cash Flow Forecast Line"
+msgstr "MIS Cash flow riga previsione"
+
+#. module: mis_builder_cash_flow_purchase
+#: code:addons/mis_builder_cash_flow_purchase/models/purchase.py:35
+#, python-format
+msgid "Payment mode %s used in purchase orders must be of type fixed."
+msgstr "Il modo di pagamento %s usato negli ordini di acquisto deve essere di tipo fisso."
+
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_balance_currency
+msgid "Purchase Balance Currency"
+msgstr "Saldo acquisto in valuta"
+
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_invoiced_percent
+msgid "Purchase Invoiced Percent"
+msgstr "Fatturazione acquisto (%)"
+
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model,name:mis_builder_cash_flow_purchase.model_purchase_order
+msgid "Purchase Order"
+msgstr "Ordine di acquisto"
+
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model,name:mis_builder_cash_flow_purchase.model_purchase_order_line
 msgid "Purchase Order Line"
 msgstr "Riga ordine di acquisto"
 
-#. module: purchase_order_line_dueamount
-#: model:ir.model,name:purchase_order_line_dueamount.model_purchase_order_line_dueamount
-msgid "Purchase order line due amount"
-msgstr "Importo dovuto riga ordine di acquisto"
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model.fields,help:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_balance_currency
+msgid "Purchase amount in vendor currency recomputed with delivered qty"
+msgstr "L'importo dell'acquisto in valuta del fornitore ricalcolato sulla quantità consegnata"
 
-#. module: purchase_order_line_dueamount
-#: model_terms:ir.ui.view,arch_db:purchase_order_line_dueamount.purchase_order_form
-msgid "Total amount"
-msgstr "Importo totale"
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_line_id
+msgid "Purchase order line"
+msgstr "Riga ordine di acquisto"
+
+#. module: mis_builder_cash_flow_purchase
+#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.mis_cash_flow_forecast_line_view_form
+#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.mis_cash_flow_forecast_line_view_tree
+#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.purchase_order_form
+msgid "Total forecast balance"
+msgstr "Totale saldo previsto"
 
