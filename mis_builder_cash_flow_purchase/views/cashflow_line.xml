@@ -8,7 +8,6 @@
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="purchase_line_id"/>
                 <field name="purchase_invoiced_percent"/>
-                <field name="currency_rate"/>
             </xpath>
             <field name="balance" position="after">
                 <field name="purchase_balance_forecast" sum="Total forecast balance"/>
@@ -23,7 +22,6 @@
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="purchase_line_id"/>
                 <field name="purchase_invoiced_percent"/>
-                <field name="currency_rate"/>
             </xpath>
             <field name="balance" position="after">
                 <field name="purchase_balance_forecast" sum="Total forecast balance"/>

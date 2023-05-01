@@ -17,6 +17,3 @@ class CashFlowForecastLine(models.Model):
     currency_id = fields.Many2one(
         comodel_name='res.currency'
     )
-    currency_rate = fields.Float(
-        related='currency_id.rate',
-    )
