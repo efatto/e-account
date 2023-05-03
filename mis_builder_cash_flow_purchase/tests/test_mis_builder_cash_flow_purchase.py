@@ -74,7 +74,7 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
                 sum(line.mapped('cashflow_line_ids.purchase_balance_forecast')),
                 - line.price_total)
 
-    def test_02_purchase_payment_term_cashflow(self):
+    def test_02_purchase_payment_term_2rate_cashflow(self):
         purchase_order1 = self.env['purchase.order'].create({
             'partner_id': self.vendor.id,
             'payment_term_id': self.payment_term_2rate.id,
@@ -93,7 +93,7 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
         )
         self.assertEqual(len(po1_lines), 1)
         for line in po1_lines:
-            self.assertTrue(line.cashflow_line_ids)
+            self.assertEqual(len(line.cashflow_line_ids), 2)
             self.assertAlmostEqual(
                 sum(line.mapped('cashflow_line_ids.purchase_balance_forecast')),
                 - line.price_total)
