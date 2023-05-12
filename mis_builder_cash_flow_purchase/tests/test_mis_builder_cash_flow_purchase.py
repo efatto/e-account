@@ -38,16 +38,16 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
 
     def _create_purchase_order_line(self, order, product, qty, price_unit, date):
         vals = {
+            'name': product.name,
             'order_id': order.id,
             'product_id': product.id,
-            'product_qty': qty,
             'product_uom': product.uom_po_id.id,
+            'product_qty': qty,
             'price_unit': price_unit,
-            'name': product.name,
             'date_planned': date,
         }
         line = self.env['purchase.order.line'].create(vals)
-        line.onchange_product_id()
+        line._onchange_quantity()
         line._convert_to_write(line._cache)
         return line
 
