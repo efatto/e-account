@@ -18,12 +18,14 @@ class MisCashFlow(models.Model):
                 fl.account_id as account_id,
                 CASE
                     WHEN fl.purchase_balance_forecast > 0
-                    THEN fl.purchase_balance_forecast * (1 - fl.purchase_invoiced_percent)
+                    THEN fl.purchase_balance_forecast *
+                        (1 - fl.purchase_invoiced_percent)
                     ELSE 0.0
                 END as debit,
                 CASE
                     WHEN fl.purchase_balance_forecast < 0
-                    THEN -fl.purchase_balance_forecast * (1 - fl.purchase_invoiced_percent)
+                    THEN -fl.purchase_balance_forecast *
+                        (1 - fl.purchase_invoiced_percent)
                     ELSE 0.0
                 END as credit,
                 Null as reconciled,
