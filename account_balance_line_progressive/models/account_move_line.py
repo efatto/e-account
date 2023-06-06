@@ -1,16 +1,17 @@
-# Copyright 2019 Sergio Corato <https://github.com/sergiocorato>
+# Copyright 2019-2023 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
-    _order = 'date desc, id desc'
+    _order = "date desc, id desc"
 
     def _compute_balance_progressive(self):
         tables, where_clause, where_params = self.with_context(
-            initial_bal=True)._query_get()
+            initial_bal=True
+        )._query_get()
         where_params = [tuple(self.ids)] + where_params
         query = """SELECT l1.id,
             COALESCE(SUM(l2.debit-l2.credit), 0),
@@ -33,8 +34,8 @@ class AccountMoveLine(models.Model):
             JOIN account_move m1 on (m1.id = l2.move_id AND m1.state <> 'draft')
             WHERE l1.id IN %s """
         if where_clause:
-            where_clause = 'AND ' + where_clause
-            where_clause = where_clause.replace('account_move_line', 'l1')
+            where_clause = "AND " + where_clause
+            where_clause = where_clause.replace("account_move_line", "l1")
             query += where_clause
         query += " GROUP BY l1.id"
         self._cr.execute(query, where_params)
@@ -44,13 +45,15 @@ class AccountMoveLine(models.Model):
             line.balance_progressive_currency = balance_currency
 
     balance_progressive = fields.Monetary(
-        compute='_compute_balance_progressive',
-        currency_field='company_currency_id',
-        string='Progressive Balance',
-        help="Field holding the progressive balance of the account for partner")
+        compute="_compute_balance_progressive",
+        currency_field="company_currency_id",
+        string="Progressive Balance",
+        help="Field holding the progressive balance of the account for partner",
+    )
     balance_progressive_currency = fields.Monetary(
-        compute='_compute_balance_progressive',
-        currency_field='currency_id',
-        string='Progressive Balance Currency',
+        compute="_compute_balance_progressive",
+        currency_field="currency_id",
+        string="Progressive Balance Currency",
         help="Field holding the progressive currency balance of the account for "
-             "partner")
+        "partner",
+    )
