@@ -8,15 +8,12 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        order = super(SaleOrder, self).create(vals)
+        order = super().create(vals)
         if not order.analytic_account_id:
             order._create_analytic_account()
         if not order.project_id:
             # use sudo() as user may not have permission to create the project
-            order.sudo().with_context(
-                default_company_id=order.company_id.id,
-                force_company=order.company_id.id,
-            )._create_project()
+            order.sudo().with_company(order.company_id.id)._create_project()
         if not order.procurement_group_id:
             group_id = self.env["procurement.group"].create(
                 {
@@ -29,22 +26,21 @@ class SaleOrder(models.Model):
             order.procurement_group_id = group_id
         return order
 
-    @api.multi
     def _create_project(self):
-        self.ensure_one()
-        account = self.analytic_account_id
-        values = {
-            "name": "%s - %s" % (self.client_order_ref, self.name)
-            if self.client_order_ref
-            else self.name,
-            "allow_timesheets": True,
-            "analytic_account_id": account.id,
-            "partner_id": self.partner_id.id,
-            "sale_order_id": self.id,
-            "active": True,
-        }
-        project = self.env["project.project"].create(values)
-        self.project_id = project
+        for sale in self:
+            account = sale.analytic_account_id
+            values = {
+                "name": "%s - %s" % (sale.client_order_ref, sale.name)
+                if sale.client_order_ref
+                else sale.name,
+                "allow_timesheets": True,
+                "analytic_account_id": account.id,
+                "partner_id": sale.partner_id.id,
+                "sale_order_id": sale.id,
+                "active": True,
+            }
+            project = self.env["project.project"].create(values)
+            sale.project_id = project
 
 
 class SaleOrderLine(models.Model):
@@ -56,7 +52,7 @@ class SaleOrderLine(models.Model):
             lambda sol: (
                 sol.order_id.project_id
                 and sol.is_service
-                and sol.product_id.service_tracking == "task_new_project"
+                and sol.product_id.service_tracking == "task_in_project"
             )
         )
         for so_line in so_lines:
