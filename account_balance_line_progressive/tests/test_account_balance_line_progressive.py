@@ -1,4 +1,4 @@
-# Copyright 2019 Sergio Corato <https://github.com/sergiocorato>
+# Copyright 2019-2023 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from datetime import timedelta
@@ -14,7 +14,7 @@ class TestAccountBalanceProgressive(common.TransactionCase):
             {
                 "name": "Miscellaneus journal",
                 "type": "general",
-                "code": "OTHER",
+                "code": "J_MISC",
             }
         )
         self.account = self.env["account.account"].create(
@@ -33,10 +33,10 @@ class TestAccountBalanceProgressive(common.TransactionCase):
             }
         )
 
-    def create_move(self, date, debit, credit):
+    def create_move(self, date, debit, credit, number):
         move = self.env["account.move"].create(
             {
-                "name": _("Account move"),
+                "name": _("Account move # %s") % number,
                 "journal_id": self.miscellaneous_journal.id,
                 "date": date,
                 "line_ids": [
@@ -70,7 +70,7 @@ class TestAccountBalanceProgressive(common.TransactionCase):
 
     def test_account_move(self):
         date = fields.Datetime.to_string(fields.Datetime.today() - timedelta(days=50))
-        move = self.create_move(date, debit=50, credit=0)
+        move = self.create_move(date, debit=50, credit=0, number=1)
         move.action_post()
         self.assertAlmostEqual(
             move.line_ids.filtered(
@@ -79,7 +79,7 @@ class TestAccountBalanceProgressive(common.TransactionCase):
             50,
         )
         date = fields.Datetime.to_string(fields.Datetime.today() - timedelta(days=30))
-        move1 = self.create_move(date, debit=0, credit=15)
+        move1 = self.create_move(date, debit=0, credit=15, number=2)
         move1.action_post()
         self.assertAlmostEqual(
             move1.line_ids.filtered(
@@ -88,7 +88,7 @@ class TestAccountBalanceProgressive(common.TransactionCase):
             35,
         )
         date = fields.Datetime.to_string(fields.Datetime.today())
-        move2 = self.create_move(date, debit=0, credit=30)
+        move2 = self.create_move(date, debit=0, credit=30, number=3)
         move2.action_post()
         self.assertAlmostEqual(
             move2.line_ids.filtered(
