@@ -17,12 +17,15 @@ class AccountMove(models.Model):
     def dueamount_set(self):
         for invoice in self:
             others_lines = invoice.line_ids.filtered(
-                lambda inv_line: inv_line.account_id.user_type_id.type not in (
-                    'receivable', 'payable'))
-            company_currency_id = (invoice.company_id or invoice.env.company
-                                   ).currency_id
+                lambda inv_line: inv_line.account_id.user_type_id.type
+                not in ("receivable", "payable")
+            )
+            company_currency_id = (
+                invoice.company_id or invoice.env.company
+            ).currency_id
             total_balance = sum(
-                others_lines.mapped(lambda l: company_currency_id.round(l.balance)))
+                others_lines.mapped(lambda l: company_currency_id.round(l.balance))
+            )
             if total_balance:
                 if invoice.invoice_payment_term_id:
                     # context for compatibility w/ account_payment_term_partner_holiday
@@ -38,7 +41,7 @@ class AccountMove(models.Model):
                     due_line_id = dueamount_line_obj.create(
                         {
                             "date": line[0],
-                            "amount": - line[1],
+                            "amount": -line[1],
                             "invoice_id": invoice.id,
                         }
                     )
@@ -48,9 +51,7 @@ class AccountMove(models.Model):
     def _post(self, soft=True):
         for move in self:
             if move.dueamount_line_ids:
-                maturity_move_lines = move.line_ids.filtered(
-                    lambda x: x.date_maturity
-                )
+                maturity_move_lines = move.line_ids.filtered(lambda x: x.date_maturity)
                 if hasattr(move, "withholding_tax_amount"):
                     dueamount_line_obj = self.env["account.invoice.dueamount.line"]
                     missing_dueamount = move.amount_total - sum(
@@ -68,7 +69,7 @@ class AccountMove(models.Model):
                         )
                         move.write({"dueamount_line_ids": [(4, due_line_id.id)]})
                 # check total amount lines == invoice.amount_total
-                total_dueamount = sum(move.dueamount_line_ids.mapped('amount'))
+                total_dueamount = sum(move.dueamount_line_ids.mapped("amount"))
                 if float_compare(total_dueamount, move.amount_total, 2) != 0:
                     raise exceptions.ValidationError(
                         _(
@@ -90,9 +91,12 @@ class AccountMove(models.Model):
                             maturity_lines_delta -= 1
                 # add extra move lines
                 elif maturity_lines_delta < 0:
-                    for i in range(0, abs(maturity_lines_delta)):
-                        maturity_move_lines += maturity_move_lines[0].with_context(
-                            check_move_validity=False).copy()
+                    for _i in range(0, abs(maturity_lines_delta)):
+                        maturity_move_lines += (
+                            maturity_move_lines[0]
+                            .with_context(check_move_validity=False)
+                            .copy()
+                        )
 
                 dueamount_lines = self.env["account.invoice.dueamount.line"].browse(
                     dueamount_ids
@@ -104,7 +108,7 @@ class AccountMove(models.Model):
                     line.with_context(check_move_validity=False).update(
                         {
                             "date_maturity": dueamount_line.date,
-                            credit_debit_field: dueamount_line.amount
+                            credit_debit_field: dueamount_line.amount,
                         }
                     )
                     i += 1
