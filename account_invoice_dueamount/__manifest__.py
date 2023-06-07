@@ -5,8 +5,6 @@
     "version": "14.0.1.0.0",
     "category": "other",
     "author": "Sergio Corato",
-    "description": "This module add optional custom due amount field, "
-    "to customize amount and dates of payments.",
     "website": "https://github.com/sergiocorato/e-account",
     "license": "AGPL-3",
     "depends": [
