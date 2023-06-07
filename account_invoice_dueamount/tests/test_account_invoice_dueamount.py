@@ -1,9 +1,10 @@
 # Copyright 2023 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo import fields
 from odoo.tests import tagged
+
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
 @tagged("post_install", "-at_install")
@@ -11,11 +12,16 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
     def setUp(self):
         super().setUp()
         self.today = fields.Date.today()
-        self.sale_journal = self.env['account.journal'].with_company(
-            self.env.user.company_id.id
-        ).search([
-            ("type", "=", "sale"),
-        ], limit=1)
+        self.sale_journal = (
+            self.env["account.journal"]
+            .with_company(self.env.user.company_id.id)
+            .search(
+                [
+                    ("type", "=", "sale"),
+                ],
+                limit=1,
+            )
+        )
         self.revenue_account = self.env["account.account"].create(
             {
                 "code": "TEST_REVENUE",
@@ -28,21 +34,31 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
                 "name": "Test partner",
             }
         )
-        self.payment_term_2rate = self.env['account.payment.term'].create({
-            'name': 'Payment term 30/60 end of month',
-            'line_ids': [
-                (0, 0, {
-                    'value': 'percent',
-                    'value_amount': 50,
-                    'days': 30,
-                }),
-                (0, 0, {
-                    'value': 'balance',
-                    'days': 30,
-                    'option': 'after_invoice_month'
-                })
-            ],
-        })
+        self.payment_term_2rate = self.env["account.payment.term"].create(
+            {
+                "name": "Payment term 30/60 end of month",
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "value": "percent",
+                            "value_amount": 50,
+                            "days": 30,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "value": "balance",
+                            "days": 30,
+                            "option": "after_invoice_month",
+                        },
+                    ),
+                ],
+            }
+        )
 
     def create_invoice(self):
         invoice_line_data = {
@@ -72,38 +88,31 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
         # another invoice forcing due amounts
         invoice = self.create_invoice()
         invoice._post()
-        self.assertEqual(
-            len(
-                invoice.line_ids.filtered(
-                    lambda x: x.date_maturity
-                )
-            ),
-            2
-        )
+        self.assertEqual(len(invoice.line_ids.filtered(lambda x: x.date_maturity)), 2)
         invoice.button_draft()
         self.assertEqual(invoice.state, "draft")
         invoice.dueamount_set()
-        self.assertEqual(
-            len(
-                invoice.dueamount_line_ids
-            ),
-            2
-        )
+        self.assertEqual(len(invoice.dueamount_line_ids), 2)
         total_amount = sum(invoice.mapped("dueamount_line_ids.amount"))
-        invoice.dueamount_line_ids[0].write({
-            "amount": 10.0,
-        })
-        invoice.dueamount_line_ids[1].write({
-            "amount": total_amount - 10.0,
-        })
+        invoice.dueamount_line_ids[0].write(
+            {
+                "amount": 10.0,
+            }
+        )
+        invoice.dueamount_line_ids[1].write(
+            {
+                "amount": total_amount - 10.0,
+            }
+        )
         invoice._post()
         self.assertAlmostEqual(
             sum(invoice.mapped("dueamount_line_ids.amount")),
-            sum(invoice.line_ids.filtered(
-                lambda x: x.account_id.user_type_id.type in (
-                    "receivable", "payable"
-                )
-            ).mapped("balance"))
+            sum(
+                invoice.line_ids.filtered(
+                    lambda x: x.account_id.user_type_id.type
+                    in ("receivable", "payable")
+                ).mapped("balance")
+            ),
         )
         # todo add a dueamount line
         # todo remove a dueamount line created by default
