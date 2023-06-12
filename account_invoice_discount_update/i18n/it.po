@@ -1,0 +1,38 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_invoice_discount_update
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-25 14:01+0000\n"
+"PO-Revision-Date: 2020-01-25 14:01+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_invoice_discount_update
+#: model:ir.model.fields,field_description:account_invoice_discount_update.field_account_invoice_discount
+msgid "Discount"
+msgstr "Sconto"
+
+#. module: account_invoice_discount_update
+#: model:ir.model,name:account_invoice_discount_update.model_account_invoice
+msgid "Invoice"
+msgstr "Fattura"
+
+#. module: account_invoice_discount_update
+#: model_terms:ir.ui.view,arch_db:account_invoice_discount_update.invoice_form_update_discount
+msgid "Update discount in invoice line of type product and consumable to % input."
+msgstr "Aggiorna lo sconto nelle righe fattura di tipo prodotto o consumabile alla % indicata."
+
+#. module: account_invoice_discount_update
+#: model_terms:ir.ui.view,arch_db:account_invoice_discount_update.invoice_form_update_discount
+msgid "Update discount to:"
+msgstr ""
+
+
