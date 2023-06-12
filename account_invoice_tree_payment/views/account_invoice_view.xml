@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <record id="invoice_tree_payment" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree" />
+        <field name="arch" type="xml">
+            <field name="invoice_date" position="after">
+                <field
+                    name="invoice_payment_term_id"
+                    optional="show"
+                    invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund','out_receipt')"
+                    string="Payment Term"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_in_invoice_tree" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_in_invoice_tree" />
+        <field name="arch" type="xml">
+            <field name="invoice_date" position="after">
+                <field
+                    name="invoice_payment_term_id"
+                    optional="show"
+                    invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund','out_receipt')"
+                    string="Payment Term"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_account_invoice_filter_payment" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter" />
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="invoice_payment_term_id" widget="selection" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
