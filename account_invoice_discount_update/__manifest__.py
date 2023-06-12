@@ -5,9 +5,6 @@
     "version": "14.0.1.0.0",
     "category": "Invoice Management",
     "license": "AGPL-3",
-    "description": """
-    Add the ability to update discount in all invoice lines with a button.
-    """,
     "author": "Sergio Corato",
     "website": "https://github.com/sergiocorato/e-account",
     "depends": [
