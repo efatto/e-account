@@ -1,1 +1,1 @@
-Use field country in filter or group invoices.
+Use field country to filter invoices.

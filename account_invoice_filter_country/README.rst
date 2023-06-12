@@ -29,7 +29,7 @@ This module add country field to filter invoices.
 Usage
 =====
 
-Use field country in filter or group invoices.
+Use field country to filter invoices.
 
 Bug Tracker
 ===========
