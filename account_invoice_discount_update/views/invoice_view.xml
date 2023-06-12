@@ -1,19 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="invoice_form_update_discount" model="ir.ui.view">
         <field name="name">account.invoice.form.discount.update</field>
         <field name="model">account.invoice</field>
-        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="inherit_id" ref="account.invoice_form" />
         <field name="arch" type="xml">
-            <xpath expr="/form/sheet/group/group/field[@name='payment_term_id']" position="after">
-               <button string="Update discount to:" name="invoice_discount_update"
-                   type="object"
-                   attrs="{'invisible': [('state', 'not in', ['draft','proforma','proforma2'])]}"
-                   help="Update discount in invoice line of type product and consumable to % input."/>
-               <field name="discount"
-                   attrs="{'invisible': [('state', 'not in', ['draft','proforma','proforma2'])]}"
-                   nolabel="1" style="margin-left: 8px; width: inherit;"/>
+            <xpath
+                expr="/form/sheet/group/group/field[@name='payment_term_id']"
+                position="after"
+            >
+               <button
+                    string="Update discount to:"
+                    name="invoice_discount_update"
+                    type="object"
+                    attrs="{'invisible': [('state', 'not in', ['draft','proforma','proforma2'])]}"
+                    help="Update discount in invoice line of type product and consumable to % input."
+                />
+               <field
+                    name="discount"
+                    attrs="{'invisible': [('state', 'not in', ['draft','proforma','proforma2'])]}"
+                    nolabel="1"
+                    style="margin-left: 8px; width: inherit;"
+                />
             </xpath>
         </field>
     </record>
