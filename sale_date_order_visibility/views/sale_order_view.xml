@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_order_form_usability" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <field name="validity_date" position="before">
+                <field name="client_order_ref" position="move" />
+            </field>
+            <xpath expr="//div[hasclass('o_td_label')][1]" position="attributes">
+                <attribute name="groups" />
+            </xpath>
+            <xpath expr="//field[@name='date_order'][1]" position="attributes">
+                <attribute name="groups" />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_quotation_tree" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="date_order" widget="date" optional="show" />
+            </field>
+        </field>
+    </record>
+</odoo>
