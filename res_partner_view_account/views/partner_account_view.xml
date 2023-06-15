@@ -6,10 +6,12 @@
     <field name="inherit_id" ref="base.view_partner_form" />
     <field name="arch" type="xml">
         <div name="button_box" position="inside">
+            <field name="supplier_rank" invisible="1" />
+            <field name="customer_rank" invisible="1" />
             <button
                     name="show_payable_account"
                     type="object"
-                    attrs="{'invisible': [('supplier', '=', False)]}"
+                    attrs="{'invisible': [('supplier_rank', '=', 0)]}"
                     context="{'invisible_balance': False}"
                     icon="fa-list"
                     class="oe_stat_button"
@@ -23,7 +25,7 @@
             <button
                     name="show_receivable_account"
                     type="object"
-                    attrs="{'invisible': [('customer', '=', False)]}"
+                    attrs="{'invisible': [('customer_rank', '=', 0)]}"
                     context="{'invisible_balance': False}"
                     icon="fa-list"
                     class="oe_stat_button"
