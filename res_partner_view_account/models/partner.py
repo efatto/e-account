@@ -5,18 +5,16 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     def show_receivable_account(self):
-        self.ensure_one()
         account_id = self.property_account_receivable_id.id
-        return self.common_show_account(self.ids[0], account_id)
+        return self.common_show_account(self.id, account_id)
 
     def show_payable_account(self):
-        self.ensure_one()
         account_id = self.property_account_payable_id.id
-        return self.common_show_account(self.ids[0], account_id)
+        return self.common_show_account(self.id, account_id)
 
     def common_show_account(self, partner_id, account_id):
-        action = self.env["ir.actions.act_window"].for_xml_id(
-            "account", "action_account_moves_all_tree"
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "account.action_account_moves_all_tree"
         )
         action["context"] = {
             "search_default_partner_id": [partner_id],
