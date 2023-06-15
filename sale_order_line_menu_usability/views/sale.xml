@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="so_backorder_tree_view" model="ir.ui.view">
         <field name="name">so.backorder.report.tree.usability</field>
         <field name="model">sale.order.line</field>
-        <field name="inherit_id" ref="sale_backorder.so_backorder_tree_view"/>
+        <field name="inherit_id" ref="sale_backorder.so_backorder_tree_view" />
         <field name="arch" type="xml">
             <field name="bo_qty" position="attributes">
                 <attribute name="sum">Total</attribute>
@@ -19,7 +19,7 @@
                 <attribute name="sum">Total</attribute>
             </field>
             <field name="name" position="after">
-                <field name="commitment_date" widget="date"/>
+                <field name="commitment_date" widget="date" />
             </field>
         </field>
     </record>
