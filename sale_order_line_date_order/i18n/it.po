@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* sale_order_line_usability
+#	* sale_order_line_date_order
 #
 msgid ""
 msgstr ""
@@ -14,24 +14,3 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: sale_order_line_usability
-#: model:ir.model.fields,help:sale_order_line_usability.field_sale_order_line__product_standard_price
-msgid "Cost used for stock valuation in standard price and as a first price to set in average/fifo. Also used as a base price for pricelists. Expressed in the default unit of measure of the product."
-msgstr "Costo utilizzato per la valutazione degli stock al prezzo standard e come primo prezzo per la determinazione della media/fifo. Anche utilizzato come prezzo di base per i listini prezzi. Espresso nell'unità di misura predefinita del prodotto. "
-
-#. module: sale_order_line_usability
-#: model:ir.model.fields,field_description:sale_order_line_usability.field_sale_order_line__move_price_unit
-msgid "Move Price Unit"
-msgstr "Costo Unitario Movimento Magazzino"
-
-#. module: sale_order_line_usability
-#: model:ir.model.fields,field_description:sale_order_line_usability.field_sale_order_line__product_standard_price
-msgid "Product Cost"
-msgstr "Costo Prodotto"
-
-#. module: sale_order_line_usability
-#: model:ir.model,name:sale_order_line_usability.model_sale_order_line
-msgid "Sales Order Line"
-msgstr "Linea d'ordine di vendita"
-

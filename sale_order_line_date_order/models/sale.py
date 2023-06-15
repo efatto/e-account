@@ -1,9 +1,7 @@
-from odoo import models, fields
+from odoo import fields, models
 
 
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+    _inherit = "sale.order.line"
 
-    date_order = fields.Datetime(
-        related='order_id.date_order'
-    )
+    date_order = fields.Datetime(related="order_id.date_order")
