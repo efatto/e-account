@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_order_form_usability" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <field name="validity_date" position="after">
+                <field name="opportunity_id" position="move" />
+                <field name="analytic_account_id" position="move" />
+                <field name="project_id" position="move" />
+            </field>
+        </field>
+    </record>
+</odoo>
