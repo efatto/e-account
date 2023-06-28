@@ -18,5 +18,5 @@
         'views/purchase.xml',
     ],
     'installable': True,
-    'post_init_hook': 'create_dueamount',
+    # 'post_init_hook': 'create_dueamount',
 }
