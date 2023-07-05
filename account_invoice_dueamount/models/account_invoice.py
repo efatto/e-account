@@ -17,8 +17,8 @@ class AccountMove(models.Model):
     def dueamount_set(self):
         for invoice in self:
             others_lines = invoice.line_ids.filtered(
-                lambda inv_line: inv_line.account_id.user_type_id.type
-                not in ("receivable", "payable")
+                lambda inv_line: inv_line.account_id.account_type
+                not in ("asset_receivable", "liability_payable")
             )
             company_currency_id = (
                 invoice.company_id or invoice.env.company
@@ -28,7 +28,8 @@ class AccountMove(models.Model):
             )
             if total_balance:
                 if invoice.invoice_payment_term_id:
-                    # context for compatibility w/ account_payment_term_partner_holiday
+                    # context for compatibility w/
+                    # account_payment_term_partner_holiday
                     totlines = invoice.invoice_payment_term_id.with_context(
                         currency_id=invoice.currency_id.id,
                         default_partner_id=invoice.partner_id.id,

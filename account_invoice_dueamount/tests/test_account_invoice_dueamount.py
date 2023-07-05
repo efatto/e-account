@@ -2,18 +2,20 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import fields
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.tests import tagged
+
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
 @tagged("post_install", "-at_install")
 class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
-    def setUp(self):
-        super().setUp()
-        self.today = fields.Date.today()
-        self.sale_journal = (
-            self.env["account.journal"]
-            .with_company(self.env.user.company_id.id)
+    @classmethod
+    def setUpClass(cls, chart_template_ref=None):
+        super().setUpClass(chart_template_ref=chart_template_ref)
+        cls.today = fields.Date.today()
+        cls.sale_journal = (
+            cls.env["account.journal"]
+            .with_company(cls.env.user.company_id.id)
             .search(
                 [
                     ("type", "=", "sale"),
@@ -21,19 +23,19 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
                 limit=1,
             )
         )
-        self.revenue_account = self.env["account.account"].create(
+        cls.revenue_account = cls.env["account.account"].create(
             {
-                "code": "TEST_REVENUE",
+                "code": "TESTREVENUE",
                 "name": "Sale revenue",
-                "user_type_id": self.env.ref("account.data_account_type_revenue").id,
+                "account_type": "income",
             }
         )
-        self.partner = self.env["res.partner"].create(
+        cls.partner = cls.env["res.partner"].create(
             {
                 "name": "Test partner",
             }
         )
-        self.payment_term_2rate = self.env["account.payment.term"].create(
+        cls.payment_term_2rate = cls.env["account.payment.term"].create(
             {
                 "name": "Payment term 30/60 end of month",
                 "line_ids": [
@@ -51,8 +53,7 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
                         0,
                         {
                             "value": "balance",
-                            "days": 30,
-                            "option": "after_invoice_month",
+                            "days": 60,
                         },
                     ),
                 ],
@@ -83,8 +84,8 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
         return invoice
 
     def test_01_invoice(self):
-        # create invoice with payment term and check it is the default, then create
-        # another invoice forcing due amounts
+        # create invoice with payment term and check it is the default,
+        # then create another invoice forcing due amounts
         invoice = self.create_invoice()
         invoice._post()
         self.assertEqual(len(invoice.line_ids.filtered(lambda x: x.date_maturity)), 2)
@@ -108,8 +109,8 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
             sum(invoice.mapped("dueamount_line_ids.amount")),
             sum(
                 invoice.line_ids.filtered(
-                    lambda x: x.account_id.user_type_id.type
-                    in ("receivable", "payable")
+                    lambda x: x.account_id.account_type
+                    in ("asset_receivable", "liability_payable")
                 ).mapped("balance")
             ),
         )
