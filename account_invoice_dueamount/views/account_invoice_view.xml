@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<record id="view_invoice_form_dueamount_lines" model="ir.ui.view">
+    <field name="model">account.move</field>
+    <field name="inherit_id" ref="account.view_move_form" />
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='line_ids']" position="before">
+            <button
+                    name="dueamount_set"
+                    string="Compute payments"
+                    type="object"
+                    states="draft"
+                />
+            <field
+                    name="dueamount_line_ids"
+                    string="Due amount lines"
+                    attrs="{'readonly': [('state', '!=', 'draft')]}"
+                >
+                <tree editable="bottom">
+                    <field name="date" />
+                    <field name="amount" sum="Total amount" />
+                </tree>
+            </field>
+        </xpath>
+    </field>
+</record>
+</odoo>
