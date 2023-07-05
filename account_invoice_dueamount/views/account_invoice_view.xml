@@ -6,15 +6,15 @@
     <field name="arch" type="xml">
         <xpath expr="//field[@name='line_ids']" position="before">
             <button
-                    name="dueamount_set"
-                    string="Compute payments"
-                    type="object"
-                    states="draft"
-                />
+          name="dueamount_set"
+          string="Compute payments"
+          type="object"
+          states="draft"
+        />
             <field
-                    name="dueamount_line_ids"
-                    attrs="{'readonly': [('state', '!=', 'draft')]}"
-                >
+          name="dueamount_line_ids"
+          attrs="{'readonly': [('state', '!=', 'draft')]}"
+        >
                 <tree editable="bottom" string="Due amount lines">
                     <field name="date" />
                     <field name="amount" sum="Total amount" />

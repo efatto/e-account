@@ -2,9 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import fields
-from odoo.tests import tagged
-
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.tests import tagged
 
 
 @tagged("post_install", "-at_install")
