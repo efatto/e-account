@@ -19,7 +19,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_margin_exclude.field_product_product__exclude_from_margin
 #: model:ir.model.fields,field_description:product_margin_exclude.field_product_template__exclude_from_margin
 msgid "Exclude From Margin"
-msgstr "Escludi dal margine"
+msgstr "Escluso dal margine"
 
 #. module: product_margin_exclude
 #: model:ir.model,name:product_margin_exclude.model_product_template
