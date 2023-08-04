@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
     def copy(self, default=None):
         if default is None:
             default = {}
-        if self.analytic_account_id:
+        if self.analytic_account_id and "unrevisioned_name" in default:
             default.update({
                 "analytic_account_id": self.analytic_account_id.id,
             })
