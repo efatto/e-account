@@ -1,4 +1,8 @@
-È possibile rimuovere i destinatari della mail direttamente. In questo esempio i followers del documento sono 4:
+Questo modulo nasconde il flag per selezionare o meno la notificare verso i followers, esponendoli direttamente nell'elenco dei destinatari della mail.
+
+L'utente può quindi rimuoverli direttamente in maniera specifica.
+
+In questo esempio i followers del documento sono 4:
 
 .. figure:: static/description/followers.png
    :alt: Followers
