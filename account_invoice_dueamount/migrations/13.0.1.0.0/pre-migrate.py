@@ -38,4 +38,4 @@ def migrate(cr, version):
             sql.Identifier(table),
             sql.Identifier(column),
         ),
-        )
+    )
