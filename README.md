@@ -7,9 +7,9 @@
 
 <!-- /!\ do not modify above this line -->
 
-# Account tools
+# Tools for account management
 
-Tools for account management
+Account tools
 
 <!-- /!\ do not modify below this line -->
 
