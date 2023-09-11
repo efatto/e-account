@@ -15,7 +15,7 @@
                     name="dueamount_line_ids"
                     attrs="{'readonly': [('state', '!=', 'draft')]}"
                 >
-                <tree editable="bottom" string="Due amount lines">
+                <tree editable="bottom">
                     <field name="date" />
                     <field name="amount" sum="Total amount" />
                 </tree>
