@@ -11,7 +11,7 @@
                "in sale order (comment top and bottom now linked with a m2o) and "
                "formatted_note in sale order line (now unexisting), in readonly view.",
     "depends": [
-        "sale",
+        "sale_comment_template",
     ],
     "data": [
         "views/sale_order_view.xml",
