@@ -1,19 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_invoice_dueamount
+# 	* account_invoice_dueamount
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-23 14:40+0000\n"
-"PO-Revision-Date: 2020-02-23 14:40+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2023-09-14 08:43+0000\n"
+"PO-Revision-Date: 2023-09-14 08:43+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: account_invoice_dueamount
+#: model:ir.model,name:account_invoice_dueamount.model_account_invoice_dueamount_line
+msgid "Account invoice due amount line"
+msgstr "Riga scadenza fattura"
 
 #. module: account_invoice_dueamount
 #: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_invoice_dueamount_line__amount
@@ -22,7 +27,6 @@ msgstr "Importo"
 
 #. module: account_invoice_dueamount
 #: model_terms:ir.ui.view,arch_db:account_invoice_dueamount.view_invoice_form_dueamount_lines
-#: model_terms:ir.ui.view,arch_db:account_invoice_dueamount.view_invoice_supplier_form_dueamount_lines
 msgid "Compute payments"
 msgstr "Calcola scadenze"
 
@@ -43,27 +47,36 @@ msgstr "Data"
 
 #. module: account_invoice_dueamount
 #: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_invoice_dueamount_line__display_name
+#: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_move__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: account_invoice_dueamount
-#: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_invoice__dueamount_line_ids
+#: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_bank_statement_line__dueamount_line_ids
+#: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_move__dueamount_line_ids
+#: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_payment__dueamount_line_ids
 msgid "Due amounts"
 msgstr "Importi dovuti"
 
 #. module: account_invoice_dueamount
 #: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_invoice_dueamount_line__id
+#: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_move__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: account_invoice_dueamount
-#: model:ir.model,name:account_invoice_dueamount.model_account_invoice
 #: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_invoice_dueamount_line__invoice_id
 msgid "Invoice"
 msgstr "Fattura"
 
 #. module: account_invoice_dueamount
+#: model:ir.model,name:account_invoice_dueamount.model_account_move
+msgid "Journal Entry"
+msgstr "Registrazione contabile"
+
+#. module: account_invoice_dueamount
 #: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_invoice_dueamount_line____last_update
+#: model:ir.model.fields,field_description:account_invoice_dueamount.field_account_move____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
 
@@ -79,18 +92,14 @@ msgstr "Ultimo aggiornamento il"
 
 #. module: account_invoice_dueamount
 #: model_terms:ir.ui.view,arch_db:account_invoice_dueamount.view_invoice_form_dueamount_lines
-#: model_terms:ir.ui.view,arch_db:account_invoice_dueamount.view_invoice_supplier_form_dueamount_lines
 msgid "Total amount"
 msgstr "Importo totale"
 
 #. module: account_invoice_dueamount
-#: code:addons/account_invoice_dueamount/models/account_invoice.py:43
+#: code:addons/account_invoice_dueamount/models/account_invoice.py:0
 #, python-format
-msgid "Total amount of due amount lines must be equal to invoice total amount %.2f"
-msgstr "L'importo totale delle scadenze deve essere uguale al totale %.2f della fattura"
-
-#. module: account_invoice_dueamount
-#: model:ir.model,name:account_invoice_dueamount.model_account_invoice_dueamount_line
-msgid "account.invoice.dueamount.line"
+msgid ""
+"Total amount of due amount lines must be equal to invoice total amount %.2f"
 msgstr ""
-
+"L'importo totale delle scadenze deve essere uguale al totale %.2f della "
+"fattura"
