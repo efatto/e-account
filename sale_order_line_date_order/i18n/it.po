@@ -1,16 +1,50 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* sale_order_line_date_order
+# 	* sale_order_line_date_order
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-20 15:17+0000\n"
-"PO-Revision-Date: 2021-07-20 15:17+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2023-09-14 08:30+0000\n"
+"PO-Revision-Date: 2023-09-14 08:30+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: sale_order_line_date_order
+#: model:ir.model.fields,help:sale_order_line_date_order.field_sale_order_line__date_order
+msgid ""
+"Creation date of draft/sent orders,\n"
+"Confirmation date of confirmed orders."
+msgstr ""
+"Data di creazione di ordini in bozza o inviati,\n"
+"Data di conferma degli ordini confermati."
+
+#. module: sale_order_line_date_order
+#: model:ir.model.fields,field_description:sale_order_line_date_order.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: sale_order_line_date_order
+#: model:ir.model.fields,field_description:sale_order_line_date_order.field_sale_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_order_line_date_order
+#: model:ir.model.fields,field_description:sale_order_line_date_order.field_sale_order_line____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: sale_order_line_date_order
+#: model:ir.model.fields,field_description:sale_order_line_date_order.field_sale_order_line__date_order
+msgid "Order Date"
+msgstr "Data ordine"
+
+#. module: sale_order_line_date_order
+#: model:ir.model,name:sale_order_line_date_order.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Riga ordine di vendita"
