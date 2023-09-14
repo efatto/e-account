@@ -8,8 +8,8 @@
     "website": "https://github.com/sergiocorato/e-account",
     "license": "AGPL-3",
     "summary": "This module only preserve fields removed from v.>12.0: note1 and note2 "
-               "in sale order (comment top and bottom now linked with a m2o) and "
-               "formatted_note in sale order line (now unexisting), in readonly view.",
+    "in sale order (comment top and bottom now linked with a m2o) and "
+    "formatted_note in sale order line (now unexisting), in readonly view.",
     "depends": [
         "sale_comment_template",
     ],
