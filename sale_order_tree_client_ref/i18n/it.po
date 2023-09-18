@@ -14,9 +14,3 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: sale_order_view_usability
-#: model_terms:ir.ui.view,arch_db:sale_order_view_usability.view_order_tree_usability
-#: model_terms:ir.ui.view,arch_db:sale_order_view_usability.view_quotation_tree_usability
-msgid "Total Tax Excluded"
-msgstr "Totale Imponibile"
