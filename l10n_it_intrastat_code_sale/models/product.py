@@ -14,7 +14,7 @@ class ProductTemplate(models.Model):
         - Intrastat Code on product template
         """
         res = super().get_intrastat_data()
-        if self._context.get("type", "") in ["out_invoice", "out_refund"]:
+        if self._context.get("move_type", "") in ["out_invoice", "out_refund"]:
             if self.categ_id and self.categ_id.intrastat_code_id:
                 res["intrastat_code_id"] = self.categ_id.intrastat_code_id.id
                 res["intrastat_type"] = self.categ_id.intrastat_type
