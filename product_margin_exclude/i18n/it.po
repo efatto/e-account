@@ -1,0 +1,38 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_margin_exclude
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-20 15:20+0000\n"
+"PO-Revision-Date: 2023-07-20 15:20+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_margin_exclude
+#: model:ir.model.fields,field_description:product_margin_exclude.field_product_product__exclude_from_margin
+#: model:ir.model.fields,field_description:product_margin_exclude.field_product_template__exclude_from_margin
+msgid "Exclude From Margin"
+msgstr "Escluso dal margine"
+
+#. module: product_margin_exclude
+#: model:ir.model,name:product_margin_exclude.model_product_template
+msgid "Product Template (Multi-Company)"
+msgstr ""
+
+#. module: product_margin_exclude
+#: model:ir.model,name:product_margin_exclude.model_sale_order
+msgid "Sale Order"
+msgstr "Ordine di vendita"
+
+#. module: product_margin_exclude
+#: model:ir.model,name:product_margin_exclude.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Linea d'ordine di vendita"
+
