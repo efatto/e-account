@@ -5,43 +5,39 @@ from odoo import api, models
 
 
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+    _inherit = "sale.order.line"
 
-    @api.depends('margin', 'price_subtotal', 'product_id.exclude_from_margin')
-    def _compute_margin_percent(self):
-        super()._compute_margin_percent()
-        for line in self.filtered(
-                lambda x: x.product_id.exclude_from_margin
-        ):
-            line.margin_percent = 0.0
-
-    @api.depends('product_id', 'purchase_price', 'product_uom_qty', 'price_unit',
-                 'price_subtotal', 'product_id.exclude_from_margin')
-    def _product_margin(self):
-        super()._product_margin()
-        for line in self.filtered(
-                lambda x: x.product_id.exclude_from_margin
-        ):
+    @api.depends(
+        "price_subtotal",
+        "product_uom_qty",
+        "purchase_price",
+        "product_id",
+        "product_id.exclude_from_margin",
+        "price_unit",
+    )
+    def _compute_margin(self):
+        super()._compute_margin()
+        for line in self.filtered(lambda sol: sol.product_id.exclude_from_margin):
             line.margin = 0.0
+            line.margin_percent = 0.0
 
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    @api.depends('margin', 'order_line.margin', 'amount_untaxed',
-                 'order_line.product_id.exclude_from_margin')
-    def _compute_percent(self):
-        super()._compute_percent()
-        for order in self:
+    @api.depends(
+        "order_line.margin",
+        "amount_untaxed",
+        "order_line.product_id.exclude_from_margin",
+    )
+    def _compute_margin(self):
+        super()._compute_margin()
+        for order in self.filtered(
+            lambda so: any(sol.product_id.exclude_from_margin for sol in so.order_line)
+        ):
             if order.margin and order.amount_untaxed:
-                order.percent = (
-                    order.margin /
-                    sum(
-                        line.price_subtotal for line in order.order_line
-                        if not line.product_id.exclude_from_margin
-                    )
-                ) * 100
-
-    @api.depends('order_line.margin', 'order_line.product_id.exclude_from_margin')
-    def _product_margin(self):
-        super()._product_margin()
+                order.margin_percent = order.margin / sum(
+                    line.price_subtotal
+                    for line in order.order_line
+                    if not line.product_id.exclude_from_margin
+                )
