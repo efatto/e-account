@@ -5,8 +5,8 @@
     "version": "14.0.1.0.0",
     "category": "other",
     "author": "Sergio Corato",
-    "summary": "Extend sale order views adding sale order ref, origin and total amount"
-    " in tree view, sale order ref in form view, "
+    "summary": "Extend sale order tree view adding origin and moving state after the "
+    "partner.  sale order ref in form view, "
     "show origin field to base user.",
     "website": "https://github.com/sergiocorato/e-account",
     "license": "AGPL-3",
