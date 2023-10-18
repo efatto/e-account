@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<record id="view_quotation_tree_usability" model="ir.ui.view">
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_quotation_tree" />
+    <field name="arch" type="xml">
+        <field name="partner_id" position="after">
+            <field name="origin" />
+            <field name="state" position="move" />
+        </field>
+    </field>
+</record>
+<record id="view_order_tree_usability" model="ir.ui.view">
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_tree" />
+    <field name="arch" type="xml">
+        <field name="partner_id" position="after">
+            <field name="origin" />
+            <field name="state" position="move" />
+        </field>
+    </field>
+</record>
+
+<record id="view_order_form_usability" model="ir.ui.view">
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form" />
+    <field name="arch" type="xml">
+        <xpath expr="//group[@name='sale_reporting']" position="attributes">
+            <attribute name="groups">base.group_user</attribute>
+        </xpath>
+        <field name="date_order" position="after">
+            <field name="client_order_ref" position="move" />
+        </field>
+    </field>
+</record>
+</odoo>
