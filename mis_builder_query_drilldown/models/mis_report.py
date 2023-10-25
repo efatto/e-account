@@ -48,7 +48,6 @@ class MisReportInstance(models.Model):
             aep,
             period.date_from,
             period.date_to,
-            None,  # target_move now part of additional_move_line_filter
             period._get_additional_move_line_filter(),
             period._get_aml_model_name(),
         )
@@ -78,7 +77,7 @@ class MisReportInstance(models.Model):
                 )
             )
             return {
-                "name": u"{} - {}".format(model, period.name),
+                "name": "{} - {}".format(model, period.name),
                 "domain": domain,
                 "type": "ir.actions.act_window",
                 "res_model": model,
