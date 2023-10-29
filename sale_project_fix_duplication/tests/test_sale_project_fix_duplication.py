@@ -1,6 +1,6 @@
 # Copyright 2023 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo.tests import common, Form
+from odoo.tests import Form, common
 
 
 class TestSaleOrderAnalyticAll(common.SavepointCase):
@@ -45,14 +45,10 @@ class TestSaleOrderAnalyticAll(common.SavepointCase):
         self.assertEqual(len(project), 1, msg="Project was not created")
 
     def test_01_order_create_task(self):
-        task_type_new_id = self.env["project.task.type"].search([
-            ('name', '=', 'New')
-        ])
+        task_type_new_id = self.env["project.task.type"].search([("name", "=", "New")])
         self.assertEqual(len(task_type_new_id), 1)
         self._create_sale_order_with_project()
         # create another sale order with project
         self._create_sale_order_with_project()
-        task_type_new_id = self.env["project.task.type"].search([
-            ('name', '=', 'New')
-        ])
+        task_type_new_id = self.env["project.task.type"].search([("name", "=", "New")])
         self.assertEqual(len(task_type_new_id), 1)
