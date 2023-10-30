@@ -45,10 +45,13 @@ class TestSaleOrderAnalyticAll(common.SavepointCase):
         self.assertEqual(len(project), 1, msg="Project was not created")
 
     def test_01_order_create_task(self):
-        task_type_new_id = self.env["project.task.type"].search([("name", "=", "New")])
-        self.assertEqual(len(task_type_new_id), 1)
+        actual_task_type_new_ids = self.env["project.task.type"].search(
+            [("name", "=", "New")]
+        )
+        actual_new_state_number = len(actual_task_type_new_ids)
         self._create_sale_order_with_project()
         # create another sale order with project
         self._create_sale_order_with_project()
-        task_type_new_id = self.env["project.task.type"].search([("name", "=", "New")])
-        self.assertEqual(len(task_type_new_id), 1)
+        task_type_new_ids = self.env["project.task.type"].search([("name", "=", "New")])
+        # check no New task type are created in addition to the existing ones
+        self.assertEqual(len(task_type_new_ids), actual_new_state_number)
