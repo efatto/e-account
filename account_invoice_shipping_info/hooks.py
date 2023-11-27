@@ -73,7 +73,9 @@ UPDATE account_move
 set {new_field} = ai.{old_field}
 FROM account_move am
 JOIN account_invoice ai ON ai.id = am.old_invoice_id
-""".format(new_field=fields[3], old_field=fields[2])
+""".format(
+                new_field=fields[3], old_field=fields[2]
+            )
         )
         openupgrade.logged_query(
             env.cr,

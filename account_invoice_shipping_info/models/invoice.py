@@ -20,39 +20,43 @@ class AccountMove(models.Model):
 
     gross_weight = fields.Float(string="Gross Weight")
     gross_weight_uom_id = fields.Many2one(
-        'uom.uom', 'Gross Weight UoM',
+        "uom.uom",
+        "Gross Weight UoM",
         default=_default_weight_uom,
         domain=_domain_weight_uom,
     )
     net_weight = fields.Float(string="Weight")
     net_weight_uom_id = fields.Many2one(
-        'uom.uom', 'Net Weight UoM',
+        "uom.uom",
+        "Net Weight UoM",
         default=_default_weight_uom,
         domain=_domain_weight_uom,
     )
-    volume = fields.Float('Volume')
+    volume = fields.Float("Volume")
     volume_uom_id = fields.Many2one(
-        'uom.uom', 'Volume UoM',
+        "uom.uom",
+        "Volume UoM",
         default=_default_volume_uom,
         domain=_domain_volume_uom,
     )
     transport_condition_id = fields.Many2one(
         "stock.picking.transport.condition",  # era 'stock.picking.carriage_condition'
-        string='Carriage Condition')
+        string="Carriage Condition",
+    )
     goods_appearance_id = fields.Many2one(
         "stock.picking.goods.appearance",  # era 'stock.picking.goods_description'
-        string="Appearance of goods",)
+        string="Appearance of goods",
+    )
     transport_reason_id = fields.Many2one(
         "stock.picking.transport.reason",  # era 'stock.picking.transportation_reason'
-        string='Reason of transport')
+        string="Reason of transport",
+    )
     transport_method_id = fields.Many2one(
         "stock.picking.transport.method",  # era 'stock.picking.transportation_method'
-        string='Method of transport')
-    transport_datetime = fields.Datetime(
-        string="Transport date"
+        string="Method of transport",
     )
-    carrier_id = fields.Many2one(
-        'res.partner', string='Carrier')
-    carrier_tracking_ref = fields.Char(string='Tracking Reference', copy=False)
+    transport_datetime = fields.Datetime(string="Transport date")
+    carrier_id = fields.Many2one("res.partner", string="Carrier")
+    carrier_tracking_ref = fields.Char(string="Tracking Reference", copy=False)
     dimension = fields.Char()
-    packages = fields.Integer('Packages')
+    packages = fields.Integer("Packages")
