@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <record id="hr_timesheet.timesheet_action_all" model="ir.actions.act_window">
+        <field name="view_mode">tree,form,calendar,pivot,kanban</field>
+    </record>
+
+    <record id="timesheet_action_calendar" model="ir.ui.view">
+        <field name="name">Timesheet calendar</field>
+        <field name="model">account.analytic.line</field>
+        <field name="arch" type="xml">
+            <calendar date_start="date_time" date_delay="unit_amount" string="Timesheets" mode="week" color="employee_id"
+                      hide_time="false">
+                <field name="employee_id" avatar_field="image_128" filters="1"/>
+                <field name="date_time"/>
+                <field name="project_id"/>
+                <field name="task_id"/>
+            </calendar>
+        </field>
+    </record>
+
+</odoo>
