@@ -9,12 +9,18 @@
         <field name="name">Timesheet calendar</field>
         <field name="model">account.analytic.line</field>
         <field name="arch" type="xml">
-            <calendar date_start="date_time" date_delay="unit_amount" string="Timesheets" mode="week" color="employee_id"
-                      hide_time="false">
-                <field name="employee_id" avatar_field="image_128" filters="1"/>
-                <field name="date_time"/>
-                <field name="project_id"/>
-                <field name="task_id"/>
+            <calendar
+                date_start="date_time"
+                date_delay="unit_amount"
+                string="Timesheets"
+                mode="week"
+                color="employee_id"
+                hide_time="false"
+            >
+                <field name="employee_id" avatar_field="image_128" filters="1" />
+                <field name="date_time" />
+                <field name="project_id" />
+                <field name="task_id" />
             </calendar>
         </field>
     </record>
