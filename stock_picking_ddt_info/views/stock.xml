@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.ddt</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='extra']" position="after">
+                 <page string="TD Info" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}">
+                     <group>
+                         <field name="ddt_supplier_number"/>
+                         <field name="ddt_supplier_date"/>
+                     </group>
+                 </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_internal_search" model="ir.ui.view">
+        <field name="name">view.picking.search.ddt</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id"  ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="ddt_supplier_number"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
