@@ -1,5 +1,5 @@
-from odoo.tests import common
 from odoo import fields
+from odoo.tests import common
 from odoo.tools.date_utils import relativedelta
 
 
@@ -64,4 +64,5 @@ class TestSaleOrderConfirmationDate(common.SavepointCase):
         self.assertEqual(sale_order_1.date_order, date_order)
         self.assertEqual(
             sale_order_1.confirmation_date.replace(minute=0, second=0, microsecond=0),
-            confirmation_date.replace(minute=0, second=0, microsecond=0))
+            confirmation_date.replace(minute=0, second=0, microsecond=0),
+        )
