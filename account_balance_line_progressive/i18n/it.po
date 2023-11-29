@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0+e\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-14 08:56+0000\n"
-"PO-Revision-Date: 2023-09-14 08:56+0000\n"
+"POT-Creation-Date: 2023-11-29 08:46+0000\n"
+"PO-Revision-Date: 2023-11-29 08:46+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,10 +16,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_balance_line_progressive
-#: code:addons/account_balance_line_progressive/tests/test_account_balance_line_progressive.py:0
-#, python-format
-msgid "Account move # %s"
-msgstr "Registrazione contabile # %s"
+#: model:ir.model.fields,field_description:account_balance_line_progressive.field_account_move_line__balance_progressive
+msgid "Balance Progressive"
+msgstr "Saldo progressivo"
+
+#. module: account_balance_line_progressive
+#: model:ir.model.fields,field_description:account_balance_line_progressive.field_account_move_line__balance_progressive_currency
+msgid "Currency Balance Progressive"
+msgstr "(Valuta) Saldo progressivo"
 
 #. module: account_balance_line_progressive
 #: model:ir.model.fields,field_description:account_balance_line_progressive.field_account_move_line__display_name
@@ -51,13 +55,3 @@ msgstr "Movimento contabile"
 #: model:ir.model.fields,field_description:account_balance_line_progressive.field_account_move_line____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
-
-#. module: account_balance_line_progressive
-#: model:ir.model.fields,field_description:account_balance_line_progressive.field_account_move_line__balance_progressive
-msgid "Progressive Balance"
-msgstr "Saldo progressivo"
-
-#. module: account_balance_line_progressive
-#: model:ir.model.fields,field_description:account_balance_line_progressive.field_account_move_line__balance_progressive_currency
-msgid "Progressive Balance Currency"
-msgstr "Saldo progressivo valuta"
