@@ -39,21 +39,27 @@ class AccountMoveLine(models.Model):
             query += where_clause
         query += " GROUP BY l1.id"
         self._cr.execute(query, where_params)
-        for line_id, balance, balance_currency in self._cr.fetchall():
-            line = self.browse(line_id)
-            line.balance_progressive = balance
-            line.balance_progressive_currency = balance_currency
+        result = self._cr.fetchall()
+        if not result:
+            for line in self:
+                line.balance_progressive = 0
+                line.balance_progressive_currency = 0
+        else:
+            for line_id, balance, balance_currency in result:
+                line = self.browse(line_id)
+                line.balance_progressive = balance
+                line.balance_progressive_currency = balance_currency
 
     balance_progressive = fields.Monetary(
         compute="_compute_balance_progressive",
         currency_field="company_currency_id",
-        string="Progressive Balance",
+        string="Balance Progressive",
         help="Field holding the progressive balance of the account for partner",
     )
     balance_progressive_currency = fields.Monetary(
         compute="_compute_balance_progressive",
         currency_field="currency_id",
-        string="Progressive Balance Currency",
+        string="Currency Balance Progressive",
         help="Field holding the progressive currency balance of the account for "
         "partner",
     )
