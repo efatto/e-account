@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record model="ir.ui.view" id="mis_cash_flow_tree_view">
         <field name="name">mis.cash_flow.tree</field>
         <field name="model">mis.cash_flow</field>
-        <field name="inherit_id" ref="mis_builder_cash_flow.mis_cash_flow_tree_view"/>
+        <field name="inherit_id" ref="mis_builder_cash_flow.mis_cash_flow_tree_view" />
         <field name="arch" type="xml">
             <field name="account_id" position="after">
-                <field name="invoiced_percent"/>
-                <field name="currency_id"/>
-                <field name="balance_currency"/>
-                <field name="balance_forecast"/>
+                <field name="invoiced_percent" />
+                <field name="currency_id" />
+                <field name="balance_currency" />
+                <field name="balance_forecast" />
             </field>
         </field>
     </record>
@@ -18,13 +18,13 @@
     <record model="ir.ui.view" id="mis_cash_flow_form_view">
         <field name="name">mis.cash_flow.form</field>
         <field name="model">mis.cash_flow</field>
-        <field name="inherit_id" ref="mis_builder_cash_flow.mis_cash_flow_form_view"/>
+        <field name="inherit_id" ref="mis_builder_cash_flow.mis_cash_flow_form_view" />
         <field name="arch" type="xml">
             <field name="move_line_id" position="after">
-                <field name="invoiced_percent"/>
-                <field name="currency_id"/>
-                <field name="balance_currency"/>
-                <field name="balance_forecast"/>
+                <field name="invoiced_percent" />
+                <field name="currency_id" />
+                <field name="balance_currency" />
+                <field name="balance_forecast" />
             </field>
         </field>
     </record>

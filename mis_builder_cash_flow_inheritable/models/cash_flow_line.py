@@ -4,16 +4,10 @@ from odoo import fields, models
 
 
 class CashFlowForecastLine(models.Model):
-    _inherit = 'mis.cash_flow.forecast_line'
-    _rec_name = 'date'
+    _inherit = "mis.cash_flow.forecast_line"
+    _rec_name = "date"
 
     res_id = fields.Integer()
-    res_model_id = fields.Many2one(
-        comodel_name='ir.model',
-        index=True)
-    res_model = fields.Char(
-        related='res_model_id.model',
-        store=True)
-    currency_id = fields.Many2one(
-        comodel_name='res.currency'
-    )
+    res_model_id = fields.Many2one(comodel_name="ir.model", index=True)
+    res_model = fields.Char(related="res_model_id.model", store=True)
+    currency_id = fields.Many2one(comodel_name="res.currency")
