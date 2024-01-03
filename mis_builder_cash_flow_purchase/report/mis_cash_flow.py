@@ -3,13 +3,13 @@ from odoo import models
 
 
 class MisCashFlow(models.Model):
-    _inherit = 'mis.cash_flow'
+    _inherit = "mis.cash_flow"
 
     def get_cash_flow_query(self):
         query = super().get_cash_flow_query()
-        account_type_receivable = self.env.ref(
-            'account.data_account_type_receivable')
-        purchase_query = """
+        account_type_receivable = self.env.ref("account.data_account_type_receivable")
+        purchase_query = (
+            """
             UNION ALL
             SELECT
                 fl.id as id,
@@ -43,9 +43,8 @@ class MisCashFlow(models.Model):
                 fl.purchase_balance_forecast as balance_forecast
             FROM mis_cash_flow_forecast_line as fl
             UNION ALL
-        """ % account_type_receivable.id
-        full_query = query.replace(
-            "UNION ALL",
-            purchase_query
+        """
+            % account_type_receivable.id
         )
+        full_query = query.replace("UNION ALL", purchase_query)
         return full_query
