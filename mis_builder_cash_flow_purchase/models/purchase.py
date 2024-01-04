@@ -129,7 +129,7 @@ class PurchaseOrderLine(models.Model):
                         line.date_planned
                         or line.order_id.date_planned
                         or line.order_id.date_order,
-                    )[0]
+                    )
                 for i, dueline in enumerate(totlines, start=1):
                     line.write(
                         {

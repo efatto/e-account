@@ -5,12 +5,12 @@
         <field name="inherit_id" ref="purchase.purchase_order_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='order_line']/form/sheet/notebook"
+                expr="//field[@name='order_line']/form/group/group/notebook"
                 position="inside"
             >
                 <page string="Cash flow" groups="account.group_account_manager">
                     <field name="cashflow_line_ids">
-                        <tree editable="bottom" string="Cash flow lines">
+                        <tree editable="bottom">
                             <field name="date" />
                             <field name="currency_id" />
                             <field
