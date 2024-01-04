@@ -1,7 +1,7 @@
 # Copyright 2023 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import fields
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import Form, SavepointCase
 from odoo.tools.date_utils import relativedelta
 
 
@@ -14,6 +14,20 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
         cls.vendor = cls.env.ref("base.res_partner_3")
         cls.product = cls.env.ref("product.product_delivery_01")
         cls.product1 = cls.env.ref("product.product_delivery_02")
+        cls.company = cls.env.ref("base.main_company")
+        cls.payment_mode_model = cls.env["account.payment.mode"]
+        cls.journal_model = cls.env["account.journal"]
+        cls.manual_out = cls.env.ref("account.account_payment_method_manual_out")
+        cls.manual_out.bank_account_required = True
+        cls.journal_c1 = cls.journal_model.create(
+            {
+                "name": "J1",
+                "code": "J1",
+                "type": "bank",
+                "company_id": cls.company.id,
+                "bank_acc_number": "123456",
+            }
+        )
         cls.payment_term_2rate = cls.env["account.payment.term"].create(
             {
                 "name": "Payment term 30/60 end of month",
@@ -46,42 +60,32 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
                 "user_type_id": cls.env.ref("account.data_account_type_liquidity").id,
             }
         )
-
-    def _create_purchase_order_line(self, order, product, qty, price_unit, date):
-        vals = {
-            "name": product.name,
-            "order_id": order.id,
-            "product_id": product.id,
-            "product_uom": product.uom_po_id.id,
-            "product_qty": qty,
-            "price_unit": price_unit,
-            "date_planned": date,
-        }
-        line = self.env["purchase.order.line"].create(vals)
-        line.onchange_product_id()
-        line._convert_to_write(line._cache)
-        return line
-
-    def test_01_purchase_no_payment_term_cashflow(self):
-        purchase_order = self.env["purchase.order"].create(
+        cls.supplier_payment_mode = cls.payment_mode_model.create(
             {
-                "partner_id": self.vendor.id,
+                "name": "Suppliers Bank Payment",
+                "bank_account_link": "fixed",
+                "payment_method_id": cls.manual_out.id,
+                "show_bank_account_from_journal": True,
+                "company_id": cls.company.id,
+                "fixed_journal_id": cls.journal_c1.id,
             }
         )
-        self._create_purchase_order_line(
-            purchase_order,
-            self.product,
-            5.0,
-            13,
-            fields.Date.today() + relativedelta(days=40),
-        )
-        self._create_purchase_order_line(
-            purchase_order,
-            self.product1,
-            5.0,
-            19,
-            fields.Date.today() + relativedelta(days=70),
-        )
+
+    def test_01_purchase_no_payment_term_cashflow(self):
+        purchase_form = Form(self.env["purchase.order"])
+        purchase_form.partner_id = self.vendor
+        purchase_form.payment_mode_id = self.supplier_payment_mode
+        with purchase_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product
+            order_line_form.product_qty = 5.0
+            order_line_form.price_unit = 13.0
+            order_line_form.date_planned = fields.Date.today() + relativedelta(days=40)
+        with purchase_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product1
+            order_line_form.product_qty = 5.0
+            order_line_form.price_unit = 19.0
+            order_line_form.date_planned = fields.Date.today() + relativedelta(days=70)
+        purchase_order = purchase_form.save()
         self.assertEqual(
             len(purchase_order.order_line), 2, msg="Order line was not created"
         )
@@ -98,35 +102,30 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
             )
 
     def test_02_purchase_payment_term_2rate_cashflow(self):
-        purchase_order1 = self.env["purchase.order"].create(
-            {
-                "partner_id": self.vendor.id,
-                "payment_term_id": self.payment_term_2rate.id,
-            }
-        )
-        self._create_purchase_order_line(
-            purchase_order1,
-            self.product,
-            5.0,
-            13,
-            fields.Date.today() + relativedelta(days=40),
-        )
-        self._create_purchase_order_line(
-            purchase_order1,
-            self.product1,
-            5.0,
-            19,
-            fields.Date.today() + relativedelta(days=70),
-        )
+        purchase_form = Form(self.env["purchase.order"])
+        purchase_form.partner_id = self.vendor
+        purchase_form.payment_term_id = self.payment_term_2rate
+        purchase_form.payment_mode_id = self.supplier_payment_mode
+        with purchase_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product
+            order_line_form.product_qty = 5.0
+            order_line_form.price_unit = 13.0
+            order_line_form.date_planned = fields.Date.today() + relativedelta(days=40)
+        with purchase_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product1
+            order_line_form.product_qty = 5.0
+            order_line_form.price_unit = 19.0
+            order_line_form.date_planned = fields.Date.today() + relativedelta(days=70)
+        purchase_order = purchase_form.save()
         self.assertEqual(
-            len(purchase_order1.order_line), 2, msg="Order line was not created"
+            len(purchase_order.order_line), 2, msg="Order line was not created"
         )
-        purchase_order1.button_confirm()
-        po1_lines = purchase_order1.order_line.filtered(
+        purchase_order.button_confirm()
+        po_lines = purchase_order.order_line.filtered(
             lambda x: x.product_id == self.product
         )
-        self.assertEqual(len(po1_lines), 1)
-        for line in po1_lines:
+        self.assertEqual(len(po_lines), 1)
+        for line in po_lines:
             self.assertEqual(len(line.cashflow_line_ids), 2)
             self.assertAlmostEqual(
                 sum(line.mapped("cashflow_line_ids.purchase_balance_forecast")),
