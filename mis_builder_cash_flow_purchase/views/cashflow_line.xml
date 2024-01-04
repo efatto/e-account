@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mis_cash_flow_forecast_line_view_form" model="ir.ui.view">
+        <field name="name">mis.cash_flow.forecast_line.form</field>
+        <field name="model">mis.cash_flow.forecast_line</field>
+        <field
+            name="inherit_id"
+            ref="mis_builder_cash_flow.mis_cash_flow_forecast_line_view_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="purchase_line_id" />
+                <field name="purchase_invoiced_percent" />
+            </xpath>
+            <field name="balance" position="after">
+                <field name="purchase_balance_forecast" sum="Total forecast balance" />
+            </field>
+        </field>
+    </record>
+    <record id="mis_cash_flow_forecast_line_view_tree" model="ir.ui.view">
+        <field name="name">mis.cash_flow.forecast_line.tree</field>
+        <field name="model">mis.cash_flow.forecast_line</field>
+        <field
+            name="inherit_id"
+            ref="mis_builder_cash_flow.mis_cash_flow_forecast_line_view_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="purchase_line_id" />
+                <field name="purchase_invoiced_percent" />
+            </xpath>
+            <field name="balance" position="after">
+                <field name="purchase_balance_forecast" sum="Total forecast balance" />
+            </field>
+        </field>
+    </record>
+</odoo>
