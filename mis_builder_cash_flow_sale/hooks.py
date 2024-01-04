@@ -17,6 +17,4 @@ def create_cashflow_lines(cr, registry):
         for sale in sales:
             i += 1
             sale.order_line._refresh_cashflow_line()
-            _logger.info(
-                "Creating cashflow line for sale order #%s/%s" % (i, i_max)
-            )
+            _logger.info("Creating cashflow line for sale order #%s/%s" % (i, i_max))
