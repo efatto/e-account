@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import float_is_zero, float_round
+from odoo.tools import config, float_is_zero, float_round
 
 
 class SaleOrder(models.Model):
@@ -28,15 +28,18 @@ class SaleOrder(models.Model):
 
     @api.constrains("payment_mode_id")
     def _check_payment_mode(self):
-        for record in self:
-            if (
-                record.payment_mode_id
-                and record.payment_mode_id.bank_account_link != "fixed"
-            ):
-                raise ValidationError(
-                    _("Payment mode %s used in sale orders must be of type fixed.")
-                    % record.payment_mode_id.name
-                )
+        if not config["test_enable"] or self.env.context.get(
+            "test_mis_builder_cash_flow_sale"
+        ):
+            for record in self:
+                if (
+                    record.payment_mode_id
+                    and record.payment_mode_id.bank_account_link != "fixed"
+                ):
+                    raise ValidationError(
+                        _("Payment mode %s used in sale orders must be of type fixed.")
+                        % record.payment_mode_id.name
+                    )
 
 
 class SaleOrderLine(models.Model):
@@ -138,9 +141,7 @@ class SaleOrderLine(models.Model):
                                     0,
                                     0,
                                     {
-                                        "name": _(
-                                            "Due line #%s/%s of Sale order %s"
-                                        )
+                                        "name": _("Due line #%s/%s of Sale order %s")
                                         % (i, len(totlines), line.order_id.name),
                                         "date": dueline[0],
                                         "sale_balance_currency": dueline[1],

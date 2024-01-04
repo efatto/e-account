@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="sale_order_form" model="ir.ui.view">
+    <record id="view_order_form" model="ir.ui.view">
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='order_line']/form/group/group/notebook"
-                position="inside"
+                expr="//field[@name='order_line']/form/field[@name='company_id']"
+                position="after"
             >
-                <page string="Cash flow" groups="account.group_account_manager">
+                <div string="Cash flow" groups="account.group_account_manager">
                     <field name="cashflow_line_ids">
                         <tree editable="bottom">
                             <field name="date" />
@@ -25,7 +25,7 @@
                             />
                         </tree>
                     </field>
-                </page>
+                </div>
             </xpath>
         </field>
     </record>
