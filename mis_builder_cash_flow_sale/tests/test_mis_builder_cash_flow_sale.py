@@ -5,7 +5,7 @@ from odoo.tests.common import Form, SavepointCase
 from odoo.tools.date_utils import relativedelta
 
 
-class TestMisBuilderCashflowPurchase(SavepointCase):
+class TestMisBuilderCashflowSale(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -17,8 +17,8 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
         cls.company = cls.env.ref("base.main_company")
         cls.payment_mode_model = cls.env["account.payment.mode"]
         cls.journal_model = cls.env["account.journal"]
-        cls.manual_out = cls.env.ref("account.account_payment_method_manual_out")
-        cls.manual_out.bank_account_required = True
+        cls.manual_in = cls.env.ref("account.account_payment_method_manual_in")
+        cls.manual_in.bank_account_required = True
         cls.journal_c1 = cls.journal_model.create(
             {
                 "name": "J1",
@@ -60,74 +60,86 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
                 "user_type_id": cls.env.ref("account.data_account_type_liquidity").id,
             }
         )
-        cls.supplier_payment_mode = cls.payment_mode_model.create(
+        cls.customer_payment_mode = cls.payment_mode_model.create(
             {
-                "name": "Suppliers Bank Payment",
+                "name": "Customers Bank Payment",
                 "bank_account_link": "fixed",
-                "payment_method_id": cls.manual_out.id,
+                "payment_method_id": cls.manual_in.id,
                 "show_bank_account_from_journal": True,
                 "company_id": cls.company.id,
                 "fixed_journal_id": cls.journal_c1.id,
             }
         )
 
-    def test_01_purchase_no_payment_term_cashflow(self):
-        purchase_form = Form(self.env["purchase.order"])
-        purchase_form.partner_id = self.vendor
-        purchase_form.payment_mode_id = self.supplier_payment_mode
-        with purchase_form.order_line.new() as order_line_form:
-            order_line_form.product_id = self.product
-            order_line_form.product_qty = 5.0
-            order_line_form.price_unit = 13.0
-            order_line_form.date_planned = fields.Date.today() + relativedelta(days=40)
-        with purchase_form.order_line.new() as order_line_form:
-            order_line_form.product_id = self.product1
-            order_line_form.product_qty = 5.0
-            order_line_form.price_unit = 19.0
-            order_line_form.date_planned = fields.Date.today() + relativedelta(days=70)
-        purchase_order = purchase_form.save()
-        self.assertEqual(
-            len(purchase_order.order_line), 2, msg="Order line was not created"
+    def test_01_sale_no_payment_term_cashflow(self):
+        sale_form = Form(
+            self.env["sale.order"].with_context(test_mis_builder_cash_flow_sale=True)
         )
-        purchase_order.button_confirm()
-        po_lines = purchase_order.order_line.filtered(
+        sale_form.partner_id = self.vendor
+        sale_form.payment_mode_id = self.customer_payment_mode
+        with sale_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product
+            order_line_form.product_uom_qty = 5.0
+            order_line_form.price_unit = 13.0
+            order_line_form.commitment_date = fields.Date.today() + relativedelta(
+                days=40
+            )
+        with sale_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product1
+            order_line_form.product_uom_qty = 5.0
+            order_line_form.price_unit = 19.0
+            order_line_form.commitment_date = fields.Date.today() + relativedelta(
+                days=70
+            )
+        sale_order = sale_form.save()
+        self.assertEqual(
+            len(sale_order.order_line), 2, msg="Order line was not created"
+        )
+        sale_order.action_confirm()
+        so_lines = sale_order.order_line.filtered(
             lambda x: x.product_id == self.product
         )
-        self.assertEqual(len(po_lines), 1)
-        for line in po_lines:
+        self.assertEqual(len(so_lines), 1)
+        for line in so_lines:
             self.assertTrue(line.cashflow_line_ids)
             self.assertAlmostEqual(
-                sum(line.mapped("cashflow_line_ids.purchase_balance_forecast")),
+                sum(line.mapped("cashflow_line_ids.sale_balance_forecast")),
                 -line.price_total,
             )
 
-    def test_02_purchase_payment_term_2rate_cashflow(self):
-        purchase_form = Form(self.env["purchase.order"])
-        purchase_form.partner_id = self.vendor
-        purchase_form.payment_term_id = self.payment_term_2rate
-        purchase_form.payment_mode_id = self.supplier_payment_mode
-        with purchase_form.order_line.new() as order_line_form:
-            order_line_form.product_id = self.product
-            order_line_form.product_qty = 5.0
-            order_line_form.price_unit = 13.0
-            order_line_form.date_planned = fields.Date.today() + relativedelta(days=40)
-        with purchase_form.order_line.new() as order_line_form:
-            order_line_form.product_id = self.product1
-            order_line_form.product_qty = 5.0
-            order_line_form.price_unit = 19.0
-            order_line_form.date_planned = fields.Date.today() + relativedelta(days=70)
-        purchase_order = purchase_form.save()
-        self.assertEqual(
-            len(purchase_order.order_line), 2, msg="Order line was not created"
+    def test_02_sale_payment_term_2rate_cashflow(self):
+        sale_form = Form(
+            self.env["sale.order"].with_context(test_mis_builder_cash_flow_sale=True)
         )
-        purchase_order.button_confirm()
-        po_lines = purchase_order.order_line.filtered(
+        sale_form.partner_id = self.vendor
+        sale_form.payment_term_id = self.payment_term_2rate
+        sale_form.payment_mode_id = self.customer_payment_mode
+        with sale_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product
+            order_line_form.product_uom_qty = 5.0
+            order_line_form.price_unit = 13.0
+            order_line_form.commitment_date = fields.Date.today() + relativedelta(
+                days=40
+            )
+        with sale_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product1
+            order_line_form.product_uom_qty = 5.0
+            order_line_form.price_unit = 19.0
+            order_line_form.commitment_date = fields.Date.today() + relativedelta(
+                days=70
+            )
+        sale_order = sale_form.save()
+        self.assertEqual(
+            len(sale_order.order_line), 2, msg="Order line was not created"
+        )
+        sale_order.action_confirm()
+        so_lines = sale_order.order_line.filtered(
             lambda x: x.product_id == self.product
         )
-        self.assertEqual(len(po_lines), 1)
-        for line in po_lines:
+        self.assertEqual(len(so_lines), 1)
+        for line in so_lines:
             self.assertEqual(len(line.cashflow_line_ids), 2)
             self.assertAlmostEqual(
-                sum(line.mapped("cashflow_line_ids.purchase_balance_forecast")),
+                sum(line.mapped("cashflow_line_ids.sale_balance_forecast")),
                 -line.price_total,
             )
