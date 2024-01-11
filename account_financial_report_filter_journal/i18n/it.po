@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_invoice_filter_country
+# 	* account_financial_report_filter_journal
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0+e\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-14 08:28+0000\n"
-"PO-Revision-Date: 2023-09-14 08:28+0000\n"
+"POT-Creation-Date: 2024-01-11 17:15+0000\n"
+"PO-Revision-Date: 2024-01-11 17:15+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,29 +15,36 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: account_invoice_filter_country
-#: model:ir.model.fields,field_description:account_invoice_filter_country.field_account_bank_statement_line__country_id
-#: model:ir.model.fields,field_description:account_invoice_filter_country.field_account_move__country_id
-#: model:ir.model.fields,field_description:account_invoice_filter_country.field_account_payment__country_id
-msgid "Country"
-msgstr "Nazione"
-
-#. module: account_invoice_filter_country
-#: model:ir.model.fields,field_description:account_invoice_filter_country.field_account_move__display_name
+#. module: account_financial_report_filter_journal
+#: model:ir.model.fields,field_description:account_financial_report_filter_journal.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_financial_report_filter_journal.field_trial_balance_report_wizard__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
-#. module: account_invoice_filter_country
-#: model:ir.model.fields,field_description:account_invoice_filter_country.field_account_move__id
+#. module: account_financial_report_filter_journal
+#: model:ir.model.fields,field_description:account_financial_report_filter_journal.field_account_journal__id
+#: model:ir.model.fields,field_description:account_financial_report_filter_journal.field_trial_balance_report_wizard__id
 msgid "ID"
 msgstr ""
 
-#. module: account_invoice_filter_country
-#: model:ir.model,name:account_invoice_filter_country.model_account_move
-msgid "Journal Entry"
-msgstr "Registrazione contabile"
+#. module: account_financial_report_filter_journal
+#: model:ir.model,name:account_financial_report_filter_journal.model_account_journal
+#: model:ir.model.fields,field_description:account_financial_report_filter_journal.field_trial_balance_report_wizard__journal_ids
+msgid "Journal"
+msgstr "Registro"
 
-#. module: account_invoice_filter_country
-#: model:ir.model.fields,field_description:account_invoice_filter_country.field_account_move____last_update
+#. module: account_financial_report_filter_journal
+#: model:ir.model.fields,field_description:account_financial_report_filter_journal.field_account_journal____last_update
+#: model:ir.model.fields,field_description:account_financial_report_filter_journal.field_trial_balance_report_wizard____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
+
+#. module: account_financial_report_filter_journal
+#: model:ir.model.fields,field_description:account_financial_report_filter_journal.field_account_journal__trial_balance_exclude
+msgid "Trial Balance Exclude"
+msgstr "Escludere dal bilancio contabile"
+
+#. module: account_financial_report_filter_journal
+#: model:ir.model,name:account_financial_report_filter_journal.model_trial_balance_report_wizard
+msgid "Trial Balance Report Wizard"
+msgstr "Procedura guidata bilancio di verifica"
