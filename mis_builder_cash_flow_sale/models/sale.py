@@ -133,29 +133,29 @@ class SaleOrderLine(models.Model):
                         or line.order_id.commitment_date
                         or line.order_id.date_order,
                     )
-                for i, dueline in enumerate(totlines, start=1):
-                    line.write(
-                        {
-                            "cashflow_line_ids": [
-                                (
-                                    0,
-                                    0,
-                                    {
-                                        "name": _("Due line #%s/%s of Sale order %s")
-                                        % (i, len(totlines), line.order_id.name),
-                                        "date": dueline[0],
-                                        "sale_balance_currency": dueline[1],
-                                        "currency_id": line.order_id.currency_id.id,
-                                        "balance": 0,
-                                        "sale_line_id": line.id,
-                                        "account_id": account_id.id,
-                                        "partner_id": line.order_id.partner_id.id,
-                                        "res_id": line.id,
-                                        "res_model_id": self.env.ref(
-                                            "sale.model_sale_order_line"
-                                        ).id,
-                                    },
-                                )
-                            ]
-                        }
-                    )
+                line.write(
+                    {
+                        "cashflow_line_ids": [
+                            (
+                                0,
+                                0,
+                                {
+                                    "name": _("Due line #%s/%s of Sale order %s")
+                                    % (i, len(totlines), line.order_id.name),
+                                    "date": dueline[0],
+                                    "sale_balance_currency": dueline[1],
+                                    "currency_id": line.order_id.currency_id.id,
+                                    "balance": 0,
+                                    "sale_line_id": line.id,
+                                    "account_id": account_id.id,
+                                    "partner_id": line.order_id.partner_id.id,
+                                    "res_id": line.id,
+                                    "res_model_id": self.env.ref(
+                                        "sale.model_sale_order_line"
+                                    ).id,
+                                },
+                            )
+                            for i, dueline in enumerate(totlines, start=1)
+                        ]
+                    }
+                )
