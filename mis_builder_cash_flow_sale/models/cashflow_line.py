@@ -13,7 +13,7 @@ class CashFlowForecastLine(models.Model):
     )
     sale_balance_currency = fields.Monetary(
         currency_field="currency_id",
-        help="Sale amount in vendor currency recomputed with delivered qty",
+        help="Sale amount in customer currency recomputed with delivered qty",
     )
     sale_invoiced_percent = fields.Float(
         compute="_compute_sale_balance_forecast", store=True

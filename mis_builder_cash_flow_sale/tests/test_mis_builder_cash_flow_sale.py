@@ -11,7 +11,7 @@ class TestMisBuilderCashflowSale(SavepointCase):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.user_model = cls.env["res.users"].with_context(no_reset_password=True)
-        cls.vendor = cls.env.ref("base.res_partner_3")
+        cls.customer = cls.env.ref("base.res_partner_3")
         cls.product = cls.env.ref("product.product_delivery_01")
         cls.product1 = cls.env.ref("product.product_delivery_02")
         cls.company = cls.env.ref("base.main_company")
@@ -75,7 +75,7 @@ class TestMisBuilderCashflowSale(SavepointCase):
         sale_form = Form(
             self.env["sale.order"].with_context(test_mis_builder_cash_flow_sale=True)
         )
-        sale_form.partner_id = self.vendor
+        sale_form.partner_id = self.customer
         sale_form.payment_mode_id = self.customer_payment_mode
         with sale_form.order_line.new() as order_line_form:
             order_line_form.product_id = self.product
@@ -115,7 +115,7 @@ class TestMisBuilderCashflowSale(SavepointCase):
         sale_form = Form(
             self.env["sale.order"].with_context(test_mis_builder_cash_flow_sale=True)
         )
-        sale_form.partner_id = self.vendor
+        sale_form.partner_id = self.customer
         sale_form.payment_term_id = self.payment_term_2rate
         sale_form.payment_mode_id = self.customer_payment_mode
         with sale_form.order_line.new() as order_line_form:
