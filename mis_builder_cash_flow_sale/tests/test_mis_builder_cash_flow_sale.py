@@ -104,7 +104,7 @@ class TestMisBuilderCashflowSale(SavepointCase):
             self.assertTrue(line.cashflow_line_ids)
             self.assertAlmostEqual(
                 sum(line.mapped("cashflow_line_ids.sale_balance_forecast")),
-                -line.price_total,
+                line.price_total,
             )
 
     def test_02_sale_payment_term_2rate_cashflow(self):
@@ -141,5 +141,5 @@ class TestMisBuilderCashflowSale(SavepointCase):
             self.assertEqual(len(line.cashflow_line_ids), 2)
             self.assertAlmostEqual(
                 sum(line.mapped("cashflow_line_ids.sale_balance_forecast")),
-                -line.price_total,
+                line.price_total,
             )

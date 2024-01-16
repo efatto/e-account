@@ -46,7 +46,7 @@ class CashFlowForecastLine(models.Model):
                         ]
                     )
                 )
-                line.sale_balance_forecast = -line.currency_id._convert(
+                line.sale_balance_forecast = line.currency_id._convert(
                     line.sale_balance_currency or line.balance,
                     line.sale_line_id.order_id.company_id.currency_id,
                     line.sale_line_id.order_id.company_id,
