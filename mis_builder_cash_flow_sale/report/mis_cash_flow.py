@@ -7,33 +7,31 @@ class MisCashFlow(models.Model):
 
     def get_cash_flow_query(self):
         query = super().get_cash_flow_query()
-        account_type_receivable = self.env.ref("account.data_account_type_receivable")
-        sale_query = (
-            """
+        sale_query = """
             UNION ALL
             SELECT
                 fl.id as id,
-                CAST('forecast_line' as varchar) as line_type,
-                Null as move_line_id,
+                'forecast_line' as line_type,
+                NULL as move_line_id,
                 fl.account_id as account_id,
                 CASE
                     WHEN fl.sale_balance_forecast > 0
                     THEN fl.sale_balance_forecast *
                         (1 - fl.sale_invoiced_percent)
                     ELSE 0.0
-                END as debit,
+                END AS debit,
                 CASE
                     WHEN fl.sale_balance_forecast < 0
                     THEN -fl.sale_balance_forecast *
                         (1 - fl.sale_invoiced_percent)
                     ELSE 0.0
-                END as credit,
-                Null as reconciled,
-                Null as full_reconcile_id,
+                END AS credit,
+                NULL as reconciled,
+                NULL as full_reconcile_id,
                 fl.partner_id as partner_id,
                 fl.company_id as company_id,
-                %i as user_type_id,
                 fl.name as name,
+                'posted' as state,
                 fl.date as date,
                 CAST('sale_order_line' as varchar) as res_model,
                 fl.res_id as res_id,
@@ -44,7 +42,5 @@ class MisCashFlow(models.Model):
             FROM mis_cash_flow_forecast_line as fl
             UNION ALL
         """
-            % account_type_receivable.id
-        )
         full_query = query.replace("UNION ALL", sale_query)
         return full_query
