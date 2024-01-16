@@ -36,15 +36,14 @@ class CashFlowForecastLine(models.Model):
     def _compute_sale_balance_forecast(self):
         for line in self:
             if line.sale_line_id:
-                line.sale_invoiced_percent = line.sale_line_id.qty_invoiced / (
+                sale_invoiced_percent = line.sale_line_id.qty_invoiced / (
                     max(
-                        [
-                            line.sale_line_id.product_uom_qty,
-                            line.sale_line_id.qty_delivered,
-                            1,
-                        ]
+                        line.sale_line_id.product_uom_qty,
+                        line.sale_line_id.qty_delivered,
+                        1,
                     )
                 )
+                line.sale_invoiced_percent = min(sale_invoiced_percent, 1)
                 line.sale_balance_forecast = line.currency_id._convert(
                     line.sale_balance_currency or line.balance,
                     line.sale_line_id.order_id.company_id.currency_id,
