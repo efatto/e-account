@@ -15,33 +15,32 @@ class MisCashFlow(models.Model):
     balance_forecast = fields.Float()
 
     def get_cash_flow_query(self):
-        account_type_receivable = self.env.ref("account.data_account_type_receivable")
-        query = (
-            """
+        self.env.ref("account.data_account_type_receivable")
+        query = """
             SELECT
                 -- we use negative id to avoid duplicates and we don't use
                 -- ROW_NUMBER() because the performance was very poor
                 -aml.id as id,
-                CAST('move_line' as varchar) as line_type,
+                'move_line' as line_type,
                 aml.id as move_line_id,
                 aml.account_id as account_id,
                 CASE
                     WHEN aml.amount_residual > 0
                     THEN aml.amount_residual
                     ELSE 0.0
-                END as debit,
+                END AS debit,
                 CASE
                     WHEN aml.amount_residual < 0
                     THEN -aml.amount_residual
                     ELSE 0.0
-                END as credit,
+                END AS credit,
                 aml.reconciled as reconciled,
                 aml.full_reconcile_id as full_reconcile_id,
                 aml.partner_id as partner_id,
                 aml.company_id as company_id,
-                aa.user_type_id as user_type_id,
                 aml.name as name,
-                aml.date_maturity as date,
+                aml.parent_state as state,
+                COALESCE(aml.date_maturity, aml.date) as date,
                 CAST('account_move_line' as varchar) as res_model,
                 aml.id as res_id,
                 0.0 as invoiced_percent,
@@ -49,29 +48,29 @@ class MisCashFlow(models.Model):
                 0.0 as balance_currency,
                 0.0 as balance_forecast
             FROM account_move_line as aml
-            LEFT JOIN account_account as aa ON aa.id = aml.account_id
+            WHERE aml.parent_state != 'cancel'
             UNION ALL
             SELECT
                 fl.id as id,
-                CAST('forecast_line' as varchar) as line_type,
-                Null as move_line_id,
+                'forecast_line' as line_type,
+                NULL as move_line_id,
                 fl.account_id as account_id,
                 CASE
                     WHEN fl.balance > 0
                     THEN fl.balance
                     ELSE 0.0
-                END as debit,
+                END AS debit,
                 CASE
                     WHEN fl.balance < 0
                     THEN -fl.balance
                     ELSE 0.0
-                END as credit,
-                Null as reconciled,
-                Null as full_reconcile_id,
+                END AS credit,
+                NULL as reconciled,
+                NULL as full_reconcile_id,
                 fl.partner_id as partner_id,
                 fl.company_id as company_id,
-                %i as user_type_id,
                 fl.name as name,
+                'posted' as state,
                 fl.date as date,
                 Null as res_model,
                 Null as res_id,
@@ -85,8 +84,6 @@ class MisCashFlow(models.Model):
             WHERE
                 fl.res_model_id IS NULL
         """
-            % account_type_receivable.id
-        )
         return query
 
     def init(self):
