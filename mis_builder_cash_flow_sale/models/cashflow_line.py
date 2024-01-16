@@ -16,11 +16,11 @@ class CashFlowForecastLine(models.Model):
         help="Sale amount in vendor currency recomputed with delivered qty",
     )
     sale_invoiced_percent = fields.Float(
-        compute="_compute_balance_forecast", store=True
+        compute="_compute_sale_balance_forecast", store=True
     )
     sale_balance_forecast = fields.Float(
-        compute="_compute_balance_forecast",
-        string="Forecast balance",
+        compute="_compute_sale_balance_forecast",
+        string="Sale forecast balance",
         store=True,
     )
 
@@ -34,7 +34,7 @@ class CashFlowForecastLine(models.Model):
         "sale_line_id.order_id.date_order",
         "sale_line_id.order_id.currency_id.rate",
     )
-    def _compute_balance_forecast(self):
+    def _compute_sale_balance_forecast(self):
         for line in self:
             if line.sale_line_id:
                 line.sale_invoiced_percent = line.sale_line_id.qty_invoiced / (
