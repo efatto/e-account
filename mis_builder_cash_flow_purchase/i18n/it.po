@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* mis_builder_cash_flow_purchase
+# 	* mis_builder_cash_flow_purchase
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-01 14:57+0000\n"
-"PO-Revision-Date: 2023-05-01 14:57+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2024-01-16 16:12+0000\n"
+"PO-Revision-Date: 2024-01-16 16:12+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,20 +21,18 @@ msgid "Cash flow"
 msgstr ""
 
 #. module: mis_builder_cash_flow_purchase
-#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.purchase_order_form
-msgid "Cash flow lines"
-msgstr "Righe cash flow"
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow__display_name
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__display_name
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_purchase_order_line__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
 
 #. module: mis_builder_cash_flow_purchase
-#: code:addons/mis_builder_cash_flow_purchase/models/purchase.py:119
+#: code:addons/mis_builder_cash_flow_purchase/models/purchase.py:0
 #, python-format
 msgid "Due line #%s/%s of Purchase order %s"
 msgstr "Riga cash flow #%s/%s dell'ordine di acquisto %s"
-
-#. module: mis_builder_cash_flow_purchase
-#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_balance_forecast
-msgid "Forecast balance"
-msgstr "Saldo previsto"
 
 #. module: mis_builder_cash_flow_purchase
 #: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_purchase_order_line__cashflow_line_ids
@@ -42,20 +40,38 @@ msgid "Forecast cashflow line"
 msgstr "Riga saldo previsto"
 
 #. module: mis_builder_cash_flow_purchase
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow__id
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__id
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_purchase_order__id
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_purchase_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow____last_update
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line____last_update
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_purchase_order____last_update
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_purchase_order_line____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: mis_builder_cash_flow_purchase
 #: model:ir.model,name:mis_builder_cash_flow_purchase.model_mis_cash_flow
 msgid "MIS Cash Flow"
-msgstr "MIS Cash flow"
+msgstr "Flusso di cassa MIS"
 
 #. module: mis_builder_cash_flow_purchase
 #: model:ir.model,name:mis_builder_cash_flow_purchase.model_mis_cash_flow_forecast_line
 msgid "MIS Cash Flow Forecast Line"
-msgstr "MIS Cash flow riga previsione"
+msgstr "Riga previsione flusso di cassa MIS"
 
 #. module: mis_builder_cash_flow_purchase
-#: code:addons/mis_builder_cash_flow_purchase/models/purchase.py:35
+#: code:addons/mis_builder_cash_flow_purchase/models/purchase.py:0
 #, python-format
 msgid "Payment mode %s used in purchase orders must be of type fixed."
-msgstr "Il modo di pagamento %s usato negli ordini di acquisto deve essere di tipo fisso."
+msgstr ""
+"Il modo di pagamento %s usato negli ordini di acquisto deve essere di tipo "
+"fisso."
 
 #. module: mis_builder_cash_flow_purchase
 #: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_balance_currency
@@ -70,7 +86,7 @@ msgstr "Fatturazione acquisto (%)"
 #. module: mis_builder_cash_flow_purchase
 #: model:ir.model,name:mis_builder_cash_flow_purchase.model_purchase_order
 msgid "Purchase Order"
-msgstr "Ordine di acquisto"
+msgstr "Ordine di Acquisto"
 
 #. module: mis_builder_cash_flow_purchase
 #: model:ir.model,name:mis_builder_cash_flow_purchase.model_purchase_order_line
@@ -80,7 +96,14 @@ msgstr "Riga ordine di acquisto"
 #. module: mis_builder_cash_flow_purchase
 #: model:ir.model.fields,help:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_balance_currency
 msgid "Purchase amount in vendor currency recomputed with delivered qty"
-msgstr "L'importo dell'acquisto in valuta del fornitore ricalcolato sulla quantità consegnata"
+msgstr ""
+"L'importo dell'acquisto in valuta del fornitore ricalcolato sulla quantità "
+"consegnata"
+
+#. module: mis_builder_cash_flow_purchase
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_balance_forecast
+msgid "Purchase forecast balance"
+msgstr "Saldo previsto acquisto"
 
 #. module: mis_builder_cash_flow_purchase
 #: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_line_id
@@ -93,4 +116,3 @@ msgstr "Riga ordine di acquisto"
 #: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.purchase_order_form
 msgid "Total forecast balance"
 msgstr "Totale saldo previsto"
-
