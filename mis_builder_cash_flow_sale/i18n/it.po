@@ -69,7 +69,7 @@ msgstr "Riga previsione flusso di cassa MIS"
 #: code:addons/mis_builder_cash_flow_sale/models/sale.py:0
 #, python-format
 msgid "Payment mode %s used in sale orders must be of type fixed."
-msgstr "La modalità di pagamento % usata negli ordini di vendita deve essere di tipo fisso."
+msgstr "La modalità di pagamento %s usata negli ordini di vendita deve essere di tipo fisso."
 
 #. module: mis_builder_cash_flow_sale
 #: model:ir.model.fields,field_description:mis_builder_cash_flow_sale.field_mis_cash_flow_forecast_line__sale_balance_currency
