@@ -25,7 +25,6 @@ class CashFlowForecastLine(models.Model):
     )
 
     @api.depends(
-        "balance",
         "sale_balance_currency",
         "sale_line_id.qty_invoiced",
         "sale_line_id.product_uom_qty",
@@ -52,6 +51,7 @@ class CashFlowForecastLine(models.Model):
                     line.sale_line_id.order_id.company_id,
                     line.date,
                 ) * (1 - line.sale_invoiced_percent)
+                line.balance = line.sale_balance_forecast
             else:
                 line.sale_invoiced_percent = 0
                 line.sale_balance_forecast = line.balance
