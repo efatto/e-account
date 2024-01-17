@@ -33,13 +33,17 @@ class MisCashFlow(models.Model):
                 fl.name as name,
                 'posted' as state,
                 fl.date as date,
-                CAST('purchase_order_line' as varchar) as res_model,
+                fl.res_model_id as res_model_id,
                 fl.res_id as res_id,
                 fl.purchase_invoiced_percent as invoiced_percent,
                 fl.currency_id as currency_id,
                 fl.purchase_balance_currency as balance_currency,
                 fl.purchase_balance_forecast as balance_forecast
             FROM mis_cash_flow_forecast_line as fl
+            LEFT JOIN
+                ir_model im ON im.id = fl.res_model_id
+            WHERE
+                im.model = 'purchase.order.line'
             UNION ALL
         """
         full_query = query.replace("UNION ALL", purchase_query)
