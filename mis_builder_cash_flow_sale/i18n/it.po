@@ -70,7 +70,7 @@ msgstr "Riga previsione flusso di cassa MIS"
 #, python-format
 msgid "Payment mode %s used in sale orders must be of type fixed."
 msgstr ""
-"La modalità di pagamento % usata negli ordini di vendita deve essere di tipo"
+"La modalità di pagamento %s usata negli ordini di vendita deve essere di tipo"
 " fisso."
 
 #. module: mis_builder_cash_flow_sale
