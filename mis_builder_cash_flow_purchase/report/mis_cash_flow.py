@@ -43,8 +43,13 @@ class MisCashFlow(models.Model):
                 FROM mis_cash_flow_forecast_line as fl
                 LEFT JOIN
                     ir_model im ON im.id = fl.res_model_id
+                LEFT JOIN
+                    purchase_order_line pol ON pol.id = fl.res_id
+                LEFT JOIN
+                    purchase_order po ON po.id = pol.order_id
                 WHERE
                     im.model = 'purchase.order.line'
+                    AND po.invoice_status != 'invoiced'
                 UNION ALL
             """
             full_query = query.replace("UNION ALL", purchase_query, 1)
