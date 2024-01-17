@@ -10,12 +10,11 @@ class MisCashFlow(models.Model):
 
     invoiced_percent = fields.Float()
     currency_id = fields.Many2one(comodel_name="res.currency")
-    res_model = fields.Char()
+    res_model_id = fields.Many2one(comodel_name="ir.model")
     balance_currency = fields.Float()
     balance_forecast = fields.Float()
 
     def get_cash_flow_query(self):
-        self.env.ref("account.data_account_type_receivable")
         query = """
             SELECT
                 -- we use negative id to avoid duplicates and we don't use
@@ -41,7 +40,7 @@ class MisCashFlow(models.Model):
                 aml.name as name,
                 aml.parent_state as state,
                 COALESCE(aml.date_maturity, aml.date) as date,
-                CAST('account_move_line' as varchar) as res_model,
+                Null as res_model_id,
                 aml.id as res_id,
                 0.0 as invoiced_percent,
                 Null as currency_id,
@@ -72,17 +71,14 @@ class MisCashFlow(models.Model):
                 fl.name as name,
                 'posted' as state,
                 fl.date as date,
-                Null as res_model,
+                Null as res_model_id,
                 Null as res_id,
                 0.0 as invoiced_percent,
                 Null as currency_id,
                 0.0 as balance_currency,
                 0.0 as balance_forecast
             FROM mis_cash_flow_forecast_line as fl
-            LEFT JOIN
-                ir_model im ON im.id = fl.res_model_id
-            WHERE
-                fl.res_model_id IS NULL
+            WHERE fl.res_model_id IS NULL
         """
         return query
 
