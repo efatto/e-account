@@ -15,5 +15,5 @@
         "views/invoice_view.xml",
     ],
     "installable": True,
-    # "post_init_hook": "migrate_old_module",
+    "post_init_hook": "migrate_old_module",
 }
