@@ -1,96 +1,86 @@
-# -*- coding: utf-8 -*-
-##############################################################################
-# For copyright and license notices, see __openerp__.py file in root directory
-##############################################################################
-from openerp import models, api, fields
-import openerp.addons.decimal_precision as dp
+from odoo import api, fields, models
 
 
-class AccountInvoice(models.Model):
-    _inherit = 'account.invoice'
+class AccountMove(models.Model):
+    _inherit = "account.move"
 
-    weight_invoice = fields.Float(
-        compute='_compute_weight',
+    compute_weight = fields.Selection(
+        selection=[
+            ("invoice", "On invoice"),
+            ("picking", "On picking"),
+            ("no", "Manual"),
+        ],
+        string="Compute weight",
+        default="invoice",
+    )
+    gross_weight = fields.Float(
+        compute="_compute_weight",
         help="The weight is computed when the invoice is done.",
-        digits_compute=dp.get_precision('Stock Weight'),
-        digits=dp.get_precision('Stock Weight'))
-    net_weight_invoice = fields.Float(
-        compute='_compute_weight',
-        help="The weight is computed when the invoice is done.",
-        digits_compute=dp.get_precision('Stock Weight'),
-        digits=dp.get_precision('Stock Weight'))
-    volume_invoice = fields.Float(
-        compute='_compute_weight',
-        help="The volume is computed when the invoice is done.",
-        digits_compute=dp.get_precision('Stock Volume'),
-        digits=dp.get_precision('Stock Volume'))
-    weight_custom = fields.Float(
-        help="Put here weight when computed amount is not exact.",
-        digits_compute=dp.get_precision('Stock Weight'),
-        digits=dp.get_precision('Stock Weight'))
-    net_weight_custom = fields.Float(
-        help="Put here net weight when computed amount is not exact.",
-        digits_compute=dp.get_precision('Stock Weight'),
-        digits=dp.get_precision('Stock Weight'))
-    volume_custom = fields.Float(
-        help="Put here net volume when computed amount is not exact.",
-        digits_compute=dp.get_precision('Stock Volume'),
-        digits=dp.get_precision('Stock Volume'))
-    compute_weight = fields.Boolean(default=True)
-    weight = fields.Float(
-        compute='_compute_weight',
-        string='TOTAL GROSS WEIGHT (KG)',
-        help="The weight is computed when the invoice is done.",
-        digits_compute=dp.get_precision('Stock Weight'),
-        digits=dp.get_precision('Stock Weight'))
-    net_weight = fields.Float(
-        compute='_compute_weight',
-        string='TOTAL NET WEIGHT (KG)',
-        help="The weight is computed when the invoice is done.",
-        digits_compute=dp.get_precision('Stock Weight'),
-        digits=dp.get_precision('Stock Weight'))
+    )
     volume = fields.Float(
-        compute='_compute_weight',
+        compute="_compute_weight",
         help="The volume is computed when the invoice is done.",
-        digits_compute=dp.get_precision('Stock Volume'),
-        digits=dp.get_precision('Stock Volume'))
-    parcels_sppp = fields.Float(
-        compute='_compute_weight',
-        help="Parcels are computed when the invoice is saved.",
-        string='Parcels (computed)')
+    )
+    net_weight = fields.Float(
+        compute="_compute_weight",
+        help="Put here net weight when computed amount is not correct.",
+    )
+    packages = fields.Integer(
+        compute="_compute_weight",
+        help="Put here number of packages when computed amount is not correct.",
+    )
 
-    @api.multi
+    @api.depends("compute_weight", "picking_ids", "invoice_line_ids")
     def _compute_weight(self):
+        volume_uom_id = self.env[
+            "product.template"
+        ]._get_volume_uom_id_from_ir_config_parameter()
         for invoice in self:
+            net_weight = 0
+            gross_weight = 0
+            volume = 0
+            packages = 0
             # sum weight from pickings
-            if invoice.stock_picking_package_preparation_ids:
-                invoice.weight += sum(
-                    x.weight for x in
-                    invoice.stock_picking_package_preparation_ids)
-                invoice.net_weight += sum(
-                    x.net_weight for x in
-                    invoice.stock_picking_package_preparation_ids)
-                invoice.volume += sum(
-                    x.volume for x in
-                    invoice.stock_picking_package_preparation_ids)
-                invoice.parcels_sppp += sum(
-                    x.parcels for x in
-                    invoice.stock_picking_package_preparation_ids)
-            # compute from invoice if not pickings
-            else:
-                invoice.weight = sum(
-                    l.product_id.weight and l.product_id.weight
-                    * l.quantity for l in invoice.invoice_line)
-                invoice.net_weight = sum(
-                    l.product_id.weight_net and l.product_id.weight_net
-                    * l.quantity for l in invoice.invoice_line)
-                invoice.volume = sum(
-                    l.product_id.volume and l.product_id.volume
-                    * l.quantity for l in invoice.invoice_line)
-                invoice.parcels_sppp = 0
-            # put custom value if selected from user
-            if not invoice.compute_weight:
-                invoice.net_weight = invoice.net_weight_custom
-                invoice.weight = invoice.weight_custom
-                invoice.volume = invoice.volume_custom
-                invoice.parcels_sppp = invoice.parcels
+            if invoice.compute_weight == "picking" and invoice.picking_ids:
+                net_weight = sum(
+                    x.net_weight_uom_id._compute_quantity(
+                        qty=x.weight, to_unit=invoice.net_weight_uom_id
+                    )
+                    for x in invoice.picking_ids
+                )
+                gross_weight = sum(
+                    x.gross_weight_uom_id._compute_quantity(
+                        qty=x.shipping_weight, to_unit=invoice.gross_weight_uom_id
+                    )
+                    for x in invoice.picking_ids
+                )
+                volume = sum(
+                    volume_uom_id._compute_quantity(
+                        qty=x.volume, to_unit=invoice.volume_uom_id
+                    )
+                    for x in invoice.picking_ids
+                )
+                packages = sum(x.number_of_packages for x in invoice.picking_ids)
+            # compute from invoice if not pickings or not compute_weight on picking
+            elif invoice.compute_weight == "invoice":
+                net_weight = sum(
+                    l.product_id.weight_uom_id._compute_quantity(
+                        qty=l.product_id.weight or 0, to_unit=invoice.net_weight_uom_id
+                    )
+                    * l.quantity
+                    for l in invoice.invoice_line_ids
+                )
+                # gross_weight obviously does not exist in product
+                gross_weight = net_weight
+                volume = sum(
+                    l.product_id.volume_uom_id._compute_quantity(
+                        qty=l.product_id.volume or 0, to_unit=invoice.volume_uom_id
+                    )
+                    * l.quantity
+                    for l in invoice.invoice_line_ids
+                )
+                # packages not computable
+            invoice.net_weight = net_weight
+            invoice.gross_weight = gross_weight
+            invoice.volume = volume
+            invoice.packages = packages
