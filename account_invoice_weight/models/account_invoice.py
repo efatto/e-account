@@ -64,20 +64,22 @@ class AccountMove(models.Model):
             # compute from invoice if not pickings or not compute_weight on picking
             elif invoice.compute_weight == "invoice":
                 net_weight = sum(
-                    l.product_id.weight_uom_id._compute_quantity(
-                        qty=l.product_id.weight or 0, to_unit=invoice.net_weight_uom_id
+                    inv_line.product_id.weight_uom_id._compute_quantity(
+                        qty=inv_line.product_id.weight or 0,
+                        to_unit=invoice.net_weight_uom_id,
                     )
-                    * l.quantity
-                    for l in invoice.invoice_line_ids
+                    * inv_line.quantity
+                    for inv_line in invoice.invoice_line_ids
                 )
                 # gross_weight obviously does not exist in product
                 gross_weight = net_weight
                 volume = sum(
-                    l.product_id.volume_uom_id._compute_quantity(
-                        qty=l.product_id.volume or 0, to_unit=invoice.volume_uom_id
+                    inv_line.product_id.volume_uom_id._compute_quantity(
+                        qty=inv_line.product_id.volume or 0,
+                        to_unit=invoice.volume_uom_id,
                     )
-                    * l.quantity
-                    for l in invoice.invoice_line_ids
+                    * inv_line.quantity
+                    for inv_line in invoice.invoice_line_ids
                 )
                 # packages not computable
             invoice.net_weight = net_weight
