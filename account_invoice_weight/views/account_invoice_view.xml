@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_move_form_weight" model="ir.ui.view">
+        <field name="name">account.invoice.form.weight</field>
+        <field name="model">account.move</field>
+        <field
+            name="inherit_id"
+            ref="account_invoice_shipping_info.invoice_form_view_shipping_info"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='packages']" position="before">
+                <field name="compute_weight" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

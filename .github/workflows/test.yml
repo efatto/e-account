@@ -51,6 +51,8 @@ jobs:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
+      - name: Install openupgradelib
+        run: pip3 install -e "git+https://github.com/OCA/openupgradelib.git@master#egg=openupgradelib"
       - name: Install addons and dependencies
         run: oca_install_addons
       - name: Check licenses
