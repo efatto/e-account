@@ -69,11 +69,11 @@ def migrate_old_module(cr, registry):
         # copy data from account.invoice to account.move
         query = sql.SQL(
             """
-UPDATE account_move
-set {new_field} = ai.{old_field}
-FROM account_move am
-JOIN account_invoice ai ON ai.id = am.old_invoice_id
-""".format(
+            UPDATE account_move
+            set {new_field} = ai.{old_field}
+            FROM account_move am
+            JOIN account_invoice ai ON ai.id = am.old_invoice_id
+            """.format(
                 new_field=fields[3], old_field=fields[2]
             )
         )

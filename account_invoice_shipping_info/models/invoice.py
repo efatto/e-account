@@ -25,7 +25,7 @@ class AccountMove(models.Model):
         default=_default_weight_uom,
         domain=_domain_weight_uom,
     )
-    net_weight = fields.Float(string="Weight")
+    net_weight = fields.Float(string="Net Weight")
     net_weight_uom_id = fields.Many2one(
         "uom.uom",
         "Net Weight UoM",
