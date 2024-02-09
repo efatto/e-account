@@ -10,11 +10,11 @@
     "website": "https://github.com/sergiocorato/e-account",
     "license": "AGPL-3",
     "depends": [
-        "stock_picking_invoice_link",
-        "stock_picking_volume",
         "account_invoice_shipping_info",
         "delivery_package_number",
         "product_logistics_uom",
+        "stock_picking_invoice_link",
+        "stock_picking_volume",
     ],
     "data": [
         "views/account_invoice_view.xml",

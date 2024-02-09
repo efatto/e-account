@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_invoice_weight
+# 	* account_invoice_weight
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-27 18:29+0000\n"
-"PO-Revision-Date: 2018-02-27 18:29+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2024-02-09 08:27+0000\n"
+"PO-Revision-Date: 2024-02-09 08:27+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,111 +16,102 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_invoice_weight
-#: field:account.invoice,compute_weight:0
+#: model:ir.model.fields,help:account_invoice_weight.field_account_move__gross_weight
+#: model:ir.model.fields,help:account_invoice_weight.field_account_move__net_weight
+#: model:ir.model.fields,help:account_invoice_weight.field_account_move__packages
+#: model:ir.model.fields,help:account_invoice_weight.field_account_move__volume
+msgid "Computation is done on save."
+msgstr "Il calcolo è eseguito al salvataggio."
+
+#. module: account_invoice_weight
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move__compute_weight
 msgid "Compute weight"
-msgstr "Calcola il peso"
+msgstr "Calcola pesi"
 
 #. module: account_invoice_weight
-#: view:account.invoice:account_invoice_weight.view_invoice_form_weight
-msgid "Computed from pickings or invoice if missing"
-msgstr "Calcolato dai DDT e dalla fattura dove mancanti"
+#: model:ir.model.fields,help:account_invoice_weight.field_account_move__compute_weight
+msgid ""
+"Compute weights and packages:\n"
+"with 'On invoice' the net weight and volume are computed on the invoice lines, packages and gross weight can be set by user;\n"
+"with 'On picking' all data is computed on pickings;\n"
+"with 'Manual' all data remains those set by user."
+msgstr ""
+"Calcola pesi e colli:\n"
+"con 'Sulla fattura' il peso netto e il volume sono calcolati sulle righe della fattura, colli e peso lordo possono essere impostati dall'utente;\n"
+"con 'Sui trasferimenti' tutti i dati sono calcolati sui trasferimenti;\n"
+"con 'Manuale' tutti i dati rimangono come impostati dall'utente."
 
 #. module: account_invoice_weight
-#: model:ir.model,name:account_invoice_weight.model_account_invoice
-msgid "Invoice"
-msgstr "Fattura"
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
 
 #. module: account_invoice_weight
-#: field:account.invoice,net_weight:0
-msgid "TOTAL NET WEIGHT (KG)"
-msgstr "TOTALE PESO NETTO (KG)"
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move__gross_weight
+msgid "Gross Weight"
+msgstr "Peso lordo"
 
 #. module: account_invoice_weight
-#: field:account.invoice,net_weight_custom:0
-msgid "Net weight custom"
-msgstr "Peso Netto (manuale)"
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move__gross_weight_custom
+msgid "Gross Weight Custom"
+msgstr "Peso lordo custom"
 
 #. module: account_invoice_weight
-#: field:account.invoice,net_weight_invoice:0
-msgid "Net weight invoice"
-msgstr "Peso Netto fattura"
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move__id
+msgid "ID"
+msgstr ""
 
 #. module: account_invoice_weight
-#: field:account.invoice,parcels_sppp:0
-msgid "Parcels (computed)"
-msgstr "Colli (calcolato)"
+#: model:ir.model,name:account_invoice_weight.model_account_move
+msgid "Journal Entry"
+msgstr "Registrazione contabile"
 
 #. module: account_invoice_weight
-#: help:account.invoice,parcels_sppp:0
-msgid "Parcels are computed when the invoice is saved."
-msgstr "I Colli sono calcolati quando la fattura viene salvata."
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
 
 #. module: account_invoice_weight
-#: help:account.invoice,volume_custom:0
-msgid "Put here net volume when computed amount is not exact."
-msgstr "Indicare il volume quando il valore calcolato non è esatto."
+#: model:ir.model.fields.selection,name:account_invoice_weight.selection__account_move__compute_weight__no
+msgid "Manual"
+msgstr "Manuale"
 
 #. module: account_invoice_weight
-#: help:account.invoice,net_weight_custom:0
-msgid "Put here net weight when computed amount is not exact."
-msgstr "Indicare il peso netto quando il valore calcolato non è esatto."
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move__net_weight_custom
+msgid "Net Weight Custom"
+msgstr "Peso netto custom"
 
 #. module: account_invoice_weight
-#: help:account.invoice,weight_custom:0
-msgid "Put here weight when computed amount is not exact."
-msgstr "Indicare il peso lordo quando il valore calcolato non è esatto."
+#: model:ir.model.fields.selection,name:account_invoice_weight.selection__account_move__compute_weight__invoice
+msgid "On invoice"
+msgstr "Sulla fattura"
 
 #. module: account_invoice_weight
-#: view:account.invoice:account_invoice_weight.view_invoice_form_weight
-msgid "Shipping Informations"
-msgstr "Informazioni spedizione"
+#: model:ir.model.fields.selection,name:account_invoice_weight.selection__account_move__compute_weight__picking
+msgid "On picking"
+msgstr "Sui trasferimenti"
 
 #. module: account_invoice_weight
-#: help:account.invoice,volume:0
-#: help:account.invoice,volume_invoice:0
-msgid "The volume is computed when the invoice is done."
-msgstr "Il volume è calcolato quando la fattura è salvata."
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move__packages
+msgid "Packages"
+msgstr "Colli"
 
 #. module: account_invoice_weight
-#: help:account.invoice,net_weight:0
-#: help:account.invoice,net_weight_invoice:0
-#: help:account.invoice,weight:0
-#: help:account.invoice,weight_invoice:0
-msgid "The weight is computed when the invoice is done."
-msgstr "Il peso è calcolato quando la fattura è salvata."
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move__packages_custom
+msgid "Packages Custom"
+msgstr "Colli custom"
 
 #. module: account_invoice_weight
-#: field:account.invoice,volume:0
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move__volume
 msgid "Volume"
-msgstr "Volume"
+msgstr ""
 
 #. module: account_invoice_weight
-#: field:account.invoice,volume_custom:0
-msgid "Volume custom"
-msgstr "Volume (manuale)"
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move__volume_custom
+msgid "Volume Custom"
+msgstr "Peso custom"
 
 #. module: account_invoice_weight
-#: field:account.invoice,volume_invoice:0
-msgid "Volume invoice"
-msgstr "Volume fattura"
-
-#. module: account_invoice_weight
-#: field:account.invoice,weight:0
-msgid "TOTAL GROSS WEIGHT (KG)"
-msgstr "TOTALE PESO LORDO (KG)"
-
-#. module: account_invoice_weight
-#: view:account.invoice:account_invoice_weight.view_invoice_form_weight
-msgid "Weight Informations"
-msgstr "Pesi e Volumi"
-
-#. module: account_invoice_weight
-#: field:account.invoice,weight_custom:0
-msgid "Weight custom"
-msgstr "Peso lordo (manuale)"
-
-#. module: account_invoice_weight
-#: field:account.invoice,weight_invoice:0
-msgid "Weight invoice"
-msgstr "Peso fattura"
-
+#: model:ir.model.fields,field_description:account_invoice_weight.field_account_move__net_weight
+msgid "Weight"
+msgstr "Peso"
