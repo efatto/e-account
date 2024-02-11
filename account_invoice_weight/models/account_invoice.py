@@ -11,7 +11,7 @@ class AccountMove(models.Model):
             ("no", "Manual"),
         ],
         string="Compute weight",
-        default="invoice",
+        default="no",
         help="Compute weights and packages:\n"
         "with 'On invoice' the net weight and volume are computed on the invoice lines,"
         " packages and gross weight can be set by user;\n"
