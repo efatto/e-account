@@ -35,9 +35,7 @@ def migrate_fields(cr):
 
     for fields in renamed_fields:
         # copy data
-        if not openupgrade.column_exists(
-            env.cr, "account_move", fields[1]
-        ):
+        if not openupgrade.column_exists(env.cr, "account_move", fields[1]):
             openupgrade.add_fields(
                 env,
                 [
