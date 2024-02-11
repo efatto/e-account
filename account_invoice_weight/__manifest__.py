@@ -20,4 +20,5 @@
         "views/account_invoice_view.xml",
     ],
     "installable": True,
+    "pre_init_hook": "migrate_fields",
 }
