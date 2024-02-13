@@ -1,15 +1,14 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
 
 
 class MailComposeMessage(models.TransientModel):
-    _inherit = 'mail.compose.message'
+    _inherit = "mail.compose.message"
 
     def send_mail(self, auto_commit=False):
         if (
-            self._context.get('mark_shipping_email_as_sent', False)
+            self._context.get("mark_shipping_email_as_sent", False)
             and self._context.get("default_model", False) == "account.move"
             and self._context.get("default_res_id", False)
         ):
