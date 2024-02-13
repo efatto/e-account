@@ -27,3 +27,8 @@ Lo stato passerà quindi in *Spedizione confermata*:
 
 .. image:: ../static/description/stato_confermata.png
     :alt: Spedizione confermata
+
+Si potrà nel mentre raggruppare o filtrare le fatture per controllare lo *Stato spedizione*:
+
+.. image:: ../static/description/filtra_raggruppa.png
+    :alt: Filtra o raggruppa
