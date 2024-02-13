@@ -4,10 +4,13 @@
     <record id="invoice_form_send_shipping_email" model="ir.ui.view">
         <field name="name">account.invoice.form.shippin.email</field>
         <field name="model">account.move</field>
-        <field name="inherit_id" ref="account_invoice_shipping_info.invoice_form_view_shipping_info" />
+        <field
+            name="inherit_id"
+            ref="account_invoice_shipping_info.invoice_form_view_shipping_info"
+        />
         <field name="arch" type="xml">
             <field name="goods_appearance_id" position="before">
-                <field name="shipping_email_state"/>
+                <field name="shipping_email_state" />
             </field>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button
