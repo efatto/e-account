@@ -9,7 +9,6 @@
     "website": "https://github.com/sergiocorato/e-account",
     "depends": [
         "l10n_it_sdi_channel",
-        "partner_contact_email",
     ],
     "data": [],
     "installable": True,
