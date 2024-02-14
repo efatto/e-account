@@ -26,12 +26,12 @@ class AccountMove(models.Model):
         email_values = template.generate_email(
             self.ids, ["body_html", "subject", "reply_to", "email_to"]
         )
-        kwargs = {"mail_auto_delete": False}
-        if email_values.get("reply_to", False):
-            kwargs["reply_to"] = email_values["reply_to"]
-        if email_values.get("email_to", False):
-            kwargs["email_to"] = email_values["email_to"]
         values = email_values[self.id]
+        kwargs = {"mail_auto_delete": False}
+        if values.get("reply_to", False):
+            kwargs["reply_to"] = values["reply_to"]
+        if values.get("email_to", False):
+            kwargs["email_to"] = values["email_to"]
         self.message_post(
             author_id=self.env.user.partner_id.id,
             body=values["body_html"],
