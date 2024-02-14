@@ -1,4 +1,3 @@
-
 from odoo import models
 
 
@@ -14,9 +13,9 @@ class AccountMove(models.Model):
     def send_shipping_email(self):
         self.ensure_one()
         lang = self.partner_id.lang or self.env.context.get("lang")
-        template = self.env.ref(
-            "account.email_template_edi_invoice"
-        ).with_context(lang=lang)
+        template = self.env.ref("account.email_template_edi_invoice").with_context(
+            lang=lang
+        )
         # possible other implementation, but without email status notification
         # res = template.send_mail(
         #     self.id,
@@ -25,7 +24,8 @@ class AccountMove(models.Model):
         # )
         # return res
         email_values = template.generate_email(
-            self.ids, ["body_html", "subject", "reply_to", "email_to"])
+            self.ids, ["body_html", "subject", "reply_to", "email_to"]
+        )
         kwargs = {"mail_auto_delete": False}
         if email_values.get("reply_to", False):
             kwargs["reply_to"] = email_values["reply_to"]
@@ -39,7 +39,7 @@ class AccountMove(models.Model):
             subject=values["subject"],
             attachments=values["attachments"],
             email_from=template.email_from,
-            subtype_xmlid='mail.mt_comment',
+            subtype_xmlid="mail.mt_comment",
             **kwargs,
         )
         return True

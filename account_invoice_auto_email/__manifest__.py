@@ -11,7 +11,6 @@
         "l10n_it_sdi_channel",
         "partner_contact_email",
     ],
-    "data": [
-    ],
+    "data": [],
     "installable": True,
 }
