@@ -39,11 +39,18 @@ class AccountMove(models.Model):
                 due_line_ids = []
                 for line in totlines:
                     due_line_id = dueamount_line_obj.create(
-                        {
-                            "date": line[0],
-                            "amount": -line[1],
-                            "invoice_id": invoice.id,
-                        }
+                        [
+                            {
+                                "date": line[0],
+                                "amount": line[1]
+                                * (
+                                    invoice.move_type in ("out_invoice", "in_refund")
+                                    and -1
+                                    or 1
+                                ),
+                                "invoice_id": invoice.id,
+                            }
+                        ]
                     )
                     due_line_ids.append(due_line_id.id)
                 invoice.write({"dueamount_line_ids": [(6, 0, due_line_ids)]})
@@ -73,10 +80,13 @@ class AccountMove(models.Model):
                 if float_compare(total_dueamount, move.amount_total, 2) != 0:
                     raise exceptions.ValidationError(
                         _(
-                            "Total amount of due amount lines must be equal to "
+                            "Total amount of due amount lines %.2f must be equal to "
                             "invoice total amount %.2f"
                         )
-                        % move.amount_total
+                        % (
+                            total_dueamount,
+                            move.amount_total,
+                        )
                     )
 
                 dueamount_ids = move.dueamount_line_ids.ids
