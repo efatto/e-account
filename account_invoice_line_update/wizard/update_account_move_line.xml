@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_update_account_move_line" model="ir.ui.view">
+        <field name="name">update_account_move_line_wizard</field>
+        <field name="model">wizard.update.account.move.line</field>
+        <field name="arch" type="xml">
+            <form string="Update move line">
+                <div>
+                    <group>
+                        <field name="account_id" />
+                    </group>
+                </div>
+                <footer>
+                    <button
+                        class="btn-primary"
+                        name="update_account_move_line"
+                        string="Confirm"
+                        type="object"
+                      />
+                    <button class="btn-secondary" special="cancel" string="Discard" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_update_account_move_line" model="ir.actions.act_window">
+        <field name="name">Update move line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.update.account.move.line</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
