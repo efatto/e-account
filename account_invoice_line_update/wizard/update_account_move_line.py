@@ -6,6 +6,9 @@ class UpdateAccountMoveLineWizard(models.TransientModel):
     _description = "Wizard update account move line"
 
     account_id = fields.Many2one(comodel_name="account.account", required=True)
+    company_id = fields.Many2one(
+        comodel_name="res.company", required=True, default=lambda self: self.env.company
+    )
 
     def update_account_move_line(self):
         rec_ids = self.env.context.get("active_ids", False)
