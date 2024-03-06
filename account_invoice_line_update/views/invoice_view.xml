@@ -6,13 +6,16 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='line_ids']/tree/field[@name='account_id']" position="after">
+            <xpath
+                expr="//field[@name='line_ids']/tree/field[@name='account_id']"
+                position="after"
+            >
                 <button
                     name="%(account_invoice_line_update.action_update_account_move_line)d"
                     type="action"
                     icon="fa-edit"
                     attrs="{
-                        'invisible': [('display_type', 'in', ('line_section', 'line_note'))],
+                        'invisible': ['|', ('display_type', 'in', ('line_section', 'line_note')), ('account_internal_type', 'in', ('receivable', 'payable'))],
                     }"
                 />
             </xpath>
