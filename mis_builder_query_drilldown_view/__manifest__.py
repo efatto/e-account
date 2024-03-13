@@ -9,9 +9,12 @@
     "license": "AGPL-3",
     "summary": "Add drilldown views to mis report",
     "depends": [
+        "account_analytic_mrp_extra_cost",
         "account_invoice_line_usability",
         "mis_builder_query_drilldown",
         "mrp",
+        "mrp_workorder_timesheet_cost",
+        "mrp_workcenter_productivity_usability",
         "sale_order_line_usability",
         "stock",
         "stock_move_usability",
