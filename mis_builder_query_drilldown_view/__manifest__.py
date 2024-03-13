@@ -14,6 +14,7 @@
         "mrp",
         "sale_order_line_usability",
         "stock",
+        "stock_move_usability",
     ],
     "data": [
         "views/account.xml",
