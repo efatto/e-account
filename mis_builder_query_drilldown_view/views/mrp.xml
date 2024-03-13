@@ -15,7 +15,9 @@
                 <field name="loss_type"/>
                 <field name="date_start"/>
                 <field name="date_end"/>
-                <field name="duration" sum="Total"/>
+                <field name="duration"/>
+                <field name="duration_hour" sum="Total (hours)"/>
+                <field name="amount" sum="Total Cost"/>
             </tree>
         </field>
     </record>
