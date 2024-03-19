@@ -30,6 +30,7 @@
                 <field name="date"/>
                 <field name="name"/>
                 <field name="account_id"/>
+                <field name="general_account_id" groups="account.group_account_user"/>
                 <field name="currency_id" invisible="1"/>
                 <field name="company_id" groups="base.group_multi_company"/>
                 <field name="unit_amount" sum="Quantity"/>
