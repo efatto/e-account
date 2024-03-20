@@ -36,8 +36,10 @@ class SaleOrder(models.Model):
             lambda so: any(sol.product_id.exclude_from_margin for sol in so.order_line)
         ):
             if order.margin and order.amount_untaxed:
-                order.margin_percent = order.margin / sum(
-                    line.price_subtotal
-                    for line in order.order_line
-                    if not line.product_id.exclude_from_margin
+                amount_untaxed_not_excluded = order.amount_untaxed - sum(
+                    order.order_line.filtered(
+                        lambda line: line.product_id.exclude_from_margin
+                    ).mapped("price_subtotal")
+                    or [0]
                 )
+                order.margin_percent = order.margin / (amount_untaxed_not_excluded or 1)
