@@ -1,29 +1,26 @@
-# Copyright 2017-2020 Sergio Corato <https://github.com/sergiocorato>
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-
+# Copyright 2017-2024 Sergio Corato <https://github.com/sergiocorato>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    'name': 'Account move line usability',
-    'version': '12.0.1.0.2',
-    'category': 'Accounting & Finance',
-    'author': 'Sergio Corato',
-    'description': '''
-Solve some usability issue in account move line:
-------------------------------------------------
-* set credit accordingly to debit and viceversa,
-* add filter from_date and to_date,
-* set minimum width for account fields,
-* set next line with balance value,
-* set account accordingly to partner.
-''',
-    'website': 'https://github.com/sergiocorato/e-account',
-    'license': 'AGPL-3',
-    'depends': [
-        'account',
+    "name": "Account move line usability",
+    "version": "14.0.1.0.0",
+    "category": "Accounting & Finance",
+    "author": "Sergio Corato",
+    "summary": """
+Solve some usability issue in account move line:\n
+------------------------------------------------\n
+* add filter from_date and to_date,\n
+* set minimum width for account fields,\n
+* set account accordingly to partner.\n
+""",
+    "website": "https://github.com/sergiocorato/e-account",
+    "license": "AGPL-3",
+    "depends": [
+        "account",
     ],
-    'data': [
-        'views/css.xml',
-        'views/account.xml',
+    "data": [
+        "views/css.xml",
+        "views/account.xml",
     ],
-    'installable': True,
-    'pre_init_hook': 'pre_init_hook',
+    "installable": True,
+    "pre_init_hook": "pre_init_hook",
 }
