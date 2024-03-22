@@ -35,7 +35,6 @@
                 <field name="company_id" groups="base.group_multi_company"/>
                 <field name="unit_amount" sum="Quantity"/>
                 <field name="amount" sum="Total"/>
-                <field name="extra_cost" sum="Total Extra Cost"/>
             </tree>
         </field>
     </record>
