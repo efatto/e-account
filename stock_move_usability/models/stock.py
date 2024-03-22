@@ -9,7 +9,7 @@ class StockMove(models.Model):
         string="Price Total", compute='_compute_price_total', store=True)
 
     @api.multi
-    @api.depends('price_unit')
+    @api.depends('price_unit', 'quantity_done')
     def _compute_price_total(self):
         for move in self:
             move.price_total = move.quantity_done * move.price_unit
