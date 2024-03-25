@@ -15,7 +15,7 @@ Solve some usability issue in account move line: add filter from_date and to_dat
         "account",
     ],
     "data": [
-        "views/css.xml",
+        "views/scss.xml",
         "views/account.xml",
     ],
     "installable": True,
