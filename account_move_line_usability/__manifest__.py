@@ -6,11 +6,8 @@
     "category": "Accounting & Finance",
     "author": "Sergio Corato",
     "summary": """
-Solve some usability issue in account move line:\n
-------------------------------------------------\n
-* add filter from_date and to_date,\n
-* set minimum width for account fields,\n
-* set account accordingly to partner.\n
+Solve some usability issue in account move line: add filter from_date and to_date,
+ set minimum width for account fields, set account accordingly to partner.
 """,
     "website": "https://github.com/sergiocorato/e-account",
     "license": "AGPL-3",
