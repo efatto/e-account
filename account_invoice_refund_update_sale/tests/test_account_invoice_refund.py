@@ -36,7 +36,7 @@ class TestAccountInvoiceRefund(TransactionCase):
         self.journalrec = self.journal_obj.search([('type', '=', 'sale')])[0]
         self.account_id = self.account_obj.search([
             ('user_type_id', '=', self.account_revenue.id)], limit=1)
-        self.fiscal_position = self.env["account.fiscal.position"].search([], limit=1)
+
         self.account_rec1_id = self.account_obj.create(dict(
             code="cust_acc",
             name="customer account",
@@ -83,7 +83,6 @@ class TestAccountInvoiceRefund(TransactionCase):
         # create invoice from sale order
         order1 = self.env['sale.order'].create({
             'partner_id': self.partner3.id,
-            'fiscal_position_id': self.fiscal_position.id,
         })
         self._create_sale_order_line(order1, self.product_id, 5)
         order1.action_confirm()
