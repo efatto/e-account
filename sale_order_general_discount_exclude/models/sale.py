@@ -24,4 +24,3 @@ class SaleOrderLine(models.Model):
             if product.exclude_from_discount:
                 vals['discount'] = 0.0
         return super().create(vals)
-
