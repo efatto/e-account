@@ -21,10 +21,12 @@ class TestSaleOrderAnalyticAll(common.SavepointCase):
                 (4, cls.env.ref('sales_team.group_sale_salesman').id),
             ]
         }])
+        cls.fiscal_position = cls.env["account.fiscal.position"].search([], limit=1)
 
     def _create_sale_order(self):
         new_sale = self.sale_order_model.sudo(self.sale_user).create({
             'partner_id': self.partner.id,
+            'fiscal_position_id': self.fiscal_position.id,
         })
         return new_sale
 
