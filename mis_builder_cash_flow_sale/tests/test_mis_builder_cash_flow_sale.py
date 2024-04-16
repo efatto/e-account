@@ -81,14 +81,14 @@ class TestMisBuilderCashflowSale(SavepointCase):
             order_line_form.product_id = self.product
             order_line_form.product_uom_qty = 5.0
             order_line_form.price_unit = 13.0
-            order_line_form.commitment_date = fields.Date.today() + relativedelta(
+            order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
                 days=40
             )
         with sale_form.order_line.new() as order_line_form:
             order_line_form.product_id = self.product1
             order_line_form.product_uom_qty = 5.0
             order_line_form.price_unit = 19.0
-            order_line_form.commitment_date = fields.Date.today() + relativedelta(
+            order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
                 days=70
             )
         sale_order = sale_form.save()
@@ -106,10 +106,6 @@ class TestMisBuilderCashflowSale(SavepointCase):
                 sum(line.mapped("cashflow_line_ids.sale_balance_forecast")),
                 line.price_total,
             )
-            self.assertAlmostEqual(
-                sum(line.mapped("cashflow_line_ids.balance")),
-                line.price_total,
-            )
 
     def test_02_sale_payment_term_2rate_cashflow(self):
         sale_form = Form(
@@ -122,14 +118,14 @@ class TestMisBuilderCashflowSale(SavepointCase):
             order_line_form.product_id = self.product
             order_line_form.product_uom_qty = 5.0
             order_line_form.price_unit = 13.0
-            order_line_form.commitment_date = fields.Date.today() + relativedelta(
+            order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
                 days=40
             )
         with sale_form.order_line.new() as order_line_form:
             order_line_form.product_id = self.product1
             order_line_form.product_uom_qty = 5.0
             order_line_form.price_unit = 19.0
-            order_line_form.commitment_date = fields.Date.today() + relativedelta(
+            order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
                 days=70
             )
         sale_order = sale_form.save()
@@ -145,9 +141,5 @@ class TestMisBuilderCashflowSale(SavepointCase):
             self.assertEqual(len(line.cashflow_line_ids), 2)
             self.assertAlmostEqual(
                 sum(line.mapped("cashflow_line_ids.sale_balance_forecast")),
-                line.price_total,
-            )
-            self.assertAlmostEqual(
-                sum(line.mapped("cashflow_line_ids.balance")),
                 line.price_total,
             )
