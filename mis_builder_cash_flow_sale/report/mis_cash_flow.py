@@ -7,6 +7,8 @@ class MisCashFlow(models.Model):
 
     def get_cash_flow_query(self):
         query = super().get_cash_flow_query()
+        account_type_receivable = self.env.ref(
+            'account.data_account_type_receivable')
         if "sale.order.line" not in query:
             sale_query = """
                 UNION ALL
@@ -31,6 +33,7 @@ class MisCashFlow(models.Model):
                     NULL as full_reconcile_id,
                     fl.partner_id as partner_id,
                     fl.company_id as company_id,
+                    %i as user_type_id,
                     fl.name as name,
                     'posted' as state,
                     fl.date as date,
@@ -51,7 +54,7 @@ class MisCashFlow(models.Model):
                     im.model = 'sale.order.line'
                     AND so.invoice_status != 'invoiced'
                 UNION ALL
-            """
+            """ % account_type_receivable.id
             full_query = query.replace("UNION ALL", sale_query, 1)
             return full_query
         return query

@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='order_line']/form/field[@name='company_id']"
+                expr="//field[@name='order_line']/form/field[@name='name']"
                 position="after"
             >
                 <div string="Cash flow" groups="account.group_account_manager">

@@ -8,6 +8,7 @@ from odoo.tools import config, float_is_zero, float_round
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
+    @api.multi
     def action_confirm(self):
         res = super().action_confirm()
         self.filtered(lambda x: x.state == "sale").mapped(
@@ -15,6 +16,7 @@ class SaleOrder(models.Model):
         )._refresh_cashflow_line()
         return res
 
+    @api.multi
     def write(self, vals):
         res = super().write(vals)
         for sale_order in self:
@@ -57,6 +59,7 @@ class SaleOrderLine(models.Model):
         line._refresh_cashflow_line()
         return line
 
+    @api.multi
     def write(self, vals):
         res = super().write(vals)
         if (
@@ -70,15 +73,16 @@ class SaleOrderLine(models.Model):
             self._refresh_cashflow_line()
         return res
 
+    @api.multi
     def _refresh_cashflow_line(self):
         for line in self:
             line.cashflow_line_ids.unlink()
             if line.order_id.payment_mode_id.fixed_journal_id:
                 journal_id = line.order_id.payment_mode_id.fixed_journal_id
                 if line.price_total < 0:
-                    account_id = journal_id.payment_credit_account_id
+                    account_id = journal_id.default_credit_account_id
                 else:
-                    account_id = journal_id.payment_debit_account_id
+                    account_id = journal_id.default_debit_account_id
             else:
                 account_ids = self.env["account.account"].search(
                     [
@@ -131,8 +135,7 @@ class SaleOrderLine(models.Model):
                         sale_balance_total_currency,
                         line.commitment_date
                         or line.order_id.commitment_date
-                        or line.order_id.date_order,
-                    )
+                        or line.order_id.date_order)[0]
                 line.write(
                     {
                         "cashflow_line_ids": [
