@@ -51,6 +51,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
+      - name: Pip install PR
+        run: pip3 install -e "git+https://github.com/sergiocorato/mis-builder@12.0-imp-mis_builder-query-drilldown-filtered#egg=odoo12-addon-mis_builder&subdirectory=setup/mis_builder"
+      - name: Install account_analytic_mrp_extra_cost module from efatto repo
+        run: pip3 install -e "git+https://github.com/sergiocorato/efatto@12.0#egg=odoo12-addon-account_analytic_mrp_extra_cost&subdirectory=setup/account_analytic_mrp_extra_cost"
+      - name: Install mrp_workorder_timesheet_cost module from e-efatto repo
+        run: pip3 install -e "git+https://github.com/sergiocorato/e-efatto@12.0#egg=odoo12-addon-mrp_workorder_timesheet_cost&subdirectory=setup/mrp_workorder_timesheet_cost"
       - name: Install addons and dependencies
         run: oca_install_addons
       - name: Check licenses
@@ -59,11 +65,5 @@ jobs:
         run: manifestoo -d . check-dev-status --default-dev-status=Beta
       - name: Initialize test db
         run: oca_init_test_database
-      - name: Pip install PR
-        run: pip3 install -e "git+https://github.com/sergiocorato/mis-builder@12.0-imp-mis_builder-query-drilldown-filtered#egg=odoo12-addon-mis_builder&subdirectory=setup/mis_builder"
-      - name: Install account_analytic_mrp_extra_cost module from efatto repo
-        run: pip3 install -e "git+https://github.com/sergiocorato/efatto@12.0#egg=odoo12-addon-account_analytic_mrp_extra_cost&subdirectory=setup/account_analytic_mrp_extra_cost"
-      - name: Install mrp_workorder_timesheet_cost module from e-efatto repo
-        run: pip3 install -e "git+https://github.com/sergiocorato/e-efatto@12.0#egg=odoo12-addon-mrp_workorder_timesheet_cost&subdirectory=setup/mrp_workorder_timesheet_cost"
       - name: Run tests
         run: oca_run_tests
