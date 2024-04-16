@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='order_line']/form/field[@name='name']"
+                position="after"
+            >
+                <div string="Cash flow" groups="account.group_account_manager">
+                    <field name="cashflow_line_ids">
+                        <tree editable="bottom">
+                            <field name="date" />
+                            <field name="currency_id" />
+                            <field
+                                name="sale_balance_currency"
+                                widget="monetary"
+                                options="{'currency_field': 'sale_currency_id'}"
+                            />
+                            <field name="sale_invoiced_percent" />
+                            <field
+                                name="sale_balance_forecast"
+                                sum="Total forecast balance"
+                            />
+                        </tree>
+                    </field>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
