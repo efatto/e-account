@@ -55,6 +55,8 @@ jobs:
         run: pip3 install -e "git+https://github.com/sergiocorato/mis-builder@12.0-imp-mis_builder-query-drilldown-filtered#egg=odoo12-addon-mis_builder&subdirectory=setup/mis_builder"
       - name: Install account_analytic_mrp_extra_cost module from efatto repo
         run: pip3 install -e "git+https://github.com/sergiocorato/efatto@12.0#egg=odoo12-addon-account_analytic_mrp_extra_cost&subdirectory=setup/account_analytic_mrp_extra_cost"
+      - name: Install mrp_employee_productivity module from e-efatto repo
+        run: pip3 install -e "git+https://github.com/sergiocorato/e-efatto@12.0#egg=odoo12-addon-mrp_employee_productivity&subdirectory=setup/mrp_employee_productivity"
       - name: Install mrp_workorder_timesheet_cost module from e-efatto repo
         run: pip3 install -e "git+https://github.com/sergiocorato/e-efatto@12.0#egg=odoo12-addon-mrp_workorder_timesheet_cost&subdirectory=setup/mrp_workorder_timesheet_cost"
       - name: Install addons and dependencies
