@@ -11,7 +11,7 @@ class MisCashFlow(models.Model):
     currency_id = fields.Many2one(
         comodel_name='res.currency'
     )
-    res_model = fields.Char()
+    res_model_id = fields.Many2one(comodel_name="ir.model")
     balance_currency = fields.Float()
     balance_forecast = fields.Float()
 
@@ -23,7 +23,7 @@ class MisCashFlow(models.Model):
                 -- we use negative id to avoid duplicates and we don't use
                 -- ROW_NUMBER() because the performance was very poor
                 -aml.id as id,
-                CAST('move_line' as varchar) as line_type,
+                'move_line' as line_type,
                 aml.id as move_line_id,
                 aml.account_id as account_id,
                 CASE
@@ -42,14 +42,17 @@ class MisCashFlow(models.Model):
                 aml.company_id as company_id,
                 aml.user_type_id as user_type_id,
                 aml.name as name,
-                aml.date_maturity as date,
-                CAST('account_move_line' as varchar) as res_model,
+                am.state as state,
+                COALESCE(aml.date_maturity, aml.date) as date,
+                Null as res_model_id,
                 aml.id as res_id,
                 0.0 as invoiced_percent,
                 Null as currency_id,
                 0.0 as balance_currency,
                 0.0 as balance_forecast
             FROM account_move_line as aml
+            JOIN account_move am ON am.id = aml.move_id
+            WHERE am.state = 'posted'
             UNION ALL
             SELECT
                 fl.id as id,
@@ -72,16 +75,15 @@ class MisCashFlow(models.Model):
                 fl.company_id as company_id,
                 %i as user_type_id,
                 fl.name as name,
+                'posted' as state,
                 fl.date as date,
-                Null as res_model,
+                Null as res_model_id,
                 Null as res_id,
                 0.0 as invoiced_percent,
                 Null as currency_id,
                 0.0 as balance_currency,
                 0.0 as balance_forecast
             FROM mis_cash_flow_forecast_line as fl
-            LEFT JOIN
-                ir_model im ON im.id = fl.res_model_id
             WHERE
                 fl.res_model_id IS NULL
         """ % account_type_receivable.id

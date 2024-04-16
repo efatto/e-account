@@ -21,7 +21,7 @@ class CashFlowForecastLine(models.Model):
     )
     purchase_balance_forecast = fields.Float(
         compute='_compute_balance_forecast',
-        string='Forecast balance',
+        string='Purchase forecast balance',
         store=True,
     )
 
@@ -37,15 +37,21 @@ class CashFlowForecastLine(models.Model):
     def _compute_balance_forecast(self):
         for line in self:
             if line.purchase_line_id:
-                line.purchase_invoiced_percent = line.purchase_line_id.qty_invoiced / (
-                    max([line.purchase_line_id.product_qty,
-                         line.purchase_line_id.qty_received, 1]))
+                purchase_invoiced_percent = line.purchase_line_id.qty_invoiced / (
+                    max(
+                        line.purchase_line_id.product_qty,
+                        line.purchase_line_id.qty_received,
+                        1,
+                    )
+                )
+                line.purchase_invoiced_percent = min(purchase_invoiced_percent, 1)
                 line.purchase_balance_forecast = - line.currency_id._convert(
                     line.purchase_balance_currency or line.balance,
                     line.purchase_line_id.order_id.company_id.currency_id,
                     line.purchase_line_id.order_id.company_id,
-                    line.date
+                    line.date,
                 ) * (1 - line.purchase_invoiced_percent)
+                line.balance = line.purchase_balance_forecast
             else:
                 line.purchase_invoiced_percent = 0
                 line.purchase_balance_forecast = line.balance

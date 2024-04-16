@@ -1,12 +1,12 @@
 # Copyright 2022-2023 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import api, models, fields, _
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_is_zero, float_round
 
 
 class PurchaseOrder(models.Model):
-    _inherit = 'purchase.order'
+    _inherit = "purchase.order"
 
     @api.multi
     def button_confirm(self):
