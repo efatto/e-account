@@ -5,10 +5,11 @@
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='order_line']/form/field[@name='name']"
+                expr="//field[@name='order_line']/form/field[@name='state']"
                 position="after"
             >
                 <div string="Cash flow" groups="account.group_account_manager">
+                    <label for="cashflow_line_ids"/>
                     <field name="cashflow_line_ids">
                         <tree editable="bottom">
                             <field name="date" />
