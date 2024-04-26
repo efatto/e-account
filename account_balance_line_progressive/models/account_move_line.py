@@ -6,7 +6,7 @@ from odoo import fields, models
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
-    _order = "date desc, id desc"
+    _order = "date desc, credit desc, id desc"
 
     def _compute_balance_progressive(self):
         tables, where_clause, where_params = self.with_context(
@@ -30,7 +30,11 @@ class AccountMoveLine(models.Model):
                      at.type not in ('receivable', 'payable')
                     )
                )
-            AND (l2.date < l1.date OR (l2.date = l1.date AND l2.id <= l1.id))
+            AND (
+                 l2.date < l1.date
+                 OR (l2.date = l1.date AND l1.debit >=0)
+                 OR (l2.date = l1.date AND l2.id <= l1.id)
+            )
             JOIN account_move m1 on (m1.id = l2.move_id AND m1.state <> 'draft')
             WHERE l1.id IN %s """
         if where_clause:
