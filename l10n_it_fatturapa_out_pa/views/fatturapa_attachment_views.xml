@@ -10,7 +10,8 @@
                 <div class="badge-pill badge-danger float-left"
                      attrs="{'invisible': [('is_pa_sendable', '=', True)]}">
                     Warning: this file is in a format not sendable to Public Administration!
-                    How-to sign video <b><a target="_blank" style="text-decoration:none; color: #28a745;" href="https://efatto.it/slides/slide/fatturazione-elettronica-verso-pa-141">here</a></b>
+                    How-to sign video <b><a target="_blank" style="text-decoration:none; color: #28a745;"
+                    href="https://efatto.it/slides/slide/fatturazione-elettronica-verso-pubblica-amministrazione-161">here</a></b>
                     (need login to learning site)
                 </div>
             </xpath>
