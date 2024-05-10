@@ -21,24 +21,32 @@ class AccountMove(models.Model):
     gross_weight = fields.Float(
         compute="_compute_weight",
         inverse="_inverse_weight",
+        store=True,
+        readonly=False,
         help="Computation is done on save.",
     )
     gross_weight_custom = fields.Float()
     volume = fields.Float(
         compute="_compute_weight",
         inverse="_inverse_weight",
+        store=True,
+        readonly=False,
         help="Computation is done on save.",
     )
     volume_custom = fields.Float()
     net_weight = fields.Float(
         compute="_compute_weight",
         inverse="_inverse_weight",
+        store=True,
+        readonly=False,
         help="Computation is done on save.",
     )
     net_weight_custom = fields.Float()
     packages = fields.Integer(
         compute="_compute_weight",
         inverse="_inverse_weight",
+        store=True,
+        readonly=False,
         help="Computation is done on save.",
     )
     packages_custom = fields.Integer()
@@ -101,11 +109,7 @@ class AccountMove(models.Model):
 
     def _inverse_weight(self):
         for invoice in self:
-            if invoice.net_weight:
-                invoice.net_weight_custom = invoice.net_weight
-            if invoice.gross_weight:
-                invoice.gross_weight_custom = invoice.gross_weight
-            if invoice.volume:
-                invoice.volume_custom = invoice.volume
-            if invoice.packages:
-                invoice.packages_custom = invoice.packages
+            invoice.net_weight_custom = invoice.net_weight
+            invoice.gross_weight_custom = invoice.gross_weight
+            invoice.volume_custom = invoice.volume
+            invoice.packages_custom = invoice.packages
