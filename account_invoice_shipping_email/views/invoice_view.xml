@@ -18,14 +18,14 @@
                     string="Send shipping Email"
                     type="object"
                     icon="fa-send"
-                    attrs="{'invisible': [('shipping_email_state', '!=', 'no')]}"
+                    attrs="{'invisible': ['|', ('shipping_email_state', '!=', 'no'), ('move_type', 'not in', ['in_refund', 'out_invoice'])]}"
                 />
                 <button
                     name="action_set_shipping_confirmed"
                     string="Set shipping confirmed"
                     type="object"
                     icon="fa-ship"
-                    attrs="{'invisible': [('shipping_email_state', '!=', 'sent')]}"
+                    attrs="{'invisible': ['|', ('shipping_email_state', '!=', 'sent'), ('move_type', 'not in', ['in_refund', 'out_invoice'])]}"
                 />
             </xpath>
         </field>
