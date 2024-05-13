@@ -7,7 +7,10 @@
             <field name="inherit_id" ref="account.view_move_form" />
             <field name="arch" type="xml">
                 <notebook position="inside">
-                    <page string="Shipping Informations">
+                    <page
+                    string="Shipping Informations"
+                    attrs="{'invisible':[('move_type', 'not in', ['in_refund', 'out_invoice'])]}"
+                >
                         <group string="Shipping Informations">
                             <field name="goods_appearance_id" widget="selection" />
                             <field name="transport_condition_id" widget="selection" />
