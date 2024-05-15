@@ -30,5 +30,21 @@
             </xpath>
         </field>
     </record>
+    <record model="ir.ui.view" id="view_out_invoice_tree">
+        <field name="name" />
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_out_invoice_tree" />
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field
+                    name="shipping_email_state"
+                    widget="badge"
+                    decoration-success="shipping_email_state == 'confirmed'"
+                    decoration-info="shipping_email_state == 'sent'"
+                    optional="show"
+                />
+            </field>
+        </field>
+    </record>
 
 </odoo>
