@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Mis builder drilldown view analytic extra cost",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "category": "Reporting",
     "author": "Sergio Corato",
     "website": "https://github.com/sergiocorato/e-account",
