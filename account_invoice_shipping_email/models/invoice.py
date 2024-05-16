@@ -40,3 +40,19 @@ class AccountMove(models.Model):
     def action_set_shipping_confirmed(self):
         self.ensure_one()
         self.shipping_email_state = "confirmed"
+
+    def _notify_get_groups(self, msg_vals=None):
+        """
+         Remove access button to portal and customer if the document is a shipping mail.
+        """
+        groups = super()._notify_get_groups(msg_vals=msg_vals)
+        if (
+            self._context.get("mark_shipping_email_as_sent", False)
+            and self._context.get("default_model", False) == "account.move"
+            and self._context.get("default_res_id", False)
+        ):
+            for group_name, group_method, group_data in groups:
+                if group_name in ["portal", "customer"]:
+                    group_data['has_button_access'] = False
+
+        return groups
