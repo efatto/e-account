@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Send shipping mail from invoice",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Invoice Management",
     "license": "AGPL-3",
     "author": "Sergio Corato",
