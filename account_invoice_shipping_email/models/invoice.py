@@ -43,7 +43,7 @@ class AccountMove(models.Model):
 
     def _notify_get_groups(self, msg_vals=None):
         """
-         Remove access button to portal and customer if the document is a shipping mail.
+        Remove access button to portal and customer if the document is a shipping mail.
         """
         groups = super()._notify_get_groups(msg_vals=msg_vals)
         if (
@@ -51,8 +51,8 @@ class AccountMove(models.Model):
             and self._context.get("default_model", False) == "account.move"
             and self._context.get("default_res_id", False)
         ):
-            for group_name, group_method, group_data in groups:
+            for group_name, _group_method, group_data in groups:
                 if group_name in ["portal", "customer"]:
-                    group_data['has_button_access'] = False
+                    group_data["has_button_access"] = False
 
         return groups
