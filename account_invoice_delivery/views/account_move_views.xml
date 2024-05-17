@@ -7,10 +7,10 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@id='header_right_group']" position="inside">
                 <field
-          name="delivery_carrier_id"
-          groups="sale.group_delivery_invoice_address"
-          attrs="{'readonly': [('state', '!=', 'draft')], 'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund', 'out_receipt'))]}"
-        />
+                    name="delivery_carrier_id"
+                    groups="sale.group_delivery_invoice_address"
+                    attrs="{'readonly': [('state', '!=', 'draft')], 'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund', 'out_receipt'))]}"
+                />
             </xpath>
         </field>
     </record>
