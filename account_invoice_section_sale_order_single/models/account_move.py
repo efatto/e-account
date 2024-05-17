@@ -12,6 +12,7 @@ class AccountMove(models.Model):
                 key=lambda r: (
                     f"{r.mapped('sale_line_ids.order_id.id')}"
                     f"{r.mapped('sale_line_ids.sequence')}"
-                    f"{r.mapped('sale_line_ids.id')}")
+                    f"{r.mapped('sale_line_ids.id')}"
+                )
             )
         return super()._get_ordered_invoice_lines()

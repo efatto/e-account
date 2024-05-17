@@ -4,9 +4,9 @@
 {
     "name": "Account invoice delivery",
     "summary": "Add ability to compute delivery price in invoices",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Delivery",
-    "website": "https://github.com/sergiocorato/e-efatto",
+    "website": "https://github.com/sergiocorato/e-account",
     "author": "Sergio Corato",
     "license": "AGPL-3",
     "application": False,
