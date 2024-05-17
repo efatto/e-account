@@ -2,12 +2,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Stock picking packages",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "other",
     "summary": "Add simple management of packages in picking",
     "author": "Sergio Corato",
     "license": "AGPL-3",
-    "website": "https://github.com/sergiocorato/e-efatto",
+    "website": "https://github.com/sergiocorato/e-account",
     "depends": [
         "l10n_it_delivery_note",
         "delivery",
