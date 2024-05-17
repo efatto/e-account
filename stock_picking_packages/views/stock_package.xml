@@ -11,11 +11,11 @@
                 <div>
                     <field name="weight_custom" class="oe_inline" />
                     <field
-            name="weight_custom_uom_id"
-            nolabel="1"
-            class="oe_inline"
-            style="margin-left:5px"
-          />
+                        name="weight_custom_uom_id"
+                        nolabel="1"
+                        class="oe_inline"
+                        style="margin-left:5px"
+                    />
                 </div>
                 <field name="goods_appearance_id" />
             </field>

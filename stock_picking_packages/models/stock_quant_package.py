@@ -17,5 +17,5 @@ class StockQuantPackage(models.Model):
         default=_get_default_weight_uom_id,
     )
     goods_appearance_id = fields.Many2one(
-        comodel_name="stock.picking.goods.appearance",
-        string="Appearance of goods")
+        comodel_name="stock.picking.goods.appearance", string="Appearance of goods"
+    )
