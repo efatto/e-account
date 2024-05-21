@@ -10,7 +10,7 @@ class AccountInvoice(models.Model):
         pay_mode = self.payment_mode_id
         if (
             pay_mode and
-            pay_mode.payment_type == 'outbound' and
+            pay_mode.payment_type == 'inbound' and
             pay_mode.bank_account_link == 'fixed' and
             pay_mode.fixed_journal_id.bank_account_id
         ):
