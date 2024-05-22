@@ -58,6 +58,11 @@ class AccountMove(models.Model):
         # todo pass is_delivery field from sale.order.line to account.move.line created
         invoice = super().create(vals)
         invoice._auto_refresh_delivery()
+        invoice.with_context(
+            auto_refresh_delivery=True, check_move_validity=False
+        )._recompute_dynamic_lines(
+            recompute_all_taxes=True, recompute_tax_base_amount=True
+        )
         return invoice
 
     def write(self, vals):
