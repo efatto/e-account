@@ -1,12 +1,11 @@
 from odoo import api, models
 
 
-class AccountInvoice(models.Model):
-    _inherit = "account.invoice"
+class AccountMove(models.Model):
+    _inherit = "account.move"
 
     @api.onchange("payment_mode_id")
     def _onchange_payment_mode_id(self):
-        super()._onchange_payment_mode_id()
         pay_mode = self.payment_mode_id
         if (
             pay_mode
