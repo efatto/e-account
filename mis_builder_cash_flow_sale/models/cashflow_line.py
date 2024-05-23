@@ -48,7 +48,7 @@ class CashFlowForecastLine(models.Model):
                     line.sale_balance_currency or line.balance,
                     line.sale_line_id.order_id.company_id.currency_id,
                     line.sale_line_id.order_id.company_id,
-                    line.date,
+                    line.date or line.sale_line_id.order_id.date_order,
                 ) * (1 - line.sale_invoiced_percent)
                 line.balance = line.sale_balance_forecast
             else:
