@@ -5,14 +5,14 @@
     'version': '12.0.1.0.0',
     'category': 'other',
     'author': 'Sergio Corato',
-    'description': 'Add computed field to show percent of total deposited amount.',
+    'description': 'Technical module that add a computed field which store percent of '
+                   'total deposited amount for a sale order.',
     'website': 'https://github.com/sergiocorato/e-account',
     'license': 'AGPL-3',
     'depends': [
         'sale',
     ],
     'data': [
-        'views/sale_order_view.xml',
     ],
     'installable': True,
 }
