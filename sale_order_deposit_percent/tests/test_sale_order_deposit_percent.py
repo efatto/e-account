@@ -42,5 +42,5 @@ class TestSaleOrderDeposit(common.SavepointCase):
         sale_order_1 = self._create_sale_order()
         sale_order_1.action_confirm()
         self.assertEqual(sale_order_1.state, 'sale')
-        sol1 = self._create_sale_order_line(sale_order_1, self.product, 5)
+        self._create_sale_order_line(sale_order_1, self.product, 5)
         # todo create deposit invoice and check deposit percent
