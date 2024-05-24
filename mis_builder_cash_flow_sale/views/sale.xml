@@ -20,6 +20,7 @@
                                 options="{'currency_field': 'sale_currency_id'}"
                             />
                             <field name="sale_invoiced_percent" />
+                            <field name="sale_deposit_percent" />
                             <field
                                 name="sale_balance_forecast"
                                 sum="Total forecast balance"

@@ -12,6 +12,7 @@
         "mis_builder_cash_flow_inheritable",
         "account_payment_sale",
         "sale",
+        "sale_order_deposit",
         "sale_order_line_date",
     ],
     "data": [

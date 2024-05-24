@@ -11,6 +11,7 @@
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="sale_line_id" />
                 <field name="sale_invoiced_percent" />
+                <field name="sale_deposit_percent" />
             </xpath>
             <field name="balance" position="after">
                 <field name="sale_balance_forecast" sum="Total forecast balance" />

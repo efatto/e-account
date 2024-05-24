@@ -16,16 +16,24 @@ class CashFlowForecastLine(models.Model):
         help="Sale amount in customer currency recomputed with delivered qty",
     )
     sale_invoiced_percent = fields.Float(
-        compute="_compute_sale_balance_forecast", store=True
+        compute="_compute_sale_balance_forecast",
+        string="Invoiced sale (%)",
+        store=True,
     )
     sale_balance_forecast = fields.Float(
         compute="_compute_sale_balance_forecast",
         string="Sale forecast balance",
         store=True,
     )
+    sale_deposit_percent = fields.Float(
+        related="sale_line_id.order_id.deposit_percent",
+        string="Deposit sale (%)",
+        store=True,
+    )
 
     @api.depends(
         "sale_balance_currency",
+        "sale_deposit_percent",
         "sale_line_id.qty_invoiced",
         "sale_line_id.product_uom_qty",
         "sale_line_id.qty_delivered",
@@ -45,11 +53,17 @@ class CashFlowForecastLine(models.Model):
                 )
                 line.sale_invoiced_percent = min(sale_invoiced_percent, 1)
                 line.sale_balance_forecast = line.currency_id._convert(
-                    line.sale_balance_currency or line.balance,
+                    (
+                        (
+                            line.sale_balance_currency or line.balance
+                        )
+                        * (1 - line.sale_invoiced_percent)
+                        * (1 - line.sale_deposit_percent)
+                    ),
                     line.sale_line_id.order_id.company_id.currency_id,
                     line.sale_line_id.order_id.company_id,
                     line.date or line.sale_line_id.order_id.date_order,
-                ) * (1 - line.sale_invoiced_percent)
+                )
                 line.balance = line.sale_balance_forecast
             else:
                 line.sale_invoiced_percent = 0
