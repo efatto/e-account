@@ -9,6 +9,7 @@
     "website": "https://github.com/sergiocorato/e-account",
     "depends": [
         "account",
+        "l10n_it_reverse_charge",
     ],
     "data": [
         "views/account_fiscal_position_views.xml",
