@@ -17,7 +17,6 @@ class AccountMove(models.Model):
     is_all_service = fields.Boolean(
         "Service Product", compute="_compute_is_service_products"
     )
-    recompute_delivery_price = fields.Boolean("Delivery cost should be recomputed")
 
     @api.depends("invoice_line_ids")
     def _compute_is_service_products(self):
@@ -33,7 +32,6 @@ class AccountMove(models.Model):
         self.ensure_one()
         if self.state != "draft":
             return
-        # todo group delivery lines
         # Make sure that if you have removed the carrier, the line is gone
         if not self.env.context.get("deleting_delivery_line"):
             # Context added to avoid the recursive calls and save the new
@@ -48,9 +46,6 @@ class AccountMove(models.Model):
             price_unit = self.rate_shipment(self.delivery_carrier_id)["price"]
             if not self.is_all_service:
                 self._create_delivery_line(self.delivery_carrier_id, price_unit)
-            self.with_context(
-                auto_refresh_delivery=True,
-            ).write({"recompute_delivery_price": False})
 
     @api.model
     def create(self, vals):
@@ -216,6 +211,3 @@ class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
     is_delivery = fields.Boolean(string="Is a Delivery", default=False)
-    recompute_delivery_price = fields.Boolean(
-        related="move_id.recompute_delivery_price"
-    )
