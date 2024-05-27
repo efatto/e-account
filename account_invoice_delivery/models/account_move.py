@@ -165,6 +165,7 @@ class AccountMove(models.Model):
             so_description = carrier.name
         values = {
             "move_id": self.id,
+            "partner_id": self.partner_id.id,
             "name": so_description,
             "sequence": 99999,
             "quantity": 1,
