@@ -4,10 +4,7 @@
     <record id="invoice_form_send_shipping_email" model="ir.ui.view">
         <field name="name">account.invoice.form.shippin.email</field>
         <field name="model">account.fiscal.position</field>
-        <field
-            name="inherit_id"
-            ref="account.view_account_position_form"
-        />
+        <field name="inherit_id" ref="account.view_account_position_form" />
         <field name="arch" type="xml">
             <form position="inside">
                 <div class="oe_chatter">
