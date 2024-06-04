@@ -12,7 +12,7 @@
         "l10n_it_reverse_charge",
     ],
     "data": [
-        "views/account_fiscal_position_views.xml",
+        "views/account.xml",
     ],
     "installable": True,
 }

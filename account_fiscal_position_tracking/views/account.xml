@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_account_position_form" model="ir.ui.view">
+        <field name="name">account.fiscal.position.tracking</field>
+        <field name="model">account.fiscal.position</field>
+        <field name="inherit_id" ref="account.view_account_position_form" />
+        <field name="arch" type="xml">
+            <form position="inside">
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_rc_type_form" model="ir.ui.view">
+        <field name="name">account.rc.type.tracking</field>
+        <field name="model">account.rc.type</field>
+        <field name="inherit_id" ref="l10n_it_reverse_charge.view_rc_type_form" />
+        <field name="arch" type="xml">
+            <form position="inside">
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+</odoo>
