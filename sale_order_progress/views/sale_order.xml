@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_progress" model="ir.ui.view">
+        <field name="name">sale.order.inherit.progress</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Order Progress">
+                    <field name="is_amount_toinvoice_under_total" invisible="1"/>
+                    <div class="badge-pill badge-danger float-left"
+                     attrs="{'invisible': [('is_amount_toinvoice_under_total', '!=', True)]}">
+                    Warning: total amount to invoice is lower than order amount!
+                </div>
+                    <field name="order_progress_ids" nolabel="1">
+                        <tree string="Order Progress" editable="bottom">
+                            <field name="offset_month"/>
+                            <field name="name"/>
+                            <field name="amount_percent" sum="Total (%)"/>
+                            <field name="amount_toinvoice_manual" sum="Total to invoice manual"/>
+                            <field name="amount_toinvoice" sum="Total to invoice"/>
+                            <field name="amount_invoiced" sum="Total invoiced"/>
+                            <field name="residual_toinvoice" sum="Residual to invoice"/>
+                            <field name="invoiced"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
