@@ -1,6 +1,6 @@
-=======================================
-Remove widget remaining days in picking
-=======================================
+===============================================
+Remove widget remaining days in picking and MRP
+===============================================
 
 .. 
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -22,7 +22,7 @@ Remove widget remaining days in picking
 
 |badge1| |badge2| |badge3|
 
-This module remove widget remaining_days to picking.
+This module remove widget remaining_days from picking and MRP.
 
 **Table of contents**
 

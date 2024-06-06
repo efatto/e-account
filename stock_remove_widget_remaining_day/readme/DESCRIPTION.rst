@@ -1,1 +1,1 @@
-This module remove widget remaining_days to picking.
+This module remove widget remaining_days from picking and MRP.
