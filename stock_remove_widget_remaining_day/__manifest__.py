@@ -12,6 +12,7 @@
         "stock",
     ],
     "data": [
+        "views/mrp.xml",
         "views/stock.xml",
     ],
     "installable": True,
