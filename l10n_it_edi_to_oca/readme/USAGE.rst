@@ -1,0 +1,188 @@
+Passaggi:
+
+#. Installare questo modulo
+#. Disinstallare account_edi
+#. Installare l10n_it_fatturapa*
+#. Disinstallare questo modulo
+#. Assegnare la posizione fiscale all'azienda
+#. Creare ed assegnare il server PEC se previsto
+
+Implementazione:
+'account.chart.template': nulla da fare
+'account.edi.format': nulla da fare
+'account.move': migrare i campi
+
+da
+
+fatturapa_state = fields.Selection([
+("ready", "Ready to Send"),
+("sent", "Sent"),
+("delivered", "Delivered"),
+("accepted", "Accepted"),
+("error", "Error"),])
+
+a
+
+l10n_it_send_state = fields.Selection([
+('new', 'New'),
+('other', 'Other'),
+('to_send', 'Not yet send'),
+('sent', 'Sent, waiting for response'),
+('invalid', 'Sent, but invalid'),
+('delivered', 'This invoice is delivered'),
+('delivered_accepted', 'This invoice is delivered and accepted by destinatory'),
+('delivered_refused', 'This invoice is delivered and refused by destinatory'),
+('delivered_expired', 'This invoice is delivered and expired (expiry of the '
+'maximum term for communication of acceptance/refusal)'),
+('failed_delivery', 'Delivery impossible, ES certify that it has received the '
+'invoice and that the file \
+could not be delivered to the addressee')
+# ok we must do nothing
+], default='to_send', copy=False, string="FatturaPA Send State")
+
+da
+
+l10n_it_stamp_duty = fields.Float(
+default=0, string="Dati Bollo", readonly=True,
+states={'draft': [('readonly', False)]})
+
+a tax_stamp = fields.Boolean('Tax Stamp', readonly=False, compute="_compute_tax_stamp", store=True)
+
+ignorato:
+
+l10n_it_ddt_id = fields.Many2one(
+'l10n_it.ddt', string='DDT', readonly=True,
+states={'draft': [('readonly', False)]}, copy=False)
+
+da
+
+l10n_it_einvoice_id = fields.Many2one(
+'ir.attachment', string="Electronic invoice",
+compute='_compute_l10n_it_einvoice')
+
+a
+
+fatturapa_attachment_out_id = fields.Many2one("fatturapa.attachment.out",)
+
+"account.tax": migrare i campi
+
+da l10n_it_law_reference = fields.Char(... a law_reference
+da l10n_it_kind_exoneration = fields.Selection(... a kind_id = fields.Many2one("account.tax.kind"
+ignorato l10n_it_has_exoneration = fields.Boolean(...
+da l10n_it_vat_due_date = fields.Selection(
+[("I", "[I] IVA ad esigibilità immediata"),
+("D", "[D] IVA ad esigibilità differita"),
+("S", "[S] Scissione dei pagamenti"),],
+a payability
+
+'l10n_it.ddt': ignorato (sulla 14.0 ci sono solo 2 campi nome e data)
+
+'fetchmail.server': migrare i campi
+
+da
+
+l10n_it_is_pec = fields.Boolean(
+'PEC server',
+help="If PEC Server, only mail from '...@pec.fatturapa.it' will be processed.")
+
+a is_fatturapa_pec = fields.Boolean("E-invoice PEC server")
+
+ignorato
+
+l10n_it_last_uid = fields.Integer(string='Last message UID', default=1)
+
+"ir.mail_server": niente da fare
+"res.company": migrare i campi
+
+nulla da fare per
+
+l10n_it_codice_fiscale = fields.Char(
+string="Codice Fiscale",
+size=16,
+related="partner_id.l10n_it_codice_fiscale",
+store=True,
+readonly=False,
+help="Fiscal code of your company",)
+
+da
+l10n_it_tax_system = fields.Selection(
+selection=TAX_SYSTEM,
+string="Tax System",
+help="Please select the Tax system to which you are subjected.",)
+
+a
+
+fatturapa_fiscal_position_id = fields.Many2one(
+"fatturapa.fiscal_position",
+"Fiscal Position",
+help="Fiscal position used by electronic invoice",)
+
+passando per
+
+fatturapa_fiscal_position_code = fields.Char("Code", size=4)
+
+ignorato i dati del PEC server perchè non mi risulta che fosse presente come funzionalità, da configurare a cura dell'utente
+
+l10n_it_mail_pec_server_id = fields.Many2one(
+"ir.mail_server",
+string="Server PEC",
+help="Configure your PEC-mail server to send electronic invoices.",)
+l10n_it_address_recipient_fatturapa = fields.Char(
+string="Government PEC-mail",
+help="Enter Government PEC-mail address. Ex: sdi01@pec.fatturapa.it",)
+l10n_it_address_send_fatturapa = fields.Char(
+string="Company PEC-mail",
+help="Enter your company PEC-mail address. Ex: yourcompany@pec.mail.it",)
+
+ignorati
+
+l10n_it_has_eco_index = fields.Boolean()
+# Tax representative
+l10n_it_has_tax_representative = fields.Boolean(
+default=False,
+help="The seller/provider is a non-resident subject which\
+carries out transactions in Italy with relevance for VAT\
+purposes and which takes avail of a tax representative in\
+Italy",)
+l10n_it_tax_representative_partner_id = fields.Many2one(
+"res.partner", string="Tax representative partner")
+
+"res.partner": migrare i campi
+
+da l10n_it_pec_email = fields.Char(string="PEC e-mail")
+a pec_destinatario = fields.Char("Addressee PEC",)
+
+da l10n_it_codice_fiscale = fields.Char(string="Codice Fiscale", size=16)
+a fiscalcode = fields.Char("Fiscal Code", size=16, help="Italian Fiscal Code")
+
+da
+
+l10n_it_pa_index = fields.Char(string="PA index",
+size=7,
+help="Must contain the 6-character (or 7) code, present in the PA\
+Index in the information relative to the electronic invoicing service,\
+associated with the office which, within the addressee administration, deals\
+with receiving (and processing) the invoice.")
+
+a
+
+# se lungo 7 caratteri
+codice_destinatario = fields.Char("Addressee Code",)
+# oppure
+pa_partner_code = fields.Char("PA Code for Partner", size=20)
+
+da l10n_it_eco_index_office fields.Many2one("res.country.state"... a rea_office
+da l10n_it_eco_index_number = fields.Char(... a rea_code
+da l10n_it_eco_index_share_capital = fields.Float(... a rea_capital
+da l10n_it_eco_index_sole_shareholder = fields.Selection([
+("NO", "Not a limited liability company"), > False
+("SU", "Socio unico"),
+("SM", "Più soci"),
+]...
+a rea_member_type (SU, SM)
+da l10n_it_eco_index_liquidation_state = fields.Selection( a rea_liquidation_state
+
+Todo:
+account_edi_format
+account_edi_document
+fatturapa_attachment_out_id
