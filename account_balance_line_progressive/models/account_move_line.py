@@ -13,9 +13,13 @@ class AccountMoveLine(models.Model):
             initial_bal=True
         )._query_get()
         where_params = [tuple(self.ids)] + where_params
-        query = """SELECT l1.id,
-            COALESCE(SUM(l2.debit-l2.credit), 0),
-            COALESCE(SUM(l2.amount_currency), 0)
+        query = """SELECT l1.id AS line_id,
+            COALESCE(SUM(l2.debit-l2.credit), 0) AS balance,
+            CASE WHEN l1.currency_id <> l1.company_currency_id
+                THEN COALESCE(SUM(l2.amount_currency), 0)
+                ELSE 0
+                END
+                AS balance_currency
             FROM account_move_line l1
             LEFT JOIN account_account a
             ON (a.id = l1.account_id)
@@ -41,7 +45,7 @@ class AccountMoveLine(models.Model):
             where_clause = "AND " + where_clause
             where_clause = where_clause.replace("account_move_line", "l1")
             query += where_clause
-        query += " GROUP BY l1.id"
+        query += " GROUP BY l1.id, l1.currency_id, l1.company_currency_id"
         self._cr.execute(query, where_params)
         result = self._cr.fetchall()
         if not result:
