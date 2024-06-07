@@ -44,6 +44,8 @@ def migrate_fields(cr, registry):  # noqa C901
     if hasattr(partner_obj, "l10n_it_pec_email"):
         for partner in partner_obj.search([("l10n_it_pec_email", "!=", False)]):
             partner.pec_destinatario = partner.l10n_it_pec_email
+            partner.electronic_invoice_subjected = True
+            partner.electronic_invoice_obliged_subject = True
         for partner in partner_obj.search([("l10n_it_codice_fiscale", "!=", False)]):
             partner.fiscalcode = partner.l10n_it_codice_fiscale
         for partner in partner_obj.search([("l10n_it_pa_index", "!=", False)]):
@@ -51,6 +53,8 @@ def migrate_fields(cr, registry):  # noqa C901
                 partner.codice_destinatario = partner.l10n_it_pa_index
             else:
                 partner.pa_partner_code = partner.l10n_it_pa_index
+            partner.electronic_invoice_subjected = True
+            partner.electronic_invoice_obliged_subject = True
     # set partner rea fields
     if hasattr(partner_obj, "l10n_it_eco_index_office"):
         for partner in partner_obj.search([("l10n_it_eco_index_office", "!=", False)]):

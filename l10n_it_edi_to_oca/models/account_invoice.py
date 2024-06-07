@@ -19,3 +19,9 @@ class AccountMove(models.Model):
     # fatturapa_attachment_out_id = fields.Many2one(
     #     "fatturapa.attachment.out",
     # )
+    # se installato l10n_it_edi_sdicoop
+    # l10n_it_edi_transaction = fields.Char(
+    #     copy=False, string="FatturaPA Transaction")
+    # l10n_it_edi_attachment_id = fields.Many2one(
+    #     'ir.attachment', copy=False, string="FatturaPA Attachment",
+    #     ondelete="restrict")
