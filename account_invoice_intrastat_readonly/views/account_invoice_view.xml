@@ -4,7 +4,10 @@
     <record id="account_intrastat_invoice_form" model="ir.ui.view">
         <field name="name">account.intrastat.invoice.form.readonly</field>
         <field name="model">account.move</field>
-        <field name="inherit_id" ref="l10n_it_intrastat.account_intrastat_invoice_form" />
+        <field
+            name="inherit_id"
+            ref="l10n_it_intrastat.account_intrastat_invoice_form"
+        />
         <field name="arch" type="xml">
             <field name="intrastat" position="attributes">
                 <attribute name="attrs">{'invisible': False}</attribute>
