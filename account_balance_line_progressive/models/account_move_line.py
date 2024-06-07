@@ -15,7 +15,8 @@ class AccountMoveLine(models.Model):
         where_params = [tuple(self.ids)] + where_params
         query = """SELECT l1.id AS line_id,
             COALESCE(SUM(l2.debit-l2.credit), 0) AS balance,
-            CASE WHEN l1.currency_id <> l1.company_currency_id
+            CASE WHEN l1.currency_id <> l1.company_currency_id AND
+                    l2.currency_id <> l2.company_currency_id
                 THEN COALESCE(SUM(l2.amount_currency), 0)
                 ELSE 0
                 END
@@ -45,7 +46,10 @@ class AccountMoveLine(models.Model):
             where_clause = "AND " + where_clause
             where_clause = where_clause.replace("account_move_line", "l1")
             query += where_clause
-        query += " GROUP BY l1.id, l1.currency_id, l1.company_currency_id"
+        query += (
+            " GROUP BY l1.id, l1.currency_id, l1.company_currency_id,"
+            " l2.currency_id, l2.company_currency_id"
+        )
         self._cr.execute(query, where_params)
         result = self._cr.fetchall()
         if not result:
