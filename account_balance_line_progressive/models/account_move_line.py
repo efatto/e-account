@@ -86,7 +86,12 @@ class AccountMoveLine(models.Model):
     @api.constrains("currency_id", "supplier_currency_id", "amount_currency")
     def check_currency_purchase(self):
         for line in self:
-            if line.currency_id != line.supplier_currency_id and line.amount_currency:
+            if (
+                line.currency_id
+                and line.supplier_currency_id
+                and line.amount_currency
+                and line.currency_id != line.supplier_currency_id
+            ):
                 raise ValidationError(
                     _(
                         "Currency mismatch with partner currency! To proceed set "
