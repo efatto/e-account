@@ -9,6 +9,7 @@
     "license": "AGPL-3",
     "depends": [
         "account",
+        "purchase",
     ],
     "data": [
         "views/account_move_line.xml",
