@@ -1,4 +1,4 @@
-from odoo import _, models
+from odoo import models
 
 
 class SaleOrder(models.Model):
@@ -9,9 +9,10 @@ class SaleOrder(models.Model):
         if self.picking_ids.stock_package_ids:
             res.update(
                 goods_appearance_id=self.picking_ids.mapped(
-                    'stock_package_ids.goods_appearance_id')[:1],
+                    "stock_package_ids.goods_appearance_id"
+                )[:1],
                 dimension=", ".join(
-                    self.picking_ids.mapped('stock_package_ids.dimensions')
+                    self.picking_ids.mapped("stock_package_ids.dimensions")
                 ),
             )
         gross_weight_uom_id = self.env["stock.delivery.note"]._default_weight_uom()
@@ -19,10 +20,9 @@ class SaleOrder(models.Model):
             res.update(
                 gross_weight_custom=sum(
                     pack.weight_custom_uom_id._compute_quantity(
-                        qty=pack.weight_custom,
-                        to_unit=gross_weight_uom_id
+                        qty=pack.weight_custom, to_unit=gross_weight_uom_id
                     )
-                    for pack in self.picking_ids.mapped('stock_package_ids')
+                    for pack in self.picking_ids.mapped("stock_package_ids")
                 ),
             )
         return res
