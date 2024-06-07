@@ -14,6 +14,7 @@
         "delivery_package_number",
         "product_logistics_uom",
         "stock_picking_invoice_link",
+        "stock_picking_packages",
         "stock_picking_volume",
     ],
     "data": [
