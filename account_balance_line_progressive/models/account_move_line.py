@@ -1,7 +1,8 @@
 # Copyright 2019-2023 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class AccountMoveLine(models.Model):
@@ -75,3 +76,23 @@ class AccountMoveLine(models.Model):
         help="Field holding the progressive currency balance of the account for "
         "partner",
     )
+    supplier_currency_id = fields.Many2one(
+        comodel_name="res.currency",
+        related="partner_id.property_purchase_currency_id",
+        company_dependent=True,
+        string="Partner purchase currency",
+    )
+
+    @api.constrains("currency_id", "supplier_currency_id", "amount_currency")
+    def check_currency_purchase(self):
+        for line in self:
+            if line.currency_id != line.supplier_currency_id and line.amount_currency:
+                raise ValidationError(
+                    _(
+                        "Currency mismatch with partner currency! To proceed set "
+                        "amount to %s and currency amount to 0, which is the default "
+                        "for exchange difference registration or (if really needed) "
+                        "to the correct value."
+                    )
+                    % line.supplier_currency_id.symbol
+                )
