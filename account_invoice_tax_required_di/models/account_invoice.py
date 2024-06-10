@@ -19,6 +19,6 @@ class AccountInvoice(models.Model):
                 )
 
     def _post(self, soft=True):
-        self._check_di_line_tax()
         res = super()._post(soft=soft)
+        self._check_di_line_tax()
         return res
