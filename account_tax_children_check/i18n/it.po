@@ -1,0 +1,28 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_tax_children_check
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-12 17:22+0000\n"
+"PO-Revision-Date: 2024-06-12 17:22+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_tax_children_check
+#: model:ir.model,name:account_tax_children_check.model_account_tax
+msgid "Tax"
+msgstr "Imposta"
+
+#. module: account_tax_children_check
+#: code:addons/account_tax_children_check/models/account_tax.py:13
+#, python-format
+msgid "Tax %s has already a parent tax: %s"
+msgstr "L'imposta %s ha già una tassa genitore: %s"
+
