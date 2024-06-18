@@ -19,13 +19,13 @@ class TestSaleOrderProgress(common.SavepointCase):
             'login': 'demo user',
             'email': 'demo@email.it',
             'groups_id': [
-                (4, cls.env.ref('sales_team.group_sale_salesman').id),
+                (4, cls.group_sale.id),
             ]
         }])
 
     def test_00_order(self):
         sale_form = Form(
-            self.env["sale.order"].with_user(self.sale_user)
+            self.env["sale.order"].sudo(self.sale_user)
         )
         sale_form.partner_id = self.partner
         with sale_form.order_line.new() as order_line_form:

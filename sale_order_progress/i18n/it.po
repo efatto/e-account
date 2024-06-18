@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-17 15:29+0000\n"
-"PO-Revision-Date: 2024-06-17 15:29+0000\n"
+"POT-Creation-Date: 2024-06-26 09:54+0000\n"
+"PO-Revision-Date: 2024-06-26 09:54+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,14 +21,19 @@ msgid "Amount (%)"
 msgstr "Importo (%)"
 
 #. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__amount_toinvoice_manual
+msgid "Amount (manual)"
+msgstr "Importo (manuale)"
+
+#. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__amount_percent_total
 msgid "Amount Percent Total"
 msgstr "Totale (%)"
 
 #. module: sale_order_progress
-#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__amount_toinvoice_manual
-msgid "Amount Toinvoice Manual"
-msgstr "Totale da fatturare (manuale)"
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__amount_toinvoice_difference
+msgid "Amount Toinvoice Difference"
+msgstr "Differenza totale da fatturare"
 
 #. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__amount_toinvoice_total
@@ -81,14 +86,14 @@ msgid "Invoice Line"
 msgstr "Riga fattura"
 
 #. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_line__invoice_progress_ids
+msgid "Invoice Progress"
+msgstr "Stato avanzamento lavori"
+
+#. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__invoiced
 msgid "Invoiced"
 msgstr "Fatturato"
-
-#. module: sale_order_progress
-#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__is_amount_toinvoice_under_total
-msgid "Is Amount Toinvoice Under Total"
-msgstr "L'importo da fatturare è inferiore al totale"
 
 #. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress____last_update
@@ -129,7 +134,6 @@ msgstr "Ordine"
 #. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_advance_payment_inv__order_progress_id
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__order_progress_ids
-#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_line__order_progress_id
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
 msgid "Order Progress"
 msgstr "Stato avanzamento lavori"
@@ -163,14 +167,14 @@ msgstr "Avanzamento lavori vendita"
 #: model:ir.ui.menu,name:sale_order_progress.sale_order_progress
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_tree
 msgid "Sale order progress"
-msgstr "Avanzamenti lavori vendita"
+msgstr "Stato avanzamento lavori"
 
 #. module: sale_order_progress
 #: model:ir.model.fields,help:sale_order_progress.field_sale_order_progress__invoiced
 msgid "Sale order progress is marked invoiced when amount invoice lines linked to sale order progress is almost equal to the sale order progress amount.\n"
-"It can be marked manually too."
+"It can be marked manually only if not already invoiced."
 msgstr "L'avanzamento lavori è marcato fatturato quando l'ammontare delle righe fattura collegate è almeno uguale all'ammontare dell'avanzamento lavori.\n"
-"Può anche essere marcato manualmente."
+"Può anche essere marcato manualmente se non già fatturato."
 
 #. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_account_invoice_line__sale_order_ids
@@ -219,13 +223,13 @@ msgid "Total invoiced"
 msgstr "Totale fatturato"
 
 #. module: sale_order_progress
-#: code:addons/sale_order_progress/models/sale.py:53
+#: code:addons/sale_order_progress/models/sale.py:49
 #, python-format
 msgid "Total of order progress percent cannot exceed 100!"
 msgstr "Il totale (%) degli stati di avanzamento lavori non può superare 100!"
 
 #. module: sale_order_progress
-#: code:addons/sale_order_progress/models/sale.py:57
+#: code:addons/sale_order_progress/models/sale.py:53
 #, python-format
 msgid "Total of progress amount to invoice cannot exceed order amount!"
 msgstr "Il totale degli importi da fatturare degli stati di avanzamento lavori non può superare l'importo dell'ordine!"
@@ -248,6 +252,6 @@ msgstr "Totale da fatturare (manuale)"
 
 #. module: sale_order_progress
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
-msgid "Warning: total amount to invoice is lower than order amount!"
-msgstr "Attenzione: l'importo totale da fatturare è più basso dell'importo dell'ordine!"
+msgid "Warning: total amount to invoice is different than order amount! Discrepancy:"
+msgstr "Attenzione: l'importo totale da fatturare è diverso dall'importo dell'ordine! Differenza:"
 

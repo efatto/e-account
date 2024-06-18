@@ -7,10 +7,10 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Order Progress">
-                    <field name="is_amount_toinvoice_under_total" invisible="1"/>
                     <div class="badge-pill badge-danger float-left"
-                     attrs="{'invisible': [('is_amount_toinvoice_under_total', '!=', True)]}">
-                    Warning: total amount to invoice is lower than order amount!
+                     attrs="{'invisible': [('amount_toinvoice_difference', '=', 0)]}">
+                    Warning: total amount to invoice is different than order amount! Discrepancy:
+                        <field name="amount_toinvoice_difference"/>
                 </div>
                     <field name="order_progress_ids" nolabel="1">
                         <tree string="Order Progress" editable="bottom">
@@ -21,10 +21,18 @@
                             <field name="amount_toinvoice" sum="Total to invoice"/>
                             <field name="amount_invoiced" sum="Total invoiced"/>
                             <field name="residual_toinvoice" sum="Residual to invoice"/>
+                            <field name="invoiced_manual" widget="boolean_toggle"/>
                             <field name="invoiced"/>
                         </tree>
                     </field>
                 </page>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//label[@for='analytic_tag_ids']" position="before">
+                <label for="invoice_progress_ids" />
+                <div>
+                    <field name="invoice_progress_ids" widget="many2many_tags"
+                    />
+                </div>
             </xpath>
         </field>
     </record>

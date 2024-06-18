@@ -12,14 +12,19 @@ class SaleOrderProgress(models.Model):
         comodel_name="sale.order",
         ondelete="cascade",
         required=True,
-        string="Order")
+        string="Order",
+    )
+    # il related su order_id.currency_id crea un errore sull'eliminazione del primo
+    # record dall'ordine di vendita, non ho trovato il motivo
     currency_id = fields.Many2one(
-        related="order_id.currency_id",
+        compute="_compute_currency_id",
+        comodel_name="res.currency",
+        depends=["order_id.currency_id"],
         string="Currency",
         readonly=True,
         store=True,
     )
-    amount_toinvoice_manual = fields.Monetary()
+    amount_toinvoice_manual = fields.Monetary(string="Amount (manual)")
     amount_toinvoice = fields.Monetary(
         'Amount to invoice',
         compute="compute_invoiced",
@@ -38,7 +43,10 @@ class SaleOrderProgress(models.Model):
         store=True,
         help='Sale order progress is marked invoiced when amount invoice lines linked '
              'to sale order progress is almost equal to the sale order progress amount.'
-             '\nIt can be marked manually too.'
+             '\nIt can be marked manually only if not already invoiced.'
+    )
+    invoiced_manual = fields.Boolean(
+        string="Force invoiced",
     )
     offset_month = fields.Integer(
         string="Offset months (+/-)",
@@ -61,6 +69,7 @@ class SaleOrderProgress(models.Model):
     @api.depends(
         'amount_toinvoice_manual',
         'amount_percent',
+        'invoiced_manual',
         'order_id.amount_untaxed',
         'order_id.order_line.invoice_lines.price_subtotal',
         'order_id.order_line.invoice_lines.invoice_id.state')
@@ -83,5 +92,12 @@ class SaleOrderProgress(models.Model):
                         order_id.amount_untaxed * progress.amount_percent / 100)
                 progress.residual_toinvoice = (
                     progress.amount_toinvoice - progress.amount_invoiced)
-                if progress.amount_invoiced >= progress.amount_toinvoice > 0.0:
+                if progress.invoiced_manual or (
+                    progress.amount_invoiced >= progress.amount_toinvoice > 0.0
+                ):
                     progress.invoiced = True
+
+    @api.multi
+    def _compute_currency_id(self):
+        for progress in self:
+            progress.currency_id = progress.order_id.currency_id

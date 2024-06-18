@@ -6,6 +6,7 @@ class AccountInvoiceLine(models.Model):
 
     sale_order_progress_id = fields.Many2one(
         comodel_name="sale.order.progress",
+        ondelete="restrict",
         string='Sale order progress',
     )
     sale_order_ids = fields.Many2many(
@@ -19,4 +20,7 @@ class AccountInvoiceLine(models.Model):
     @api.multi
     def _compute_sale_order_ids(self):
         for line in self:
-            line.sale_order_ids = line.mapped("sale_line_ids.order_id")
+            if line.sale_line_ids:
+                line.sale_order_ids = line.mapped("sale_line_ids.order_id")
+            else:
+                line.sale_order_ids = False

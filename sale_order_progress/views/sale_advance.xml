@@ -9,7 +9,8 @@
                 <field name="order_ids" invisible="1"/>
                 <field name="has_progress" invisible="1"/>
                 <field name="order_progress_id"
-                       attrs="{'invisible': [('has_progress', '!=', True)]}"
+                       attrs="{'invisible': [('has_progress', '!=', True)],
+                               'required': [('has_progress', '=', True)]}"
                        domain="[('order_id', 'in', order_ids)]"/>
             </label>
         </field>

@@ -1,3 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sale_order_progress_all_user,sale_order_progress_all_user,model_sale_order_progress,base.group_user,1,0,0,0
-access_sale_order_progress_invoice_user,sale_order_progress_invoice_user,model_sale_order_progress,account.group_account_invoice,1,1,1,1
+access_sale_order_progress_accountant,sale_order_progress_accountant,model_sale_order_progress,account.group_account_user,1,1,0,0
+access_sale_order_progress_invoice_user,sale_order_progress_invoice_user,model_sale_order_progress,sales_team.group_sale_salesman,1,1,1,1
