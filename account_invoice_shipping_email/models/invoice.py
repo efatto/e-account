@@ -51,7 +51,7 @@ class AccountMove(models.Model):
             and self._context.get("default_model", False) == "account.move"
             and self._context.get("default_res_id", False)
         ):
-            for group_name, _group_method, group_data in groups:
+            for _group_name, _group_method, group_data in groups:
                 # exclude all
                 # if group_name in ["portal", "customer"]:
                 group_data["has_button_access"] = False
