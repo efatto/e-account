@@ -1,5 +1,3 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 from odoo import models
 
 
@@ -15,4 +13,6 @@ class MailComposeMessage(models.TransientModel):
             self.env["account.move"].browse(
                 self._context["default_res_id"]
             ).shipping_email_state = "sent"
+            if self.reply_to:
+                self = self.with_context(default_reply_to=self.reply_to)
         return super(MailComposeMessage, self).send_mail(auto_commit=auto_commit)
