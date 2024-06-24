@@ -1,31 +1,21 @@
-from odoo import api, models
+from odoo import models, tools
 
 
 class MailThread(models.AbstractModel):
     _inherit = "mail.thread"
 
-    @api.returns("mail.message", lambda value: value.id)
-    def message_post(self, **kwargs):
-        """
-        Force reply_to as it is overriden by the catchall.
-        Force email_cc as it is ignored.
-        """
-        if self.env.context.get("default_reply_to", False):
-            kwargs["reply_to"] = self.env.context.get("default_reply_to")
-        if self.env.context.get("default_email_cc", False):
-            kwargs["email_cc"] = self.env.context.get("default_email_cc")
-        return super().message_post(**kwargs)
-
     def _notify_by_email_add_values(self, base_mail_values):
         res = super()._notify_by_email_add_values(base_mail_values=base_mail_values)
         if self.env.context.get("default_email_cc"):
-            res.update(
-                {
-                    "email_cc": self.env.context[
-                        "default_email_cc"
-                    ],  # format email safely
-                }
+            emails_normalized = tools.email_normalize_all(
+                self.env.context["default_email_cc"]
             )
+            if emails_normalized:
+                res.update(
+                    {
+                        "email_cc": ",".join(emails_normalized),
+                    }
+                )
         return res
 
     def _notify_thread(self, message, msg_vals=False, notify_by_email=True, **kwargs):
