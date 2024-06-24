@@ -1,9 +1,9 @@
 # Copyright 2016 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "Mail do not notify by default",
-    "summary": "Set to default to do not notify followers on mail.compose.message "
-    "and add them to recipient of the mail.",
+    "name": "Show recipients of email",
+    "summary": "Show the recipient of the email, removing the anonimous flag "
+    "'Notify followers'.",
     "author": "ACSONE SA/NV," "Odoo Community Association (OCA)," "Sergio Corato",
     "website": "https://github.com/sergiocorato/e-account",
     "category": "Social Network",
