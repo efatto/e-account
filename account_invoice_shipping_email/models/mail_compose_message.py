@@ -13,8 +13,4 @@ class MailComposeMessage(models.TransientModel):
             self.env["account.move"].browse(
                 self._context["default_res_id"]
             ).shipping_email_state = "sent"
-            if self.reply_to:
-                self = self.with_context(default_reply_to=self.reply_to)
-            if self.template_id.email_cc:
-                self = self.with_context(default_email_cc=self.template_id.email_cc)
         return super(MailComposeMessage, self).send_mail(auto_commit=auto_commit)

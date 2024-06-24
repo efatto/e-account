@@ -26,6 +26,8 @@ class AccountMove(models.Model):
             "default_template_id": template and template.id or False,
             "force_email": True,
             "mark_shipping_email_as_sent": True,
+            "default_email_cc": template and template.email_cc or False,
+            "default_reply_to": template and template.reply_to or False,
         }
         return {
             "type": "ir.actions.act_window",
