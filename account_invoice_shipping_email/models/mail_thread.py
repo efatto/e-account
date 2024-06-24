@@ -16,8 +16,8 @@ class MailThread(models.AbstractModel):
             kwargs["email_cc"] = self.env.context.get("default_email_cc")
         return super().message_post(**kwargs)
 
-    def _notify_email_recipient_values(self, recipient_ids):
-        res = super()._notify_email_recipient_values(recipient_ids=recipient_ids)
+    def _notify_by_email_add_values(self, base_mail_values):
+        res = super()._notify_by_email_add_values(base_mail_values=base_mail_values)
         if self.env.context.get("default_email_cc"):
             res.update(
                 {
