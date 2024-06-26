@@ -58,6 +58,16 @@ Nelle righe generate sarà visibile lo stato di avanzamento lavori scelto:
 .. image:: https://raw.githubusercontent.com/efatto/e-account/12.0/sale_order_progress/static/description/riga_fattura.png
     :alt: Riga fattura
 
+Mentre nelle righe dell'ordine di vendita saranno visibili gli stati di avanzamento lavori collegati:
+
+.. image:: https://raw.githubusercontent.com/efatto/e-account/12.0/sale_order_progress/static/description/riga_vendita.png
+    :alt: Riga vendita
+
+Questa è la situazione che si presenta dopo aver emesso una fattura di acconto collegata allo stato di avanzamento lavori Acconto e una di beni/servizi collegata allo stato di avanzamento lavori Primo SAL:
+
+.. image:: https://raw.githubusercontent.com/efatto/e-account/12.0/sale_order_progress/static/description/fatturazione.png
+    :alt: Fatturazione
+
 
 Bug Tracker
 ===========
