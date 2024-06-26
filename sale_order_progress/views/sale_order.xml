@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_progress" model="ir.ui.view">
+        <field name="name">sale.order.inherit.progress</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Order Progress">
+                    <div class="badge-pill badge-danger float-left"
+                     attrs="{'invisible': [('amount_toinvoice_difference', '=', 0)]}">
+                    Warning: total amount to invoice is different than order amount! Discrepancy:
+                        <field name="amount_toinvoice_difference"/>
+                </div>
+                    <field name="order_progress_ids" nolabel="1">
+                        <tree string="Order Progress" editable="bottom">
+                            <field name="offset_month"/>
+                            <field name="name"/>
+                            <field name="amount_percent" sum="Total (%)"/>
+                            <field name="amount_toinvoice_manual" sum="Total to invoice manual"/>
+                            <field name="amount_toinvoice" sum="Total to invoice"/>
+                            <field name="amount_invoiced" sum="Total invoiced"/>
+                            <field name="residual_toinvoice" sum="Residual to invoice"/>
+                            <field name="invoiced_manual" widget="boolean_toggle"/>
+                            <field name="invoiced"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//label[@for='analytic_tag_ids']" position="before">
+                <label for="invoice_progress_ids" />
+                <div>
+                    <field name="invoice_progress_ids" widget="many2many_tags"
+                    />
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

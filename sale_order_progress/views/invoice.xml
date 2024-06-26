@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_account_invoice_progress_form">
+        <field name="name">account.invoice.form.progress</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='account_id']" position="after">
+                <field name="sale_order_ids" invisible="1"/>
+                <field name="sale_order_progress_id"
+                       domain="[('order_id', 'in', sale_order_ids)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

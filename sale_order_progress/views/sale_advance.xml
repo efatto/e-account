@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_advance_payment_inv_inh" model="ir.ui.view">
+        <field name="name">Invoice Order Advance Payment</field>
+        <field name="model">sale.advance.payment.inv</field>
+        <field name="inherit_id" ref="sale.view_sale_advance_payment_inv"/>
+        <field name="arch" type="xml">
+            <label for="amount" position="before">
+                <field name="order_ids" invisible="1"/>
+                <field name="has_progress" invisible="1"/>
+                <field name="order_progress_id"
+                       attrs="{'invisible': [('has_progress', '!=', True)],
+                               'required': [('has_progress', '=', True)]}"
+                       domain="[('order_id', 'in', order_ids)]"/>
+            </label>
+        </field>
+    </record>
+</odoo>
