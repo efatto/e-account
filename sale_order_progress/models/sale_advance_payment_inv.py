@@ -13,15 +13,15 @@ class SaleAdvancePaymentInv(models.TransientModel):
     @api.onchange('order_progress_id')
     def _onchange_order_progress_id(self):
         if self._count() == 1:
-            if self.order_progress_id and self.advance_payment_method in [
-                "percentage", "fixed"
-            ]:
+            if self.order_progress_id:
                 if self.order_progress_id.amount_percent:
                     self.advance_payment_method = "percentage"
                     self.amount = self.order_progress_id.amount_percent
                 elif self.order_progress_id.amount_toinvoice_manual:
                     self.advance_payment_method = "fixed"
                     self.amount = self.order_progress_id.amount_toinvoice_manual
+                else:
+                    self.advance_payment_method = "all"
 
     @api.onchange('advance_payment_method')
     def onchange_advance_payment_method(self):
