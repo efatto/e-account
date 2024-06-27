@@ -71,8 +71,10 @@ class SaleOrderProgress(models.Model):
         'amount_percent',
         'invoiced_manual',
         'order_id.amount_untaxed',
+        'order_id.order_line.price_subtotal',
         'order_id.order_line.invoice_lines.price_subtotal',
-        'order_id.order_line.invoice_lines.invoice_id.state')
+        'order_id.order_line.invoice_lines.invoice_id.state',
+    )
     def compute_invoiced(self):
         for progress in self:
             progress.amount_invoiced = 0

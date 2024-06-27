@@ -24,6 +24,11 @@ class SaleOrder(models.Model):
     )
 
     @api.multi
+    def update_difference(self):
+        for order in self:
+            order._compute_totals()
+
+    @api.multi
     @api.depends(
         "order_progress_ids.amount_percent",
         "order_progress_ids.amount_toinvoice",

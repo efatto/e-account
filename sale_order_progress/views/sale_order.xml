@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Order Progress">
+                    <button string="Check difference" name="update_difference" type="object" icon="fa-refresh"/>
                     <div class="badge-pill badge-danger float-left"
                      attrs="{'invisible': [('amount_toinvoice_difference', '=', 0)]}">
                     Warning: total amount to invoice is different than order amount! Discrepancy:
