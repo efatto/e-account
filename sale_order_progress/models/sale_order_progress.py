@@ -7,6 +7,7 @@ class SaleOrderProgress(models.Model):
     _order = "offset_month"
 
     name = fields.Char(string="Name", required=True)
+    is_advance = fields.Boolean(string="Is an advance?")
     amount_percent = fields.Float(string="Amount (%)")
     order_id = fields.Many2one(
         comodel_name="sale.order",
