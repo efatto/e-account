@@ -21,6 +21,13 @@
                     attrs="{'invisible': ['|', ('shipping_email_state', '!=', 'no'), ('move_type', 'not in', ['in_refund', 'out_invoice'])]}"
                 />
                 <button
+                    name="action_send_shipping_email"
+                    string="Re-Send shipping Email"
+                    type="object"
+                    icon="fa-send"
+                    attrs="{'invisible': ['|', ('shipping_email_state', '!=', 'sent'), ('move_type', 'not in', ['in_refund', 'out_invoice'])]}"
+                />
+                <button
                     name="action_set_shipping_confirmed"
                     string="Set shipping confirmed"
                     type="object"
