@@ -11,10 +11,13 @@ class SaleOrder(models.Model):
                 goods_appearance_id=self.picking_ids.mapped(
                     "stock_package_ids.goods_appearance_id"
                 )[:1],
-                dimension=", ".join(
-                    self.picking_ids.mapped("stock_package_ids.dimensions") or []
-                ),
             )
+            if self.picking_ids.stock_package_ids.dimensions:
+                res.update(
+                    dimension=", ".join(
+                        self.picking_ids.mapped("stock_package_ids.dimensions")
+                    ),
+                )
         gross_weight_uom_id = self.env["stock.delivery.note"]._default_weight_uom()
         if gross_weight_uom_id:
             res.update(
