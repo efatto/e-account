@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
                     "stock_package_ids.goods_appearance_id"
                 )[:1],
             )
-            if self.picking_ids.stock_package_ids.dimensions:
+            if self.picking_ids.mapped("stock_package_ids.dimensions"):
                 res.update(
                     dimension=", ".join(
                         self.picking_ids.mapped("stock_package_ids.dimensions")
