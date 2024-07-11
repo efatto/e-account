@@ -10,9 +10,6 @@ class SaleOrderProgress(models.Model):
     name = fields.Char(string="Name", required=True)
     is_advance = fields.Boolean(string="Is an advance?")
     amount_percent = fields.Float(string="Amount (%)")
-    advance_to_return_percent = fields.Float(
-        string="Advance to return (%)",
-    )
     order_id = fields.Many2one(
         comodel_name="sale.order",
         ondelete="cascade",
@@ -89,9 +86,9 @@ class SaleOrderProgress(models.Model):
         for progress in self:
             progress.date = ((
                 progress.order_id.date_progress_end
-                or progress.order_id.date_order
+                or progress.order_id.date_order.date()
             ) + relativedelta(
-                months=progress.offset_month)).date()
+                months=progress.offset_month))
 
     @api.multi
     @api.depends(

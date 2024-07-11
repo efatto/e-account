@@ -12,7 +12,6 @@
                 <field name="order_id"/>
                 <field name="is_advance"/>
                 <field name="amount_percent"/>
-                <field name="advance_to_return_percent"/>
                 <field name="amount_toinvoice"/>
                 <field name="amount_invoiced"/>
                 <field name="invoiced"/>
@@ -34,7 +33,6 @@
                 <field name="order_id"/>
                 <field name="is_advance"/>
                 <field name="amount_percent"/>
-                <field name="advance_to_return_percent" sum="Total to return (%)"/>
                 <field name="amount_toinvoice" sum="Total to Invoice"/>
                 <field name="amount_invoiced" sum="Total Invoiced"/>
                 <field name="residual_toinvoice" sum="Residual to Invoice"/>
@@ -61,7 +59,6 @@
                         <field name="payment_term_id"/>
                         <field name="is_advance"/>
                         <field name="amount_percent"/>
-                        <field name="advance_to_return_percent" sum="Total to return (%)"/>
                         <field name="amount_toinvoice_manual" sum="Total to Invoice"/>
                         <field name="amount_toinvoice" sum="Total to Invoice"/>
                         <field name="amount_invoiced" sum="Total Invoiced"/>
