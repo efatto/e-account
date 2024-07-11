@@ -111,6 +111,11 @@ msgid "Invoiced"
 msgstr "Fatturato"
 
 #. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__is_advance
+msgid "Is an advance?"
+msgstr "È un acconto?"
+
+#. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
@@ -152,6 +157,11 @@ msgstr "Ordine"
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
 msgid "Order Progress"
 msgstr "Stato avanzamento lavori"
+
+#. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__payment_term_id
+msgid "Payment term"
+msgstr "Termine di pagamento"
 
 #. module: sale_order_progress
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_form
