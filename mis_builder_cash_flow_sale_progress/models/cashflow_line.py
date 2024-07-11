@@ -19,11 +19,7 @@ class CashFlowForecastLine(models.Model):
     @api.depends(
         "sale_order_progress_id",
         "sale_balance_currency",
-        # "sale_order_progress_id.residual_toinvoice",
-        # TODO È un campo calcolato, usare gli altri? PERÒ mi sa che non serve visto
-        #  che viene scritto sale_balance_currency
-        "sale_order_progress_id.order_id.commitment_date",
-        "sale_order_progress_id.order_id.date_order",
+        "sale_order_progress_id.date",
         "sale_order_progress_id.order_id.currency_id.rate",
     )
     def _compute_sale_progress_balance_forecast(self):
