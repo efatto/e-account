@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
         store=True,
     )
     date_progress_end = fields.Date(
-        string="Final date",
+        string="Progress end date",
     )
 
     @api.multi
