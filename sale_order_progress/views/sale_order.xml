@@ -17,6 +17,7 @@
                         <tree string="Order Progress" editable="bottom">
                             <field name="offset_month"/>
                             <field name="date"/>
+                            <field name="payment_term_id"/>
                             <field name="name"/>
                             <field name="is_advance"/>
                             <field name="amount_percent" sum="Total (%)"/>
