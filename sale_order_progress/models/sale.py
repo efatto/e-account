@@ -25,11 +25,35 @@ class SaleOrder(models.Model):
     date_progress_end = fields.Date(
         string="Progress end date",
     )
+    total_advance_percent = fields.Float(
+        string="Total advance (%)",
+        compute="compute_total_advance_percent",
+    )
 
     @api.multi
     def update_difference(self):
         for order in self:
             order._compute_totals()
+
+    @api.multi
+    @api.depends(
+        "amount_untaxed",
+        "order_progress_ids.amount_toinvoice",
+        "order_progress_ids.is_advance",
+    )
+    def compute_total_advance_percent(self):
+        for order in self:
+            order.total_advance_percent = 0
+            total_advance_amount = sum(
+                order.order_progress_ids.filtered(
+                    lambda x: x.is_advance
+                ).mapped("amount_toinvoice")
+                or []
+            )
+            if total_advance_amount:
+                order.total_advance_percent = (
+                    total_advance_amount / order.amount_untaxed * 100.0
+                )
 
     @api.multi
     @api.depends(

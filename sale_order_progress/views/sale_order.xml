@@ -10,6 +10,7 @@
                     <group>
                         <group colspan="4" col="3">
                             <field name="date_progress_end"/>
+                            <field name="total_advance_percent"/>
                             <button string="Check difference" name="update_difference" type="object" icon="fa-refresh"/>
                         </group>
                         <group colspan="4" col="1">
