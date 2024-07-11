@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.tools.date_utils import relativedelta
 
 
 class SaleOrderProgress(models.Model):
@@ -55,6 +56,15 @@ class SaleOrderProgress(models.Model):
              "used to compute the foreseen invoicing date of this line starting from "
              "the commitment date month."
     )
+    date = fields.Date(
+        compute="compute_date",
+        string="Date",
+        store=True,
+    )
+    payment_term_id = fields.Many2one(
+        comodel_name="account.payment.term",
+        string="Payment term",
+    )
 
     @api.onchange("amount_toinvoice_manual")
     def _onchange_amount_toinvoice_manual(self):
@@ -65,6 +75,20 @@ class SaleOrderProgress(models.Model):
     def _onchange_amount_percent(self):
         if self.amount_percent:
             self.amount_toinvoice_manual = 0
+
+    @api.multi
+    @api.depends(
+        'offset_month',
+        'order_id.commitment_date',
+        'order_id.date_order',
+    )
+    def compute_date(self):
+        for progress in self:
+            progress.date = ((
+                progress.order_id.commitment_date
+                or progress.order_id.date_order
+            ) + relativedelta(
+                months=progress.offset_month)).date()
 
     @api.multi
     @api.depends(
