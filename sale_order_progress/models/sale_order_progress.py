@@ -29,19 +29,19 @@ class SaleOrderProgress(models.Model):
     amount_toinvoice_manual = fields.Monetary(string="Amount (manual)")
     amount_toinvoice = fields.Monetary(
         'Amount to invoice',
-        compute="compute_invoiced",
+        compute="_compute_invoiced",
         store=True)
     amount_invoiced = fields.Monetary(
         string="Amount invoiced",
-        compute="compute_invoiced",
+        compute="_compute_invoiced",
         store=True)
     residual_toinvoice = fields.Monetary(
         'Residual to invoice',
-        compute="compute_invoiced",
+        compute="_compute_invoiced",
         store=True)
     invoiced = fields.Boolean(
         string='Invoiced',
-        compute="compute_invoiced",
+        compute="_compute_invoiced",
         store=True,
         help='Sale order progress is marked invoiced when amount invoice lines linked '
              'to sale order progress is almost equal to the sale order progress amount.'
@@ -57,7 +57,7 @@ class SaleOrderProgress(models.Model):
              "the commitment date month."
     )
     date = fields.Date(
-        compute="compute_date",
+        compute="_compute_date",
         string="Date",
         store=True,
     )
@@ -82,7 +82,7 @@ class SaleOrderProgress(models.Model):
         'order_id.date_progress_end',
         'order_id.date_order',
     )
-    def compute_date(self):
+    def _compute_date(self):
         for progress in self:
             progress.date = ((
                 progress.order_id.date_progress_end
@@ -100,7 +100,7 @@ class SaleOrderProgress(models.Model):
         'order_id.order_line.invoice_lines.price_subtotal',
         'order_id.order_line.invoice_lines.invoice_id.state',
     )
-    def compute_invoiced(self):
+    def _compute_invoiced(self):
         for progress in self:
             progress.amount_invoiced = 0
             progress.residual_toinvoice = 0

@@ -27,7 +27,7 @@ class SaleOrder(models.Model):
     )
     total_advance_percent = fields.Float(
         string="Total advance (%)",
-        compute="compute_total_advance_percent",
+        compute="_compute_total_advance_percent",
     )
 
     @api.multi
@@ -41,7 +41,7 @@ class SaleOrder(models.Model):
         "order_progress_ids.amount_toinvoice",
         "order_progress_ids.is_advance",
     )
-    def compute_total_advance_percent(self):
+    def _compute_total_advance_percent(self):
         for order in self:
             order.total_advance_percent = 0
             total_advance_amount = sum(
