@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mis_cash_flow_forecast_line_view_form" model="ir.ui.view">
+        <field name="name">mis.cash_flow.forecast_line.form</field>
+        <field name="model">mis.cash_flow.forecast_line</field>
+        <field
+            name="inherit_id"
+            ref="mis_builder_cash_flow_sale.mis_cash_flow_forecast_line_view_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sale_balance_forecast']" position="after">
+                <field name="sale_order_progress_id" />
+                <field name="sale_progress_balance_forecast" sum="Total forecast balance progress" />
+            </xpath>
+        </field>
+    </record>
+    <record id="mis_cash_flow_forecast_line_view_tree" model="ir.ui.view">
+        <field name="name">mis.cash_flow.forecast_line.tree</field>
+        <field name="model">mis.cash_flow.forecast_line</field>
+        <field
+            name="inherit_id"
+            ref="mis_builder_cash_flow_sale.mis_cash_flow_forecast_line_view_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sale_balance_forecast']" position="after">
+                <field name="sale_order_progress_id" />
+                <field name="sale_progress_balance_forecast" sum="Total forecast balance progress" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

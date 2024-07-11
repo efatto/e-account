@@ -1,0 +1,58 @@
+
+from odoo import models
+
+
+class MisCashFlow(models.Model):
+    _inherit = "mis.cash_flow"
+
+    def get_cash_flow_query(self):
+        query = super().get_cash_flow_query()
+        account_type_receivable = self.env.ref(
+            'account.data_account_type_receivable')
+        if "sale.order.progress" not in query:
+            sale_query = """
+                UNION ALL
+                SELECT
+                    fl.id as id,
+                    'forecast_line' as line_type,
+                    NULL as move_line_id,
+                    fl.account_id as account_id,
+                    CASE
+                        WHEN fl.sale_progress_balance_forecast > 0
+                        THEN fl.sale_progress_balance_forecast
+                        ELSE 0.0
+                    END AS debit,
+                    CASE
+                        WHEN fl.sale_progress_balance_forecast < 0
+                        THEN -fl.sale_progress_balance_forecast
+                        ELSE 0.0
+                    END AS credit,
+                    NULL as reconciled,
+                    NULL as full_reconcile_id,
+                    fl.partner_id as partner_id,
+                    fl.company_id as company_id,
+                    %i as user_type_id,
+                    fl.name as name,
+                    'posted' as state,
+                    fl.date as date,
+                    fl.res_model_id as res_model_id,
+                    fl.res_id as res_id,
+                    NULL as invoiced_percent,
+                    fl.currency_id as currency_id,
+                    fl.sale_balance_currency as balance_currency,
+                    fl.sale_progress_balance_forecast as balance_forecast
+                FROM mis_cash_flow_forecast_line as fl
+                LEFT JOIN
+                    ir_model im ON im.id = fl.res_model_id
+                LEFT JOIN
+                    sale_order_progress sop ON sop.id = fl.res_id
+                LEFT JOIN
+                    sale_order so ON so.id = sop.order_id
+                WHERE
+                    im.model = 'sale.order.progress'
+                    AND so.invoice_status != 'invoiced'
+                UNION ALL
+            """ % account_type_receivable.id
+            full_query = query.replace("UNION ALL", sale_query, 1)
+            return full_query
+        return query

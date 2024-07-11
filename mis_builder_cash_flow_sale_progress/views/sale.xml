@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="mis_builder_cash_flow_sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='sale_balance_forecast']"
+                position="after"
+            >
+                <field
+                    name="sale_progress_balance_forecast"
+                    sum="Total forecast balance progress"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
