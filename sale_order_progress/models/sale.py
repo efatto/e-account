@@ -22,6 +22,9 @@ class SaleOrder(models.Model):
         compute="_compute_totals",
         store=True,
     )
+    date_progress_end = fields.Date(
+        string="Final date",
+    )
 
     @api.multi
     def update_difference(self):

@@ -7,12 +7,19 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Order Progress">
-                    <button string="Check difference" name="update_difference" type="object" icon="fa-refresh"/>
-                    <div class="badge-pill badge-danger float-left"
-                     attrs="{'invisible': [('amount_toinvoice_difference', '=', 0)]}">
-                    Warning: total amount to invoice is different than order amount! Discrepancy:
-                        <field name="amount_toinvoice_difference"/>
-                </div>
+                    <group>
+                        <group colspan="4" col="3">
+                            <field name="date_progress_end"/>
+                            <button string="Check difference" name="update_difference" type="object" icon="fa-refresh"/>
+                        </group>
+                        <group colspan="4" col="1">
+                            <div class="badge-pill badge-danger float-left"
+                             attrs="{'invisible': [('amount_toinvoice_difference', '=', 0)]}">
+                            Warning: total amount to invoice is different than order amount! Discrepancy:
+                                <field name="amount_toinvoice_difference"/>
+                            </div>
+                        </group>
+                    </group>
                     <field name="order_progress_ids" nolabel="1">
                         <tree string="Order Progress" editable="bottom">
                             <field name="offset_month"/>
@@ -21,6 +28,7 @@
                             <field name="name"/>
                             <field name="is_advance"/>
                             <field name="amount_percent" sum="Total (%)"/>
+                            <field name="advance_to_return_percent" sum="Total to return (%)"/>
                             <field name="amount_toinvoice_manual" sum="Total to invoice manual"/>
                             <field name="amount_toinvoice" sum="Total to invoice"/>
                             <field name="amount_invoiced" sum="Total invoiced"/>
