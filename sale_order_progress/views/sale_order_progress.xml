@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <search string="Search order progress">
                 <field name="offset_month"/>
+                <field name="date"/>
                 <field name="name"/>
                 <field name="order_id"/>
                 <field name="is_advance"/>
@@ -25,6 +26,7 @@
         <field name="arch" type="xml">
             <tree string="Sale order progress">
                 <field name="offset_month"/>
+                <field name="date"/>
                 <field name="name"/>
                 <field name="order_id"/>
                 <field name="is_advance"/>
@@ -51,6 +53,7 @@
                     </group>
                     <group>
                         <field name="offset_month"/>
+                        <field name="date"/>
                         <field name="is_advance"/>
                         <field name="amount_percent"/>
                         <field name="amount_toinvoice_manual" sum="Total to Invoice"/>
