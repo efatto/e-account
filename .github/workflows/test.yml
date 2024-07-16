@@ -53,8 +53,6 @@ jobs:
           persist-credentials: false
       - name: Install openupgradelib
         run: pip3 install -e "git+https://github.com/OCA/openupgradelib.git@master#egg=openupgradelib"
-      - name: Install web_hide_on_edit from efatto
-        run: pip3 install -e "git+https://github.com/efatto/efatto@14.0#egg=odoo14-addon-web_hide_on_edit&subdirectory=setup/web_hide_on_edit"
       - name: Install addons and dependencies
         run: oca_install_addons
       - name: Check licenses

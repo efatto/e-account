@@ -13,7 +13,6 @@
     "depends": [
         "account",
         "l10n_it_fiscal_document_type",
-        "web_hide_on_edit",
     ],
     "data": [
         "views/account_invoice_view.xml",
