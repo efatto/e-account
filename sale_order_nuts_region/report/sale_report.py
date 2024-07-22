@@ -6,7 +6,7 @@ class SaleReport(models.Model):
 
     nuts3_id = fields.Many2one(
         comodel_name="res.partner.nuts",
-        string="Region",
+        string="Partner Region",
         readonly=True,
     )
 
