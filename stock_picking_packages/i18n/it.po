@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-10 09:48+0000\n"
-"PO-Revision-Date: 2024-05-10 09:48+0000\n"
+"POT-Creation-Date: 2024-07-24 08:49+0000\n"
+"PO-Revision-Date: 2024-07-24 08:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_packages
-#: model:ir.model.fields,field_description:stock_picking_packages.field_stock_quant_package__appearance
-msgid "Appearance"
+#: model:ir.model.fields,field_description:stock_picking_packages.field_stock_quant_package__goods_appearance_id
+msgid "Appearance of goods"
 msgstr "Aspetto dei beni"
 
 #. module: stock_picking_packages
@@ -50,6 +50,11 @@ msgid "Last Modified on"
 msgstr "Ultima modifica il"
 
 #. module: stock_picking_packages
+#: model_terms:ir.ui.view,arch_db:stock_picking_packages.quant_package_search_view
+msgid "Not used in other pickings"
+msgstr "Non usato in altri trasferimenti"
+
+#. module: stock_picking_packages
 #: model:ir.model,name:stock_picking_packages.model_stock_quant_package
 msgid "Packages"
 msgstr "Colli"
@@ -58,6 +63,11 @@ msgstr "Colli"
 #: model:ir.model.fields,field_description:stock_picking_packages.field_stock_picking__stock_package_ids
 msgid "Packages custom"
 msgstr "Colli"
+
+#. module: stock_picking_packages
+#: model:ir.model.fields,field_description:stock_picking_packages.field_stock_quant_package__stock_picking_ids
+msgid "Related pickings"
+msgstr "Trasferimenti collegati"
 
 #. module: stock_picking_packages
 #: model:ir.model,name:stock_picking_packages.model_stock_picking

@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
+    <record id="quant_package_search_view" model="ir.ui.view">
+        <field name="name">stock.quant.package.search</field>
+        <field name="model">stock.quant.package</field>
+        <field name="inherit_id" ref="stock.quant_package_search_view"/>
+        <field name="arch" type="xml">
+            <filter name="location" position="before">
+                <filter string="Not used in other pickings" name="not_in_other_pickings"
+                        domain="[('stock_picking_ids', '=', False)]"/>
+            </filter>
+        </field>
+    </record>
     <record id="view_picking_withcarrier_out_form" model="ir.ui.view">
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form" />
         <field name="arch" type="xml">
             <xpath expr="//group[@name='carrier_data']" position="inside">
-                <field name="stock_package_ids">
-                    <tree editable="bottom">
-                        <field name="display_name" />
+                <field name="stock_package_ids" context="{'search_default_not_in_other_pickings': True}">
+                    <tree>
                         <field name="dimensions" />
                         <field name="weight_custom" />
                         <field name="weight_custom_uom_id" />
                         <field name="goods_appearance_id" />
-                        <field name="packaging_id" />
-                        <field name="company_id" groups="base.group_multi_company" />
                     </tree>
                 </field>
             </xpath>
