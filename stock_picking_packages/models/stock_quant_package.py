@@ -19,3 +19,10 @@ class StockQuantPackage(models.Model):
     goods_appearance_id = fields.Many2one(
         comodel_name="stock.picking.goods.appearance", string="Appearance of goods"
     )
+    stock_picking_ids = fields.Many2many(
+        comodel_name="stock.picking",
+        relation="stock_picking_stock_quant_package_rel",
+        column1="stock_quant_package_id",
+        column2="stock_picking_id",
+        string="Related pickings",
+    )
