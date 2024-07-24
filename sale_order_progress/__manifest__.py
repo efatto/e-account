@@ -11,6 +11,7 @@
     'website': 'https://github.com/sergiocorato/e-account',
     'license': 'AGPL-3',
     'depends': [
+        'report_py3o',
         'sale',
     ],
     'data': [
@@ -19,6 +20,7 @@
         'views/sale_order.xml',
         'views/sale_order_progress.xml',
         'views/sale_advance.xml',
+        'report/report.xml',
     ],
     'installable': True,
 }

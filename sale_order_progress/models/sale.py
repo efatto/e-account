@@ -1,5 +1,6 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+import re
 
 
 class SaleOrder(models.Model):
@@ -123,3 +124,7 @@ class SaleOrderLine(models.Model):
                 )
             else:
                 line.invoice_progress_ids = False
+
+    @staticmethod
+    def desc_nocode(string):
+        return re.compile("\[.*\] ").sub('', string)  # pylint: disable=W1401
