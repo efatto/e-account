@@ -194,7 +194,7 @@ msgstr "Avanzamento lavori vendita"
 #. module: sale_order_progress
 #: model:ir.actions.report,name:sale_order_progress.sale_order_progress_report_py3o
 msgid "Sale Order Progress Measurements Report"
-msgstr "Rilievo Stato avanzamento lavori"
+msgstr "Rilievo stato avanzamento lavori"
 
 #. module: sale_order_progress
 #: model:ir.actions.act_window,name:sale_order_progress.action_sale_order_progress_line_form
