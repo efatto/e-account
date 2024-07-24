@@ -24,7 +24,7 @@ class SaleOrder(models.Model):
         store=True,
     )
     date_progress_end = fields.Date(
-        string="Progress end date",
+        string="Expected end date",
     )
     total_advance_percent = fields.Float(
         string="Total advance (%)",
