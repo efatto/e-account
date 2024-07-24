@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_order_progress_report_py3o" model="ir.actions.report">
+        <field name="name">Sale Order Progress Report</field>
+        <field name="model">sale.order</field>
+        <field name="report_name">report_progress_ods</field>
+        <field name="report_type">py3o</field>
+        <field name="py3o_filetype">xls</field>
+        <field name="module">sale_order_progress</field>
+        <field name="py3o_template_fallback">report/report_progress.ods</field>
+        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

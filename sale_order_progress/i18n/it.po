@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-11 07:33+0000\n"
-"PO-Revision-Date: 2024-07-11 07:33+0000\n"
+"POT-Creation-Date: 2024-07-24 09:10+0000\n"
+"PO-Revision-Date: 2024-07-24 09:10+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -187,6 +187,11 @@ msgid "Sale Order Progress"
 msgstr "Avanzamento lavori vendita"
 
 #. module: sale_order_progress
+#: model:ir.actions.report,name:sale_order_progress.sale_order_progress_report_py3o
+msgid "Sale Order Progress Report"
+msgstr "Report Stato avanzamento lavori"
+
+#. module: sale_order_progress
 #: model:ir.actions.act_window,name:sale_order_progress.action_sale_order_progress_line_form
 #: model:ir.model.fields,field_description:sale_order_progress.field_account_invoice_line__sale_order_progress_id
 #: model:ir.ui.menu,name:sale_order_progress.sale_order_progress
@@ -243,18 +248,23 @@ msgid "Total Invoiced"
 msgstr "Totale fatturato"
 
 #. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__total_advance_percent
+msgid "Total advance (%)"
+msgstr "Totale acconti (%)"
+
+#. module: sale_order_progress
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
 msgid "Total invoiced"
 msgstr "Totale fatturato"
 
 #. module: sale_order_progress
-#: code:addons/sale_order_progress/models/sale.py:59
+#: code:addons/sale_order_progress/models/sale.py:87
 #, python-format
 msgid "Total of order progress percent cannot exceed 100!"
 msgstr "Il totale (%) degli stati di avanzamento lavori non può superare 100!"
 
 #. module: sale_order_progress
-#: code:addons/sale_order_progress/models/sale.py:63
+#: code:addons/sale_order_progress/models/sale.py:91
 #, python-format
 msgid "Total of progress amount to invoice cannot exceed order amount!"
 msgstr "Il totale degli importi da fatturare degli stati di avanzamento lavori non può superare l'importo dell'ordine!"
