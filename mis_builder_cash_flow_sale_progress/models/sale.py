@@ -1,6 +1,6 @@
 
 from odoo import _, api, fields, models
-from odoo.tools import float_is_zero, relativedelta
+from odoo.tools import float_is_zero
 
 
 class SaleOrder(models.Model):
