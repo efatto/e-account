@@ -3,7 +3,7 @@
 
 {
     "name": "Account financial report default filter journal",
-    "version": "14.0.1.0.0",
+    "version": "12.0.1.0.0",
     "category": "other",
     "author": "Sergio Corato",
     "website": "https://github.com/sergiocorato/e-account",
