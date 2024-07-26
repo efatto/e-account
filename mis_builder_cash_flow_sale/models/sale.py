@@ -11,9 +11,19 @@ class SaleOrder(models.Model):
     @api.multi
     def action_confirm(self):
         res = super().action_confirm()
-        self.filtered(lambda x: x.state == "sale").mapped(
-            "order_line"
-        )._refresh_cashflow_line()
+        self.mapped("order_line")._refresh_cashflow_line()
+        return res
+
+    @api.multi
+    def action_cancel(self):
+        res = super().action_cancel()
+        self.mapped('order_line')._refresh_cashflow_line()
+        return res
+
+    @api.multi
+    def action_draft(self):
+        res = super().action_draft()
+        self.mapped('order_line')._refresh_cashflow_line()
         return res
 
     @api.multi
@@ -77,6 +87,9 @@ class SaleOrderLine(models.Model):
     def _refresh_cashflow_line(self):
         for line in self:
             line.cashflow_line_ids.unlink()
+            if line.order_id.state == "cancel":
+                # do not create cashflow lines for cancelled SO
+                continue
             if line.order_id.payment_mode_id.fixed_journal_id:
                 journal_id = line.order_id.payment_mode_id.fixed_journal_id
                 if line.price_total < 0:

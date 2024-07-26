@@ -143,3 +143,8 @@ class TestMisBuilderCashflowSale(SavepointCase):
                 sum(line.mapped("cashflow_line_ids.sale_balance_forecast")),
                 line.price_total,
             )
+
+        sale_order.action_cancel()
+        self.assertFalse(sale_order.mapped("order_line.cashflow_line_ids"))
+        sale_order.action_draft()
+        self.assertTrue(sale_order.mapped("order_line.cashflow_line_ids"))
