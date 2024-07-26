@@ -97,3 +97,8 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
             self.assertAlmostEqual(
                 sum(line.mapped('cashflow_line_ids.purchase_balance_forecast')),
                 - line.price_total)
+
+        purchase_order1.button_cancel()
+        self.assertFalse(purchase_order1.mapped("order_line.cashflow_line_ids"))
+        purchase_order1.button_draft()
+        self.assertTrue(purchase_order1.mapped("order_line.cashflow_line_ids"))

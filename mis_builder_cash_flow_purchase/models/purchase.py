@@ -11,17 +11,29 @@ class PurchaseOrder(models.Model):
     @api.multi
     def button_confirm(self):
         res = super().button_confirm()
-        self.filtered(
-            lambda x: x.state == 'purchase'
-        ).mapped('order_line')._refresh_cashflow_line()
+        self.mapped('order_line')._refresh_cashflow_line()
+        return res
+
+    @api.multi
+    def button_cancel(self):
+        res = super().button_cancel()
+        self.mapped('order_line')._refresh_cashflow_line()
+        return res
+
+    @api.multi
+    def button_draft(self):
+        res = super().button_draft()
+        self.mapped('order_line')._refresh_cashflow_line()
         return res
 
     @api.multi
     def write(self, vals):
         res = super().write(vals)
         for purchase_order in self:
-            if vals.get('payment_term_id') or vals.get('date_planned') or vals.get(
-                'payment_mode_id'
+            if (
+                vals.get('payment_term_id')
+                or vals.get('date_planned')
+                or vals.get('payment_mode_id')
             ):
                 purchase_order.order_line._refresh_cashflow_line()
         return res
@@ -55,9 +67,14 @@ class PurchaseOrderLine(models.Model):
     @api.multi
     def write(self, vals):
         res = super().write(vals)
-        if vals.get('price_unit') or vals.get('date_planned') \
-                or vals.get('product_qty') or vals.get('discount') \
-                or vals.get('discount2') or vals.get('discount3'):
+        if (
+            vals.get('price_unit')
+            or vals.get('date_planned')
+            or vals.get('product_qty')
+            or vals.get('discount')
+            or vals.get('discount2')
+            or vals.get('discount3')
+        ):
             self._refresh_cashflow_line()
         return res
 
@@ -65,6 +82,9 @@ class PurchaseOrderLine(models.Model):
     def _refresh_cashflow_line(self):
         for line in self:
             line.cashflow_line_ids.unlink()
+            if line.order_id.state == "cancel":
+                # do not create cashflow lines for cancelled PO
+                continue
             if line.order_id.payment_mode_id.fixed_journal_id:
                 journal_id = line.order_id.payment_mode_id.fixed_journal_id
                 if line.price_total < 0:
