@@ -11,7 +11,14 @@ _logger = logging.getLogger(__name__)
 def create_cashflow_lines(cr, registry):
     with Environment.manage():
         env = Environment(cr, SUPERUSER_ID, {})
-        sales = env["sale.order"].search([], order="id")
+        # Create cashflow lines only for not invoiced purchase orders.
+        # It's too time expensive to select here only the purchase orders with a delay
+        # of the payment term plus planned date that is included in current period, so
+        # this part is implemented directly in the purchase cashflow line refresh
+        # method.
+        sales = env['sale.order'].search([
+            ('invoice_status', '!=', 'invoiced'),
+        ], order="id")
         i_max = len(sales)
         i = 0
         for sale in sales:
