@@ -80,6 +80,7 @@ class PurchaseOrderLine(models.Model):
 
     @api.multi
     def _refresh_cashflow_line(self):
+        first_day_current_month = fields.Date.today().replace(day=1)
         for line in self:
             line.cashflow_line_ids.unlink()
             if line.order_id.state == "cancel":
@@ -132,6 +133,10 @@ class PurchaseOrderLine(models.Model):
                         purchase_balance_total_currency,
                         line.date_planned or line.order_id.date_planned or
                         line.order_id.date_order)[0]
+                max_date_due = fields.Date.from_string(max([x[0] for x in totlines]))
+                if max_date_due < first_day_current_month:
+                    # do not create cashflow lines for dates before current month
+                    continue
                 for i, dueline in enumerate(totlines, start=1):
                     line.write({
                         'cashflow_line_ids': [
