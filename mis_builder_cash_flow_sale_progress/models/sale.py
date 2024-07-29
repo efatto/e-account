@@ -9,9 +9,19 @@ class SaleOrder(models.Model):
     @api.multi
     def action_confirm(self):
         res = super().action_confirm()
-        self.filtered(lambda x: x.state == "sale").mapped(
-            "order_progress_ids"
-        )._refresh_cashflow_line()
+        self.mapped("order_progress_ids")._refresh_cashflow_line()
+        return res
+
+    @api.multi
+    def action_cancel(self):
+        res = super().action_cancel()
+        self.mapped('order_progress_ids')._refresh_cashflow_line()
+        return res
+
+    @api.multi
+    def action_draft(self):
+        res = super().action_draft()
+        self.mapped('order_progress_ids')._refresh_cashflow_line()
         return res
 
 
@@ -46,8 +56,12 @@ class SaleOrderProgress(models.Model):
 
     @api.multi
     def _refresh_cashflow_line(self):
+        first_day_current_month = fields.Date.today().replace(day=1)
         for line in self:
             line.cashflow_line_ids.unlink()
+            if line.order_id.state == "cancel":
+                # do not create cashflow lines for cancelled SO
+                continue
             if line.order_id.payment_mode_id.fixed_journal_id:
                 journal_id = line.order_id.payment_mode_id.fixed_journal_id
                 if line.residual_toinvoice < 0:
@@ -94,30 +108,27 @@ class SaleOrderProgress(models.Model):
                         line.residual_toinvoice,
                         line.date,
                     )[0]
-                line.write(
-                    {
+                max_date_due = fields.Date.from_string(max([x[0] for x in totlines]))
+                if max_date_due < first_day_current_month:
+                    # do not create cashflow lines for dates before current month
+                    continue
+                for i, dueline in enumerate(totlines, start=1):
+                    line.write({
                         "cashflow_line_ids": [
-                            (
-                                0,
-                                0,
-                                {
-                                    "name": _(
-                                        "Due line progress #%s/%s of Sale order %s"
-                                    ) % (i, len(totlines), line.order_id.name),
-                                    "date": dueline[0],
-                                    "sale_balance_currency": dueline[1],
-                                    "currency_id": line.order_id.currency_id.id,
-                                    "balance": 0,
-                                    "sale_order_progress_id": line.id,
-                                    "account_id": account_id.id,
-                                    "partner_id": line.order_id.partner_id.id,
-                                    "res_id": line.id,
-                                    "res_model_id": self.env.ref(
-                                        "sale_order_progress.model_sale_order_progress"
-                                    ).id,
-                                },
-                            )
-                            for i, dueline in enumerate(totlines, start=1)
+                            (0, 0, {
+                                "name": _("Due line sale order progress #%s/%s %s") % (
+                                    i, len(totlines), line.order_id.name),
+                                "date": dueline[0],
+                                "sale_balance_currency": dueline[1],
+                                "currency_id": line.order_id.currency_id.id,
+                                "balance": 0,
+                                "sale_order_progress_id": line.id,
+                                "account_id": account_id.id,
+                                "partner_id": line.order_id.partner_id.id,
+                                "res_id": line.id,
+                                "res_model_id": self.env.ref(
+                                    "sale_order_progress.model_sale_order_progress"
+                                ).id,
+                            })
                         ]
-                    }
-                )
+                    })
