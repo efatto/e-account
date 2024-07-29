@@ -4,7 +4,7 @@ from odoo.tests.common import Form, SavepointCase
 from odoo.tools.date_utils import relativedelta
 
 
-class TestMisBuilderCashflowSale(SavepointCase):
+class TestMisBuilderCashflowSaleProgress(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -69,6 +69,12 @@ class TestMisBuilderCashflowSale(SavepointCase):
                 "fixed_journal_id": cls.journal_c1.id,
             }
         )
+        cls.tax = cls.env['account.tax'].create({
+            'name': 'Tax 22.0',
+            'description': '22',
+            'amount': 22.0,
+            'type_tax_use': 'sale',
+        })
 
     def test_01_sale_no_payment_term_cashflow(self):
         sale_form = Form(
@@ -83,6 +89,7 @@ class TestMisBuilderCashflowSale(SavepointCase):
             order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
                 days=40
             )
+            order_line_form.tax_id.add(self.tax)
         with sale_form.order_line.new() as order_line_form:
             order_line_form.product_id = self.product1
             order_line_form.product_uom_qty = 5.0
@@ -90,20 +97,36 @@ class TestMisBuilderCashflowSale(SavepointCase):
             order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
                 days=70
             )
+            order_line_form.tax_id.add(self.tax)
         sale_order = sale_form.save()
         self.assertEqual(
             len(sale_order.order_line), 2, msg="Order line was not created"
         )
         sale_order.action_confirm()
-        so_lines = sale_order.order_line.filtered(
-            lambda x: x.product_id == self.product
-        )
-        self.assertEqual(len(so_lines), 1)
-        for line in so_lines:
+        sale_form = Form(sale_order)
+        with sale_form.order_progress_ids.new() as order_progress_form:
+            order_progress_form.name = "Advance 10%"
+            order_progress_form.offset_month = 1
+            order_progress_form.amount_percent = 10
+        with sale_form.order_progress_ids.new() as order_progress_form:
+            order_progress_form.name = "First SAL"
+            order_progress_form.offset_month = 3
+            order_progress_form.amount_percent = 60
+        with sale_form.order_progress_ids.new() as order_progress_form:
+            order_progress_form.name = "Last SAL"
+            order_progress_form.offset_month = 4
+            order_progress_form.amount_percent = 30
+        sale_order = sale_form.save()
+        sop_lines = sale_order.order_progress_ids
+        self.assertEqual(len(sop_lines), 3)
+        self.assertAlmostEqual(
+            sum(sop_lines.mapped("amount_toinvoice")),
+            sale_order.amount_total, places=2)
+        for line in sop_lines:
             self.assertTrue(line.cashflow_line_ids)
             self.assertAlmostEqual(
                 sum(line.mapped("cashflow_line_ids.sale_balance_forecast")),
-                line.price_total,
+                line.amount_toinvoice,
             )
 
     def test_02_sale_payment_term_2rate_cashflow(self):
