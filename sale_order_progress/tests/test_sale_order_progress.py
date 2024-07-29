@@ -22,6 +22,12 @@ class TestSaleOrderProgress(common.SavepointCase):
                 (4, cls.group_sale.id),
             ]
         }])
+        cls.tax = cls.env['account.tax'].create({
+            'name': 'Tax 22.0',
+            'description': '22',
+            'amount': 22.0,
+            'type_tax_use': 'sale',
+        })
 
     def test_00_order(self):
         sale_form = Form(
@@ -32,19 +38,20 @@ class TestSaleOrderProgress(common.SavepointCase):
             order_line_form.product_id = self.product
             order_line_form.product_uom_qty = 5.0
             order_line_form.price_unit = 100.0
-            order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
-                days=40
-            )
+            order_line_form.tax_id.add(self.tax)
         with sale_form.order_line.new() as order_line_form:
             order_line_form.product_id = self.product1
             order_line_form.product_uom_qty = 2.0
             order_line_form.price_unit = 200.0
-            order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
-                days=70
-            )
+            order_line_form.tax_id.add(self.tax)
         sale_order = sale_form.save()
         sale_order.action_confirm()
         self.assertEqual(sale_order.state, 'sale')
+        self.assertAlmostEqual(
+            sale_order.amount_total,
+            (500 + 400) * 1.22,
+            places=2,
+        )
         # todo create deposit invoice and check deposit percent
         sale_form = Form(sale_order)
         with sale_form.order_progress_ids.new() as order_progress_form:
