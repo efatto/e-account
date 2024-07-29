@@ -70,6 +70,12 @@ class TestMisBuilderCashflowSale(SavepointCase):
                 "fixed_journal_id": cls.journal_c1.id,
             }
         )
+        cls.tax = cls.env['account.tax'].create({
+            'name': 'Tax 22.0',
+            'description': '22',
+            'amount': 22.0,
+            'type_tax_use': 'sale',
+        })
 
     def test_01_sale_no_payment_term_cashflow(self):
         sale_form = Form(
@@ -84,6 +90,7 @@ class TestMisBuilderCashflowSale(SavepointCase):
             order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
                 days=40
             )
+            order_line_form.tax_id.add(self.tax)
         with sale_form.order_line.new() as order_line_form:
             order_line_form.product_id = self.product1
             order_line_form.product_uom_qty = 5.0
@@ -91,6 +98,7 @@ class TestMisBuilderCashflowSale(SavepointCase):
             order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
                 days=70
             )
+            order_line_form.tax_id.add(self.tax)
         sale_order = sale_form.save()
         self.assertEqual(
             len(sale_order.order_line), 2, msg="Order line was not created"
@@ -121,6 +129,7 @@ class TestMisBuilderCashflowSale(SavepointCase):
             order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
                 days=40
             )
+            order_line_form.tax_id.add(self.tax)
         with sale_form.order_line.new() as order_line_form:
             order_line_form.product_id = self.product1
             order_line_form.product_uom_qty = 5.0
@@ -128,6 +137,7 @@ class TestMisBuilderCashflowSale(SavepointCase):
             order_line_form.commitment_date = fields.Datetime.now() + relativedelta(
                 days=70
             )
+            order_line_form.tax_id.add(self.tax)
         sale_order = sale_form.save()
         self.assertEqual(
             len(sale_order.order_line), 2, msg="Order line was not created"
