@@ -51,6 +51,8 @@ class TestSaleOrderProgress(common.SavepointCase):
             places=2,
         )
         # todo create deposit invoice and check deposit percent
+        sale_order.action_cancel()
+        sale_order.action_draft()
         sale_form = Form(sale_order)
         with sale_form.order_progress_ids.new() as order_progress_form:
             order_progress_form.name = "Advance 10%"
