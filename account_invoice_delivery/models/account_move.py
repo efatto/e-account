@@ -49,22 +49,27 @@ class AccountMove(models.Model):
 
     @api.model
     def create(self, vals):
-        """Create or refresh delivery line on create."""
+        """Create or refresh delivery line on create of customer invoices/refund."""
         # todo pass is_delivery field from sale.order.line to account.move.line created
         invoice = super().create(vals)
-        invoice._auto_refresh_delivery()
-        invoice.with_context(
-            auto_refresh_delivery=True, check_move_validity=False
-        )._recompute_dynamic_lines(
-            recompute_all_taxes=True, recompute_tax_base_amount=True
-        )
+        if invoice.move_type.startswith("_out"):
+            invoice._auto_refresh_delivery()
+            invoice.with_context(
+                auto_refresh_delivery=True, check_move_validity=False
+            )._recompute_dynamic_lines(
+                recompute_all_taxes=True, recompute_tax_base_amount=True
+            )
         return invoice
 
     def write(self, vals):
         """Create or refresh the delivery line after saving."""
         # Check if it's already deleting a delivery line to not
         # delete it again inside `_auto_refresh_delivery()`
-        if self.env.context.get("auto_refresh_delivery"):
+        # Ignore vendor invoices/refund
+        if (
+            self.move_type.startswith("_in") or
+            self.env.context.get("auto_refresh_delivery")
+        ):
             return super().write(vals)
         deleting_delivery_line = vals.get("line_ids", False) and any(
             i[0] == 2 and self.env["account.move.line"].browse(i[1]).is_delivery
