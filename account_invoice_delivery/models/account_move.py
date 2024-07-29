@@ -52,7 +52,7 @@ class AccountMove(models.Model):
         """Create or refresh delivery line on create of customer invoices/refund."""
         # todo pass is_delivery field from sale.order.line to account.move.line created
         invoice = super().create(vals)
-        if invoice.move_type.startswith("_out"):
+        if invoice.move_type.startswith("out_"):
             invoice._auto_refresh_delivery()
             invoice.with_context(
                 auto_refresh_delivery=True, check_move_validity=False
@@ -66,7 +66,7 @@ class AccountMove(models.Model):
         # Check if it's already deleting a delivery line to not
         # delete it again inside `_auto_refresh_delivery()`
         # Ignore vendor invoices/refund
-        if self.move_type.startswith("_in") or self.env.context.get(
+        if self.move_type.startswith("in_") or self.env.context.get(
             "auto_refresh_delivery"
         ):
             return super().write(vals)
