@@ -35,6 +35,12 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
             'code': '100999',
             'user_type_id': cls.env.ref('account.data_account_type_liquidity').id,
         })
+        cls.tax = cls.env['account.tax'].create({
+            'name': 'Tax 22.0',
+            'description': '22p',
+            'amount': 22.0,
+            'type_tax_use': 'purchase',
+        })
 
     def _create_purchase_order_line(self, order, product, qty, price_unit, date):
         vals = {
@@ -45,6 +51,7 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
             'product_qty': qty,
             'price_unit': price_unit,
             'date_planned': date,
+            'taxes_id': self.tax.id,
         }
         line = self.env['purchase.order.line'].create(vals)
         line.onchange_product_id()
