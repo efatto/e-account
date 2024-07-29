@@ -51,7 +51,7 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
             'product_qty': qty,
             'price_unit': price_unit,
             'date_planned': date,
-            'taxes_id': self.tax.id,
+            'taxes_id': [(6, 0, self.tax.ids)],
         }
         line = self.env['purchase.order.line'].create(vals)
         line.onchange_product_id()
