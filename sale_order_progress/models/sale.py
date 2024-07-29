@@ -38,7 +38,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     @api.depends(
-        "amount_untaxed",
+        "amount_total",
         "order_progress_ids.amount_toinvoice",
         "order_progress_ids.is_advance",
     )
@@ -53,14 +53,14 @@ class SaleOrder(models.Model):
             )
             if total_advance_amount:
                 order.total_advance_percent = (
-                    total_advance_amount / order.amount_untaxed * 100.0
+                    total_advance_amount / order.amount_total * 100.0
                 )
 
     @api.multi
     @api.depends(
         "order_progress_ids.amount_percent",
         "order_progress_ids.amount_toinvoice",
-        "amount_untaxed",
+        "amount_total",
     )
     def _compute_totals(self):
         for order in self:
@@ -73,21 +73,21 @@ class SaleOrder(models.Model):
                 ))
                 order.amount_toinvoice_total = amount_toinvoice_total
                 order.amount_toinvoice_difference = (
-                    amount_toinvoice_total - order.amount_untaxed)
+                    amount_toinvoice_total - order.amount_total)
             else:
                 order.amount_percent_total = 0
                 order.amount_toinvoice_total = 0
                 order.amount_toinvoice_difference = 0
 
     @api.multi
-    @api.constrains('amount_percent_total', 'amount_toinvoice_total', 'amount_untaxed')
+    @api.constrains('amount_percent_total', 'amount_toinvoice_total', 'amount_total')
     def check_amount_percent_total(self):
         for order in self:
             if order.amount_percent_total > 100:
                 raise ValidationError(_(
                     "Total of order progress percent cannot exceed 100!"
                 ))
-            if order.amount_toinvoice_total > order.amount_untaxed:
+            if order.amount_toinvoice_total > order.amount_total:
                 raise ValidationError(_(
                     "Total of progress amount to invoice cannot exceed order amount!"
                 ))

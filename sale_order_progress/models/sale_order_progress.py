@@ -95,7 +95,7 @@ class SaleOrderProgress(models.Model):
         'amount_toinvoice_manual',
         'amount_percent',
         'invoiced_manual',
-        'order_id.amount_untaxed',
+        'order_id.amount_total',
         'order_id.order_line.price_subtotal',
         'order_id.order_line.invoice_lines.price_subtotal',
         'order_id.order_line.invoice_lines.invoice_id.state',
@@ -116,7 +116,7 @@ class SaleOrderProgress(models.Model):
                     progress.amount_toinvoice = progress.amount_toinvoice_manual
                 elif progress.amount_percent:
                     progress.amount_toinvoice = (
-                        order_id.amount_untaxed * progress.amount_percent / 100)
+                        order_id.amount_total * progress.amount_percent / 100)
                 progress.residual_toinvoice = (
                     progress.amount_toinvoice - progress.amount_invoiced)
                 if progress.invoiced_manual or (

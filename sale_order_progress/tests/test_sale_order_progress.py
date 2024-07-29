@@ -46,3 +46,22 @@ class TestSaleOrderProgress(common.SavepointCase):
         sale_order.action_confirm()
         self.assertEqual(sale_order.state, 'sale')
         # todo create deposit invoice and check deposit percent
+        sale_form = Form(sale_order)
+        with sale_form.order_progress_ids.new() as order_progress_form:
+            order_progress_form.name = "Advance 10%"
+            order_progress_form.offset_month = 1
+            order_progress_form.amount_percent = 10
+        with sale_form.order_progress_ids.new() as order_progress_form:
+            order_progress_form.name = "First SAL"
+            order_progress_form.offset_month = 3
+            order_progress_form.amount_percent = 60
+        with sale_form.order_progress_ids.new() as order_progress_form:
+            order_progress_form.name = "Last SAL"
+            order_progress_form.offset_month = 4
+            order_progress_form.amount_percent = 30
+        sale_order = sale_form.save()
+        sop_lines = sale_order.order_progress_ids
+        self.assertEqual(len(sop_lines), 3)
+        self.assertAlmostEqual(
+            sum(sop_lines.mapped("amount_toinvoice")),
+            sale_order.amount_total, places=2)
