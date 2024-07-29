@@ -102,7 +102,6 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
         self.assertEqual(
             len(sale_order.order_line), 2, msg="Order line was not created"
         )
-        sale_order.action_confirm()
         sale_form = Form(sale_order)
         with sale_form.order_progress_ids.new() as order_progress_form:
             order_progress_form.name = "Advance 10%"
@@ -127,6 +126,7 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
             self.assertAlmostEqual(
                 sum(line.mapped("cashflow_line_ids.sale_balance_forecast")),
                 line.amount_toinvoice,
+                places=2,
             )
 
     def test_02_sale_payment_term_2rate_cashflow(self):

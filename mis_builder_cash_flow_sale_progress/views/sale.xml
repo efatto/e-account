@@ -15,4 +15,31 @@
             </xpath>
         </field>
     </record>
+    <record model="ir.ui.view" id="view_sale_order_progress_form">
+        <field name="model">sale.order.progress</field>
+        <field name="inherit_id" ref="sale_order_progress.view_sale_order_progress_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Order progress lines">
+                    <field name="cashflow_line_ids">
+                        <tree>
+                            <field name="date" />
+                            <field name="currency_id" />
+                            <field
+                                name="sale_balance_currency"
+                                widget="monetary"
+                                options="{'currency_field': 'sale_currency_id'}"
+                            />
+                            <field name="sale_invoiced_percent" />
+                            <field name="sale_deposit_percent" />
+                            <field
+                                name="sale_balance_forecast"
+                                sum="Total forecast balance"
+                            />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
 </odoo>
