@@ -54,17 +54,24 @@
                         <field name="order_id" options="{'no_create_edit': True}"/>
                     </group>
                     <group>
-                        <field name="offset_month"/>
-                        <field name="date"/>
-                        <field name="payment_term_id"/>
-                        <field name="is_advance"/>
-                        <field name="amount_percent"/>
-                        <field name="amount_toinvoice_manual" sum="Total to Invoice"/>
-                        <field name="amount_toinvoice" sum="Total to Invoice"/>
-                        <field name="amount_invoiced" sum="Total Invoiced"/>
-                        <field name="residual_toinvoice" sum="Residual to Invoice"/>
-                        <field name="invoiced"/>
+                        <group>
+                            <field name="offset_month"/>
+                            <field name="date"/>
+                            <field name="payment_term_id"/>
+                            <field name="is_advance"/>
+                        </group>
+                        <group>
+                            <field name="amount_percent"/>
+                            <field name="amount_toinvoice_manual" sum="Total to Invoice"/>
+                            <field name="amount_toinvoice" sum="Total to Invoice"/>
+                            <field name="amount_invoiced" sum="Total Invoiced"/>
+                        </group>
+                        <group>
+                            <field name="residual_toinvoice" sum="Residual to Invoice"/>
+                            <field name="invoiced"/>
+                        </group>
                     </group>
+                    <notebook></notebook>
                 </sheet>
             </form>
         </field>
