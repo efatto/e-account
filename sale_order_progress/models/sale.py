@@ -1,5 +1,6 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+from odoo.tools import float_compare
 import re
 
 
@@ -87,7 +88,11 @@ class SaleOrder(models.Model):
                 raise ValidationError(_(
                     "Total of order progress percent cannot exceed 100!"
                 ))
-            if order.amount_toinvoice_total > order.amount_total:
+            if float_compare(
+                order.amount_toinvoice_total,
+                order.amount_total,
+                precision_rounding=order.currency_id.rounding
+            ) == 1:
                 raise ValidationError(_(
                     "Total of progress amount to invoice cannot exceed order amount!"
                 ))
