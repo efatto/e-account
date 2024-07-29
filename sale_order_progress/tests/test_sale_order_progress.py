@@ -1,6 +1,4 @@
-from odoo import fields
 from odoo.tests import common, Form
-from odoo.tools.date_utils import relativedelta
 
 
 class TestSaleOrderProgress(common.SavepointCase):
