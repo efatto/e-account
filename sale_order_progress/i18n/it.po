@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-24 09:10+0000\n"
-"PO-Revision-Date: 2024-07-24 09:10+0000\n"
+"POT-Creation-Date: 2024-07-30 12:54+0000\n"
+"PO-Revision-Date: 2024-07-30 12:54+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,6 +26,11 @@ msgid "Amount (manual)"
 msgstr "Importo (manuale)"
 
 #. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__amount_advance_toreturn_total
+msgid "Amount Advance Toreturn Total"
+msgstr "Totale acconti da rendere"
+
+#. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__amount_percent_total
 msgid "Amount Percent Total"
 msgstr "Totale (%)"
@@ -39,6 +44,11 @@ msgstr "Differenza totale da fatturare"
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__amount_toinvoice_total
 msgid "Amount Toinvoice Total"
 msgstr "Totale da fatturare"
+
+#. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__amount_advance_toreturn
+msgid "Amount advance to return"
+msgstr "Importo acconto da rendere"
 
 #. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__amount_invoiced
@@ -79,6 +89,11 @@ msgstr "Data"
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
+
+#. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__date_progress_end
+msgid "Expected end date"
+msgstr "Fine lavori prevista"
 
 #. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__invoiced_manual
@@ -164,21 +179,20 @@ msgid "Payment term"
 msgstr "Termine di pagamento"
 
 #. module: sale_order_progress
-#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__date_progress_end
-msgid "Expected end date"
-msgstr "Fine lavori prevista"
-
-#. module: sale_order_progress
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_form
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_tree
 msgid "Residual to Invoice"
 msgstr "Residuo da fatturare"
 
 #. module: sale_order_progress
-#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__residual_toinvoice
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
 msgid "Residual to invoice"
 msgstr "Residuo da fatturare"
+
+#. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__residual_toinvoice
+msgid "Residual to invoice after advance return"
+msgstr "Residuo da fattura dopo il reso acconti"
 
 #. module: sale_order_progress
 #: model:ir.model,name:sale_order_progress.model_sale_order
@@ -247,6 +261,11 @@ msgid "Total (%)"
 msgstr "Totale (%)"
 
 #. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__total_advance_amount
+msgid "Total Advance Amount"
+msgstr "Totale importo acconti"
+
+#. module: sale_order_progress
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_form
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_tree
 msgid "Total Invoiced"
@@ -263,13 +282,13 @@ msgid "Total invoiced"
 msgstr "Totale fatturato"
 
 #. module: sale_order_progress
-#: code:addons/sale_order_progress/models/sale.py:87
+#: code:addons/sale_order_progress/models/sale.py:114
 #, python-format
 msgid "Total of order progress percent cannot exceed 100!"
 msgstr "Il totale (%) degli stati di avanzamento lavori non può superare 100!"
 
 #. module: sale_order_progress
-#: code:addons/sale_order_progress/models/sale.py:91
+#: code:addons/sale_order_progress/models/sale.py:122
 #, python-format
 msgid "Total of progress amount to invoice cannot exceed order amount!"
 msgstr "Il totale degli importi da fatturare degli stati di avanzamento lavori non può superare l'importo dell'ordine!"
@@ -279,6 +298,12 @@ msgstr "Il totale degli importi da fatturare degli stati di avanzamento lavori n
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_tree
 msgid "Total to Invoice"
 msgstr "Totale da fatturare"
+
+#. module: sale_order_progress
+#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
+#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_form
+msgid "Total advance to return"
+msgstr "Totale acconti da rendere"
 
 #. module: sale_order_progress
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
