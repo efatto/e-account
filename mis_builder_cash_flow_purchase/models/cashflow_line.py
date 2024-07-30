@@ -16,25 +16,27 @@ class CashFlowForecastLine(models.Model):
         help='Purchase amount in vendor currency recomputed with delivered qty',
     )
     purchase_invoiced_percent = fields.Float(
-        compute='_compute_balance_forecast',
+        compute='_compute_purchase_balance_forecast',
+        string="Invoiced purchase (%)",
         store=True
     )
     purchase_balance_forecast = fields.Float(
-        compute='_compute_balance_forecast',
+        compute='_compute_purchase_balance_forecast',
         string='Purchase forecast balance',
         store=True,
     )
 
     @api.multi
-    @api.depends('balance',
-                 'purchase_balance_currency',
-                 'purchase_line_id.qty_invoiced',
-                 'purchase_line_id.product_qty',
-                 'purchase_line_id.qty_received',
-                 'purchase_line_id.order_id.date_planned',
-                 'purchase_line_id.order_id.date_order',
-                 'purchase_line_id.order_id.currency_id.rate')
-    def _compute_balance_forecast(self):
+    @api.depends(
+        'purchase_balance_currency',
+        'purchase_line_id.qty_invoiced',
+        'purchase_line_id.product_qty',
+        'purchase_line_id.qty_received',
+        'purchase_line_id.order_id.date_planned',
+        'purchase_line_id.order_id.date_order',
+        'purchase_line_id.order_id.currency_id.rate',
+    )
+    def _compute_purchase_balance_forecast(self):
         for line in self:
             if line.purchase_line_id:
                 purchase_invoiced_percent = line.purchase_line_id.qty_invoiced / (
@@ -46,12 +48,17 @@ class CashFlowForecastLine(models.Model):
                 )
                 line.purchase_invoiced_percent = min(purchase_invoiced_percent, 1)
                 line.purchase_balance_forecast = - line.currency_id._convert(
-                    line.purchase_balance_currency or line.balance,
+                    (
+                        (
+                            line.purchase_balance_currency
+                        )
+                        * (1 - line.purchase_invoiced_percent)
+                    ),
                     line.purchase_line_id.order_id.company_id.currency_id,
                     line.purchase_line_id.order_id.company_id,
-                    line.date,
-                ) * (1 - line.purchase_invoiced_percent)
+                    line.date or line.purchase_line_id.order_id.date_order,
+                )
                 line.balance = line.purchase_balance_forecast
             else:
                 line.purchase_invoiced_percent = 0
-                line.purchase_balance_forecast = line.balance
+                line.purchase_balance_forecast = 0
