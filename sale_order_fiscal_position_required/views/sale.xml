@@ -9,7 +9,7 @@
             </xpath>
             <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
                 <attribute name="attrs">
-                    {'required': [('is_fiscal_position_required', '=', True)]}
+                    {'required': [('is_fiscal_position_required', '=', True), ('state', '=', 'sale')]}
                 </attribute>
             </xpath>
         </field>
