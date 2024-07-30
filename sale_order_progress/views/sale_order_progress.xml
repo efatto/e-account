@@ -63,6 +63,7 @@
                         <group>
                             <field name="amount_percent"/>
                             <field name="amount_toinvoice_manual" sum="Total to Invoice"/>
+                            <field name="amount_advance_toreturn" sum="Total advance to return"/>
                             <field name="amount_toinvoice" sum="Total to Invoice"/>
                             <field name="amount_invoiced" sum="Total Invoiced"/>
                         </group>

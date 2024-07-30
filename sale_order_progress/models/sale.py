@@ -20,12 +20,19 @@ class SaleOrder(models.Model):
         compute="_compute_totals",
         store=True,
     )
+    amount_advance_toreturn_total = fields.Monetary(
+        compute="_compute_totals",
+        store=True,
+    )
     amount_toinvoice_difference = fields.Monetary(
         compute="_compute_totals",
         store=True,
     )
     date_progress_end = fields.Date(
         string="Expected end date",
+    )
+    total_advance_amount = fields.Monetary(
+        compute="_compute_total_advance_percent",
     )
     total_advance_percent = fields.Float(
         string="Total advance (%)",
@@ -45,43 +52,67 @@ class SaleOrder(models.Model):
     )
     def _compute_total_advance_percent(self):
         for order in self:
-            order.total_advance_percent = 0
-            total_advance_amount = sum(
-                order.order_progress_ids.filtered(
-                    lambda x: x.is_advance
-                ).mapped("amount_toinvoice")
-                or []
-            )
-            if total_advance_amount:
-                order.total_advance_percent = (
-                    total_advance_amount / order.amount_total * 100.0
+            if order.order_progress_ids:
+                total_advance_amount = sum(
+                    order.order_progress_ids.filtered(
+                        lambda x: x.is_advance
+                    ).mapped("amount_toinvoice")
+                    or [0]
                 )
+                total_advance_percent = 0
+                if total_advance_amount:
+                    total_advance_percent = (
+                        total_advance_amount / order.amount_total * 100.0
+                    )
+                order.total_advance_amount = total_advance_amount
+                order.total_advance_percent = total_advance_percent
+            else:
+                order.total_advance_percent = 0
+                order.total_advance_amount = 0
 
     @api.multi
     @api.depends(
         "order_progress_ids.amount_percent",
         "order_progress_ids.amount_toinvoice",
+        "order_progress_ids.amount_advance_toreturn",
         "amount_total",
     )
     def _compute_totals(self):
         for order in self:
             if order.order_progress_ids:
-                order.amount_percent_total = sum(order.mapped(
-                    "order_progress_ids.amount_percent"
-                ))
+                order.amount_percent_total = sum(
+                    order.order_progress_ids.filtered(
+                        lambda op: not op.is_advance
+                    ).mapped(
+                        "amount_percent"
+                    )
+                )
                 amount_toinvoice_total = sum(order.mapped(
                     "order_progress_ids.amount_toinvoice"
                 ))
                 order.amount_toinvoice_total = amount_toinvoice_total
+                amount_advance_toreturn_total = sum(order.mapped(
+                    "order_progress_ids.amount_advance_toreturn"
+                ))
+                order.amount_advance_toreturn_total = amount_advance_toreturn_total
                 order.amount_toinvoice_difference = (
-                    amount_toinvoice_total - order.amount_total)
+                    amount_toinvoice_total
+                    - amount_advance_toreturn_total
+                    - order.amount_total
+                )
             else:
                 order.amount_percent_total = 0
                 order.amount_toinvoice_total = 0
+                order.amount_advance_toreturn_total = 0
                 order.amount_toinvoice_difference = 0
 
     @api.multi
-    @api.constrains('amount_percent_total', 'amount_toinvoice_total', 'amount_total')
+    @api.constrains(
+        'amount_percent_total',
+        'amount_toinvoice_total',
+        'amount_total',
+        'amount_advance_toreturn_total',
+    )
     def check_amount_percent_total(self):
         for order in self:
             if order.amount_percent_total > 100:
@@ -89,7 +120,12 @@ class SaleOrder(models.Model):
                     "Total of order progress percent cannot exceed 100!"
                 ))
             if float_compare(
-                order.amount_toinvoice_total,
+                order.amount_toinvoice_total - max(
+                    order.total_advance_amount,
+                    sum(order.mapped(
+                      "order_progress_ids.amount_advance_toreturn")
+                    )
+                ),
                 order.amount_total,
                 precision_rounding=order.currency_id.rounding
             ) == 1:

@@ -30,6 +30,7 @@
                             <field name="is_advance"/>
                             <field name="amount_percent" sum="Total (%)"/>
                             <field name="amount_toinvoice_manual" sum="Total to invoice manual"/>
+                            <field name="amount_advance_toreturn" sum="Total advance to return"/>
                             <field name="amount_toinvoice" sum="Total to invoice"/>
                             <field name="amount_invoiced" sum="Total invoiced"/>
                             <field name="residual_toinvoice" sum="Residual to invoice"/>

@@ -1,5 +1,6 @@
 from odoo import api, fields, models
 from odoo.tools.date_utils import relativedelta
+from odoo.tools import float_compare
 
 
 class SaleOrderProgress(models.Model):
@@ -27,6 +28,11 @@ class SaleOrderProgress(models.Model):
         store=True,
     )
     amount_toinvoice_manual = fields.Monetary(string="Amount (manual)")
+    amount_advance_toreturn = fields.Monetary(
+        string="Amount advance to return",
+        compute="_compute_invoiced",
+        store=True,
+    )
     amount_toinvoice = fields.Monetary(
         'Amount to invoice',
         compute="_compute_invoiced",
@@ -36,7 +42,7 @@ class SaleOrderProgress(models.Model):
         compute="_compute_invoiced",
         store=True)
     residual_toinvoice = fields.Monetary(
-        'Residual to invoice',
+        'Residual to invoice after advance return',
         compute="_compute_invoiced",
         store=True)
     invoiced = fields.Boolean(
@@ -94,23 +100,27 @@ class SaleOrderProgress(models.Model):
     @api.depends(
         'amount_toinvoice_manual',
         'amount_percent',
+        'date',
         'invoiced_manual',
+        'is_advance',
         'order_id.amount_total',
-        'order_id.order_line.price_subtotal',
-        'order_id.order_line.invoice_lines.price_subtotal',
+        'order_id.total_advance_percent',
+        'order_id.order_line.price_total',
+        'order_id.order_line.invoice_lines.price_total',
         'order_id.order_line.invoice_lines.invoice_id.state',
     )
     def _compute_invoiced(self):
-        for progress in self:
+        for progress in self.sorted(key="date"):
             progress.amount_invoiced = 0
             progress.residual_toinvoice = 0
+            progress.amount_advance_toreturn = 0
             progress.invoiced = False
             order_id = progress.order_id
             if order_id:
                 for line in order_id.mapped("order_line.invoice_lines").filtered(
                     lambda x: x.sale_order_progress_id == progress
                 ):
-                    progress.amount_invoiced += line.price_subtotal
+                    progress.amount_invoiced += line.price_total
                 # set amount_toinvoice if amount_percent is set
                 if progress.amount_toinvoice_manual:
                     progress.amount_toinvoice = progress.amount_toinvoice_manual
@@ -118,11 +128,40 @@ class SaleOrderProgress(models.Model):
                     progress.amount_toinvoice = (
                         order_id.amount_total * progress.amount_percent / 100)
                 progress.residual_toinvoice = (
-                    progress.amount_toinvoice - progress.amount_invoiced)
+                    progress.amount_toinvoice - progress.amount_invoiced
+                    - (
+                        progress.amount_advance_toreturn
+                        if not progress.is_advance
+                        else 0
+                    )
+                )
                 if progress.invoiced_manual or (
                     progress.amount_invoiced >= progress.amount_toinvoice > 0.0
                 ):
                     progress.invoiced = True
+                amount_advance_toreturn = (
+                    progress.amount_toinvoice
+                    * order_id.total_advance_percent
+                    / 100.0
+                ) if not progress.is_advance else 0
+                current_advance_toreturn_total = sum(
+                    order_id.order_progress_ids.filtered(
+                        lambda x: x != progress
+                    ).mapped("amount_advance_toreturn")
+                )  # put in the last order progress the difference of advance amount
+                if (float_compare(
+                    current_advance_toreturn_total + amount_advance_toreturn,
+                    order_id.total_advance_amount,
+                    precision_rounding=progress.currency_id.rounding,
+                ) != 0
+                    and progress == order_id.order_progress_ids.sorted(key="date")[-1]
+                ):
+                    progress.amount_advance_toreturn = (
+                        order_id.total_advance_amount
+                        - current_advance_toreturn_total
+                    )
+                else:
+                    progress.amount_advance_toreturn = amount_advance_toreturn
 
     @api.multi
     def _compute_currency_id(self):
