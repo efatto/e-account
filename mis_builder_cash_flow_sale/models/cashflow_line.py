@@ -55,7 +55,7 @@ class CashFlowForecastLine(models.Model):
                 line.sale_balance_forecast = line.currency_id._convert(
                     (
                         (
-                            line.sale_balance_currency or line.balance
+                            line.sale_balance_currency
                         )
                         * (1 - line.sale_invoiced_percent)
                         * (1 - line.sale_deposit_percent)
@@ -67,4 +67,4 @@ class CashFlowForecastLine(models.Model):
                 line.balance = line.sale_balance_forecast
             else:
                 line.sale_invoiced_percent = 0
-                line.sale_balance_forecast = line.balance
+                line.sale_balance_forecast = 0
