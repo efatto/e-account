@@ -24,6 +24,16 @@ class SaleOrder(models.Model):
         self.mapped('order_progress_ids')._refresh_cashflow_line()
         return res
 
+    @api.multi
+    def write(self, vals):
+        res = super().write(vals)
+        for sale_order in self:
+            if (
+                vals.get('date_progress_end')
+            ):
+                sale_order.order_line._refresh_cashflow_line()
+        return res
+
 
 class SaleOrderProgress(models.Model):
     _inherit = "sale.order.progress"
