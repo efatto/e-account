@@ -31,7 +31,7 @@ class SaleOrder(models.Model):
             if (
                 vals.get('date_progress_end')
             ):
-                sale_order.order_line._refresh_cashflow_line()
+                sale_order.order_progress_ids._refresh_cashflow_line()
         return res
 
 
@@ -40,8 +40,10 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _refresh_cashflow_line(self):
-        lines_to_do = self.filtered(lambda x: not x.order_id.order_progress_ids)
-        super(SaleOrderLine, lines_to_do)._refresh_cashflow_line()
+        so_lines_to_do = self.filtered(lambda x: not x.order_id.order_progress_ids)
+        so_lines_with_progress = self - so_lines_to_do
+        so_lines_with_progress.mapped("cashflow_line_ids").unlink()
+        super(SaleOrderLine, so_lines_to_do)._refresh_cashflow_line()
 
 
 class SaleOrderProgress(models.Model):
@@ -57,6 +59,7 @@ class SaleOrderProgress(models.Model):
     def create(self, vals):
         line = super().create(vals)
         line._refresh_cashflow_line()
+        line.order_id.order_line._refresh_cashflow_line()
         return line
 
     @api.multi

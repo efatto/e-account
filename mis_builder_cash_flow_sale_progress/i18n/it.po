@@ -38,8 +38,8 @@ msgstr "MIS Cash flow riga previsione"
 
 #. module: mis_builder_cash_flow_sale_progress
 #: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_sale_progress.view_sale_order_progress_form
-msgid "Order progress lines"
-msgstr "Righe stato avanzamento lavori"
+msgid "Order progress cashflow lines"
+msgstr "Righe cashflow stato avanzamento lavori"
 
 #. module: mis_builder_cash_flow_sale_progress
 #: model:ir.model,name:mis_builder_cash_flow_sale_progress.model_sale_order
