@@ -33,8 +33,8 @@
                             <field name="sale_invoiced_percent" />
                             <field name="sale_deposit_percent" />
                             <field
-                                name="sale_balance_forecast"
-                                sum="Total forecast balance"
+                                name="sale_progress_balance_forecast"
+                                sum="Total progress forecast balance"
                             />
                         </tree>
                     </field>
