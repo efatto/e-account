@@ -192,7 +192,7 @@ msgstr "Residuo da fatturare"
 #. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__residual_toinvoice
 msgid "Residual to invoice after advance return"
-msgstr "Residuo da fattura dopo il reso acconti"
+msgstr "Residuo da fatturare dopo il reso acconti"
 
 #. module: sale_order_progress
 #: model:ir.model,name:sale_order_progress.model_sale_order
