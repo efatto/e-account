@@ -122,8 +122,10 @@ class SaleOrder(models.Model):
             if float_compare(
                 order.amount_toinvoice_total - max(
                     order.total_advance_amount,
-                    sum(order.mapped(
-                      "order_progress_ids.amount_advance_toreturn")
+                    sum(
+                        order.mapped(
+                            "order_progress_ids.amount_advance_toreturn"
+                        )
                     )
                 ),
                 order.amount_total,
