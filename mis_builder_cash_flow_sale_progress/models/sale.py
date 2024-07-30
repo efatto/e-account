@@ -35,6 +35,15 @@ class SaleOrder(models.Model):
         return res
 
 
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    @api.multi
+    def _refresh_cashflow_line(self):
+        lines_to_do = self.filtered(lambda x: not x.order_id.order_progress_ids)
+        super(SaleOrderLine, lines_to_do)._refresh_cashflow_line()
+
+
 class SaleOrderProgress(models.Model):
     _inherit = "sale.order.progress"
 
