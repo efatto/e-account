@@ -10,6 +10,7 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.user_model = cls.env["res.users"].with_context(no_reset_password=True)
+        cls.sale_model = cls.env["sale.order"]
         cls.customer = cls.env.ref("base.res_partner_3")
         cls.product = cls.env.ref("product.product_delivery_01")
         cls.product1 = cls.env.ref("product.product_delivery_02")
@@ -78,10 +79,12 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
 
     def test_01_sale_no_payment_term_cashflow(self):
         sale_form = Form(
-            self.env["sale.order"].with_context(test_mis_builder_cash_flow_sale=True)
+            self.sale_model.with_context(test_mis_builder_cash_flow_sale=True)
         )
         sale_form.partner_id = self.customer
         sale_form.payment_mode_id = self.customer_payment_mode
+        if hasattr(self.sale_model, "is_fiscal_position_required"):
+            sale_form.is_fiscal_position_required = False
         with sale_form.order_line.new() as order_line_form:
             order_line_form.product_id = self.product
             order_line_form.product_uom_qty = 5.0
@@ -99,6 +102,7 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
             )
             order_line_form.tax_id.add(self.tax)
         sale_order = sale_form.save()
+        sale_order.action_confirm()
         self.assertEqual(
             len(sale_order.order_line), 2, msg="Order line was not created"
         )
@@ -124,7 +128,7 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
         for line in sop_lines:
             self.assertTrue(line.cashflow_line_ids)
             self.assertAlmostEqual(
-                sum(line.mapped("cashflow_line_ids.sale_balance_forecast")),
+                sum(line.mapped("cashflow_line_ids.sale_progress_balance_forecast")),
                 line.amount_toinvoice,
                 places=2,
             )
@@ -134,8 +138,8 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
             self.env["sale.order"].with_context(test_mis_builder_cash_flow_sale=True)
         )
         sale_form.partner_id = self.customer
-        sale_form.payment_term_id = self.payment_term_2rate
-        sale_form.payment_mode_id = self.customer_payment_mode
+        if hasattr(self.sale_model, "is_fiscal_position_required"):
+            sale_form.is_fiscal_position_required = False
         with sale_form.order_line.new() as order_line_form:
             order_line_form.product_id = self.product
             order_line_form.product_uom_qty = 5.0
@@ -155,13 +159,16 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
             len(sale_order.order_line), 2, msg="Order line was not created"
         )
         sale_order.action_confirm()
-        so_lines = sale_order.order_line.filtered(
-            lambda x: x.product_id == self.product
-        )
-        self.assertEqual(len(so_lines), 1)
-        for line in so_lines:
-            self.assertEqual(len(line.cashflow_line_ids), 2)
+        sale_form.payment_term_id = self.payment_term_2rate
+        sop_lines = sale_order.order_progress_ids
+        self.assertEqual(len(sop_lines), 3)
+        self.assertAlmostEqual(
+            sum(sop_lines.mapped("amount_toinvoice")),
+            sale_order.amount_total, places=2)
+        for line in sop_lines:
+            self.assertTrue(line.cashflow_line_ids)
             self.assertAlmostEqual(
-                sum(line.mapped("cashflow_line_ids.sale_balance_forecast")),
-                line.price_total,
+                sum(line.mapped("cashflow_line_ids.sale_progress_balance_forecast")),
+                line.amount_toinvoice,
+                places=2,
             )
