@@ -135,7 +135,7 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
 
     def test_02_sale_payment_term_2rate_cashflow(self):
         sale_form = Form(
-            self.env["sale.order"].with_context(test_mis_builder_cash_flow_sale=True)
+            self.env["sale.order"]
         )
         sale_form.partner_id = self.customer
         if hasattr(self.sale_model, "is_fiscal_position_required"):
@@ -159,7 +159,22 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
             len(sale_order.order_line), 2, msg="Order line was not created"
         )
         sale_order.action_confirm()
-        sale_form.payment_term_id = self.payment_term_2rate
+        sale_form = Form(sale_order)
+        with sale_form.order_progress_ids.new() as order_progress_form:
+            order_progress_form.name = "Advance 10%"
+            order_progress_form.offset_month = 1
+            order_progress_form.amount_percent = 10
+        with sale_form.order_progress_ids.new() as order_progress_form:
+            order_progress_form.name = "First SAL"
+            order_progress_form.offset_month = 3
+            order_progress_form.amount_percent = 60
+            order_progress_form.payment_term_id = self.payment_term_2rate
+        with sale_form.order_progress_ids.new() as order_progress_form:
+            order_progress_form.name = "Last SAL"
+            order_progress_form.offset_month = 4
+            order_progress_form.amount_percent = 30
+            order_progress_form.payment_term_id = self.payment_term_2rate
+        sale_order = sale_form.save()
         sop_lines = sale_order.order_progress_ids
         self.assertEqual(len(sop_lines), 3)
         self.assertAlmostEqual(
