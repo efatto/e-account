@@ -15,7 +15,7 @@
         "mrp_workorder_timesheet_cost",
         "mrp_workcenter_productivity_usability",
         "sale_order_line_usability",
-        "stock",
+        "purchase_stock",
         "stock_move_usability",
     ],
     "data": [

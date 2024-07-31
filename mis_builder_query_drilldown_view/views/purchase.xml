@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_purchase_order_line_tree" model="ir.ui.view">
+        <field name="model">purchase.order.line</field>
+        <field name="name">purchase.order.line.tree</field>
+        <field name="priority" eval="999"/>
+        <field name="arch" type="xml">
+            <tree string="purchases Order Lines" create="false">
+                <field name="order_id"/>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <field name="product_uom_qty" string="Qty"/>
+                <field name="qty_received"/>
+                <field name="qty_invoiced"/>
+                <field name="product_uom" string="Unit of Measure" groups="uom.group_uom"/>
+                <field name="price_subtotal" sum="Total" widget="monetary"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
