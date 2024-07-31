@@ -21,6 +21,7 @@
     "data": [
         "views/account.xml",
         "views/mrp.xml",
+        "views/purchase.xml",
         "views/sale.xml",
         "views/stock.xml",
     ],
