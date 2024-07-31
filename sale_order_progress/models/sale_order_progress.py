@@ -127,14 +127,6 @@ class SaleOrderProgress(models.Model):
                 elif progress.amount_percent:
                     progress.amount_toinvoice = (
                         order_id.amount_total * progress.amount_percent / 100)
-                progress.residual_toinvoice = (
-                    progress.amount_toinvoice - progress.amount_invoiced
-                    - (
-                        progress.amount_advance_toreturn
-                        if not progress.is_advance
-                        else 0
-                    )
-                )
                 if progress.invoiced_manual or (
                     progress.amount_invoiced >= progress.amount_toinvoice > 0.0
                 ):
@@ -162,6 +154,14 @@ class SaleOrderProgress(models.Model):
                     )
                 else:
                     progress.amount_advance_toreturn = amount_advance_toreturn
+                progress.residual_toinvoice = (
+                    progress.amount_toinvoice - progress.amount_invoiced
+                    - (
+                        progress.amount_advance_toreturn
+                        if not progress.is_advance
+                        else 0
+                    )
+                )
 
     @api.multi
     def _compute_currency_id(self):
