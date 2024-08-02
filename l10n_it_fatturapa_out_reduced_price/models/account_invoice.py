@@ -48,19 +48,7 @@ class AccountInvoiceLine(models.Model):
                     line.price_subtotal,
                     precision_rounding=line.currency_id.rounding
                 ) != 0:
-                    # diff_amount = (
-                    #     line.price_subtotal
-                    #     - float_round(
-                    #         line.quantity * line.price_reduced_tax_excluded,
-                    #         precision_rounding=line.currency_id.rounding
-                    #     )
-                    # )
                     line.is_exportable_reduced_price = False
-                    # raise ValidationError(_(
-                    #     "This invoice cannot be exported with reduced price option as "
-                    #     "there is a residual total amount difference %0.2f in line %s")
-                    #                       % (diff_amount, line.name)
-                    #                       )
                 else:
                     line.is_exportable_reduced_price = True
             # reduced price is the same as unit price
