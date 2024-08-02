@@ -14,9 +14,8 @@
     "installable": True,
     "auto_install": False,
     "depends": [
-        "account_invoice_triple_discount",
+        "account_invoice_reduced_price",
         "l10n_it_fatturapa_out",
-        "sale",
     ],
     "data": [
         "views/partner_view.xml",
