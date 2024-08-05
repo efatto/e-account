@@ -16,6 +16,5 @@
         "account_invoice_triple_discount",
     ],
     "data": [
-        "views/account_view.xml",
     ],
 }
