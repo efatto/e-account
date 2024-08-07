@@ -55,9 +55,21 @@ class SaleAdvancePaymentInv(models.TransientModel):
         string='Order Progress',
         help='Select order progress line to link to the invoice line'
     )
+    amount_advance_toreturn = fields.Float(
+        digits=dp.get_precision('Account'),
+        help='Amount of the advance to return',
+    )
 
     @api.multi
     def _create_invoice(self, order, so_line, amount):
+        if (
+            self.advance_payment_method == "all"
+            and self.amount_advance_toreturn
+        ):
+            vals_to_return = order.get_amount_advance_toreturn_by_line(
+                self.amount_advance_toreturn)
+            if vals_to_return:
+                self = self.with_context(amount_advance_toreturn=vals_to_return)
         invoice = super()._create_invoice(order, so_line, amount)
         if self.order_progress_id:
             invoice.invoice_line_ids.write(
@@ -66,6 +78,17 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     @api.multi
     def create_invoices(self):
+        if (
+            self.advance_payment_method == "all"
+            and self.amount_advance_toreturn
+        ):
+            orders = self.env['sale.order'].browse(
+                self.env.context.get('active_ids', [])
+            )
+            vals_to_return = orders.get_amount_advance_toreturn_by_line(
+                self.amount_advance_toreturn)
+            if vals_to_return:
+                self = self.with_context(amount_advance_toreturn=vals_to_return)
         if self.order_progress_id:
             return super(
                 SaleAdvancePaymentInv,
