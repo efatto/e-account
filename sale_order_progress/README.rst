@@ -48,6 +48,16 @@ Nel caso di fatturazione di un acconto, verrà inserito in automatico il valore 
 .. image:: https://raw.githubusercontent.com/efatto/e-account/12.0/sale_order_progress/static/description/acconto.png
     :alt: Acconto
 
+È stato aggiunto un campo nella procedura di fatturazione che mostra l'importo dell'acconto che verrà stornato. È possibile modificare questo valore direttamente:
+
+.. image:: https://raw.githubusercontent.com/efatto/e-account/12.0/sale_order_progress/static/description/acconto_da_rendere.png
+    :alt: Acconto da rendere
+
+Nell'ordine di vendita verrà mostrato la percentuale residuo dell'acconto da stornare sul campo quantità fatturata (1 = 100%, valori inferiori a 1 indicano che una parte dell'acconto è già stata resa):
+
+.. image:: https://raw.githubusercontent.com/efatto/e-account/12.0/sale_order_progress/static/description/acconto_residuo.png
+    :alt: Acconto residuo
+
 In caso invece di fatturazione di beni/servizi, il sistema richiede l'inserimento dello Stato di avanzamento lavori a cui abbinare le righe da fatturare e verrà creata la fattura come al solito:
 
 .. image:: https://raw.githubusercontent.com/efatto/e-account/12.0/sale_order_progress/static/description/creazione_fattura.png
