@@ -238,3 +238,29 @@ class SaleOrderLine(models.Model):
         else:
             vals_list = super().invoice_line_create_vals(invoice_id, qty)
         return vals_list
+
+    @api.depends(
+        'price_unit',
+        'invoice_lines.invoice_id.state',
+        'invoice_lines.quantity',
+        'invoice_lines.price_subtotal_signed',
+    )
+    def _get_invoice_qty(self):
+        """
+        Compute the quantity invoiced in case of down payment, considering amount.
+        """
+        downpayment_lines = self.filtered("is_downpayment")
+        if downpayment_lines:
+            self -= downpayment_lines
+            for line in downpayment_lines:
+                amount_residual = 0.0
+                for invoice_line in line.invoice_lines:
+                    if invoice_line.invoice_id.state != 'cancel':
+                        if invoice_line.invoice_id.type == 'out_invoice':
+                            amount_residual += invoice_line.price_subtotal_signed
+                        elif invoice_line.invoice_id.type == 'out_refund':
+                            amount_residual -= invoice_line.price_subtotal_signed
+                line.qty_invoiced = amount_residual / line.price_unit
+                # qty_invoiced refers to the down payment amount to return (it is 1
+                # when a down payment invoice is emitted, then go to 0 when refunded)
+        super()._get_invoice_qty()
