@@ -60,6 +60,12 @@ class SaleAdvancePaymentInv(models.TransientModel):
         help='Amount of the advance to return',
     )
 
+    @api.onchange("order_progress_id")
+    def _onchange_order_progress_id(self):
+        if self.order_progress_id:
+            self.amount_advance_toreturn = (
+                self.order_progress_id.amount_advance_toreturn)
+
     @api.multi
     def _create_invoice(self, order, so_line, amount):
         if (

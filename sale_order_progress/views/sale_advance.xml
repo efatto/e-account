@@ -12,7 +12,8 @@
                        attrs="{'invisible': [('has_progress', '!=', True)],
                                'required': [('has_progress', '=', True)]}"
                        domain="[('order_id', 'in', order_ids)]"/>
-                <field name="amount_advance_toreturn"/>
+                <field name="amount_advance_toreturn"
+                    attrs="{'invisible': [('advance_payment_method', '!=', 'all')]}"/>
             </label>
         </field>
     </record>
