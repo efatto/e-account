@@ -1,6 +1,6 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare
+from odoo.tools import float_compare, float_is_zero
 import re
 
 
@@ -38,6 +38,40 @@ class SaleOrder(models.Model):
         string="Total advance (%)",
         compute="_compute_total_advance_percent",
     )
+
+    def get_amount_advance_toreturn_by_line(self, amount_advance_toreturn):
+        for order in self:
+            res = {}
+            downpayment_lines = order.order_line.filtered("is_downpayment")
+            if not downpayment_lines:
+                return res
+            # compute amount advance to return for lines only when it is lower than
+            # the total advance
+            total_advance_amount = sum(downpayment_lines.mapped("price_unit"))
+            if amount_advance_toreturn < total_advance_amount:
+                for line in downpayment_lines:
+                    if float_compare(
+                        amount_advance_toreturn,
+                        line.price_unit,
+                        precision_rounding=line.currency_id.rounding,
+                    ) == -1:
+                        res[line] = amount_advance_toreturn
+                        break
+                    elif float_compare(
+                        amount_advance_toreturn,
+                        line.price_unit,
+                        precision_rounding=line.currency_id.rounding,
+                    ) == 0:
+                        res[line] = line.price_unit
+                        break
+                    elif float_compare(
+                        amount_advance_toreturn,
+                        line.price_unit,
+                        precision_rounding=line.currency_id.rounding,
+                    ) == 1:
+                        res[line] = line.price_unit
+                        amount_advance_toreturn -= line.price_unit
+            return res
 
     @api.multi
     def update_difference(self):
@@ -171,3 +205,36 @@ class SaleOrderLine(models.Model):
     @staticmethod
     def desc_nocode(string):
         return re.compile("\[.*\] ").sub('', string)  # pylint: disable=W1401
+
+    def invoice_line_create_vals(self, invoice_id, qty):
+        # Override to create refund for down payment lines with maximum value requested
+        precision = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure')
+        amount_advance_toreturn = self.env.context.get("amount_advance_toreturn", {})
+        if amount_advance_toreturn:
+            down_payment_lines = self.filtered("is_downpayment")
+            if down_payment_lines:
+                self -= down_payment_lines
+            vals_list = super().invoice_line_create_vals(invoice_id, qty)
+            for line in down_payment_lines:
+                if (
+                    not float_is_zero(qty, precision_digits=precision)
+                    or not line.product_id
+                ):
+                    vals = line._prepare_invoice_line(qty=qty)
+                    amount_advance_toreturn = self.env.context["amount_advance_toreturn"]
+                    price_unit = line.price_unit
+                    if line in amount_advance_toreturn:
+                        price_unit = amount_advance_toreturn[line]
+                    else:
+                        # this down payment line has not to be returned, todo delete it
+                        price_unit = 0
+                    vals.update({
+                        'price_unit': price_unit,
+                        'invoice_id': invoice_id,
+                        'sale_line_ids': [(6, 0, [line.id])]
+                    })
+                    vals_list.append(vals)
+        else:
+            vals_list = super().invoice_line_create_vals(invoice_id, qty)
+        return vals_list
