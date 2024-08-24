@@ -14,7 +14,9 @@
     "auto_install": False,
     "depends": [
         "account_invoice_triple_discount",
+        "account_invoice_report_qweb",
     ],
     "data": [
+        "views/account.xml",
     ],
 }
