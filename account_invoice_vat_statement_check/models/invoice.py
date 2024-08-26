@@ -48,10 +48,10 @@ class AccountMoveLine(models.Model):
             if vat_statements:
                 raise UserError(
                     _(
-                        "The operation is refused as it would impact already issued tax "
-                        "statements on %s.\n"
-                        "Please restore the journal entry date or reset VAT statement to "
-                        "draft to proceed."
+                        "The operation is refused as it would impact already issued "
+                        "tax statements on %s.\n"
+                        "Please restore the journal entry date or reset VAT statement "
+                        "to draft to proceed."
                     )
                     % (
                         " - ".join(
