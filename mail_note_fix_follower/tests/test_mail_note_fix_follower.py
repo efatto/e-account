@@ -95,3 +95,41 @@ class TestMailNoteFixFollower(SavepointCase):
                 ):
                     notified_partner |= notification.res_partner_id
         self.assertEqual(len(notified_partner.ids), 1)
+
+    def test_03_send_note(self):
+        ctx = self.env.context.copy()
+        ctx.update(
+            {
+                "default_model": "res.partner",
+                "default_res_id": self.partner_01.id,
+                "default_composition_mode": "comment",
+                "default_subtype_id": self.env.ref("mail.mt_note").id,
+                "test_optional_follow_notification": True,
+            }
+        )
+        mail_compose = self.env["mail.compose.message"]
+        self.partner_01.message_subscribe(
+            partner_ids=[self.demo_user.partner_id.id, self.partner_03.id]
+        )
+        old_res = self.env["mail.message"].search(
+            [("model", "=", "res.partner"), ("res_id", "=", self.partner_01.id)]
+        )
+        values = mail_compose.with_context(ctx).onchange_template_id(
+            False, "comment", "res.partner", self.partner_01.id
+        )["value"]
+        compose_id = mail_compose.with_context(ctx).create(values)
+        self.assertEqual(len(compose_id.partner_ids.ids), 2)
+        for partner in compose_id.partner_ids:
+            self.assertIn(partner, [self.partner_03, self.demo_user.partner_id])
+        compose_id.with_context(ctx).send_mail()
+        res = self.env["mail.message"].search(
+            [
+                ("model", "=", "res.partner"),
+                ("res_id", "=", self.partner_01.id),
+                ("id", "not in", old_res.ids),
+            ]
+        )  # noqa
+        self.assertEqual(len(res.ids), 1)
+        # check no follower is notified
+        for record in res:
+            self.assertFalse(record.notification_ids)

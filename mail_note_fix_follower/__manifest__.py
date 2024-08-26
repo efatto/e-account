@@ -11,7 +11,7 @@
     "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "depends": [
-        "mail_optional_follower_notification",
+        "mail_no_follower_notification",
     ],
     "data": [],
     "installable": True,
