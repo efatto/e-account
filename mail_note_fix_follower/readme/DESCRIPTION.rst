@@ -1,1 +1,1 @@
-This module fix comment that are sent to all followers.
+This module block notes to be sent to all the followers.

@@ -1,11 +1,12 @@
-from odoo import api, models
+from odoo import models
 
 
 class MailFollowers(models.Model):
     _inherit = "mail.followers"
 
-    def _get_recipient_data(self, records, message_type, subtype_id, pids=None,
-                            cids=None):
+    def _get_recipient_data(
+        self, records, message_type, subtype_id, pids=None, cids=None
+    ):
         if subtype_id == self.env.ref("mail.mt_note").id:
             pids = set()
         res = super()._get_recipient_data(records, message_type, subtype_id, pids, cids)

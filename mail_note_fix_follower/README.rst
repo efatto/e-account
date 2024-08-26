@@ -22,7 +22,7 @@ Mail fix followers on note sent with extended window
 
 |badge1| |badge2| |badge3|
 
-This module fix comment that are sent to all followers.
+This module block notes to be sent to all the followers.
 
 **Table of contents**
 
