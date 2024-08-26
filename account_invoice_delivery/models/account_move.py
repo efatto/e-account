@@ -66,8 +66,10 @@ class AccountMove(models.Model):
         # Check if it's already deleting a delivery line to not
         # delete it again inside `_auto_refresh_delivery()`
         # Ignore vendor invoices/refund
-        if self.move_type and self.move_type.startswith("in_") or self.env.context.get(
-            "auto_refresh_delivery"
+        if (
+            self.move_type
+            and self.move_type.startswith("in_")
+            or self.env.context.get("auto_refresh_delivery")
         ):
             return super().write(vals)
         deleting_delivery_line = vals.get("line_ids", False) and any(
