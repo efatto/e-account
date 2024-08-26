@@ -21,7 +21,10 @@ class MailThread(models.AbstractModel):
     _inherit = "mail.thread"
 
     def _notify_compute_recipients(self, message, msg_vals):
-        if msg_vals.get("subtype_id", False) == self.env.ref("mail.mt_note").id:
+        if (
+            msg_vals.get("subtype_id", False) == self.env.ref("mail.mt_note").id
+            and not msg_vals.get("message_type") == "notification"
+        ):
             msg_vals["partner_ids"] = set()
             message.sudo().partner_ids = False
         return super()._notify_compute_recipients(message, msg_vals)
