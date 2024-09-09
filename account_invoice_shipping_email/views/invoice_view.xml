@@ -11,6 +11,7 @@
         <field name="arch" type="xml">
             <field name="goods_appearance_id" position="before">
                 <field name="shipping_email_state" />
+                <field name="shipping_email_date" />
             </field>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button
