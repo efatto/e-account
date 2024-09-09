@@ -13,6 +13,9 @@ class AccountMove(models.Model):
         string="Shipping State",
         default="no",
     )
+    shipping_email_date = fields.Datetime(
+        string="Shipping Email Date",
+    )
 
     def action_send_shipping_email(self):
         self.ensure_one()
