@@ -13,6 +13,7 @@
         'sale_stock',
     ],
     'data': [
+        'views/sale_order_line_views.xml',
     ],
     'installable': True,
 }

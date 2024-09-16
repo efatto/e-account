@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_line_view_form_readonly" model="ir.ui.view">
+        <field name="name">sale.order.line.form.view.readonly</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.sale_order_line_view_form_readonly"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_invoiced']" position="after">
+                <field name="move_price_unit"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
