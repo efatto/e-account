@@ -13,6 +13,7 @@
         'stock_picking_invoice_link',
     ],
     'data': [
+        'views/account_invoice_line_views.xml',
     ],
     'installable': True
 }

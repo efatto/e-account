@@ -12,9 +12,10 @@ class AccountInvoiceLine(models.Model):
     product_standard_price = fields.Float(
         related='product_id.standard_price')
     move_price_unit = fields.Float(
-        string="Move Price Unit", compute='_get_move_price_unit', store=True)
+        string="Move Price Unit", compute='_get_move_price_unit',
+        inverse='_set_move_price_unit', store=True)
     move_price_total = fields.Float(
-        string="Price Total", compute='_get_move_price_unit', store=True)
+        string="Price Total", compute='_get_move_price_unit', store=False)
 
     @api.multi
     @api.depends('move_line_ids.price_unit')
@@ -25,3 +26,9 @@ class AccountInvoiceLine(models.Model):
             line.move_price_total = line.quantity * (
                 line.move_price_unit if line.move_price_unit != 0.0 else
                 - line.product_standard_price)
+
+    @api.one
+    def _set_move_price_unit(self):
+        if self.move_line_ids and self.move_price_unit:
+            for move_line in self.move_line_ids:
+                move_line.price_unit = self.move_price_unit
