@@ -12,12 +12,18 @@ class SaleOrder(models.Model):
                     "stock_package_ids.goods_appearance_id"
                 )[:1],
             )
-            if self.picking_ids.mapped("stock_package_ids.dimensions"):
-                res.update(
-                    dimension=", ".join(
-                        self.picking_ids.mapped("stock_package_ids.dimensions")
-                    ),
-                )
+            dimensions = []
+            for pack in self.picking_ids.mapped("stock_package_ids"):
+                if pack.dimensions:
+                    if pack.goods_appearance_id:
+                        dimensions.append(
+                            f"{pack.goods_appearance_id.name} {pack.dimensions}"
+                        )
+                    else:
+                        dimensions.append(f"{pack.dimensions}")
+            dimension = ", ".join(x for x in dimensions if x)
+            if dimension:
+                res.update(dimension=dimension)
         gross_weight_uom_id = self.env["stock.delivery.note"]._default_weight_uom()
         if gross_weight_uom_id:
             res.update(
