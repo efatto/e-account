@@ -14,13 +14,15 @@ class SaleOrder(models.Model):
             )
             dimensions = []
             for pack in self.picking_ids.mapped("stock_package_ids"):
-                if pack.dimensions:
-                    if pack.goods_appearance_id:
+                if pack.dimensions or pack.goods_appearance_id:
+                    if pack.dimensions and pack.goods_appearance_id:
                         dimensions.append(
                             f"{pack.goods_appearance_id.name} {pack.dimensions}"
                         )
-                    else:
+                    elif pack.dimensions:
                         dimensions.append(f"{pack.dimensions}")
+                    else:
+                        dimensions.append(f"{pack.goods_appearance_id.name}")
             dimension = ", ".join(x for x in dimensions if x)
             if dimension:
                 res.update(dimension=dimension)
