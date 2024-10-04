@@ -8,9 +8,9 @@ class MailFollowers(models.Model):
         self, records, message_type, subtype_id, pids=None, cids=None
     ):
         if subtype_id == self.env.ref("mail.mt_note").id and pids:
-            # notify notes only to partners with user
+            # notify notes only to partners with internal or portal users
             partner_ids = self.env["res.partner"].browse(pids)
-            pids = {partner.id for partner in partner_ids if partner.user_id}
+            pids = {partner.id for partner in partner_ids if partner.user_ids}
         res = super()._get_recipient_data(records, message_type, subtype_id, pids, cids)
         return res
 
@@ -24,9 +24,13 @@ class MailThread(models.AbstractModel):
             and not msg_vals.get("message_type") == "notification"
             and msg_vals.get("partner_ids", False)
         ):
-            # notify notes only to partners with user
-            partner_ids = self.env["res.partner"].browse(msg_vals["partner_ids"])
-            pids = {partner.id for partner in partner_ids if partner.user_id}
+            # notify notes only to partners with internal or portal users
+            partner_ids = (
+                self.env["res.partner"]
+                .browse(msg_vals["partner_ids"])
+                .filtered(lambda partner: partner.user_ids)
+            )
+            pids = set(partner_ids.ids)
             msg_vals["partner_ids"] = pids
             message.sudo().partner_ids = partner_ids
         return super()._notify_compute_recipients(message, msg_vals)
