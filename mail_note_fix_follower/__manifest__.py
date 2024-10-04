@@ -8,7 +8,7 @@
     "author": "Sergio Corato",
     "website": "https://github.com/sergiocorato/e-account",
     "category": "Social Network",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "depends": [
         "mail_no_follower_notification",
