@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import config, float_is_zero, float_round
+from odoo.tools import config, float_is_zero, float_round, safe_eval
 
 
 class SaleOrder(models.Model):
@@ -88,9 +88,12 @@ class SaleOrderLine(models.Model):
         first_day_current_month = fields.Date.today().replace(day=1)
         for line in self:
             line.cashflow_line_ids.unlink()
-            if line.order_id.state == "cancel":
-                # do not create cashflow lines for cancelled SO
-                continue
+            get_param = self.env['ir.config_parameter'].sudo().get_param
+            param = get_param('mis_builder_cash_flow_sale.valid_states', [])
+            if param and safe_eval(param):
+                if line.order_id.state not in safe_eval(param):
+                    # do not create cashflow lines for order not in configured states
+                    continue
             if line.order_id.payment_mode_id.fixed_journal_id:
                 journal_id = line.order_id.payment_mode_id.fixed_journal_id
                 if line.price_total < 0:
