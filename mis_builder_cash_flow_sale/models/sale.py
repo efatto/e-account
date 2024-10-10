@@ -89,7 +89,7 @@ class SaleOrderLine(models.Model):
         for line in self:
             line.cashflow_line_ids.unlink()
             get_param = self.env['ir.config_parameter'].sudo().get_param
-            param = get_param('mis_builder_cash_flow_sale.valid_states', [])
+            param = get_param('mis_builder_cash_flow_sale.valid_states', '["sale"]')
             if param and safe_eval(param):
                 if line.order_id.state not in safe_eval(param):
                     # do not create cashflow lines for order not in configured states

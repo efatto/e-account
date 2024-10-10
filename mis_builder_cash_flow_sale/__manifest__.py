@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "MIS Builder sale cash flow",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.0.2",
     "category": "other",
     "author": "Sergio Corato",
     "summary": "Generate automatically cash flow lines from sale order line.",
