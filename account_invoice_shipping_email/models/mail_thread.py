@@ -23,7 +23,7 @@ class MailThread(models.AbstractModel):
             # remove recipient added in cc, to send only 1 mail
             partners = self.env["res.partner"].browse(msg_vals["partner_ids"])
             for partner in partners:
-                if partner.email == self.env.context.get("default_email_cc"):
+                if partner.email in self.env.context.get("default_email_cc"):
                     msg_vals["partner_ids"].remove(partner.id)
         res = super()._notify_thread(
             message=message,
