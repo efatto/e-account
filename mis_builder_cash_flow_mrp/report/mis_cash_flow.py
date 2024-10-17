@@ -17,14 +17,14 @@ class MisCashFlow(models.Model):
                     NULL as move_line_id,
                     fl.account_id as account_id,
                     CASE
-                        WHEN fl.purchase_balance_forecast > 0
-                        THEN fl.purchase_balance_forecast *
+                        WHEN fl.mrp_balance_forecast > 0
+                        THEN fl.mrp_balance_forecast *
                             (1 - fl.mrp_reserved_percent)
                         ELSE 0.0
                     END AS debit,
                     CASE
-                        WHEN fl.purchase_balance_forecast < 0
-                        THEN -fl.purchase_balance_forecast *
+                        WHEN fl.mrp_balance_forecast < 0
+                        THEN -fl.mrp_balance_forecast *
                             (1 - fl.mrp_reserved_percent)
                         ELSE 0.0
                     END AS credit,
@@ -38,20 +38,19 @@ class MisCashFlow(models.Model):
                     fl.date as date,
                     fl.res_model_id as res_model_id,
                     fl.res_id as res_id,
-                    fl.mrp_reserved_percent as reserved_percent,
+                    fl.mrp_reserved_percent as invoiced_percent,
                     fl.currency_id as currency_id,
-                    fl.purchase_balance_currency as balance_currency,
-                    fl.purchase_balance_forecast as balance_forecast
+                    fl.mrp_balance_currency as balance_currency,
+                    fl.mrp_balance_forecast as balance_forecast
                 FROM mis_cash_flow_forecast_line as fl
                 LEFT JOIN
                     ir_model im ON im.id = fl.res_model_id
                 LEFT JOIN
-                    purchase_order_line pol ON pol.id = fl.res_id
+                    stock_move sm ON sm.id = fl.res_id
                 LEFT JOIN
-                    purchase_order po ON po.id = pol.order_id
+                    mrp_production mp ON mp.id = sm.raw_material_production_id
                 WHERE
-                    im.model = 'purchase.order.line'
-                    AND po.invoice_status != 'invoiced'
+                    im.model = 'stock.move'
                 UNION ALL
             """ % account_type_receivable.id
             full_query = query.replace("UNION ALL", mrp_query, 1)
