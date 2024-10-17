@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_move_lots" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="mrp.view_stock_move_lots"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='active_move_line_ids']" position="after">
+                <separator string="Cash flow" groups="account.group_account_manager"/>
+                <group string="Cash flow" groups="account.group_account_manager">
+                    <field name="cashflow_line_ids">
+                        <tree editable="bottom" string="Cash flow lines">
+                            <field name="date"/>
+                            <field name="currency_id"/>
+                            <field name="mrp_balance_currency" widget="monetary" options="{'currency_field': 'mrp_currency_id'}"/>
+                            <field name="mrp_reserved_percent"/>
+                            <field name="mrp_balance_forecast" sum="Total forecast balance"/>
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
