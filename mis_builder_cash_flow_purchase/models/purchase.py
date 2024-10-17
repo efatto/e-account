@@ -116,11 +116,6 @@ class PurchaseOrderLine(models.Model):
                     line.price_total / (line.product_qty or 1),
                     precision_rounding=line.order_id.currency_id.rounding)
             ) * max_qty
-            # with this value compute not invoiced amount (delivered or not)
-            # residual balance must be computed on cashflow line as it depends on
-            # current invoice factor and currency rate
-            # residual_balance = actual_row_balance *
-            # (1 - (line.qty_invoiced / max_qty))
 
             if not float_is_zero(purchase_balance_total_currency,
                                  precision_rounding=line.order_id.currency_id.rounding):

@@ -32,6 +32,7 @@ class CashFlowForecastLine(models.Model):
         'purchase_line_id.qty_invoiced',
         'purchase_line_id.product_qty',
         'purchase_line_id.qty_received',
+        'purchase_line_id.date_planned',
         'purchase_line_id.order_id.date_planned',
         'purchase_line_id.order_id.date_order',
         'purchase_line_id.order_id.currency_id.rate',
