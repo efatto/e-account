@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* mis_builder_cash_flow_purchase
+#	* mis_builder_cash_flow_mrp
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-29 08:31+0000\n"
-"PO-Revision-Date: 2024-07-29 08:31+0000\n"
+"POT-Creation-Date: 2024-10-17 14:31+0000\n"
+"PO-Revision-Date: 2024-10-17 14:31+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,82 +15,76 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: mis_builder_cash_flow_purchase
-#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.purchase_order_form
+#. module: mis_builder_cash_flow_mrp
+#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_mrp.view_stock_move_lots
 msgid "Cash flow"
 msgstr ""
 
-#. module: mis_builder_cash_flow_purchase
-#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.purchase_order_form
+#. module: mis_builder_cash_flow_mrp
+#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_mrp.view_stock_move_lots
 msgid "Cash flow lines"
 msgstr "Righe cash flow"
 
-#. module: mis_builder_cash_flow_purchase
-#: code:addons/mis_builder_cash_flow_purchase/models/purchase.py:144
+#. module: mis_builder_cash_flow_mrp
+#: code:addons/mis_builder_cash_flow_mrp/models/mrp.py:148
 #, python-format
-msgid "Due line #%s/%s of Purchase order %s"
-msgstr "Riga cash flow #%s/%s dell'ordine di acquisto %s"
+msgid "Due line #%s/%s of Mrp production %s"
+msgstr "Riga dovuta #%s/%s della produzione %s"
 
-#. module: mis_builder_cash_flow_purchase
-#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_purchase_order_line__cashflow_line_ids
+#. module: mis_builder_cash_flow_mrp
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_mrp.field_stock_move__cashflow_line_ids
 msgid "Forecast cashflow line"
 msgstr "Riga previsione cashflow"
 
-#. module: mis_builder_cash_flow_purchase
-#: model:ir.model,name:mis_builder_cash_flow_purchase.model_mis_cash_flow
+#. module: mis_builder_cash_flow_mrp
+#: model:ir.model,name:mis_builder_cash_flow_mrp.model_mis_cash_flow
 msgid "MIS Cash Flow"
 msgstr "MIS Cash flow"
 
-#. module: mis_builder_cash_flow_purchase
-#: model:ir.model,name:mis_builder_cash_flow_purchase.model_mis_cash_flow_forecast_line
+#. module: mis_builder_cash_flow_mrp
+#: model:ir.model,name:mis_builder_cash_flow_mrp.model_mis_cash_flow_forecast_line
 msgid "MIS Cash Flow Forecast Line"
 msgstr "MIS Cash flow riga previsione"
 
-#. module: mis_builder_cash_flow_purchase
-#: code:addons/mis_builder_cash_flow_purchase/models/purchase.py:47
-#, python-format
-msgid "Payment mode %s used in purchase orders must be of type fixed."
-msgstr "Il modo di pagamento %s usato negli ordini di acquisto deve essere di tipo fisso."
+#. module: mis_builder_cash_flow_mrp
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_mrp.field_mis_cash_flow_forecast_line__mrp_balance_currency
+msgid "Mrp Balance Currency"
+msgstr "Saldo produzione in valuta"
 
-#. module: mis_builder_cash_flow_purchase
-#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_balance_currency
-msgid "Purchase Balance Currency"
-msgstr "Saldo acquisto in valuta"
+#. module: mis_builder_cash_flow_mrp
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_mrp.field_mis_cash_flow_forecast_line__mrp_balance_forecast
+msgid "Mrp forecast balance"
+msgstr "Saldo previsto produzione"
 
-#. module: mis_builder_cash_flow_purchase
-#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_invoiced_percent
-msgid "Purchase Invoiced Percent"
-msgstr "Fatturazione acquisto (%)"
+#. module: mis_builder_cash_flow_mrp
+#: model:ir.model.fields,help:mis_builder_cash_flow_mrp.field_mis_cash_flow_forecast_line__mrp_balance_currency
+msgid "Mrp purchase amount in company currency recomputed with qty to order"
+msgstr "Valore costo acquisto produzione in valuta aziendale ricalcolato sulla quantità da ordinare"
 
-#. module: mis_builder_cash_flow_purchase
-#: model:ir.model,name:mis_builder_cash_flow_purchase.model_purchase_order
-msgid "Purchase Order"
-msgstr "Ordine di acquisto"
+#. module: mis_builder_cash_flow_mrp
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_mrp.field_mis_cash_flow_forecast_line__mrp_line_id
+msgid "Mrp row component line"
+msgstr "Riga componente produzione"
 
-#. module: mis_builder_cash_flow_purchase
-#: model:ir.model,name:mis_builder_cash_flow_purchase.model_purchase_order_line
-msgid "Purchase Order Line"
-msgstr "Riga ordine di acquisto"
+#. module: mis_builder_cash_flow_mrp
+#: model:ir.model,name:mis_builder_cash_flow_mrp.model_mrp_production
+msgid "Production Order"
+msgstr "Ordine di Produzione"
 
-#. module: mis_builder_cash_flow_purchase
-#: model:ir.model.fields,help:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_balance_currency
-msgid "Purchase amount in vendor currency recomputed with delivered qty"
-msgstr "L'importo dell'acquisto in valuta del fornitore ricalcolato sulla quantità consegnata"
+#. module: mis_builder_cash_flow_mrp
+#: model:ir.model.fields,field_description:mis_builder_cash_flow_mrp.field_mis_cash_flow_forecast_line__mrp_reserved_percent
+msgid "Reserved mrp component (%)"
+msgstr "Riservato componente produzione (%)"
 
-#. module: mis_builder_cash_flow_purchase
-#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_balance_forecast
-msgid "Purchase forecast balance"
-msgstr "Saldo previsto acquisti"
+#. module: mis_builder_cash_flow_mrp
+#: model:ir.model,name:mis_builder_cash_flow_mrp.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
 
-#. module: mis_builder_cash_flow_purchase
-#: model:ir.model.fields,field_description:mis_builder_cash_flow_purchase.field_mis_cash_flow_forecast_line__purchase_line_id
-msgid "Purchase order line"
-msgstr "Riga ordine di acquisto"
-
-#. module: mis_builder_cash_flow_purchase
-#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.mis_cash_flow_forecast_line_view_form
-#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.mis_cash_flow_forecast_line_view_tree
-#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_purchase.purchase_order_form
+#. module: mis_builder_cash_flow_mrp
+#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_mrp.mis_cash_flow_forecast_line_view_form
+#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_mrp.mis_cash_flow_forecast_line_view_tree
+#: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow_mrp.view_stock_move_lots
 msgid "Total forecast balance"
-msgstr "Totale saldo previsto"
+msgstr "Saldo totale previsto"
 

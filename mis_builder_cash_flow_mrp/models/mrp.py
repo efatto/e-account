@@ -63,11 +63,10 @@ class StockMove(models.Model):
         if (
             vals.get('price_unit')
             or vals.get('date')
-            # or vals.get('date_expected')  # serve?
+            or vals.get('date_expected')  # serve? lo lascio
             or vals.get('product_qty')
             or vals.get('state')
             or vals.get('reserved_availability')
-            # or vals.get('discount3')
         ):
             self.filtered(lambda x: x.raw_material_production_id)._refresh_cashflow_line()
         return res
