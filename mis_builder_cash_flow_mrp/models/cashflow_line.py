@@ -36,7 +36,6 @@ class CashFlowForecastLine(models.Model):
     )
     def _compute_mrp_balance_forecast(self):
         for line in self:
-            mrp_reserved_percent = 0
             if line.mrp_line_id:
                 if line.mrp_line_id.product_id.type == "consu":
                     # consumable products are always shown as reserved, but they are
@@ -51,7 +50,10 @@ class CashFlowForecastLine(models.Model):
                             1,
                         )
                     )
-                mrp_reserved_percent = min(mrp_reserved_percent, 1)
-            line.mrp_reserved_percent = mrp_reserved_percent
-            line.mrp_balance_forecast = line.mrp_balance_currency
-            line.balance = line.mrp_balance_forecast
+                # currency is company currency, so this values are equals
+                line.balance = line.mrp_balance_forecast = line.mrp_balance_currency
+                line.mrp_reserved_percent = min(mrp_reserved_percent, 1)
+            else:
+                line.mrp_reserved_percent = 0
+                line.mrp_balance_forecast = 0
+
