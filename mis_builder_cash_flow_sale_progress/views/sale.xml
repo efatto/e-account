@@ -28,7 +28,7 @@
                             <field
                                 name="sale_balance_currency"
                                 widget="monetary"
-                                options="{'currency_field': 'sale_currency_id'}"
+                                options="{'currency_field': 'currency_id'}"
                             />
                             <field name="sale_invoiced_percent" />
                             <field name="sale_deposit_percent" />

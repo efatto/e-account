@@ -11,7 +11,7 @@
                         <tree editable="bottom" string="Cash flow lines">
                             <field name="date"/>
                             <field name="currency_id"/>
-                            <field name="mrp_balance_currency" widget="monetary" options="{'currency_field': 'mrp_currency_id'}"/>
+                            <field name="mrp_balance_currency" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                             <field name="mrp_reserved_percent"/>
                             <field name="mrp_balance_forecast" sum="Total forecast balance"/>
                         </tree>
