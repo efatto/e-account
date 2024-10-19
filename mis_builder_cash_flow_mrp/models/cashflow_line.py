@@ -28,7 +28,7 @@ class CashFlowForecastLine(models.Model):
     @api.depends(
         'mrp_balance_currency',
         'mrp_line_id.product_uom_qty',
-        'mrp_line_id.reserved_availability',
+        'mrp_line_id.purchase_ordered_qty',
         'mrp_line_id.raw_material_production_id.date_planned_start',
         'mrp_line_id.bom_line_id.price_unit',  # da mrp_bom_evaluation
         # todo possibile sviluppo: se i valori sulla bom line fossero stati convertiti,
@@ -43,10 +43,10 @@ class CashFlowForecastLine(models.Model):
                     # we set 0 to reserved percent
                     mrp_reserved_percent = 0
                 else:
-                    mrp_reserved_percent = line.mrp_line_id.reserved_availability / (
+                    mrp_reserved_percent = line.mrp_line_id.purchase_ordered_qty / (
                         max(
                             line.mrp_line_id.product_uom_qty,
-                            line.mrp_line_id.reserved_availability,
+                            line.mrp_line_id.purchase_ordered_qty,
                             1,
                         )
                     )

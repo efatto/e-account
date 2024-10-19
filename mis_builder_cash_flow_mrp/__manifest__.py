@@ -14,6 +14,7 @@
         'mrp',
         'mrp_bom_evaluation',
         'mrp_production_manual_procurement',
+        'mrp_production_reserved_purchase_qty',
         'purchase_last_price_info',
     ],
     'data': [
