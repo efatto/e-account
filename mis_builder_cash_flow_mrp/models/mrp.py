@@ -66,9 +66,10 @@ class StockMove(models.Model):
             or vals.get('date_expected')  # serve? lo lascio
             or vals.get('product_qty')
             or vals.get('state')
-            or vals.get('reserved_availability')
         ):
-            self.filtered(lambda x: x.raw_material_production_id)._refresh_cashflow_line()
+            self.filtered(
+                lambda x: x.raw_material_production_id
+            )._refresh_cashflow_line()
         return res
 
     @api.multi
