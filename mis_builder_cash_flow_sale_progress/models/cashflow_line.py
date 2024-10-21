@@ -40,4 +40,4 @@ class CashFlowForecastLine(models.Model):
                 )
                 line.balance = line.sale_progress_balance_forecast
             else:
-                line.sale_progress_balance_forecast = line.balance
+                line.sale_progress_balance_forecast = 0
