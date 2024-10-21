@@ -52,9 +52,12 @@ class CashFlowForecastLine(models.Model):
                             1,
                         )
                     )
-                # currency is company currency, so this values are equals
-                line.balance = line.mrp_balance_forecast = line.mrp_balance_currency
                 line.mrp_reserved_percent = min(mrp_reserved_percent, 1)
+                line.mrp_balance_forecast = line.mrp_balance_currency * (
+                    1- line.mrp_reserved_percent
+                )
+                # currency is company currency, so this values are equals
+                line.balance = line.mrp_balance_forecast
             else:
                 line.mrp_reserved_percent = 0
                 line.mrp_balance_forecast = 0
