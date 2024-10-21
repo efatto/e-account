@@ -37,6 +37,8 @@ class CashFlowForecastLine(models.Model):
     def _compute_mrp_balance_forecast(self):
         for line in self:
             if line.mrp_line_id:
+                # store in mrp_reserved_percent the qty ordered, to re-use the same
+                # logic
                 if line.mrp_line_id.product_id.type == "consu":
                     # consumable products are always shown as reserved, but they are
                     # purchased as services at the same time of the other products, so
