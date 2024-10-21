@@ -14,14 +14,12 @@ class StockMove(models.Model):
         "move_orig_ids",
         "move_orig_ids.move_line_ids",
         "move_orig_ids.move_line_ids.product_qty",
-        "move_dest_ids",
         "state",
-        "move_line_ids",
-        "group_id",
         "raw_material_production_id",
     )
     def _compute_purchase_ordered_qty(self):
-        moves = self.filtered(lambda m: m.raw_material_production_id and m.move_child_ids)
+        moves = self.filtered(
+            lambda m: m.raw_material_production_id and m.move_orig_ids)
         for move in (self - moves):
             move.purchase_ordered_qty = 0
         for move in moves:
