@@ -12,6 +12,7 @@
     'website': 'https://github.com/sergiocorato/e-account',
     'depends': [
         'purchase_mrp',
+        'purchase_line_procurement_group',
         'purchase_order_approved',
     ],
     'data': [
