@@ -19,6 +19,7 @@
     ],
     'data': [
         'views/mrp_production.xml',
+        'data/cron.xml',
     ],
     'installable': True,
 }
