@@ -37,7 +37,7 @@ class StockMove(models.Model):
             move.purchase_ordered_qty = purchase_ordered_qty
 
     def _action_assign(self):
-        # Override to force reservation
+        # Override to force reservation for production raw component only
         # 1. of MTO procurement for moves without move_orig_ids, probably deleted as
         # available in stock or re-created directly so not linked anymore
         # 2. of MTO procurement which incoming moves are in 'reserved' state, as the
@@ -60,6 +60,7 @@ class StockMove(models.Model):
             if (
                 move.location_id.should_bypass_reservation()
                 or move.product_id.type == 'consu'
+                or not move.raw_material_production_id
             ):
                 continue
             if not move.move_orig_ids:
