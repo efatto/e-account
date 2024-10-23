@@ -16,6 +16,8 @@
         'purchase_mrp',
         'purchase_line_procurement_group',
         'purchase_order_approved',
+        'purchase_requisition',
+        'purchase_stock',
     ],
     'data': [
         'views/mrp_production.xml',
