@@ -45,10 +45,14 @@ class CashFlowForecastLine(models.Model):
                     # we set 0 to reserved percent
                     mrp_reserved_percent = 0
                 else:
-                    mrp_reserved_percent = line.mrp_line_id.purchase_ordered_qty / (
+                    reserved_qty = max(
+                        line.mrp_line_id.purchase_ordered_qty,
+                        line.mrp_line_id.reserved_availability,
+                    )
+                    mrp_reserved_percent = reserved_qty / (
                         max(
                             line.mrp_line_id.product_uom_qty,
-                            line.mrp_line_id.purchase_ordered_qty,
+                            reserved_qty,
                             1,
                         )
                     )
