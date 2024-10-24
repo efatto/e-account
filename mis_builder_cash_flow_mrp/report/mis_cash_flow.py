@@ -41,7 +41,8 @@ class MisCashFlow(models.Model):
                     fl.mrp_reserved_percent as invoiced_percent,
                     fl.currency_id as currency_id,
                     fl.mrp_balance_currency as balance_currency,
-                    fl.mrp_balance_forecast as balance_forecast
+                    fl.mrp_balance_forecast as balance_forecast,
+                    mp.analytic_account_id as analytic_account_id
                 FROM mis_cash_flow_forecast_line as fl
                 LEFT JOIN
                     ir_model im ON im.id = fl.res_model_id

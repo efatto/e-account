@@ -14,6 +14,7 @@ class MisCashFlow(models.Model):
     res_model_id = fields.Many2one(comodel_name="ir.model")
     balance_currency = fields.Float()
     balance_forecast = fields.Float()
+    analytic_account_id = fields.Many2one(comodel_name='account.analytic.account')
 
     def get_cash_flow_query(self):
         account_type_receivable = self.env.ref(
@@ -49,7 +50,8 @@ class MisCashFlow(models.Model):
                 0.0 as invoiced_percent,
                 Null as currency_id,
                 0.0 as balance_currency,
-                0.0 as balance_forecast
+                0.0 as balance_forecast,
+                aml.analytic_account_id as analytic_account_id
             FROM account_move_line as aml
             JOIN account_move am ON am.id = aml.move_id
             WHERE am.state = 'posted'
@@ -82,7 +84,8 @@ class MisCashFlow(models.Model):
                 0.0 as invoiced_percent,
                 Null as currency_id,
                 0.0 as balance_currency,
-                0.0 as balance_forecast
+                0.0 as balance_forecast,
+                fl.analytic_account_id as analytic_account_id
             FROM mis_cash_flow_forecast_line as fl
             WHERE
                 fl.res_model_id IS NULL
