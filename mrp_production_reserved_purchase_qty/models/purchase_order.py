@@ -19,7 +19,4 @@ class PurchaseOrder(models.Model):
                             "move_dest_ids": pr_line.move_dest_id and
                             [(4, pr_line.move_dest_id.id)] or [],
                         })
-                        # pr_line.move_dest_id.write(
-                        #     {"created_purchase_line_id": order_line.id}
-                        # )
         super().button_release()
