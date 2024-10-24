@@ -32,7 +32,7 @@ Configuration
 
 Nella riga del componente della produzione è stato aggiunto un campo per monitorare la quantità ordinata dello stesso, basato sugli ordini generati dalla produzione (o generati dalle richieste d'acquisto) (o collegati alle richieste d'acquisto se già esistenti):
 
-.. image:: https://raw.githubusercontent.com/efatto/e-account/12.0/mrp_production_reserved_purchase_qty/static/description/purchase_ordered_qty.png
+.. image:: https://raw.githubusercontent.com/efatto/e-account/12.0/mrp_production_reserved_purchase_qty/static/description/quantita_ordinata.png
     :alt: Quantità ordinata
 
 La funzione di riserva dei prodotti è stata modificata in modo che consideri anche lo stock (anche se i componenti sono ordinati con MTO) e le quantità ordinate non ancora ricevute (attualmente considera solo i prodotti ricevuti), con effetto sul campo "Quantità riservata", solo per le righe dei componenti della produzione.
