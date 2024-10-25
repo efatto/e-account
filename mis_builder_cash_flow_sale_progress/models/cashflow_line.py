@@ -21,6 +21,7 @@ class CashFlowForecastLine(models.Model):
         "sale_balance_currency",
         "sale_order_progress_id.date",
         "sale_order_progress_id.order_id.currency_id.rate",
+        "sale_order_progress_id.order_id.order_line.qty_invoiced",
     )
     def _compute_sale_progress_balance_forecast(self):
         for line in self:
