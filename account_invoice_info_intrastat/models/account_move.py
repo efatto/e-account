@@ -19,7 +19,24 @@ class AccountMove(models.Model):
             for line in move.invoice_line_ids.filtered(
                 lambda x: x.product_id and x.product_id.type != "service"
             ).sorted(key="sequence2"):
-                intrastat_data = line.product_id.product_tmpl_id.get_intrastat_data()
+                product_tmpl_id = line.product_id.product_tmpl_id
+                # get template from component which default_code contains the default_code
+                # of the produced product if it's a bom
+                if line.product_id.product_tmpl_id.bom_ids:
+                    bom_lines = line.product_id.product_tmpl_id.mapped(
+                        "bom_ids.bom_line_ids"
+                    ).filtered(
+                        lambda bl: (
+                           "-" in line.product_id.default_code
+                            and line.product_id.default_code.split("-")[0]
+                            or line.product_id.default_code
+                        ) in bl.product_id.default_code
+                        and bl.product_id.purchase_ok
+                    )
+                    if bom_lines:
+                        product_tmpl_id = bom_lines.mapped("product_id.product_tmpl_id")[0]
+                # get intrastat data
+                intrastat_data = product_tmpl_id.get_intrastat_data()
                 country_name = (
                     intrastat_data.get("intrastat_country_origin_id")
                     and country_model.with_context(lang="en_US")
@@ -74,5 +91,5 @@ class AccountMove(models.Model):
                 for pos in origin_dict[country]:
                     amount += origin_dict[country][pos]["amount"]
                     weight += origin_dict[country][pos]["weight"]
-                narration_text += f"\nnet weight {weight:n} kg | " f"€ {amount:n}\n\n"
+                narration_text += f"\nnet weight {weight:n} kg | € {amount:n}\n\n"
             move.narration += narration_text
