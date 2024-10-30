@@ -32,7 +32,6 @@ class AccountMove(models.Model):
                     or move.user_id.company_id.country_id.with_context(
                         lang="en_US"
                     ).name
-                    or "Italy"
                 )
                 if country_name not in origin_dict:
                     origin_dict[country_name] = {}
