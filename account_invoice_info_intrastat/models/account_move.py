@@ -1,5 +1,5 @@
 from odoo import models
-from odoo.tools import float_round
+from odoo.tools import float_round, get_lang
 
 
 class AccountMove(models.Model):
@@ -27,14 +27,17 @@ class AccountMove(models.Model):
                         "bom_ids.bom_line_ids"
                     ).filtered(
                         lambda bl: (
-                           "-" in line.product_id.default_code
+                            "-" in line.product_id.default_code
                             and line.product_id.default_code.split("-")[0]
                             or line.product_id.default_code
-                        ) in bl.product_id.default_code
+                        )
+                        in bl.product_id.default_code
                         and bl.product_id.purchase_ok
                     )
                     if bom_lines:
-                        product_tmpl_id = bom_lines.mapped("product_id.product_tmpl_id")[0]
+                        product_tmpl_id = bom_lines.mapped(
+                            "product_id.product_tmpl_id"
+                        )[0]
                 # get intrastat data
                 intrastat_data = product_tmpl_id.get_intrastat_data()
                 country_name = (
@@ -91,5 +94,13 @@ class AccountMove(models.Model):
                 for pos in origin_dict[country]:
                     amount += origin_dict[country][pos]["amount"]
                     weight += origin_dict[country][pos]["weight"]
-                narration_text += f"\nnet weight {weight:n} kg | € {amount:n}\n\n"
+                lang = get_lang(self.env, lang_code=self.env.company.partner_id.lang)
+                amount = lang.format("%.2f", amount, grouping=True, monetary=True)
+                weight = lang.format(
+                    f"%.{precision_weight_digits or 2}f",
+                    weight,
+                    grouping=True,
+                    monetary=False,
+                )
+                narration_text += f"\nnet weight {weight} kg | € {amount}\n\n"
             move.narration += narration_text
