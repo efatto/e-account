@@ -22,7 +22,12 @@ Account invoice Intrastat info
 
 |badge1| |badge2| |badge3|
 
-Questo modulo aggiunge i dati relativi all'Intrastat nelle note della fattura, nel formato:
+Questo modulo aggiunge i dati relativi all'Intrastat nelle note della fattura tramite un bottone posizionato alla fine delle righe fattura:
+
+.. image:: https://raw.githubusercontent.com/sergiocorato/e-account/14.0/account_invoice_info_intrastat/static/description/bottone.png
+    :alt: Bottone
+
+nel formato:
 
 COUNTRY OF ORIGIN:
 
@@ -38,12 +43,7 @@ net weight <peso> kg | € <importo>
 Configuration
 =============
 
-* Activate developer mode.
-* Go to *Settings > Technical > Parameters > System Parameters*.
-* Locate the setting with key "delivery_auto_refresh.auto_add_delivery_line"
-  or create a new one if not exists.
-  Put a non Falsy value (1, True...) if you want to add automatically the
-  delivery line on save.
+Nessuna configurazione necessaria.
 
 Bug Tracker
 ===========
