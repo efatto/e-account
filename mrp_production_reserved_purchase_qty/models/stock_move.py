@@ -15,16 +15,19 @@ class StockMove(models.Model):
     )
 
     @api.depends(
-        "move_orig_ids",
-        "move_orig_ids.move_line_ids",
-        "move_orig_ids.move_line_ids.product_qty",
-        "created_purchase_line_id.state",
-        "raw_material_production_id",
         "state",
+        "move_orig_ids",
+        "move_orig_ids.product_qty",
+        "created_purchase_line_id",
+        "created_purchase_line_id.state",
+        "raw_material_production_id.state",
+        "raw_material_production_id.date_planned_start",
     )
     def _compute_purchase_ordered_qty(self):
         moves = self.filtered(
             lambda m: m.raw_material_production_id and m.move_orig_ids
+            and m.created_purchase_line_id
+            and m.created_purchase_line_id.state not in ["cancel", "draft"]
         )
         # removed as not sure if it is needed, from api.depends and filtered:
         # "move_orig_ids.purchase_line_id.procurement_group_id",
@@ -33,7 +36,7 @@ class StockMove(models.Model):
             move.purchase_ordered_qty = 0
         for move in moves:
             purchase_ordered_qty = sum(
-                move.mapped('move_orig_ids.move_line_ids.product_qty'))
+                move.mapped('move_orig_ids.product_qty'))
             move.purchase_ordered_qty = purchase_ordered_qty
 
     def _action_assign(self):
