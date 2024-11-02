@@ -17,6 +17,7 @@
         'purchase_line_procurement_group',
         'purchase_order_approved',
         'purchase_requisition',
+        'purchase_requisition_grouping',
         'purchase_stock',
     ],
     'data': [
