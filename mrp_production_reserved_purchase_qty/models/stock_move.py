@@ -28,6 +28,7 @@ class StockMove(models.Model):
             lambda m: m.raw_material_production_id and m.move_orig_ids
             and m.created_purchase_line_id
             and m.created_purchase_line_id.state not in ["cancel", "draft"]
+            and m.state != "cancel"
         )
         # removed as not sure if it is needed, from api.depends and filtered:
         # "move_orig_ids.purchase_line_id.procurement_group_id",
@@ -35,9 +36,19 @@ class StockMove(models.Model):
         for move in (self - moves):
             move.purchase_ordered_qty = 0
         for move in moves:
+            # get all ordered qty for the same product for all component of the
+            # production and assign proportionally, as it could be ordered summing the
+            # rows
+            product_all_moves = move.raw_material_production_id.move_raw_ids.filtered(
+                lambda x: x.product_id == move.product_id and x.state != "cancel"
+            ) | move
             purchase_ordered_qty = sum(
-                move.mapped('move_orig_ids.product_qty'))
-            move.purchase_ordered_qty = purchase_ordered_qty
+                product_all_moves.mapped('move_orig_ids.product_uom_qty'))
+            requested_qty = sum(
+                product_all_moves.mapped("product_uom_qty")
+            )
+            purchase_ordered_ratio = purchase_ordered_qty / requested_qty
+            move.purchase_ordered_qty = move.product_uom_qty * purchase_ordered_ratio
 
     def _action_assign(self):
         # Override to force reservation for production raw component only
