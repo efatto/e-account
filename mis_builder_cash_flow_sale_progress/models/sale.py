@@ -135,10 +135,8 @@ class SaleOrderProgress(models.Model):
                         line.residual_toinvoice,
                         line.date,
                     )[0]
-                max_date_due = fields.Date.from_string(max([x[0] for x in totlines]))
-                if max_date_due < first_day_current_month:
-                    # do not create cashflow lines for dates before current month
-                    continue
+                # create cashflow lines for dates before current month
+                # they will be ignored only when invoiced
                 for i, dueline in enumerate(totlines, start=1):
                     line.write({
                         "cashflow_line_ids": [
