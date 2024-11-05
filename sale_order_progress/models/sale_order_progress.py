@@ -111,6 +111,21 @@ class SaleOrderProgress(models.Model):
     )
     def _compute_invoiced(self):
         for progress in self.sorted(key="date"):
+            # compute here as amount_toinvoice is recomputed on the fly and is correct
+            # only at the end of all computations
+            if progress.order_id.amount_total:
+                total_advance_percent = sum(
+                    [
+                        x.amount_toinvoice_manual or
+                        x.order_id.amount_total * x.amount_percent / 100
+                        for x in self.mapped("order_id.order_progress_ids").filtered(
+                            lambda x: x.is_advance
+                        )
+                    ]
+                    or [0]
+                ) / progress.order_id.amount_total * 100.0
+            else:
+                total_advance_percent = 0
             progress.amount_invoiced = 0
             progress.residual_toinvoice = 0
             progress.amount_advance_toreturn = 0
@@ -133,27 +148,10 @@ class SaleOrderProgress(models.Model):
                     progress.invoiced = True
                 amount_advance_toreturn = (
                     progress.amount_toinvoice
-                    * order_id.total_advance_percent
+                    * total_advance_percent
                     / 100.0
                 ) if not progress.is_advance else 0
-                current_advance_toreturn_total = sum(
-                    order_id.order_progress_ids.filtered(
-                        lambda x: x != progress
-                    ).mapped("amount_advance_toreturn")
-                )  # put in the last order progress the difference of advance amount
-                if (float_compare(
-                    current_advance_toreturn_total + amount_advance_toreturn,
-                    order_id.total_advance_amount,
-                    precision_rounding=progress.currency_id.rounding,
-                ) != 0
-                    and progress == order_id.order_progress_ids.sorted(key="date")[-1]
-                ):
-                    progress.amount_advance_toreturn = (
-                        order_id.total_advance_amount
-                        - current_advance_toreturn_total
-                    )
-                else:
-                    progress.amount_advance_toreturn = amount_advance_toreturn
+                progress.amount_advance_toreturn = amount_advance_toreturn
                 progress.residual_toinvoice = (
                     progress.amount_toinvoice - progress.amount_invoiced
                     - (
