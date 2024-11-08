@@ -11,9 +11,7 @@
     "application": False,
     "installable": True,
     "depends": [
-        "account_invoice_line_sequence",
         "l10n_it_intrastat",
-        "l10n_it_intrastat_code_sale",
         "mrp",
     ],
     "data": [

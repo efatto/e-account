@@ -36,7 +36,7 @@ msgstr ""
 #. module: account_invoice_info_intrastat
 #: model_terms:ir.ui.view,arch_db:account_invoice_info_intrastat.account_invoice_form_intrastat_info
 msgid "Insert intrastat data"
-msgstr "Inserisci riepilogo Intrastat"
+msgstr "Inserisci dati Intrastat"
 
 #. module: account_invoice_info_intrastat
 #: model:ir.model,name:account_invoice_info_intrastat.model_account_move
