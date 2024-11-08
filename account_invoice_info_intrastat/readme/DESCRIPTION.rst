@@ -11,7 +11,7 @@ Nel caso il codice HS sia mancante nel prodotto, verrà indicato MISSING.
 
 Il campo nazione di origine viene preso dal prodotto, in mancanza dal primo fornitore, in ultima istanza dall'azienda.
 
-È possibile rimuovere i dati Instrastat con il bottone:
+È possibile rimuovere i dati Intrastat con il bottone:
 
-.. image:: ../static/description/bottone_rimozione.png
+.. image:: ../static/description/bottone_rimuovi.png
     :alt: Bottone rimozione
