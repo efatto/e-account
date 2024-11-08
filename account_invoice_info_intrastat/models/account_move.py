@@ -8,8 +8,6 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     def action_insert_intrastat_data_in_move_lines(self):
-        country_model = self.env["res.country"]
-        intrastat_code_model = self.env["report.intrastat.code"]
         precision_weight_digits = (
             self.env["decimal.precision"].search([("name", "=", "Stock Weight")]).digits
         )
@@ -17,17 +15,14 @@ class AccountMove(models.Model):
             for line in move.invoice_line_ids.filtered(
                 lambda x: x.product_id and x.product_id.type != "service"
             ):
-                product_tmpl_id = line.product_id.product_tmpl_id
-                # get intrastat data
-                intrastat_data = product_tmpl_id.get_intrastat_data()
-                # if country of origin is not found in product template or category,
+                # if country of origin is not found in product,
                 # get it from first seller of the product, in the last chance from
                 # the current company
                 country_name = (
-                    intrastat_data.get("intrastat_country_origin_id")
-                    and country_model.with_context(lang="en_US")
-                    .browse(intrastat_data.get("intrastat_country_origin_id"))
-                    .name
+                    line.product_id.intrastat_country_origin_id
+                    and line.product_id.intrastat_country_origin_id.with_context(
+                        lang="en_US"
+                    ).name
                     or line.product_id.seller_ids
                     and line.product_id.seller_ids[0]
                     .name.country_id.with_context(lang="en_US")
@@ -40,12 +35,9 @@ class AccountMove(models.Model):
                     line.product_id.weight * line.quantity,
                     precision_digits=precision_weight_digits,
                 )
-                hs_code = ""
-                if intrastat_data.get("intrastat_code_id"):
-                    hs_code = intrastat_code_model.browse(
-                        intrastat_data.get("intrastat_code_id")
-                    ).name
-                # "intrastat_type": not used
+                hs_code = "MISSING"
+                if line.product_id.intrastat_code_id:
+                    hs_code = line.product_id.intrastat_code_id.name
                 intrastat_text = f"\nHS CODE: {hs_code} "
                 intrastat_text += f"COUNTRY OF ORIGIN: {country_name} "
                 lang = get_lang(self.env, lang_code=self.env.company.partner_id.lang)
@@ -58,7 +50,15 @@ class AccountMove(models.Model):
                     grouping=True,
                     monetary=False,
                 )
-                intrastat_text += f"Net weight: {weight} kg Amount: € {amount}"
+                intrastat_text += f"NET WEIGHT: {weight} kg AMOUNT: € {amount}"
                 if "HS CODE" in line.name:
                     line.name = re.compile("\nHS CODE.*").sub("", line.name)
                 line.name += intrastat_text
+
+    def action_remove_intrastat_data_in_move_lines(self):
+        for move in self.filtered(lambda x: x.move_type.startswith("out_")):
+            for line in move.invoice_line_ids.filtered(
+                lambda x: x.product_id and x.product_id.type != "service"
+            ):
+                if "HS CODE" in line.name:
+                    line.name = re.compile("\nHS CODE.*").sub("", line.name)
