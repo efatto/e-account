@@ -56,6 +56,6 @@ class AccountMove(models.Model):
             for line in move.invoice_line_ids.filtered(
                 lambda x: x.product_id
                 and x.product_id.type != "service"
-                and "HS CODE" in line.name
+                and "HS CODE" in x.name
             ):
                 line.name = re.compile("\nHS CODE.*").sub("", line.name)
