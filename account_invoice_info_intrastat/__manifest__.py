@@ -3,7 +3,7 @@
 {
     "name": "Account invoice Intrastat info",
     "summary": "Add Intrastat info to invoice narration",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Accounting",
     "website": "https://github.com/sergiocorato/e-account",
     "author": "Sergio Corato",
