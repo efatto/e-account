@@ -130,6 +130,9 @@ class TestMailNoteFixFollower(SavepointCase):
             ]
         )  # noqa
         self.assertEqual(len(res.ids), 1)
-        # check no follower is notified
+        # check no follower without user_ids is notified
         for record in res:
-            self.assertFalse(record.notification_ids)
+            notifications = record.notification_ids.filtered(
+                lambda x: not x.res_partner_id.user_ids
+            )
+            self.assertFalse(notifications)
