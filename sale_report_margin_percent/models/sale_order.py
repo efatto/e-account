@@ -2,7 +2,7 @@ from odoo import api, models
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = "sale.order"
 
     @api.model
     def read_group(
@@ -27,9 +27,7 @@ class SaleOrder(models.Model):
         for order in res:
             if "__domain" in order and "margin_percent:avg" in fields:
                 orders = self.search(order["__domain"])
-                order["margin_percent"] = (
-                    sum(orders.mapped('margin')) / (
-                        sum(orders.mapped('amount_untaxed')) or 1
-                    )
+                order["margin_percent"] = sum(orders.mapped("margin")) / (
+                    sum(orders.mapped("amount_untaxed")) or 1
                 )
         return res
