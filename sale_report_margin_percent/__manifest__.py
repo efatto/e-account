@@ -9,5 +9,8 @@
     "website": "https://github.com/sergiocorato/e-account",
     "license": "AGPL-3",
     "depends": ["sale_margin"],
+    "data": [
+        "views/sale_order.xml",
+    ],
     "installable": True,
 }
