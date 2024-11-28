@@ -131,7 +131,6 @@ class SaleOrder(models.Model):
                 order.amount_advance_toreturn_total = amount_advance_toreturn_total
                 order.amount_toinvoice_difference = (
                     amount_toinvoice_total
-                    - amount_advance_toreturn_total
                     - order.amount_total
                 )
             else:

@@ -41,6 +41,10 @@ class SaleOrderProgress(models.Model):
         'Amount advance to invoice',
         compute="_compute_invoiced",
         store=True)
+    amount_advance_invoiced = fields.Monetary(
+        string="Amount advance invoiced",
+        compute="_compute_invoiced",
+        store=True)
     amount_invoiced = fields.Monetary(
         string="Amount invoiced",
         compute="_compute_invoiced",
@@ -131,6 +135,7 @@ class SaleOrderProgress(models.Model):
             else:
                 total_advance_percent = 0
             progress.amount_invoiced = 0
+            progress.amount_advance_invoiced = 0
             progress.residual_toinvoice = 0
             progress.amount_advance_toreturn = 0
             progress.invoiced = False
@@ -139,7 +144,10 @@ class SaleOrderProgress(models.Model):
                 for line in order_id.mapped("order_line.invoice_lines").filtered(
                     lambda x: x.sale_order_progress_id == progress
                 ):
-                    progress.amount_invoiced += line.price_total
+                    if progress.is_advance:
+                        progress.amount_advance_invoiced += line.price_total
+                    else:
+                        progress.amount_invoiced += line.price_total
                 # set amount_toinvoice if amount_percent is set
                 if progress.amount_toinvoice_manual:
                     amount_toinvoice = progress.amount_toinvoice_manual
@@ -155,9 +163,11 @@ class SaleOrderProgress(models.Model):
                     else:
                         progress.amount_toinvoice = amount_toinvoice
                 if progress.invoiced_manual or (
-                    progress.amount_invoiced >= (
-                        progress.amount_toinvoice or progress.amount_advance_toinvoice
-                    ) > 0.0
+                    progress.amount_invoiced >= progress.amount_toinvoice > 0.0
+                    or (
+                        progress.amount_advance_invoiced >=
+                        progress.amount_advance_toinvoice > 0.0
+                    )
                 ):
                     progress.invoiced = True
                 amount_advance_toreturn = (
@@ -170,6 +180,7 @@ class SaleOrderProgress(models.Model):
                     progress.amount_toinvoice
                     - progress.amount_advance_toinvoice
                     - progress.amount_invoiced
+                    - progress.amount_advance_invoiced
                     - (
                         progress.amount_advance_toreturn
                         if not progress.is_advance

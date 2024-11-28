@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-07 10:30+0000\n"
-"PO-Revision-Date: 2024-08-07 10:30+0000\n"
+"POT-Creation-Date: 2024-11-28 16:20+0000\n"
+"PO-Revision-Date: 2024-11-28 16:20+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -49,6 +49,16 @@ msgstr "Differenza totale da fatturare"
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__amount_toinvoice_total
 msgid "Amount Toinvoice Total"
 msgstr "Totale da fatturare"
+
+#. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__amount_advance_invoiced
+msgid "Amount advance invoiced"
+msgstr "Acconto fatturato"
+
+#. module: sale_order_progress
+#: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__amount_advance_toinvoice
+msgid "Amount advance to invoice"
+msgstr "Acconto da fatturare"
 
 #. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__amount_advance_toreturn
@@ -266,11 +276,6 @@ msgid "To invoice"
 msgstr "Da fatturare"
 
 #. module: sale_order_progress
-#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
-msgid "Total (%)"
-msgstr "Totale (%)"
-
-#. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order__total_advance_amount
 msgid "Total Advance Amount"
 msgstr "Totale importo acconti"
@@ -287,6 +292,20 @@ msgid "Total advance (%)"
 msgstr "Totale acconti (%)"
 
 #. module: sale_order_progress
+#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_form
+#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_tree
+#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
+msgid "Total Advance Invoiced"
+msgstr "Totale acconto fatturato"
+
+#. module: sale_order_progress
+#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_form
+#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_tree
+#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
+msgid "Total Advance to Invoice"
+msgstr "Totale acconto da fatturare"
+
+#. module: sale_order_progress
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_form
 msgid "Total advance to return"
@@ -298,13 +317,13 @@ msgid "Total invoiced"
 msgstr "Totale fatturato"
 
 #. module: sale_order_progress
-#: code:addons/sale_order_progress/models/sale.py:153
+#: code:addons/sale_order_progress/models/sale.py:152
 #, python-format
 msgid "Total of order progress percent cannot exceed 100!"
 msgstr "Il totale (%) degli stati di avanzamento lavori non può superare 100!"
 
 #. module: sale_order_progress
-#: code:addons/sale_order_progress/models/sale.py:168
+#: code:addons/sale_order_progress/models/sale.py:167
 #, python-format
 msgid "Total of progress amount to invoice cannot exceed order amount!"
 msgstr "Il totale degli importi da fatturare degli stati di avanzamento lavori non può superare l'importo dell'ordine!"
@@ -312,18 +331,9 @@ msgstr "Il totale degli importi da fatturare degli stati di avanzamento lavori n
 #. module: sale_order_progress
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_form
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_sale_order_progress_tree
+#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
 msgid "Total to Invoice"
 msgstr "Totale da fatturare"
-
-#. module: sale_order_progress
-#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
-msgid "Total to invoice"
-msgstr "Totale da fatturare"
-
-#. module: sale_order_progress
-#: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
-msgid "Total to invoice manual"
-msgstr "Totale da fatturare (manuale)"
 
 #. module: sale_order_progress
 #: model_terms:ir.ui.view,arch_db:sale_order_progress.view_order_form_progress
