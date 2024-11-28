@@ -37,6 +37,10 @@ class SaleOrderProgress(models.Model):
         'Amount to invoice',
         compute="_compute_invoiced",
         store=True)
+    amount_advance_toinvoice = fields.Monetary(
+        'Amount advance to invoice',
+        compute="_compute_invoiced",
+        store=True)
     amount_invoiced = fields.Monetary(
         string="Amount invoiced",
         compute="_compute_invoiced",
@@ -138,12 +142,22 @@ class SaleOrderProgress(models.Model):
                     progress.amount_invoiced += line.price_total
                 # set amount_toinvoice if amount_percent is set
                 if progress.amount_toinvoice_manual:
-                    progress.amount_toinvoice = progress.amount_toinvoice_manual
+                    amount_toinvoice = progress.amount_toinvoice_manual
+                    if progress.is_advance:
+                        progress.amount_advance_toinvoice = amount_toinvoice
+                    else:
+                        progress.amount_toinvoice = amount_toinvoice
                 elif progress.amount_percent:
-                    progress.amount_toinvoice = (
+                    amount_toinvoice = (
                         order_id.amount_total * progress.amount_percent / 100)
+                    if progress.is_advance:
+                        progress.amount_advance_toinvoice = amount_toinvoice
+                    else:
+                        progress.amount_toinvoice = amount_toinvoice
                 if progress.invoiced_manual or (
-                    progress.amount_invoiced >= progress.amount_toinvoice > 0.0
+                    progress.amount_invoiced >= (
+                        progress.amount_toinvoice or progress.amount_advance_toinvoice
+                    ) > 0.0
                 ):
                     progress.invoiced = True
                 amount_advance_toreturn = (
@@ -153,7 +167,9 @@ class SaleOrderProgress(models.Model):
                 ) if not progress.is_advance else 0
                 progress.amount_advance_toreturn = amount_advance_toreturn
                 progress.residual_toinvoice = (
-                    progress.amount_toinvoice - progress.amount_invoiced
+                    progress.amount_toinvoice
+                    - progress.amount_advance_toinvoice
+                    - progress.amount_invoiced
                     - (
                         progress.amount_advance_toreturn
                         if not progress.is_advance
