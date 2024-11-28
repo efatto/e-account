@@ -3,7 +3,7 @@
     <record model="ir.ui.view" id="sale_margin_sale_order_pivot">
         <field name="name">sale.order.margin.view.pivot</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_pivot"/>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_pivot" />
         <field name="arch" type="xml">
             <field name="margin_percent" position="attributes">
                 <attribute name="invisible">0</attribute>
@@ -15,7 +15,7 @@
     <record model="ir.ui.view" id="sale_margin_sale_order_graph">
         <field name="name">sale.order.margin.view.graph</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_graph"/>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_graph" />
         <field name="arch" type="xml">
             <field name="margin_percent" position="attributes">
                 <attribute name="invisible">0</attribute>
