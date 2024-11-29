@@ -49,6 +49,10 @@ class SaleOrderProgress(models.Model):
         string="Amount invoiced",
         compute="_compute_invoiced",
         store=True)
+    not_tobe_invoiced = fields.Boolean(
+        string="Not tobe invoiced",
+        compute="_compute_invoiced",
+        store=True)
     amount_advance_returned = fields.Monetary(
         string="Amount advance returned",
         compute="_compute_invoiced",
@@ -127,13 +131,19 @@ class SaleOrderProgress(models.Model):
             # only at the end of all computations
             # compute here the total to invoice too as there are maybe rows not
             # invoiceable
-            progress.amount_invoiced = 0
-            progress.amount_advance_invoiced = 0
-            progress.residual_toinvoice = 0
             progress.amount_advance_toreturn = 0
+            progress.amount_toinvoice = 0
+            progress.amount_advance_toinvoice = 0
+            progress.amount_advance_invoiced = 0
+            progress.amount_invoiced = 0
+            progress.not_tobe_invoiced = False
             progress.amount_advance_returned = 0
+            progress.residual_toinvoice = 0
             progress.invoiced = False
             if progress.order_id:
+                # n.b. some fields must be recomputed on the fly as they depends on all
+                # the records, but here they are computed sequencially, so the values
+                # are valid only at the end
                 order_id = progress.order_id
                 for line in order_id.mapped("order_line.invoice_lines").filtered(
                     lambda x: x.sale_order_progress_id == progress
@@ -145,6 +155,12 @@ class SaleOrderProgress(models.Model):
                         if line.product_id.is_downpayment:
                             # advance returned are negatives
                             progress.amount_advance_returned -= line.price_total
+                if (
+                    not progress.is_advance
+                    and progress.invoiced_manual
+                    and not progress.amount_invoiced
+                ):
+                    progress.not_tobe_invoiced = True
                 if order_id.amount_total:
                     amount_advance = sum(
                         [
@@ -156,7 +172,7 @@ class SaleOrderProgress(models.Model):
                         ]
                         or [0]
                     )
-                    amount_to_invoice = progress.order_id.amount_total - sum(
+                    amount_to_not_invoice = sum(
                         [
                             x.amount_toinvoice_manual or
                             x.order_id.amount_total * x.amount_percent / 100
@@ -166,6 +182,9 @@ class SaleOrderProgress(models.Model):
                             )
                         ]
                         or [0]
+                    )
+                    amount_to_invoice = (
+                        progress.order_id.amount_total - amount_to_not_invoice
                     )
                     total_advance_percent = amount_advance / (
                         amount_to_invoice or 1
@@ -195,7 +214,10 @@ class SaleOrderProgress(models.Model):
                     )
                 ):
                     progress.invoiced = True
-                if progress.is_advance or progress.invoiced and not progress.amount_invoiced:
+                if (
+                    progress.is_advance or progress.invoiced
+                    and not progress.amount_invoiced
+                ):
                     progress.amount_advance_toreturn = 0
                 else:
                     progress.amount_advance_toreturn = (
