@@ -37,6 +37,10 @@ class SaleOrderProgress(models.Model):
         'Amount to invoice',
         compute="_compute_invoiced",
         store=True)
+    amount_toinvoice_untaxed = fields.Monetary(
+        'Technical field with untaxed amount to invoice',
+        compute="_compute_invoiced",
+        store=True)
     amount_advance_toinvoice = fields.Monetary(
         'Amount advance to invoice',
         compute="_compute_invoiced",
@@ -136,6 +140,7 @@ class SaleOrderProgress(models.Model):
             # invoiceable
             progress.amount_advance_toreturn = 0
             progress.amount_toinvoice = 0
+            progress.amount_toinvoice_untaxed = 0
             progress.amount_advance_toinvoice = 0
             progress.amount_advance_invoiced = 0
             progress.amount_invoiced = 0
@@ -209,6 +214,11 @@ class SaleOrderProgress(models.Model):
                         progress.amount_advance_toinvoice = amount_toinvoice
                     else:
                         progress.amount_toinvoice = amount_toinvoice
+                if progress.amount_toinvoice:
+                    progress.amount_toinvoice_untaxed = progress.amount_toinvoice / (
+                        1 +
+                        progress.order_id.amount_tax / progress.order_id.amount_untaxed
+                    )
                 if progress.invoiced_manual or (
                     progress.amount_invoiced >= progress.amount_toinvoice > 0.0
                     or (
