@@ -10,6 +10,7 @@
     'license': 'AGPL-3',
     'depends': [
         'delivery',
+        'mrp_bom_sale_pricelist',
         'sale_stock',
     ],
     'data': [
