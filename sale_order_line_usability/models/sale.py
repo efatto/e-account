@@ -22,11 +22,16 @@ class SaleOrderLine(models.Model):
             # preserve negative values as costs
             line.move_price_unit = min(
                 [-abs(x.price_unit) for x in line.move_ids] or [0])
-            line.move_price_to_invoice_total = (
-                line.move_price_unit if line.move_price_unit != 0.0 else
-                - line.product_standard_price) * (
-                max([line.qty_delivered, line.product_qty]) - line.qty_invoiced
-            )
+            if line.product_id.purchase_ok:
+                # this product can be purchased so if we consider it could lead to a
+                # duplication of costs
+                line.move_price_to_invoice_total = 0
+            else:
+                line.move_price_to_invoice_total = (
+                    line.move_price_unit if line.move_price_unit != 0.0 else
+                    - line.product_standard_price) * (
+                    max([line.qty_delivered, line.product_qty]) - line.qty_invoiced
+                )
 
     @api.one
     def _set_move_price_unit(self):
