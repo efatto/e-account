@@ -22,7 +22,8 @@
                         </group>
                     </group>
                     <field name="order_progress_ids" nolabel="1">
-                        <tree string="Order Progress" editable="bottom">
+                        <tree string="Order Progress" editable="bottom" decoration-muted="not_tobe_invoiced">
+                            <field name="not_tobe_invoiced" invisible="1"/>
                             <field name="offset_month"/>
                             <field name="date"/>
                             <field name="payment_term_id"/>
