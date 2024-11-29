@@ -123,9 +123,12 @@ class SaleOrderProgress(models.Model):
         'order_id.order_line.price_total',
         'order_id.order_line.invoice_lines.price_total',
         'order_id.order_line.invoice_lines.invoice_id.state',
-        'order_id.order_line.invoice_lines.product_id.is_downpayment',
     )
     def _compute_invoiced(self):
+        downpayment_product_id = self.env['ir.config_parameter'].sudo().get_param(
+            'sale.default_deposit_product_id')
+        if downpayment_product_id:
+            downpayment_product_id = int(downpayment_product_id)
         for progress in self.sorted(key="date"):
             # compute here as amount_toinvoice is recomputed on the fly and is correct
             # only at the end of all computations
@@ -152,7 +155,7 @@ class SaleOrderProgress(models.Model):
                         progress.amount_advance_invoiced += line.price_total
                     else:
                         progress.amount_invoiced += line.price_total
-                        if line.product_id.is_downpayment:
+                        if line.product_id.id == downpayment_product_id:
                             # advance returned are negatives
                             progress.amount_advance_returned -= line.price_total
                 if (
