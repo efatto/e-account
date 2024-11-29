@@ -68,7 +68,7 @@ msgstr "Importo acconto da rendere"
 #. module: sale_order_progress
 #: model:ir.model.fields,field_description:sale_order_progress.field_sale_order_progress__amount_invoiced
 msgid "Amount invoiced"
-msgstr "Importo fatturato"
+msgstr "Importo fatturato (al netto di reso acconti)"
 
 #. module: sale_order_progress
 #: model:ir.model.fields,help:sale_order_progress.field_sale_advance_payment_inv__amount_advance_toreturn

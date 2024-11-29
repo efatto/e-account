@@ -30,10 +30,11 @@
                             <field name="is_advance"/>
                             <field name="amount_percent"/>
                             <field name="amount_toinvoice_manual"/>
-                            <field name="amount_advance_toreturn" sum="Total advance to return"/>
                             <field name="amount_advance_toinvoice" sum="Total Advance to Invoice"/>
-                            <field name="amount_toinvoice" sum="Total to Invoice"/>
                             <field name="amount_advance_invoiced" sum="Total Advance invoiced"/>
+                            <field name="amount_toinvoice" sum="Total to Invoice"/>
+                            <field name="amount_advance_toreturn" sum="Total advance to return"/>
+                            <field name="amount_advance_returned" sum="Total advance returned"/>
                             <field name="amount_invoiced" sum="Total invoiced"/>
                             <field name="residual_toinvoice" sum="Residual to invoice"/>
                             <field name="invoiced_manual" widget="boolean_toggle"/>

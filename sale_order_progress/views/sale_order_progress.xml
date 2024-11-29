@@ -15,6 +15,7 @@
                 <field name="amount_advance_toinvoice"/>
                 <field name="amount_toinvoice"/>
                 <field name="amount_advance_invoiced"/>
+                <field name="amount_advance_returned"/>
                 <field name="amount_invoiced"/>
                 <field name="invoiced"/>
                 <filter name="to_invoice"
@@ -38,6 +39,7 @@
                 <field name="amount_advance_toinvoice" sum="Total Advance to Invoice"/>
                 <field name="amount_toinvoice" sum="Total to Invoice"/>
                 <field name="amount_advance_invoiced" sum="Total Advance Invoiced"/>
+                <field name="amount_advance_returned" sum="Total Advance Returned"/>
                 <field name="amount_invoiced" sum="Total Invoiced"/>
                 <field name="residual_toinvoice" sum="Residual to Invoice"/>
                 <field name="invoiced"/>
@@ -71,6 +73,7 @@
                             <field name="amount_advance_toinvoice" sum="Total Advance to Invoice"/>
                             <field name="amount_toinvoice" sum="Total to Invoice"/>
                             <field name="amount_advance_invoiced" sum="Total Advance Invoiced"/>
+                            <field name="amount_advance_returned" sum="Total Advance Invoiced"/>
                             <field name="amount_invoiced" sum="Total Invoiced"/>
                         </group>
                         <group>
