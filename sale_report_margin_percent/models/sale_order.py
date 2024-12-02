@@ -26,8 +26,11 @@ class SaleOrder(models.Model):
         )
         for order in res:
             if "__domain" in order and "margin_percent:avg" in fields:
-                orders = self.search(order["__domain"])
-                order["margin_percent"] = sum(orders.mapped("margin")) / (
-                    sum(orders.mapped("amount_untaxed")) or 1
+                orders = self.search_read(
+                    order["__domain"],
+                    ["margin", "amount_untaxed"]
                 )
+                order["margin_percent"] = sum([x["margin"] for x in orders]) / (
+                    sum([x["amount_untaxed"] for x in orders]) or 1
+                ) * 100.0
         return res

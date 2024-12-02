@@ -1,1 +1,1 @@
-Adds margin percent of the whole sale order and of the single lines fields to sale report.
+Adds weighted margin percent to sale report.
