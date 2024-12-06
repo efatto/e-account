@@ -47,7 +47,7 @@ class StockMove(models.Model):
             requested_qty = sum(
                 product_all_moves.mapped("product_uom_qty")
             )
-            purchase_ordered_ratio = purchase_ordered_qty / requested_qty
+            purchase_ordered_ratio = purchase_ordered_qty / (requested_qty or 1)
             move.purchase_ordered_qty = move.product_uom_qty * purchase_ordered_ratio
 
     def _action_assign(self):
