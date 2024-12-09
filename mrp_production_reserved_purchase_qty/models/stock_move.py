@@ -64,7 +64,7 @@ class StockMove(models.Model):
         reserved_availability = {move: move.reserved_availability for move in self}
         roundings = {move: move.product_id.uom_id.rounding for move in self}
         move_line_vals_list = []
-        for move in self:
+        for move in self.filtered(lambda x: x.state != "done"):
             rounding = roundings[move]
             missing_reserved_uom_quantity = move.product_uom_qty - \
                                             reserved_availability[move]
