@@ -13,9 +13,7 @@ class SaleOrderLine(models.Model):
         string="Move Cost Unit", compute='_get_move_price_unit',
         inverse='_set_move_price_unit', store=True)
     move_price_to_invoice_total = fields.Float(
-        string="Total Cost To Invoice", compute='_get_move_price_unit', store=False,
-        help="This cost is only computed when products can be sold but not purchased "
-             "and not produced.")
+        string="Total Cost To Invoice", compute='_get_move_price_unit', store=False)
 
     @api.multi
     @api.depends('move_ids.price_unit')
@@ -24,13 +22,9 @@ class SaleOrderLine(models.Model):
             # preserve negative values as costs
             line.move_price_unit = min(
                 [-abs(x.price_unit) for x in line.move_ids] or [0])
-            if (
-                line.product_id.purchase_ok
-                or line.product_id.compute_pricelist_on_bom_component
-            ):
-                # this product can be purchased or its costs are computed from bom
-                # components, so if we consider it, it would lead to a duplication of
-                # costs
+            if line.product_id.purchase_ok:
+                # this product can be purchased so if we consider it could lead to a
+                # duplication of costs
                 line.move_price_to_invoice_total = 0
             else:
                 line.move_price_to_invoice_total = (
