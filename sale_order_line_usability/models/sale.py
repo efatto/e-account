@@ -13,7 +13,8 @@ class SaleOrderLine(models.Model):
         string="Move Cost Unit", compute='_get_move_price_unit',
         inverse='_set_move_price_unit', store=True)
     move_price_to_invoice_total = fields.Float(
-        string="Total Cost To Invoice", compute='_get_move_price_unit', store=False)
+        string="Total Cost To Invoice", compute='_get_move_price_unit', store=False,
+        help="This cost is only computed when products can be sold but not purchased.")
 
     @api.multi
     @api.depends('move_ids.price_unit')
