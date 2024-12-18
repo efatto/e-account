@@ -1,6 +1,6 @@
-==========================
-Sale Report Margin Percent
-==========================
+===================================
+Sale Report Weighted Margin Percent
+===================================
 
 .. 
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -22,7 +22,7 @@ Sale Report Margin Percent
 
 |badge1| |badge2| |badge3|
 
-Adds margin percent of the whole sale order and of the single lines fields to sale report.
+Adds weighted margin percent to sale report.
 
 **Table of contents**
 

@@ -37,11 +37,12 @@ class SaleReport(models.Model):
         for order_line in res:
             if "__domain" in order_line and "margin_percent_weighted:avg" in fields:
                 order_lines = self.search_read(
-                    order_line["__domain"],
-                    ["margin", "price_subtotal"]
+                    order_line["__domain"], ["margin", "price_subtotal"]
                 )
-                margin_percent = sum([x["margin"] for x in order_lines]) / (
-                    sum([x["price_subtotal"] for x in order_lines]) or 1
-                ) * 100.0
+                margin_percent = (
+                    sum([x["margin"] for x in order_lines])
+                    / (sum([x["price_subtotal"] for x in order_lines]) or 1)
+                    * 100.0
+                )
                 order_line["margin_percent_weighted"] = margin_percent
         return res
