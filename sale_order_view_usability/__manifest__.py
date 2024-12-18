@@ -8,7 +8,7 @@
     "summary": "Extend sale order tree view adding origin and moving state after the "
     "partner.  sale order ref in form view, "
     "show origin field to base user.",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
         "sale",
