@@ -7,7 +7,7 @@
     "summary": "Add simple management of packages in picking",
     "author": "Sergio Corato",
     "license": "AGPL-3",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "depends": [
         "l10n_it_delivery_note",
         "delivery",
