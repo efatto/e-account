@@ -5,7 +5,7 @@
     "version": "14.0.1.0.0",
     "category": "other",
     "author": "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "summary": "This module preserves the comments already present in the "
     "document if they are not defined in the partner.",
