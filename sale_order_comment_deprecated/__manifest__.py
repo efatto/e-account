@@ -5,7 +5,7 @@
     "version": "14.0.1.0.0",
     "category": "other",
     "author": "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "summary": "This module only preserve fields removed from v.>12.0: note1 and note2 "
     "in sale order (comment top and bottom now linked with a m2o) and "

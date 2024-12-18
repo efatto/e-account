@@ -6,7 +6,7 @@
     "category": "other",
     "author": "Sergio Corato",
     "summary": "Move project, opportunity and analytic for quotation in header.",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
         "sale_crm",

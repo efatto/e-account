@@ -5,7 +5,7 @@
     "version": "14.0.1.0.0",
     "category": "Accounting & Finance",
     "author": "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
         "account_payment_partner",

@@ -9,7 +9,7 @@
     Hide Confirm button on editing account move.
     """,
     "author": "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "depends": [
         "account",
     ],

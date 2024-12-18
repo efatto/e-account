@@ -6,7 +6,7 @@
     "category": "other",
     "author": "Sergio Corato",
     "summary": "This module force adding the group with one single sale order too",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
         "account_invoice_section_sale_order",

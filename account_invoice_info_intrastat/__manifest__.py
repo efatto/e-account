@@ -5,7 +5,7 @@
     "summary": "Add Intrastat info to invoice narration",
     "version": "14.0.1.0.1",
     "category": "Accounting",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "author": "Sergio Corato",
     "license": "AGPL-3",
     "application": False,

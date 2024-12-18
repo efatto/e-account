@@ -16,15 +16,15 @@ Account invoice Intrastat info
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-sergiocorato%2Fe--account-lightgray.png?logo=github
-    :target: https://github.com/sergiocorato/e-account/tree/14.0/account_invoice_info_intrastat
-    :alt: sergiocorato/e-account
+.. |badge3| image:: https://img.shields.io/badge/github-efatto%2Fe--account-lightgray.png?logo=github
+    :target: https://github.com/efatto/e-account/tree/14.0/account_invoice_info_intrastat
+    :alt: efatto/e-account
 
 |badge1| |badge2| |badge3|
 
 Questo modulo aggiunge i dati relativi all'Intrastat nelle righe della fattura tramite un bottone:
 
-.. image:: https://raw.githubusercontent.com/sergiocorato/e-account/14.0/account_invoice_info_intrastat/static/description/bottone.png
+.. image:: https://raw.githubusercontent.com/efatto/e-account/14.0/account_invoice_info_intrastat/static/description/bottone.png
     :alt: Bottone
 
 nel formato:
@@ -37,7 +37,7 @@ Il campo nazione di origine viene preso dal prodotto, in mancanza dal primo forn
 
 È possibile rimuovere i dati Intrastat con il bottone:
 
-.. image:: https://raw.githubusercontent.com/sergiocorato/e-account/14.0/account_invoice_info_intrastat/static/description/bottone_rimuovi.png
+.. image:: https://raw.githubusercontent.com/efatto/e-account/14.0/account_invoice_info_intrastat/static/description/bottone_rimuovi.png
     :alt: Bottone rimozione
 
 **Table of contents**
@@ -53,10 +53,10 @@ Nessuna configurazione necessaria.
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/sergiocorato/e-account/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/efatto/e-account/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/sergiocorato/e-account/issues/new?body=module:%20account_invoice_info_intrastat%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/efatto/e-account/issues/new?body=module:%20account_invoice_info_intrastat%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -76,6 +76,6 @@ Contributors
 Maintainers
 ~~~~~~~~~~~
 
-This module is part of the `sergiocorato/e-account <https://github.com/sergiocorato/e-account/tree/14.0/account_invoice_info_intrastat>`_ project on GitHub.
+This module is part of the `efatto/e-account <https://github.com/efatto/e-account/tree/14.0/account_invoice_info_intrastat>`_ project on GitHub.
 
 You are welcome to contribute.

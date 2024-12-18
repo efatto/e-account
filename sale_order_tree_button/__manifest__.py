@@ -6,7 +6,7 @@
     "category": "other",
     "author": "Sergio Corato",
     "summary": "Add button to open opportunities, sales and tasks in tree view.",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
         "crm",

@@ -7,7 +7,7 @@
     "author": "Sergio Corato",
     "summary": "This module change to computed shipping fields in account invoice: "
     "weight, net weight, packages and volume.",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
         "account_invoice_shipping_info",

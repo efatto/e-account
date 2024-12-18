@@ -5,14 +5,23 @@
     <field name="inherit_id" ref="sale.view_quotation_tree" />
     <field name="arch" type="xml">
         <field name="name" position="after">
-            <button type="object" name="action_view_opportunity"
-                icon="fa-star"
-                attrs="{'invisible': [('opportunity_id', '=', False)]}"
-                groups="sales_team.group_sale_salesman">
-                <field string="Opportunity" name="opportunity_id"/>
+            <button
+                    type="object"
+                    name="action_view_opportunity"
+                    icon="fa-star"
+                    attrs="{'invisible': [('opportunity_id', '=', False)]}"
+                    groups="sales_team.group_sale_salesman"
+                >
+                <field string="Opportunity" name="opportunity_id" />
             </button>
-            <button type="object" name="action_view_task" icon="fa-tasks" attrs="{'invisible': [('tasks_count', '=', 0)]}" groups="project.group_project_user">
-                <field name="tasks_count" string="Tasks"/>
+            <button
+                    type="object"
+                    name="action_view_task"
+                    icon="fa-tasks"
+                    attrs="{'invisible': [('tasks_count', '=', 0)]}"
+                    groups="project.group_project_user"
+                >
+                <field name="tasks_count" string="Tasks" />
             </button>
         </field>
     </field>
@@ -22,17 +31,23 @@
     <field name="inherit_id" ref="sale.view_order_tree" />
     <field name="arch" type="xml">
         <field name="name" position="after">
-            <button type="object" name="action_view_opportunity"
-                icon="fa-star"
-                attrs="{'invisible': [('opportunity_id', '=', False)]}"
-                groups="sales_team.group_sale_salesman">
-                <field string="Opportunity" name="opportunity_id"/>
+            <button
+                    type="object"
+                    name="action_view_opportunity"
+                    icon="fa-star"
+                    attrs="{'invisible': [('opportunity_id', '=', False)]}"
+                    groups="sales_team.group_sale_salesman"
+                >
+                <field string="Opportunity" name="opportunity_id" />
             </button>
-            <button type="object" name="action_view_task"
+            <button
+                    type="object"
+                    name="action_view_task"
                     icon="fa-tasks"
                     attrs="{'invisible': [('tasks_count', '=', 0)]}"
-                    groups="project.group_project_user">
-                <field name="tasks_count" string="Tasks"/>
+                    groups="project.group_project_user"
+                >
+                <field name="tasks_count" string="Tasks" />
             </button>
         </field>
     </field>

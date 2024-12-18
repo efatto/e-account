@@ -6,7 +6,7 @@
         This module is not needed in v. 16.0
     """,
     "author": "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "category": "Social Network",
     "version": "14.0.1.0.1",
     "license": "AGPL-3",

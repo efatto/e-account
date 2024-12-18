@@ -6,7 +6,7 @@
     "category": "Sales",
     "author": "Sergio Corato",
     "summary": "Adds the weighted margin percent to sale analysis report",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": ["sale_margin"],
     "data": [

@@ -4,7 +4,7 @@
     "name": "Tax with required declaration of intent in invoice",
     "version": "14.0.1.0.1",
     "author": "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "category": "Localisation / Accounting",
     "license": "AGPL-3",
     "depends": ["l10n_it_declaration_of_intent", "l10n_it_account_tax_kind"],

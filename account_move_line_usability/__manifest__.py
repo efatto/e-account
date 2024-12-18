@@ -9,7 +9,7 @@
 Solve some usability issue in account move line: add filter from_date and to_date,
  set minimum width for account fields, set account accordingly to partner.
 """,
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
         "account",

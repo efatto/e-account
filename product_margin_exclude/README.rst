@@ -16,9 +16,9 @@ Product excluded from sale margin
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-sergiocorato%2Fe--account-lightgray.png?logo=github
-    :target: https://github.com/sergiocorato/e-account/tree/14.0/product_margin_exclude
-    :alt: sergiocorato/e-account
+.. |badge3| image:: https://img.shields.io/badge/github-efatto%2Fe--account-lightgray.png?logo=github
+    :target: https://github.com/efatto/e-account/tree/14.0/product_margin_exclude
+    :alt: efatto/e-account
 
 |badge1| |badge2| |badge3|
 
@@ -34,7 +34,7 @@ Configuration
 
 Nel prodotto è stato aggiunto un campo che permette di escluderlo dal calcolo del margine di vendita:
 
-.. image:: https://raw.githubusercontent.com/sergiocorato/e-account/14.0/product_margin_exclude/static/description/escludi_dal_margine.png
+.. image:: https://raw.githubusercontent.com/efatto/e-account/14.0/product_margin_exclude/static/description/escludi_dal_margine.png
     :alt: Escludi prodotto dal margine
 
 La riga di vendita del prodotto mostrerà quindi un margine pari a zero e non avrà influenza sui margini totali dell'ordine di vendita.
@@ -42,10 +42,10 @@ La riga di vendita del prodotto mostrerà quindi un margine pari a zero e non av
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/sergiocorato/e-account/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/efatto/e-account/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/sergiocorato/e-account/issues/new?body=module:%20product_margin_exclude%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/efatto/e-account/issues/new?body=module:%20product_margin_exclude%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -65,6 +65,6 @@ Contributors
 Maintainers
 ~~~~~~~~~~~
 
-This module is part of the `sergiocorato/e-account <https://github.com/sergiocorato/e-account/tree/14.0/product_margin_exclude>`_ project on GitHub.
+This module is part of the `efatto/e-account <https://github.com/efatto/e-account/tree/14.0/product_margin_exclude>`_ project on GitHub.
 
 You are welcome to contribute.

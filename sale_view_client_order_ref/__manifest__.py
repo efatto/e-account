@@ -5,7 +5,7 @@
     "version": "14.0.1.0.0",
     "category": "Sales",
     "author": "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "summary": "Add client order ref in kanban sale order view",
     "depends": [

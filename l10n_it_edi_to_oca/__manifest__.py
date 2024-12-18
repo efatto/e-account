@@ -7,7 +7,7 @@
     "author": "Sergio Corato",
     "summary": "This module will prepare fields to be used by Italian "
     "FatturaPA modules.",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
         "account",
