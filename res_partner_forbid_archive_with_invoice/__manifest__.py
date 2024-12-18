@@ -10,7 +10,7 @@
     "summary": "This module stop the user to deactivate partners that have "
     "invoices or moves. This would make impossible to find the "
     "invoices/moves without knowing their exact number.",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
         "account",
