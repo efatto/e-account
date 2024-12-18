@@ -16,9 +16,9 @@ Show recipients of email
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-sergiocorato%2Fe--account-lightgray.png?logo=github
-    :target: https://github.com/sergiocorato/e-account/tree/14.0/mail_no_follower_notification
-    :alt: sergiocorato/e-account
+.. |badge3| image:: https://img.shields.io/badge/github-efatto%2Fe--account-lightgray.png?logo=github
+    :target: https://github.com/efatto/e-account/tree/14.0/mail_no_follower_notification
+    :alt: efatto/e-account
 
 |badge1| |badge2| |badge3|
 
@@ -38,31 +38,31 @@ L'utente può quindi rimuoverli direttamente in maniera specifica.
 
 In questo esempio i followers del documento sono 4:
 
-.. figure:: https://raw.githubusercontent.com/sergiocorato/e-account/14.0/mail_no_follower_notification/static/description/followers.png
+.. figure:: https://raw.githubusercontent.com/efatto/e-account/14.0/mail_no_follower_notification/static/description/followers.png
    :alt: Followers
 
 Inviando un messaggio, i destinatari proposti sono 3 (OdooBot viene rimosso di default):
 
-.. figure:: https://raw.githubusercontent.com/sergiocorato/e-account/14.0/mail_no_follower_notification/static/description/composizione_email.png
+.. figure:: https://raw.githubusercontent.com/efatto/e-account/14.0/mail_no_follower_notification/static/description/composizione_email.png
    :alt: Composizione email
 
 Si può a questo punto rimuovere un destinatario direttamente:
 
-.. figure:: https://raw.githubusercontent.com/sergiocorato/e-account/14.0/mail_no_follower_notification/static/description/composizione_email_modificata.png
+.. figure:: https://raw.githubusercontent.com/efatto/e-account/14.0/mail_no_follower_notification/static/description/composizione_email_modificata.png
    :alt: Composizione email modificata
 
 Che non sarà quindi notificato:
 
-.. figure:: https://raw.githubusercontent.com/sergiocorato/e-account/14.0/mail_no_follower_notification/static/description/notificati.png
+.. figure:: https://raw.githubusercontent.com/efatto/e-account/14.0/mail_no_follower_notification/static/description/notificati.png
    :alt: Email inviate
 
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/sergiocorato/e-account/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/efatto/e-account/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/sergiocorato/e-account/issues/new?body=module:%20mail_no_follower_notification%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/efatto/e-account/issues/new?body=module:%20mail_no_follower_notification%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -87,6 +87,6 @@ Contributors
 Maintainers
 ~~~~~~~~~~~
 
-This module is part of the `sergiocorato/e-account <https://github.com/sergiocorato/e-account/tree/14.0/mail_no_follower_notification>`_ project on GitHub.
+This module is part of the `efatto/e-account <https://github.com/efatto/e-account/tree/14.0/mail_no_follower_notification>`_ project on GitHub.
 
 You are welcome to contribute.

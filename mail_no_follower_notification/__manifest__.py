@@ -5,7 +5,7 @@
     "summary": "Show the recipient of the email, removing the anonimous flag "
     "'Notify followers'.",
     "author": "ACSONE SA/NV," "Odoo Community Association (OCA)," "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "category": "Social Network",
     "version": "14.0.1.0.0",
     "license": "AGPL-3",
