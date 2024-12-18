@@ -7,7 +7,7 @@
     "author": "Sergio Corato",
     "summary": "Add sale order ref in tree view and sale description in product tree "
     "view.",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
         "sale",
