@@ -6,7 +6,7 @@
     "category": "Accounting",
     "license": "AGPL-3",
     "author": "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "depends": [
         "account",
         "l10n_it_reverse_charge",
