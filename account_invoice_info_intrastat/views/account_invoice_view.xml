@@ -13,7 +13,8 @@
                     string="Insert intrastat data"
                     attrs="{'invisible': ['|',
                         ('move_type', 'not in', ['out_invoice', 'out_refund', 'out_receipt']),
-                        ('state', '!=', 'draft')]}"
+                        ('state', '!=', 'draft'),
+                        ('fatturapa_attachment_out_id', '!=', False)]}"
                 />
                 <button
                     name="action_remove_intrastat_data_invoice"
@@ -21,7 +22,8 @@
                     string="Remove intrastat data"
                     attrs="{'invisible': ['|',
                         ('move_type', 'not in', ['out_invoice', 'out_refund', 'out_receipt']),
-                        ('state', '!=', 'draft')]}"
+                        ('state', '!=', 'draft'),
+                        ('fatturapa_attachment_out_id', '!=', False)]}"
                 />
             </button>
         </field>

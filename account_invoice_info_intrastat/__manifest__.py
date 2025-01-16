@@ -11,6 +11,7 @@
     "application": False,
     "installable": True,
     "depends": [
+        "l10n_it_fatturapa_out",
         "l10n_it_intrastat",
         "mrp",
     ],
