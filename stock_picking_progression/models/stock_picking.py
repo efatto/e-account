@@ -17,7 +17,8 @@ class StockPicking(models.Model):
             total_qty = sum(record.mapped("move_lines.product_uom_qty"))
             done_qty = sum(record.mapped("move_lines.quantity_done"))
             record.progress = (
-                100 if (record.state == "done" or not total_qty)
+                100
+                if (record.state == "done" or not total_qty)
                 else (done_qty / total_qty * 100)
             )
             record.progress_text = "%s/%s" % (
