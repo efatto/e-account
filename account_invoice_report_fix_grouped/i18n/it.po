@@ -1,0 +1,64 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_invoice_report_spc
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-25 17:42+0000\n"
+"PO-Revision-Date: 2024-03-25 17:42+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_invoice_report_spc
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_account_invoice_report__display_name
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_product_category__display_name
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_product_template__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: account_invoice_report_spc
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_account_invoice_report__id
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_product_category__id
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_product_template__id
+msgid "ID"
+msgstr ""
+
+#. module: account_invoice_report_spc
+#: model:ir.model,name:account_invoice_report_spc.model_account_invoice_report
+msgid "Invoices Statistics"
+msgstr "Statistiche fatture"
+
+#. module: account_invoice_report_spc
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_product_category__is_report_category
+msgid "Is Report Primary Category"
+msgstr "È una categoria primaria report"
+
+#. module: account_invoice_report_spc
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_account_invoice_report____last_update
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_product_category____last_update
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_product_template____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: account_invoice_report_spc
+#: model:ir.model,name:account_invoice_report_spc.model_product_category
+msgid "Product Category"
+msgstr "Categoria prodotto"
+
+#. module: account_invoice_report_spc
+#: model:ir.model,name:account_invoice_report_spc.model_product_template
+msgid "Product Template"
+msgstr "Modello prodotto"
+
+#. module: account_invoice_report_spc
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_account_invoice_report__report_categ_id
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_product_product__report_categ_id
+#: model:ir.model.fields,field_description:account_invoice_report_spc.field_product_template__report_categ_id
+msgid "Report Primary Category"
+msgstr "Categoria primaria report"
