@@ -88,7 +88,7 @@ class StockMove(models.Model):
                     # do not create cashflow lines for order not in configured states
                     continue
             supplier_id = line.product_id.last_supplier_id
-            if not supplier_id:
+            if not supplier_id and line.product_id.seller_ids:
                 supplier_id = line.product_id.seller_ids[0].name
             if supplier_id.supplier_payment_mode_id.fixed_journal_id:
                 journal_id = supplier_id.supplier_payment_mode_id.fixed_journal_id
