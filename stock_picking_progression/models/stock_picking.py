@@ -19,7 +19,12 @@ class StockPicking(models.Model):
             record.progress = (
                 100
                 if (record.state == "done" or not total_qty)
-                else (done_qty / total_qty * 100)
+                else (
+                    sum(
+                        min(x.quantity_done, x.product_uom_qty)
+                        for x in record.move_lines
+                    ) / total_qty * 100
+                )
             )
             record.progress_text = "%s/%s" % (
                 done_qty,
