@@ -23,7 +23,9 @@ class StockPicking(models.Model):
                     sum(
                         min(x.quantity_done, x.product_uom_qty)
                         for x in record.move_lines
-                    ) / total_qty * 100
+                    )
+                    / total_qty
+                    * 100
                 )
             )
             record.progress_text = "%s/%s" % (
