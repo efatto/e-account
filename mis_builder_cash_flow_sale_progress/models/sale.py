@@ -29,7 +29,9 @@ class SaleOrder(models.Model):
         res = super().write(vals)
         for sale_order in self:
             if (
-                vals.get('date_progress_end')
+                vals.get('payment_term_id')
+                or vals.get('date_progress_end')
+                or vals.get('payment_mode_id')
             ):
                 sale_order.order_progress_ids._refresh_cashflow_line()
         return res
