@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="invoice_form_view_dn" model="ir.ui.view">
+            <field name="name">account.invoice.form.dn</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_shipping_id" position="after">
+                    <field name="carrier_id" />
+                </field>
+            </field>
+        </record>
+
+</odoo>
