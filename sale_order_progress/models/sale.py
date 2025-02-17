@@ -259,7 +259,7 @@ class SaleOrderLine(models.Model):
                             amount_residual += invoice_line.price_subtotal_signed
                         elif invoice_line.invoice_id.type == 'out_refund':
                             amount_residual -= invoice_line.price_subtotal_signed
-                line.qty_invoiced = amount_residual / line.price_unit
+                line.qty_invoiced = amount_residual / (line.price_unit or 1)
                 # qty_invoiced refers to the down payment amount to return (it is 1
                 # when a down payment invoice is emitted, then go to 0 when refunded)
         super()._get_invoice_qty()
