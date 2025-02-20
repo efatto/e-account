@@ -53,6 +53,8 @@ class CashFlowForecastLine(models.Model):
                             line.sale_balance_currency
                             or line.balance
                         )
+                        * (1 - line.sale_invoiced_percent)
+                        * (1 - line.sale_deposit_percent)
                     ),
                     line.sale_order_progress_id.order_id.company_id.currency_id,
                     line.sale_order_progress_id.order_id.company_id,
