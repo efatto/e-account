@@ -40,11 +40,11 @@ class CashFlowForecastLine(models.Model):
         for line in progress_lines:
             line.sale_deposit_percent = (
                 line.sale_order_progress_id.amount_advance_toreturn /
-                line.sale_order_progress_id.amount_toinvoice
+                (line.sale_order_progress_id.amount_toinvoice or 1.0)
             )
             line.sale_invoiced_percent = (
                 line.sale_order_progress_id.amount_invoiced /
-                line.sale_order_progress_id.amount_toinvoice
+                (line.sale_order_progress_id.amount_toinvoice or 1.0)
             )
             line.sale_progress_balance_forecast = (
                 line.currency_id._convert(
