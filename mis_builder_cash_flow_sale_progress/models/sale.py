@@ -80,7 +80,6 @@ class SaleOrderProgress(models.Model):
 
     @api.multi
     def _refresh_cashflow_line(self):
-        first_day_current_month = fields.Date.today().replace(day=1)
         for line in self:
             line.order_id.mapped("order_line.cashflow_line_ids").unlink()
             line.cashflow_line_ids.unlink()

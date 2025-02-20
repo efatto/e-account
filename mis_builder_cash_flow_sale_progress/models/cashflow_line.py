@@ -11,7 +11,7 @@ class CashFlowForecastLine(models.Model):
         string="Sale order progress",
     )
     sale_progress_balance_forecast = fields.Float(
-        compute="_compute_sale_progress_balance_forecast",
+        compute="_compute_sale_balance_forecast",
         string="Sale progress forecast balance",
         store=True,
     )
@@ -22,23 +22,44 @@ class CashFlowForecastLine(models.Model):
         "sale_order_progress_id.date",
         "sale_order_progress_id.order_id.currency_id.rate",
         "sale_order_progress_id.order_id.order_line.qty_invoiced",
+        "sale_order_progress_id.amount_advance_toreturn",
+        "sale_order_progress_id.amount_advance_returned",
+        "sale_order_progress_id.amount_invoiced",
+        "sale_deposit_percent",
+        "sale_line_id.qty_invoiced",
+        "sale_line_id.product_uom_qty",
+        "sale_line_id.qty_delivered",
+        "sale_line_id.order_id.commitment_date",
+        "sale_line_id.order_id.date_order",
+        "sale_line_id.order_id.currency_id.rate",
+        "sale_line_id.order_id.deposit_percent",
     )
-    def _compute_sale_progress_balance_forecast(self):
-        for line in self:
-            if line.sale_order_progress_id:
-                line.sale_progress_balance_forecast = (
-                    line.currency_id._convert(
+    def _compute_sale_balance_forecast(self):
+        progress_lines = self.filtered(lambda li: li.sale_order_progress_id)
+        other_lines = self - progress_lines
+        for line in progress_lines:
+            line.sale_deposit_percent = (
+                line.sale_order_progress_id.amount_advance_toreturn /
+                line.sale_order_progress_id.amount_toinvoice
+            )
+            line.sale_invoiced_percent = (
+                line.sale_order_progress_id.amount_invoiced /
+                line.sale_order_progress_id.amount_toinvoice
+            )
+            line.sale_progress_balance_forecast = (
+                line.currency_id._convert(
+                    (
                         (
-                            (
-                                line.sale_balance_currency
-                                or line.balance
-                            )
-                        ),
-                        line.sale_order_progress_id.order_id.company_id.currency_id,
-                        line.sale_order_progress_id.order_id.company_id,
-                        line.sale_order_progress_id.date,
-                    )
+                            line.sale_balance_currency
+                            or line.balance
+                        )
+                    ),
+                    line.sale_order_progress_id.order_id.company_id.currency_id,
+                    line.sale_order_progress_id.order_id.company_id,
+                    line.sale_order_progress_id.date,
                 )
-                line.balance = line.sale_progress_balance_forecast
-            else:
-                line.sale_progress_balance_forecast = 0
+            )
+            line.balance = line.sale_progress_balance_forecast
+        for line in other_lines:
+            line.sale_progress_balance_forecast = 0
+        super(CashFlowForecastLine, other_lines)._compute_sale_balance_forecast()

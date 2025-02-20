@@ -90,7 +90,7 @@ class SaleOrder(models.Model):
                 total_advance_amount = sum(
                     order.order_progress_ids.filtered(
                         lambda x: x.is_advance
-                    ).mapped("amount_toinvoice")
+                    ).mapped("amount_advance_toinvoice")
                     or [0]
                 )
                 total_advance_percent = 0

@@ -26,7 +26,7 @@ class CashFlowForecastLine(models.Model):
         store=True,
     )
     sale_deposit_percent = fields.Float(
-        related="sale_line_id.order_id.deposit_percent",
+        compute="_compute_sale_balance_forecast",
         string="Deposit sale (%)",
         store=True,
     )
@@ -40,10 +40,12 @@ class CashFlowForecastLine(models.Model):
         "sale_line_id.order_id.commitment_date",
         "sale_line_id.order_id.date_order",
         "sale_line_id.order_id.currency_id.rate",
+        "sale_line_id.order_id.deposit_percent",
     )
     def _compute_sale_balance_forecast(self):
         for line in self:
             if line.sale_line_id:
+                line.sale_deposit_percent = line.sale_line_id.order_id.deposit_percent
                 sale_invoiced_percent = line.sale_line_id.qty_invoiced / (
                     max(
                         line.sale_line_id.product_uom_qty,
@@ -66,5 +68,6 @@ class CashFlowForecastLine(models.Model):
                 )
                 line.balance = line.sale_balance_forecast
             else:
+                line.sale_deposit_percent = 0
                 line.sale_invoiced_percent = 0
                 line.sale_balance_forecast = 0
