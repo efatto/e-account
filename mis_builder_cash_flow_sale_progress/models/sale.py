@@ -83,6 +83,10 @@ class SaleOrderProgress(models.Model):
         for line in self:
             line.order_id.mapped("order_line.cashflow_line_ids").unlink()
             line.cashflow_line_ids.unlink()
+            line_amount = (
+                line.is_advance and line.amount_advance_toinvoice
+                or line.amount_toinvoice
+            )
             get_param = self.env['ir.config_parameter'].sudo().get_param
             param = get_param(
                 'mis_builder_cash_flow_sale_progress.valid_states', '["sale"]')
@@ -92,7 +96,7 @@ class SaleOrderProgress(models.Model):
                     continue
             if line.order_id.payment_mode_id.fixed_journal_id:
                 journal_id = line.order_id.payment_mode_id.fixed_journal_id
-                if line.residual_toinvoice < 0:
+                if line_amount < 0:
                     account_id = journal_id.default_credit_account_id
                 else:
                     account_id = journal_id.default_debit_account_id
@@ -113,7 +117,7 @@ class SaleOrderProgress(models.Model):
                 account_id = account_ids[0]
 
             # check if line is to be excluded
-            if line.invoiced or not line.residual_toinvoice:
+            if line.invoiced or not line_amount:
                 continue
             # with this value compute not invoiced amount (delivered or not)
             # residual balance must be computed on cashflow line as it depends on
@@ -122,18 +126,18 @@ class SaleOrderProgress(models.Model):
             # (1 - (line.qty_invoiced / max_qty))
 
             if not float_is_zero(
-                line.residual_toinvoice,
+                line_amount,
                 precision_rounding=line.order_id.currency_id.rounding,
             ):
                 totlines = [
                     (
                         line.date.strftime("%Y-%m-%d"),
-                        line.residual_toinvoice,
+                        line_amount,
                     )
                 ]
                 if line.payment_term_id:
                     totlines = line.payment_term_id.compute(
-                        line.residual_toinvoice,
+                        line_amount,
                         line.date,
                     )[0]
                 # create cashflow lines for dates before current month

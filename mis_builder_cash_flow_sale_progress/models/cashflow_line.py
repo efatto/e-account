@@ -24,6 +24,7 @@ class CashFlowForecastLine(models.Model):
         "sale_order_progress_id.order_id.order_line.qty_invoiced",
         "sale_order_progress_id.amount_advance_toreturn",
         "sale_order_progress_id.amount_advance_returned",
+        "sale_order_progress_id.amount_advance_invoiced",
         "sale_order_progress_id.amount_invoiced",
         "sale_deposit_percent",
         "sale_line_id.qty_invoiced",
@@ -43,6 +44,9 @@ class CashFlowForecastLine(models.Model):
                 (line.sale_order_progress_id.amount_toinvoice or 1.0)
             )
             line.sale_invoiced_percent = (
+                line.sale_order_progress_id.amount_advance_invoiced /
+                (line.sale_order_progress_id.amount_advance_toinvoice or 1.0)
+            ) if line.sale_order_progress_id.is_advance else (
                 line.sale_order_progress_id.amount_invoiced /
                 (line.sale_order_progress_id.amount_toinvoice or 1.0)
             )
