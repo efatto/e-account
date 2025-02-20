@@ -40,8 +40,10 @@ class CashFlowForecastLine(models.Model):
         other_lines = self - progress_lines
         for line in progress_lines:
             line.sale_deposit_percent = (
-                line.sale_order_progress_id.amount_advance_toreturn /
-                (line.sale_order_progress_id.amount_toinvoice or 1.0)
+                0 if line.sale_order_progress_id.is_advance else (
+                    line.sale_order_progress_id.amount_advance_toreturn /
+                    (line.sale_order_progress_id.amount_toinvoice or 1.0)
+                )
             )
             line.sale_invoiced_percent = (
                 line.sale_order_progress_id.amount_advance_invoiced /
