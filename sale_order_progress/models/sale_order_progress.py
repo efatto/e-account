@@ -159,10 +159,11 @@ class SaleOrderProgress(models.Model):
                     if progress.is_advance:
                         progress.amount_advance_invoiced += line.price_total
                     else:
-                        progress.amount_invoiced += line.price_total
                         if line.product_id.id == downpayment_product_id:
                             # advance returned are negatives
                             progress.amount_advance_returned -= line.price_total
+                        else:
+                            progress.amount_invoiced += line.price_total
                 if (
                     not progress.is_advance
                     and progress.invoiced_manual
