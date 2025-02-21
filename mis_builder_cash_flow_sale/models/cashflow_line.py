@@ -33,7 +33,6 @@ class CashFlowForecastLine(models.Model):
 
     @api.depends(
         "sale_balance_currency",
-        "sale_deposit_percent",
         "sale_line_id.qty_invoiced",
         "sale_line_id.product_uom_qty",
         "sale_line_id.qty_delivered",
