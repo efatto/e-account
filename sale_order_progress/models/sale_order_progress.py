@@ -1,6 +1,5 @@
 from odoo import api, fields, models
 from odoo.tools.date_utils import relativedelta
-from odoo.tools import float_compare
 
 
 class SaleOrderProgress(models.Model):
@@ -187,7 +186,7 @@ class SaleOrderProgress(models.Model):
                             x.order_id.amount_total * x.amount_percent / 100
                             for x in progress.order_id.order_progress_ids.filtered(
                                 lambda op: not op.is_advance and op.invoiced_manual
-                                           and not op.amount_invoiced
+                                and not op.amount_invoiced
                             )
                         ]
                         or [0]
