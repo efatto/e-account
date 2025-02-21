@@ -26,7 +26,6 @@ class CashFlowForecastLine(models.Model):
         "sale_order_progress_id.amount_advance_returned",
         "sale_order_progress_id.amount_advance_invoiced",
         "sale_order_progress_id.amount_invoiced",
-        "sale_deposit_percent",
         "sale_line_id.qty_invoiced",
         "sale_line_id.product_uom_qty",
         "sale_line_id.qty_delivered",
