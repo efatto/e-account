@@ -66,8 +66,8 @@ class StockMove(models.Model):
         move_line_vals_list = []
         for move in self.filtered(lambda x: x.state != "done"):
             rounding = roundings[move]
-            missing_reserved_uom_quantity = move.product_uom_qty - \
-                                            reserved_availability[move]
+            missing_reserved_uom_quantity = (
+                move.product_uom_qty - reserved_availability[move])
             missing_reserved_quantity = move.product_uom._compute_quantity(
                 missing_reserved_uom_quantity, move.product_id.uom_id,
                 rounding_method='HALF-UP')
@@ -79,7 +79,7 @@ class StockMove(models.Model):
                 continue
             if not move.move_orig_ids:
                 if move.procure_method == 'make_to_order':
-                    pass # THIS IS THE ONLY CHANGE OF THE ORIGINAL METHOD
+                    pass  # THIS IS THE ONLY CHANGE OF THE ORIGINAL METHOD
                 # If we don't need any quantity, consider the move assigned.
                 need = missing_reserved_quantity
                 if float_is_zero(need, precision_rounding=rounding):
@@ -121,7 +121,8 @@ class StockMove(models.Model):
                     qty_done = 0
                     for ml in g:
                         qty_done += ml.product_uom_id._compute_quantity(
-                            ml.product_uom_qty, ml.product_id.uom_id)  # original was qty_done
+                            ml.product_uom_qty, ml.product_id.uom_id
+                        )  # original was qty_done
                     grouped_move_lines_in[k] = qty_done
                 move_lines_out_done = (
                         move.move_orig_ids.mapped('move_dest_ids') - move) \
@@ -168,12 +169,14 @@ class StockMove(models.Model):
                     continue
                 for move_line in move.move_line_ids.filtered(lambda m: m.product_qty):
                     if available_move_lines.get((
-                                                move_line.location_id, move_line.lot_id,
-                                                move_line.result_package_id,
-                                                move_line.owner_id)):
-                        available_move_lines[(move_line.location_id, move_line.lot_id,
-                                              move_line.result_package_id,
-                                              move_line.owner_id)
+                        move_line.location_id, move_line.lot_id,
+                        move_line.result_package_id,
+                        move_line.owner_id)
+                    ):
+                        available_move_lines[(
+                            move_line.location_id, move_line.lot_id,
+                            move_line.result_package_id,
+                            move_line.owner_id)
                         ] -= move_line.product_qty
                 for (location_id, lot_id, package_id,
                      owner_id), quantity in available_move_lines.items():
