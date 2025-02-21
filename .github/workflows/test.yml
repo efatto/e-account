@@ -79,6 +79,8 @@ jobs:
         run: pip3 install -e "git+https://github.com/efatto/e-account@12.0#egg=odoo12-addon-sale_order_analytic_all&subdirectory=setup/sale_order_analytic_all"
       - name: Install mrp_bom_evaluation module from e-efatto repo
         run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-mrp_bom_evaluation&subdirectory=setup/mrp_bom_evaluation"
+      - name: Install product_pricelist_bom_cost module from e-efatto repo
+        run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-product_pricelist_bom_cost&subdirectory=setup/product_pricelist_bom_cost"
       - name: Install mrp_bom_sale_pricelist module from e-efatto repo
         run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-mrp_bom_sale_pricelist&subdirectory=setup/mrp_bom_sale_pricelist"
       - name: Install addons and dependencies
