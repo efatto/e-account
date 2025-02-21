@@ -52,21 +52,23 @@ jobs:
         with:
           persist-credentials: false
       - name: Pip install PR
-        run: pip3 install -e "git+https://github.com/sergiocorato/mis-builder@12.0-imp-mis_builder-query-drilldown-filtered#egg=odoo12-addon-mis_builder&subdirectory=setup/mis_builder"
+        run: pip3 install -e "git+https://github.com/efatto/mis-builder@12.0-imp-mis_builder-query-drilldown-filtered#egg=odoo12-addon-mis_builder&subdirectory=setup/mis_builder"
       - name: Install account_analytic_mrp_extra_cost module from efatto repo
-        run: pip3 install -e "git+https://github.com/sergiocorato/efatto@12.0#egg=odoo12-addon-account_analytic_mrp_extra_cost&subdirectory=setup/account_analytic_mrp_extra_cost"
+        run: pip3 install -e "git+https://github.com/efatto/efatto@12.0#egg=odoo12-addon-account_analytic_mrp_extra_cost&subdirectory=setup/account_analytic_mrp_extra_cost"
       - name: Install mrp_sale_info_link module from efatto repo
-        run: pip3 install -e "git+https://github.com/sergiocorato/efatto@12.0#egg=odoo12-addon-mrp_sale_info_link&subdirectory=setup/mrp_sale_info_link"
+        run: pip3 install -e "git+https://github.com/efatto/efatto@12.0#egg=odoo12-addon-mrp_sale_info_link&subdirectory=setup/mrp_sale_info_link"
       - name: Install mrp_production_demo module from e-efatto repo
-        run: pip3 install -e "git+https://github.com/sergiocorato/e-efatto@12.0#egg=odoo12-addon-mrp_production_demo&subdirectory=setup/mrp_production_demo"
+        run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-mrp_production_demo&subdirectory=setup/mrp_production_demo"
       - name: Install mrp_workorder_time module from e-efatto repo
-        run: pip3 install -e "git+https://github.com/sergiocorato/e-efatto@12.0#egg=odoo12-addon-mrp_workorder_time&subdirectory=setup/mrp_workorder_time"
+        run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-mrp_workorder_time&subdirectory=setup/mrp_workorder_time"
       - name: Install mrp_employee_productivity module from e-efatto repo
-        run: pip3 install -e "git+https://github.com/sergiocorato/e-efatto@12.0#egg=odoo12-addon-mrp_employee_productivity&subdirectory=setup/mrp_employee_productivity"
+        run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-mrp_employee_productivity&subdirectory=setup/mrp_employee_productivity"
       - name: Install mrp_workorder_timesheet_cost module from e-efatto repo
-        run: pip3 install -e "git+https://github.com/sergiocorato/e-efatto@12.0#egg=odoo12-addon-mrp_workorder_timesheet_cost&subdirectory=setup/mrp_workorder_timesheet_cost"
+        run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-mrp_workorder_timesheet_cost&subdirectory=setup/mrp_workorder_timesheet_cost"
       - name: Install mrp_bom_sale_pricelist module from e-efatto repo
-        run: pip3 install -e "git+https://github.com/sergiocorato/e-efatto@12.0#egg=odoo12-addon-mrp_bom_sale_pricelist&subdirectory=setup/mrp_bom_sale_pricelist"
+        run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-mrp_bom_sale_pricelist&subdirectory=setup/mrp_bom_sale_pricelist"
+      - name: Install mrp_bom_evaluation module from e-efatto repo
+        run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-mrp_bom_evaluation&subdirectory=setup/mrp_bom_evaluation"
       - name: Install addons and dependencies
         run: oca_install_addons
       - name: Check licenses
