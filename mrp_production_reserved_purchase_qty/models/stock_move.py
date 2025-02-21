@@ -112,8 +112,8 @@ class StockMove(models.Model):
 
                 def _keys_in_sorted(ml):
                     return (
-                    ml.location_dest_id.id, ml.lot_id.id, ml.result_package_id.id,
-                    ml.owner_id.id)
+                        ml.location_dest_id.id, ml.lot_id.id, ml.result_package_id.id,
+                        ml.owner_id.id)
 
                 grouped_move_lines_in = {}
                 for k, g in groupby(sorted(move_lines_in, key=_keys_in_sorted),
@@ -142,7 +142,8 @@ class StockMove(models.Model):
 
                 def _keys_out_sorted(ml):
                     return (
-                    ml.location_id.id, ml.lot_id.id, ml.package_id.id, ml.owner_id.id)
+                        ml.location_id.id, ml.lot_id.id, ml.package_id.id,
+                        ml.owner_id.id)
 
                 grouped_move_lines_out = {}
                 for k, g in groupby(sorted(move_lines_out_done, key=_keys_out_sorted),
@@ -154,7 +155,8 @@ class StockMove(models.Model):
                     grouped_move_lines_out[k] = qty_done
                 for k, g in groupby(
                     sorted(move_lines_out_reserved, key=_keys_out_sorted),
-                    key=itemgetter(*keys_out_groupby)):
+                    key=itemgetter(*keys_out_groupby)
+                ):
                     grouped_move_lines_out[k] = sum(
                         self.env['stock.move.line'].concat(*list(g)).mapped(
                             'product_qty'))
