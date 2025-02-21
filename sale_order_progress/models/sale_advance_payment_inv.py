@@ -1,6 +1,5 @@
 from odoo import api, fields, models
 from odoo.addons import decimal_precision as dp
-from odoo.tools import float_compare
 
 
 class SaleAdvancePaymentInv(models.TransientModel):

@@ -221,7 +221,8 @@ class SaleOrderLine(models.Model):
                     or not line.product_id
                 ):
                     vals = line._prepare_invoice_line(qty=qty)
-                    amount_advance_toreturn = self.env.context["amount_advance_toreturn"]
+                    amount_advance_toreturn = self.env.context[
+                        "amount_advance_toreturn"]
                     price_unit = line.price_unit
                     if line in amount_advance_toreturn:
                         price_unit = amount_advance_toreturn[line]
