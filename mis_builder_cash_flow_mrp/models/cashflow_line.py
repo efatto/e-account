@@ -65,4 +65,3 @@ class CashFlowForecastLine(models.Model):
             else:
                 line.mrp_reserved_percent = 0
                 line.mrp_balance_forecast = 0
-
