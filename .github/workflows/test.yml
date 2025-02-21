@@ -65,6 +65,10 @@ jobs:
         run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-mrp_employee_productivity&subdirectory=setup/mrp_employee_productivity"
       - name: Install mrp_workorder_timesheet_cost module from e-efatto repo
         run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-mrp_workorder_timesheet_cost&subdirectory=setup/mrp_workorder_timesheet_cost"
+      - name: Install product_finishing module from e-efatto repo
+        run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-product_finishing&subdirectory=setup/product_finishing"
+      - name: Install product_template_replenishment_cost module from e-efatto repo
+        run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-product_template_replenishment_cost&subdirectory=setup/product_template_replenishment_cost"
       - name: Install mrp_bom_evaluation module from e-efatto repo
         run: pip3 install -e "git+https://github.com/efatto/e-efatto@12.0#egg=odoo12-addon-mrp_bom_evaluation&subdirectory=setup/mrp_bom_evaluation"
       - name: Install mrp_bom_sale_pricelist module from e-efatto repo
