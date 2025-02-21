@@ -1,5 +1,5 @@
 
-from odoo import models, fields, api, _
+from odoo import models, fields, _
 from odoo.exceptions import UserError
 from odoo.addons.l10n_it_account.tools.account_tools import encode_for_export
 from odoo.addons.l10n_it_fatturapa.bindings.fatturapa import (

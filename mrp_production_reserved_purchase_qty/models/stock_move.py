@@ -125,18 +125,17 @@ class StockMove(models.Model):
                         )  # original was qty_done
                     grouped_move_lines_in[k] = qty_done
                 move_lines_out_done = (
-                        move.move_orig_ids.mapped('move_dest_ids') - move) \
-                    .filtered(lambda m: m.state in ['done']) \
-                    .mapped('move_line_ids')
+                    move.move_orig_ids.mapped('move_dest_ids') - move
+                ).filtered(lambda m: m.state in ['done']).mapped('move_line_ids')
                 # As we defer the write on the stock.move's state at the end of the loop
                 # , there could be moves to consider in what our siblings already took.
                 moves_out_siblings = move.move_orig_ids.mapped('move_dest_ids') - move
                 moves_out_siblings_to_consider = moves_out_siblings & (
-                        assigned_moves + partially_available_moves)
+                    assigned_moves + partially_available_moves)
                 reserved_moves_out_siblings = moves_out_siblings.filtered(
                     lambda m: m.state in ['partially_available', 'assigned'])
                 move_lines_out_reserved = (
-                        reserved_moves_out_siblings | moves_out_siblings_to_consider
+                    reserved_moves_out_siblings | moves_out_siblings_to_consider
                 ).mapped('move_line_ids')
                 keys_out_groupby = ['location_id', 'lot_id', 'package_id', 'owner_id']
 
