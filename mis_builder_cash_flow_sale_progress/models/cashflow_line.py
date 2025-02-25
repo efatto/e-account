@@ -44,7 +44,7 @@ class CashFlowForecastLine(models.Model):
                     (line.sale_order_progress_id.amount_toinvoice or 1.0)
                 )
             )
-            line.sale_invoiced_percent = (
+            line.sale_invoiced_percent = 1 if line.sale_order_progress_id.invoiced else (
                 line.sale_order_progress_id.amount_advance_invoiced /
                 (line.sale_order_progress_id.amount_advance_toinvoice or 1.0)
             ) if line.sale_order_progress_id.is_advance else (
