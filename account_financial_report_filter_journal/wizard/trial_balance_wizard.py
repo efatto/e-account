@@ -9,7 +9,7 @@ class TrialBalanceReportWizard(models.TransientModel):
     @api.model
     def _get_journal(self):
         journal_obj = self.env["account.journal"]
-        journal_ids = journal_obj.search(
+        journal_ids = journal_obj.with_context(active_test=False).search(
             [
                 ("trial_balance_exclude", "=", False),
             ]
