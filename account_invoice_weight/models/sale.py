@@ -8,12 +8,19 @@ class SaleOrder(models.Model):
         moves = super()._create_invoices(grouped, final, date)
 
         for move in moves:
-            if move.picking_ids.stock_package_ids:
-                move.goods_appearance_id = move.picking_ids.mapped(
+            # remove picking_ids already invoiced with other invoices!
+            picking_ids = move.picking_ids.filtered(
+                lambda pick: all(
+                    move == m for m in pick.move_lines.mapped(
+                        'invoice_line_ids.move_id')
+                )
+            )
+            if picking_ids.stock_package_ids:
+                move.goods_appearance_id = picking_ids.mapped(
                     "stock_package_ids.goods_appearance_id"
                 )[:1]
                 dimensions = []
-                for pack in move.picking_ids.mapped("stock_package_ids"):
+                for pack in picking_ids.mapped("stock_package_ids"):
                     if pack.dimensions or pack.goods_appearance_id:
                         if pack.dimensions and pack.goods_appearance_id:
                             dimensions.append(
@@ -32,7 +39,7 @@ class SaleOrder(models.Model):
                     pack.weight_custom_uom_id._compute_quantity(
                         qty=pack.weight_custom, to_unit=gross_weight_uom_id
                     )
-                    for pack in move.picking_ids.mapped("stock_package_ids")
+                    for pack in picking_ids.mapped("stock_package_ids")
                 )
                 move.gross_weight_custom = gross_weight_custom
 
