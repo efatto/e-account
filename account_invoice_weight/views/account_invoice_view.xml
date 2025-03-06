@@ -10,7 +10,14 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='packages']" position="before">
                 <field name="compute_weight" />
-                <field name="stock_package_ids" />
+                <field name="stock_package_ids">
+                    <tree>
+                        <field name="dimensions" />
+                        <field name="weight_custom" />
+                        <field name="weight_custom_uom_id" />
+                        <field name="goods_appearance_id" />
+                    </tree>
+                </field>
             </xpath>
         </field>
     </record>
