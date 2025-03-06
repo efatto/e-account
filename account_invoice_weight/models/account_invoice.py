@@ -64,8 +64,8 @@ class AccountMove(models.Model):
             # remove picking_ids already invoiced with other invoices!
             move.stock_package_ids = move.picking_ids.filtered(
                 lambda pick: all(
-                    move == m for m in pick.move_lines.mapped(
-                        'invoice_line_ids.move_id')
+                    move == m
+                    for m in pick.move_lines.mapped("invoice_line_ids.move_id")
                 )
             ).mapped("stock_package_ids")
 
