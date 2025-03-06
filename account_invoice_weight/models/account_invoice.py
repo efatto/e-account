@@ -50,6 +50,24 @@ class AccountMove(models.Model):
         help="Computation is done on save.",
     )
     packages_custom = fields.Integer()
+    stock_package_ids = fields.Many2many(
+        comodel_name="stock.quant.package",
+        string="Packages custom",
+        compute="_compute_stock_package_ids",
+        compute_sudo=True,
+        store=True,
+    )
+
+    @api.depends("picking_ids.stock_package_ids")
+    def _compute_stock_package_ids(self):
+        for move in self:
+            # remove picking_ids already invoiced with other invoices!
+            move.stock_package_ids = move.picking_ids.filtered(
+                lambda pick: all(
+                    move == m for m in pick.move_lines.mapped(
+                        'invoice_line_ids.move_id')
+                )
+            ).mapped("stock_package_ids")
 
     @api.depends("compute_weight", "picking_ids", "invoice_line_ids")
     def _compute_weight(self):
