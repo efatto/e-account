@@ -1,15 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record model="ir.ui.view" id="wizard_account_invoice_report_export">
         <field name="name">Export invoices report</field>
         <field name="model">wizard.account.invoice.export</field>
         <field name="arch" type="xml">
-            <form string="Export invoice reports" >
-                <field name="export_report_name"/>
-                <separator colspan="4"/>
+            <form string="Export invoice reports">
+                <field name="export_report_name" />
+                <separator colspan="4" />
                 <group>
-                    <button string="Export invoices" name="export_report" type="object" />
-                    <button string="Cancel" special="cancel"/>
+                    <button
+                        string="Export invoices"
+                        name="export_report"
+                        type="object"
+                    />
+                    <button string="Cancel" special="cancel" />
                 </group>
             </form>
         </field>
@@ -18,7 +22,10 @@
         <field name="name">Export account invoice reports</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">wizard.account.invoice.export</field>
-        <field name="binding_model_id" ref="l10n_it_fatturapa_in.model_fatturapa_attachment_in" />
+        <field
+            name="binding_model_id"
+            ref="l10n_it_fatturapa_in.model_fatturapa_attachment_in"
+        />
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
