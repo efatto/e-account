@@ -10,9 +10,9 @@ from odoo.tools import config
 class WizardAccountInvoiceExport(models.TransientModel):
     _name = "wizard.account.invoice.export"
 
-    export_report_name = fields.Char()
+    export_report_name = fields.Char(string="Exported file name")
     data = fields.Binary("File", readonly=True)
-    name = fields.Char("Filename", size=32, readonly=True)
+    name = fields.Char("Filename", readonly=True)
 
     def export_report(self):
         attachment_obj = self.env["ir.attachment"]

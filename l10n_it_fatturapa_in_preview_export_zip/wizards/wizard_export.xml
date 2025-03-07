@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record model="ir.ui.view" id="wizard_account_invoice_report_export">
-        <field name="name">Export invoices report</field>
+        <field name="name">Export e-invoice previews</field>
         <field name="model">wizard.account.invoice.export</field>
         <field name="arch" type="xml">
-            <form string="Export invoice reports">
+            <form string="Export e-invoice previews">
                 <field name="export_report_name" />
                 <separator colspan="4" />
                 <group>
                     <button
-                        string="Export invoices"
+                        string="Export e-invoice previews"
                         name="export_report"
                         type="object"
                     />
@@ -19,7 +19,7 @@
         </field>
     </record>
     <record id="action_report_invoice_export" model="ir.actions.act_window">
-        <field name="name">Export account invoice reports</field>
+        <field name="name">Export e-invoice previews</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">wizard.account.invoice.export</field>
         <field
