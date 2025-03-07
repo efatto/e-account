@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-07 14:13+0000\n"
-"PO-Revision-Date: 2025-03-07 14:13+0000\n"
+"POT-Creation-Date: 2025-03-07 14:24+0000\n"
+"PO-Revision-Date: 2025-03-07 14:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,24 +41,15 @@ msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: l10n_it_fatturapa_in_preview_export_zip
-#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__export_report_name
-msgid "Export Report Name"
-msgstr "Nome esportazione"
-
-#. module: l10n_it_fatturapa_in_preview_export_zip
 #: model:ir.actions.act_window,name:l10n_it_fatturapa_in_preview_export_zip.action_report_invoice_export
-msgid "Export account invoice reports"
-msgstr ""
+#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in_preview_export_zip.wizard_account_invoice_report_export
+msgid "Export e-invoice previews"
+msgstr "Esporta preview e-fatture"
 
 #. module: l10n_it_fatturapa_in_preview_export_zip
-#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in_preview_export_zip.wizard_account_invoice_report_export
-msgid "Export invoice reports"
-msgstr ""
-
-#. module: l10n_it_fatturapa_in_preview_export_zip
-#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in_preview_export_zip.wizard_account_invoice_report_export
-msgid "Export invoices"
-msgstr ""
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__export_report_name
+msgid "Exported file name"
+msgstr "Nome file esportato"
 
 #. module: l10n_it_fatturapa_in_preview_export_zip
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__data
@@ -78,17 +69,17 @@ msgstr ""
 #. module: l10n_it_fatturapa_in_preview_export_zip
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: l10n_it_fatturapa_in_preview_export_zip
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento da"
 
 #. module: l10n_it_fatturapa_in_preview_export_zip
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamenti il"
 
 #. module: l10n_it_fatturapa_in_preview_export_zip
 #: model:ir.model,name:l10n_it_fatturapa_in_preview_export_zip.model_wizard_account_invoice_export
