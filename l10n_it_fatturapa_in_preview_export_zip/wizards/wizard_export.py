@@ -26,7 +26,7 @@ class WizardAccountInvoiceExport(models.TransientModel):
             result = base64.b64encode(pdf)
             file_name = "%s_%s.pdf" % (
                 attach.xml_supplier_id.name,
-                attach.invoices_number,
+                attach.id,
             )
             att = attachment_obj.create(
                 {
