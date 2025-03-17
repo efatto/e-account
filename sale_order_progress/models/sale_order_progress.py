@@ -110,8 +110,11 @@ class SaleOrderProgress(models.Model):
     def _compute_date(self):
         for progress in self:
             progress.date = ((
-                progress.order_id.date_progress_end
-                or progress.order_id.date_order.date()
+                progress.order_id.date_progress_end if
+                progress.order_id.date_progress_end else
+                progress.order_id.date_order.date()
+                if progress.order_id.date_order else
+                fields.Date.today()
             ) + relativedelta(
                 months=progress.offset_month))
 
