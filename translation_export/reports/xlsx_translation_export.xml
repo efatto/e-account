@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="xlsx_translation_export" model="ir.actions.report">
+        <field name="name">Export Translation XLSX</field>
+        <field name="model">translation.export</field>
+        <field
+            name="binding_model_id"
+            ref="translation_export.model_translation_export"
+        />
+        <field name="report_type">xlsx</field>
+        <field name="report_name">translation_export.xlsx_translation_export</field>
+        <field name="report_file">translation_export.xlsx_translation_export</field>
+        <field name="print_report_name">
+            'Products Translation'
+        </field>
+    </record>
+
+</odoo>

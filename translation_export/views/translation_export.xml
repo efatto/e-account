@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_translation_export_tree">
+        <field name="name">translation.export.tree</field>
+        <field name="model">translation.export</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="max_export_number" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_translation_export_form">
+        <field name="name">translation.export.form</field>
+        <field name="model">translation.export</field>
+        <field name="arch" type="xml">
+            <form string="Replenishment Cost">
+                <header>
+                    <button
+                        name="button_create_export"
+                        string="Export Translation"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label
+                            for="name"
+                            class="oe_edit_only"
+                            string="Export Translation Name"
+                        />
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="max_export_number" />
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_translation_export">
+        <field name="name">Translation Export</field>
+        <field name="res_model">translation.export</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_translation_export_tree" />
+    </record>
+    <menuitem
+        name="Translation Export"
+        id="menu_translation_export"
+        parent="stock.menu_warehouse_config"
+        action="action_translation_export"
+    />
+</odoo>
