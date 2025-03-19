@@ -16,6 +16,7 @@
         "security/ir.model.access.csv",
         "views/translation_export.xml",
         "reports/xlsx_translation_export.xml",
+        "data/cron.xml",
     ],
     "installable": True,
 }

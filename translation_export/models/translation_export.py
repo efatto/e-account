@@ -17,7 +17,7 @@ class TranslationExport(models.Model):
     def button_create_export(self):
         self.create_export()
 
-    def cron_create_export(self):
+    def _cron_create_export(self):
         self.search([]).create_export()
 
     def create_export(self):
@@ -37,7 +37,7 @@ class TranslationExport(models.Model):
             result = base64.b64encode(report_content)
             file_name = "%s_%s.xlsx" % (
                 rec.name,
-                fields.Datetime.now().strftime("%d_%m_%Y_%HH_%MM_%SS"),
+                fields.Datetime.now().strftime("%d_%m_%Y_%H_%M_%S"),
             )
             attachment_obj.create(
                 {
