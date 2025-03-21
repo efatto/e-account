@@ -16,7 +16,6 @@
         "mrp_workorder_timesheet_cost",
         "purchase_stock",
         "sale_order_line_usability",
-        "sale_order_progress",
         "stock_move_usability",
     ],
     "data": [
@@ -24,7 +23,6 @@
         "views/mrp.xml",
         "views/purchase.xml",
         "views/sale.xml",
-        "views/sale_order_progress.xml",
         "views/stock.xml",
     ],
     "installable": True,
