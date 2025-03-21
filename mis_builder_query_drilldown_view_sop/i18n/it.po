@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* mis_builder_query_drilldown_view
+#	* mis_builder_query_drilldown_view_sop
 #
 msgid ""
 msgstr ""
@@ -14,75 +14,3 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_account_analytic_line_tree
-msgid "Analytic Entries"
-msgstr "Registrazioni analitiche"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_invoice_line_tree
-msgid "Invoice Line"
-msgstr "Riga Fattura"
-
-#. module: mis_builder_query_drilldown_view
-#: model:ir.model,name:mis_builder_query_drilldown_view.model_mis_report_instance
-msgid "MIS Report Instance"
-msgstr "Istanza MIS Report"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_workcenter_productivity_tree
-msgid "Mrp Workcenter Productivity"
-msgstr "Tempi Lavorazioni"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_order_line_tree
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_stock_move_tree
-msgid "Qty"
-msgstr "Q.tà"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_account_analytic_line_tree
-msgid "Quantity"
-msgstr "Quantità"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_order_line_tree
-msgid "Sales Order Lines"
-msgstr "Righe ordine di vendita"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_stock_move_tree
-msgid "Stock Moves"
-msgstr "Movimenti di magazzino"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_account_analytic_line_tree
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_invoice_line_tree
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_order_line_tree
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_stock_move_tree
-msgid "Total"
-msgstr "Totale"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_workcenter_productivity_tree
-msgid "Total (hours)"
-msgstr "Totale (ore)"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_invoice_line_tree
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_workcenter_productivity_tree
-msgid "Total Cost"
-msgstr "Costo totale"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_order_line_tree
-msgid "Total Cost To Invoice"
-msgstr "Costo totale da fatturare"
-
-#. module: mis_builder_query_drilldown_view
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_order_line_tree
-#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view.view_stock_move_tree
-msgid "Unit of Measure"
-msgstr "Unità di misura"
-
