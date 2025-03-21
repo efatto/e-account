@@ -16,5 +16,6 @@
         "views/sale_order_progress.xml",
     ],
     "installable": True,
+    "auto_install": True,
     "maintainers": ["sergiocorato"],
 }
