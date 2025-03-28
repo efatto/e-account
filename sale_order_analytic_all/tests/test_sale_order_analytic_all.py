@@ -1,4 +1,4 @@
-from odoo.tests import common
+from odoo.tests import common, Form
 
 
 class TestSaleOrderAnalyticAll(common.SavepointCase):
@@ -22,25 +22,12 @@ class TestSaleOrderAnalyticAll(common.SavepointCase):
             ]
         }])
 
-    def _create_sale_order(self):
-        new_sale = self.sale_order_model.sudo(self.sale_user).create({
-            'partner_id': self.partner.id,
-        })
-        return new_sale
-
-    def _create_sale_order_line(self, order, product, qty):
-        line = self.env['sale.order.line'].sudo(self.sale_user).create({
-            'order_id': order.id,
-            'product_id': product.id,
-            'product_uom_qty': qty,
-            'price_unit': 100,
-            })
-        line.product_id_change()
-        line._convert_to_write(line._cache)
-        return line
-
     def test_order_add_task_product(self):
-        sale_order_1 = self._create_sale_order()
+        sale_form = Form(
+            self.env["sale.order"].sudo(self.sale_user)
+        )
+        sale_form.partner_id = self.partner
+        sale_order_1 = sale_form.save()
         # confirm order without lines
         sale_order_1.action_confirm()
         self.assertEqual(sale_order_1.state, 'sale')
@@ -54,11 +41,20 @@ class TestSaleOrderAnalyticAll(common.SavepointCase):
             ('name', '=', sale_order_1.name)
         ])
         self.assertEqual(len(project), 1, msg="Project was not created")
-
-        sol1 = self._create_sale_order_line(sale_order_1, self.product, 5)
-        sol2 = self._create_sale_order_line(sale_order_1, self.product1, 20)
+        sale_form = Form(sale_order_1.sudo(self.sale_user))
+        with sale_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product
+            order_line_form.product_uom_qty = 5
+            order_line_form.price_unit = 100
+        with sale_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product1
+            order_line_form.product_uom_qty = 20
+            order_line_form.price_unit = 100
+        sale_order = sale_form.save()
         # check new lines of type task and service tracking has the
         # project of sale order
+        sol1 = sale_order.order_line[0]
+        sol2 = sale_order.order_line[1]
         self.assertNotEqual(self.product1.service_tracking, "no")
         self.assertEqual(sale_order_1.project_id, sol1.project_id)
         self.assertEqual(sol1.project_id.sale_line_id, sol1)
