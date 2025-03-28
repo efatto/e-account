@@ -28,6 +28,11 @@ class SaleOrder(models.Model):
         compute="_compute_totals",
         store=True,
     )
+    # todo add field if useful
+    # amount_advance_toreturn_difference = fields.Monetary(
+    #     compute="_compute_totals",
+    #     store=True,
+    # )
     date_progress_end = fields.Date(
         string="Expected end date",
     )
@@ -133,6 +138,9 @@ class SaleOrder(models.Model):
                     amount_toinvoice_total
                     - order.amount_total
                 )
+                # todo add a field amount_advance_toreturn_difference if useful
+                # if total advance returned is lower than total advance, possible when
+                # invoiced lines have a returned value lower than the due value
             else:
                 order.amount_percent_total = 0
                 order.amount_toinvoice_total = 0
