@@ -157,4 +157,5 @@ class TestMisBuilderCashflowSale(SavepointCase):
         sale_order.action_cancel()
         self.assertFalse(sale_order.mapped("order_line.cashflow_line_ids"))
         sale_order.action_draft()
+        sale_order.action_confirm()
         self.assertTrue(sale_order.mapped("order_line.cashflow_line_ids"))
