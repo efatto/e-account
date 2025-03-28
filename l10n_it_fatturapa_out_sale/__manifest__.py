@@ -7,7 +7,7 @@
     "version": "12.0.1.0.1",
     "development_status": "Beta",
     "category": "Hidden",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "author": "Sergio Corato",
     "maintainers": ["sergiocorato"],
     "license": "AGPL-3",

@@ -9,7 +9,7 @@
                    'account for each revision. '
                    'This module set the same analytic account on revisioned sale order '
                    'as the original sale order, to do not create duplicated accounts.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'sale_order_revision',

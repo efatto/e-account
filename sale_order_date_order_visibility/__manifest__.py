@@ -7,7 +7,7 @@
     'author': 'Sergio Corato',
     'description': 'Move date_order for quotation in header for better visibility '
                    'with opportunity, client order ref, project and analytic.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'sale_crm',

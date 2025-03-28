@@ -6,7 +6,7 @@
     'category': 'other',
     'author': 'Sergio Corato',
     'description': 'This module extend menu for uninvoiced order lines.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'sale_backorder',

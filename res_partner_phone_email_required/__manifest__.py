@@ -8,7 +8,7 @@
     'description': 'When creating a partner directly from a sale order, '
                    'phone, mobile or email are required with this module. '
                    'Partner cannot be created quickly - e.g. only with name.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'account',

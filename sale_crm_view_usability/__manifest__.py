@@ -7,7 +7,7 @@
     'author': 'Sergio Corato',
     'description': 'This module extend sale order showing sale order button even if '
                    'amount is zero',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'sale_crm',

@@ -11,7 +11,7 @@
     incoming moves.
     """,
     'author': "Sergio Corato",
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'depends': [
         'purchase_mrp',
         'purchase_line_procurement_group',

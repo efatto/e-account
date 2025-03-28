@@ -5,7 +5,7 @@
     "version": "12.0.1.0.1",
     "category": "Reporting",
     "author": "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "summary": "Add analytic extra cost to drilldown view to mis report",
     "depends": [

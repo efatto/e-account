@@ -7,7 +7,7 @@
     'author': 'Sergio Corato',
     'description': 'Technical module that add a computed field which store percent of '
                    'total deposited amount for a sale order.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'sale',

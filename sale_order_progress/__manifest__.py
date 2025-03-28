@@ -8,7 +8,7 @@
     'description': 'This module add the ability to link sale advance lines generated '
                    'in the invoices to sale progress, to compute amount to be invoiced '
                    'in specific dates of the sale order.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'report_py3o',

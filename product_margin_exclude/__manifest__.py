@@ -6,7 +6,7 @@
     'category': 'other',
     'author': 'Sergio Corato',
     'summary': 'Add ability to exclude products from margin computation.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'sale_order_margin_percent',

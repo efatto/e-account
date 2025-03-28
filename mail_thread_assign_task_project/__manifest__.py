@@ -10,7 +10,7 @@
                    'this. '
                    'N.B.: This module is useful only if you have a single project for '
                    'customer!',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'LGPL-3',
     'depends': [
         'mail',

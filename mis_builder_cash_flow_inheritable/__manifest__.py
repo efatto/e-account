@@ -7,7 +7,7 @@
     'author': 'Sergio Corato',
     'description': 'This module do nothing by himself. It is used from other modules '
                    'to extend cash flow query.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'mis_builder_cash_flow',

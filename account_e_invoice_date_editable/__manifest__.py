@@ -7,7 +7,7 @@
     'license': 'AGPL-3',
     'summary': "Add the ability to always set e-invoice received date",
     'author': "Sergio Corato",
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'depends': [
         'l10n_it_fatturapa_in',
     ],

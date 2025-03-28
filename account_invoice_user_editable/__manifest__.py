@@ -5,7 +5,7 @@
     'version': '12.0.1.0.1',
     'category': 'Accounting',
     'author': 'Sergio Corato',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'description': 'Account invoice user editable',
     'license': 'AGPL-3',
     'depends': [

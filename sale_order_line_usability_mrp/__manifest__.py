@@ -6,7 +6,7 @@
     'category': 'other',
     'author': 'Sergio Corato',
     'summary': 'Autoinstall module to fix computation on mrp.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'mrp_bom_sale_pricelist',

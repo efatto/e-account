@@ -7,7 +7,7 @@
     'author': 'Sergio Corato',
     'summary': 'This module syncronize the partner bank of the invoice on the payment '
                'mode if with a single bank.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'account_payment_partner',

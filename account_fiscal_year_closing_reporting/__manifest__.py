@@ -6,7 +6,7 @@
     "summary": "Remove fyc moves from account reporting",
     "version": "12.0.1.0.3",
     "category": "Accounting & Finance",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "author": "Sergio Corato",
     "maintainers": ["sergiocorato"],
     "license": "AGPL-3",

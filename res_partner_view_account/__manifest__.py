@@ -9,7 +9,7 @@
     'author': 'Alexis de Lattre - Akretion, Sergio Corato',
     'description': 'With this module partner will have button with '
                    'only account moves linked to account.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'account',

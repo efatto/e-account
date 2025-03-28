@@ -7,7 +7,7 @@
     'author': 'Sergio Corato',
     'description': 'With this module partner will have normal selection of '
                    'payment term.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'account_payment_partner',

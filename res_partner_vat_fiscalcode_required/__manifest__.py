@@ -8,7 +8,7 @@
     'description': 'Partner vat or fiscalcode required if no contact. '
                    'Remove quick-create from sale - purchase order to put '
                    'required only in view.',
-    'website': 'https://github.com/sergiocorato/e-account',
+    'website': 'https://github.com/efatto/e-account',
     'license': 'AGPL-3',
     'depends': [
         'l10n_it_fiscalcode',

@@ -8,7 +8,7 @@
     "summary": "Modulo ponte tra emissione fatture elettroniche e DN",
     "version": "12.0.1.0.0",
     "category": "Hidden",
-    'website': 'https://github.com/sergiocorato/e-account'
+    'website': 'https://github.com/efatto/e-account'
                '/tree/12.0/l10n_it_fatturapa_out_dn',
     "author": "Sergio Corato",
     "license": "AGPL-3",

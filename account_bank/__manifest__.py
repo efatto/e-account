@@ -5,7 +5,7 @@
     "version": "12.0.1.0.1",
     "category": "other",
     "author": "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "description": "Add company dependent bank in partner",
     "license": "LGPL-3",
     "depends": [
