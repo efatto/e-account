@@ -41,22 +41,22 @@ class TestSaleOrderAnalyticAll(common.SavepointCase):
             ('name', '=', sale_order_1.name)
         ])
         self.assertEqual(len(project), 1, msg="Project was not created")
-        # sale_form = Form(sale_order_1.sudo(self.sale_user))
-        # with sale_form.order_line.new() as order_line_form:
-        #     order_line_form.product_id = self.product
-        #     order_line_form.product_uom_qty = 5
-        #     order_line_form.price_unit = 100
-        # with sale_form.order_line.new() as order_line_form:
-        #     order_line_form.product_id = self.product1
-        #     order_line_form.product_uom_qty = 20
-        #     order_line_form.price_unit = 100
-        # sale_order = sale_form.save()
-        # # check new lines of type task and service tracking has the
-        # # project of sale order
-        # sol1 = sale_order.order_line[0]
-        # sol2 = sale_order.order_line[1]
-        # self.assertNotEqual(self.product1.service_tracking, "no")
-        # self.assertEqual(sale_order_1.project_id, sol1.project_id)
-        # self.assertEqual(sol1.project_id.sale_line_id, sol1)
-        # self.assertEqual(sale_order_1.project_id, sol2.project_id)
-        # self.assertEqual(len(sale_order_1.tasks_ids), 1)
+        sale_form = Form(sale_order_1.sudo(self.sale_user))
+        with sale_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product
+            order_line_form.product_uom_qty = 5
+            order_line_form.price_unit = 100
+        with sale_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product1
+            order_line_form.product_uom_qty = 20
+            order_line_form.price_unit = 100
+        sale_order = sale_form.save()
+        # check new lines of type task and service tracking has the
+        # project of sale order
+        sol1 = sale_order.order_line[0]
+        sol2 = sale_order.order_line[1]
+        self.assertNotEqual(self.product1.service_tracking, "no")
+        self.assertEqual(sale_order_1.project_id, sol1.project_id)
+        self.assertEqual(sol1.project_id.sale_line_id, sol1)
+        self.assertEqual(sale_order_1.project_id, sol2.project_id)
+        self.assertEqual(len(sale_order_1.tasks_ids), 1)
