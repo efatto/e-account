@@ -4,7 +4,7 @@
     "name": "Tax children check",
     "version": "12.0.1.0.0",
     "author": "Sergio Corato",
-    "website": "https://github.com/sergiocorato/e-account",
+    "website": "https://github.com/efatto/e-account",
     "category": "Accounting",
     "license": "AGPL-3",
     "depends": ["l10n_it_account"],
