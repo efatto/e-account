@@ -12,7 +12,7 @@ class MisReportInstance(models.Model):
                 "views": [
                     [
                         self.env.ref(
-                            'mis_builder_query_drilldown_view_sop.view_order_progress_tree'
+                            'mis_builder_query_drilldown_view_sop.view_order_progress_tree'  # noqa
                         ).id, 'list'
                     ], [False, 'form']
                 ],
