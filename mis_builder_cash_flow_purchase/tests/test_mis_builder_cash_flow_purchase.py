@@ -61,10 +61,10 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
         })
         self._create_purchase_order_line(
             purchase_order, self.product, 5.0, 13,
-            fields.Date.today() + relativedelta(days=40))
+            fields.Datetime.now() + relativedelta(days=40))
         self._create_purchase_order_line(
             purchase_order, self.product1, 5.0, 19,
-            fields.Date.today() + relativedelta(days=70))
+            fields.Datetime.now() + relativedelta(days=70))
         self.assertEqual(
             len(purchase_order.order_line), 2, msg='Order line was not created')
         purchase_order.button_confirm()
@@ -85,10 +85,10 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
         })
         self._create_purchase_order_line(
             purchase_order1, self.product, 5.0, 13,
-            fields.Date.today() + relativedelta(days=40))
+            fields.Datetime.now() + relativedelta(days=40))
         self._create_purchase_order_line(
             purchase_order1, self.product1, 5.0, 19,
-            fields.Date.today() + relativedelta(days=70))
+            fields.Datetime.now() + relativedelta(days=70))
         self.assertEqual(
             len(purchase_order1.order_line), 2, msg='Order line was not created')
         purchase_order1.button_confirm()
