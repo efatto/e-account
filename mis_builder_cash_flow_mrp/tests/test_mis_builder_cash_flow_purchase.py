@@ -108,4 +108,5 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
         purchase_order1.button_cancel()
         self.assertFalse(purchase_order1.mapped("order_line.cashflow_line_ids"))
         purchase_order1.button_draft()
+        purchase_order1.button_confirm()
         self.assertTrue(purchase_order1.mapped("order_line.cashflow_line_ids"))
