@@ -44,16 +44,16 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
         })
 
     def _create_purchase_order_line(self, order, product, qty, price_unit, date):
-        sale_form = Form(order)
-        with sale_form.order_line.new() as order_line_form:
+        purchase_form = Form(order)
+        with purchase_form.order_line.new() as order_line_form:
             order_line_form.name = product.name
             order_line_form.product_id = product
             order_line_form.product_uom = product.uom_po_id
             order_line_form.product_qty = qty
             order_line_form.price_unit = price_unit
             order_line_form.date_planned = date
-            order_line_form.tax_id.add(self.tax)
-        sale_form.save()
+            order_line_form.taxes_id.add(self.tax)
+        purchase_form.save()
 
     def test_01_purchase_no_payment_term_cashflow(self):
         purchase_order = self.env['purchase.order'].create({
