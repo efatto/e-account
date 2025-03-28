@@ -1,5 +1,6 @@
 # Copyright 2023 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from odoo.tests import Form
 from odoo.tests.common import SavepointCase
 from odoo import fields
 from odoo.tools.date_utils import relativedelta
@@ -43,20 +44,16 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
         })
 
     def _create_purchase_order_line(self, order, product, qty, price_unit, date):
-        vals = {
-            'name': product.name,
-            'order_id': order.id,
-            'product_id': product.id,
-            'product_uom': product.uom_po_id.id,
-            'product_qty': qty,
-            'price_unit': price_unit,
-            'date_planned': date,
-            'taxes_id': [(6, 0, self.tax.ids)],
-        }
-        line = self.env['purchase.order.line'].create(vals)
-        line.onchange_product_id()
-        line._convert_to_write(line._cache)
-        return line
+        sale_form = Form(order)
+        with sale_form.order_line.new() as order_line_form:
+            order_line_form.name = product.name
+            order_line_form.product_id = product
+            order_line_form.product_uom = product.uom_po_id
+            order_line_form.product_qty = qty
+            order_line_form.price_unit = price_unit
+            order_line_form.date_planned = date
+            order_line_form.tax_id.add(self.tax)
+        sale_form.save()
 
     def test_01_purchase_no_payment_term_cashflow(self):
         purchase_order = self.env['purchase.order'].create({
