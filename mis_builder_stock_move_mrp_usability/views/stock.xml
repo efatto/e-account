@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_move_tree" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="name">stock.move.tree.mrp</field>
+        <field name="inherit_id" ref="mis_builder_query_drilldown_view.view_stock_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="price_unit" position="replace">
+                <field name="bom_line_price_unit" widget="monetary"/>
+            </field>
+            <field name="price_total" position="replace">
+                <field name="bom_price_total" sum="Total" widget="monetary"/>
+            </field>
+        </field>
+    </record>
+</odoo>
