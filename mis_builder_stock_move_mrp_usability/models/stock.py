@@ -13,5 +13,5 @@ class StockMove(models.Model):
     def _compute_bom_price_total(self):
         for move in self:
             move.bom_price_total = move.quantity_done * (
-                move.bom_line_price_unit or move.price_unit
+                - move.bom_line_price_unit or move.price_unit
             )
