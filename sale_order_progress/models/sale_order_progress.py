@@ -5,7 +5,7 @@ from odoo.tools.date_utils import relativedelta
 class SaleOrderProgress(models.Model):
     _name = "sale.order.progress"
     _description = "Sale Order Progress"
-    _order = "offset_month"
+    _order = "date"
 
     name = fields.Char(string="Name", required=True)
     is_advance = fields.Boolean(string="Is an advance?")
@@ -75,16 +75,8 @@ class SaleOrderProgress(models.Model):
     invoiced_manual = fields.Boolean(
         string="Force invoiced",
     )
-    offset_month = fields.Integer(
-        string="Offset months (+/-)",
-        help="Number of months with positive (forward) or negative (backward) value "
-             "used to compute the foreseen invoicing date of this line starting from "
-             "the commitment date month."
-    )
     date = fields.Date(
-        compute="_compute_date",
         string="Date",
-        store=True,
     )
     payment_term_id = fields.Many2one(
         comodel_name="account.payment.term",
@@ -100,23 +92,6 @@ class SaleOrderProgress(models.Model):
     def _onchange_amount_percent(self):
         if self.amount_percent:
             self.amount_toinvoice_manual = 0
-
-    @api.multi
-    @api.depends(
-        'offset_month',
-        'order_id.date_progress_end',
-        'order_id.date_order',
-    )
-    def _compute_date(self):
-        for progress in self:
-            progress.date = ((
-                progress.order_id.date_progress_end if
-                progress.order_id.date_progress_end else
-                progress.order_id.date_order.date()
-                if progress.order_id.date_order else
-                fields.Date.today()
-            ) + relativedelta(
-                months=progress.offset_month))
 
     @api.multi
     @api.depends(

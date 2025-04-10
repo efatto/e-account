@@ -5,7 +5,6 @@
         <field name="model">sale.order.progress</field>
         <field name="arch" type="xml">
             <search string="Search order progress">
-                <field name="offset_month"/>
                 <field name="date"/>
                 <field name="payment_term_id"/>
                 <field name="name"/>
@@ -29,7 +28,6 @@
         <field name="model">sale.order.progress</field>
         <field name="arch" type="xml">
             <tree string="Sale order progress">
-                <field name="offset_month"/>
                 <field name="date"/>
                 <field name="payment_term_id"/>
                 <field name="name"/>
@@ -61,7 +59,6 @@
                     </group>
                     <group>
                         <group>
-                            <field name="offset_month"/>
                             <field name="date"/>
                             <field name="payment_term_id"/>
                             <field name="is_advance"/>
