@@ -20,7 +20,8 @@ class AccountInvoiceLine(models.Model):
     @api.multi
     def _compute_sale_order_ids(self):
         for line in self:
-            if line.sale_line_ids:
-                line.sale_order_ids = line.mapped("sale_line_ids.order_id")
+            # get intentionally orders from all the lines of the invoice
+            if self.mapped("sale_line_ids"):
+                line.sale_order_ids = self.mapped("sale_line_ids.order_id")
             else:
                 line.sale_order_ids = False
