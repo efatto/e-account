@@ -17,11 +17,14 @@ class AccountInvoiceLine(models.Model):
         groups="account.group_account_invoice"
     )
 
+    @api.depends("sale_line_ids")
     @api.multi
     def _compute_sale_order_ids(self):
         for line in self:
             # get intentionally orders from all the lines of the invoice
-            if self.mapped("sale_line_ids"):
-                line.sale_order_ids = self.mapped("sale_line_ids.order_id")
+            invoice_sale_lines = line.mapped(
+                "invoice_id.invoice_line_ids.sale_line_ids")
+            if invoice_sale_lines:
+                line.sale_order_ids = invoice_sale_lines.mapped("order_id")
             else:
                 line.sale_order_ids = False
