@@ -68,7 +68,7 @@ class SaleOrderProgress(models.Model):
     def write(self, vals):
         res = super().write(vals)
         if (
-            vals.get("offset_month")
+            vals.get("date")
             or vals.get("is_advance")
             or vals.get("amount_percent")
             or vals.get("amount_toinvoice_manual")

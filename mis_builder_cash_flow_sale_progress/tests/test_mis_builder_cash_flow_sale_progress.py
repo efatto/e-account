@@ -109,15 +109,21 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
         sale_form = Form(sale_order)
         with sale_form.order_progress_ids.new() as order_progress_form:
             order_progress_form.name = "Advance 10%"
-            order_progress_form.offset_month = 1
+            order_progress_form.date = (
+                sale_order.date_order + relativedelta(month=1)
+            ).date()
             order_progress_form.amount_percent = 10
         with sale_form.order_progress_ids.new() as order_progress_form:
             order_progress_form.name = "First SAL"
-            order_progress_form.offset_month = 3
+            order_progress_form.date = (
+                sale_order.date_order + relativedelta(month=3)
+            ).date()
             order_progress_form.amount_percent = 60
         with sale_form.order_progress_ids.new() as order_progress_form:
             order_progress_form.name = "Last SAL"
-            order_progress_form.offset_month = 4
+            order_progress_form.date = (
+                sale_order.date_order + relativedelta(month=4)
+            ).date()
             order_progress_form.amount_percent = 30
         sale_order = sale_form.save()
         sop_lines = sale_order.order_progress_ids
@@ -162,16 +168,22 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
         sale_form = Form(sale_order)
         with sale_form.order_progress_ids.new() as order_progress_form:
             order_progress_form.name = "Advance 10%"
-            order_progress_form.offset_month = 1
+            order_progress_form.date = (
+                sale_order.date_order + relativedelta(month=1)
+            ).date()
             order_progress_form.amount_percent = 10
         with sale_form.order_progress_ids.new() as order_progress_form:
             order_progress_form.name = "First SAL"
-            order_progress_form.offset_month = 3
+            order_progress_form.date = (
+                sale_order.date_order + relativedelta(month=3)
+            ).date()
             order_progress_form.amount_percent = 60
             order_progress_form.payment_term_id = self.payment_term_2rate
         with sale_form.order_progress_ids.new() as order_progress_form:
             order_progress_form.name = "Last SAL"
-            order_progress_form.offset_month = 4
+            order_progress_form.date = (
+                sale_order.date_order + relativedelta(month=4)
+            ).date()
             order_progress_form.amount_percent = 30
             order_progress_form.payment_term_id = self.payment_term_2rate
         sale_order = sale_form.save()
