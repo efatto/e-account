@@ -134,7 +134,9 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
         for line in sop_lines:
             self.assertTrue(line.cashflow_line_ids)
             self.assertAlmostEqual(
-                sum(line.mapped("cashflow_line_ids.sale_progress_balance_forecast")),
+                float(
+                    sum(line.mapped("cashflow_line_ids.sale_progress_balance_forecast"))
+                ),
                 line.amount_toinvoice,
                 places=2,
             )
@@ -195,7 +197,9 @@ class TestMisBuilderCashflowSaleProgress(SavepointCase):
         for line in sop_lines:
             self.assertTrue(line.cashflow_line_ids)
             self.assertAlmostEqual(
-                sum(line.mapped("cashflow_line_ids.sale_progress_balance_forecast")),
+                float(
+                    sum(line.mapped("cashflow_line_ids.sale_progress_balance_forecast"))
+                ),
                 line.amount_toinvoice,
                 places=2,
             )
