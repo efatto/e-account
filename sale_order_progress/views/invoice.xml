@@ -7,6 +7,12 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='account_id']" position="after">
                 <field name="sale_order_ids" invisible="1"/>
+                <button
+                    name="%(sale_order_progress.action_update_account_invoice_line)d"
+                    type="action"
+                    icon="fa-edit"
+                    attrs="{'invisible': [('display_type', 'in', ('line_section', 'line_note'))]}"
+                />
                 <field name="sale_order_progress_id"
                        domain="[('order_id', 'in', sale_order_ids)]"/>
             </xpath>

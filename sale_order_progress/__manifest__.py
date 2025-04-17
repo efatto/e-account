@@ -16,6 +16,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'wizard/update_account_invoice_line.xml',
         'views/invoice.xml',
         'views/sale_order.xml',
         'views/sale_order_progress.xml',
