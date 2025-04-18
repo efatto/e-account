@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="assets_backend" name="mis_builder" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/mis_builder_xlsx_exploded/static/src/js/mis_report_widget.js"
+            />
+        </xpath>
+    </template>
+    <record id="mis_report_instance_view_tree" model="ir.ui.view">
+        <field name="inherit_id" ref="mis_builder.mis_report_instance_view_tree"/>
+        <field name="model">mis.report.instance</field>
+        <field name="arch" type="xml">
+            <button name="export_xls" position="after">
+                <button
+                    type="object"
+                    name="export_xls_exploded"
+                    string="Export Exploded"
+                    icon="fa-download"
+                />
+            </button>
+        </field>
+    </record>
+    <record id="mis_report_instance_view_form" model="ir.ui.view">
+        <field name="inherit_id" ref="mis_builder.mis_report_instance_view_form"/>
+        <field name="model">mis.report.instance</field>
+        <field name="arch" type="xml">
+            <button name="export_xls" position="after">
+                <button
+                    type="object"
+                    name="export_xls_exploded"
+                    string="Export Exploded"
+                    icon="fa-download"
+                />
+            </button>
+        </field>
+    </record>
+    <record id="wizard_mis_report_instance_view_form" model="ir.ui.view">
+        <field name="inherit_id" ref="mis_builder.wizard_mis_report_instance_view_form"/>
+        <field name="model">mis.report.instance</field>
+        <field name="arch" type="xml">
+            <button name="export_xls" position="after">
+                <button
+                    type="object"
+                    name="export_xls_exploded"
+                    string="Export Exploded"
+                    icon="fa-download"
+                />
+            </button>
+        </field>
+    </record>
+    <record id="mis_report_view_kpi_form" model="ir.ui.view">
+        <field name="inherit_id" ref="mis_builder.mis_report_view_kpi_form"/>
+        <field name="model">mis.report.kpi</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='auto_expand_accounts']" position="after">
+                <field name="cell_report_expression"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
