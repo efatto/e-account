@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-18 12:48+0000\n"
-"PO-Revision-Date: 2025-04-18 12:48+0000\n"
+"POT-Creation-Date: 2025-04-18 15:56+0000\n"
+"PO-Revision-Date: 2025-04-18 15:56+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,11 +21,14 @@ msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: mis_builder_xlsx_exploded
+#. openerp-web
+#: code:addons/mis_builder_xlsx_exploded/static/src/xml/mis_report_widget.xml:6
 #: model_terms:ir.ui.view,arch_db:mis_builder_xlsx_exploded.mis_report_instance_view_form
 #: model_terms:ir.ui.view,arch_db:mis_builder_xlsx_exploded.mis_report_instance_view_tree
 #: model_terms:ir.ui.view,arch_db:mis_builder_xlsx_exploded.wizard_mis_report_instance_view_form
+#, python-format
 msgid "Export Exploded"
-msgstr ""
+msgstr "Esporta con dettagli"
 
 #. module: mis_builder_xlsx_exploded
 #: model:ir.model.fields,field_description:mis_builder_xlsx_exploded.field_mis_report_kpi__cell_report_expression
@@ -38,7 +41,7 @@ msgid "Field or expression to evaluate to be shown in report xlsx.Possible use o
 msgstr "Campo o espressione che verrà valutata e mostrata nel report xlsx. La cella è riferibile come 'record'. Es.: 'name' or 'product_id.name' or '.join(record.extra_cost_invoice_line_ids.mapped(\"name\"))'"
 
 #. module: mis_builder_xlsx_exploded
-#: code:addons/mis_builder_xlsx_exploded/report/mis_report_exploded_xlsx.py:185
+#: code:addons/mis_builder_xlsx_exploded/report/mis_report_exploded_xlsx.py:199
 #, python-format
 msgid "Generated on {} at {}"
 msgstr "Generato il {} alle {}"

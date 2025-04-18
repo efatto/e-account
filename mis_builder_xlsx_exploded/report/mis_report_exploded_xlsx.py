@@ -59,7 +59,7 @@ class MisBuilderXlsxExploded(models.AbstractModel):
         # column headers
         sheet.write(row_pos, 0, "", header_format)
         col_pos = 1
-        sheet.write(row_pos, 1, "Partial amount", header_format)
+        sheet.write(row_pos, 1, "Partial", header_format)
         col_pos += 1
         for col in matrix.iter_cols():
             label = col.label
@@ -86,6 +86,7 @@ class MisBuilderXlsxExploded(models.AbstractModel):
         # sub column headers
         sheet.write(row_pos, 0, "", header_format)
         col_pos = 2
+        sheet.write(row_pos, col_pos - 1, "", header_format)
         for subcol in matrix.iter_subcols():
             label = subcol.label
             if subcol.description:
@@ -119,6 +120,7 @@ class MisBuilderXlsxExploded(models.AbstractModel):
             )
             for cell in row.iter_cells():
                 col_pos += 2
+                sheet.write(row_pos, col_pos - 1, "", row_format)
                 if not cell or cell.val is AccountingNone:
                     # TODO col/subcol format
                     sheet.write(row_pos, col_pos, "", row_format)
@@ -130,12 +132,14 @@ class MisBuilderXlsxExploded(models.AbstractModel):
                 cell_format = workbook.add_format(cell_xlsx_style)
                 cell_xlsx_style.update({
                     "font_size": 10,
-                    "border": True,
+                    "bg_color": '#FFFFFF',
+                    "font_color": '#000000',
                 })
                 cell_value_format = workbook.add_format(cell_xlsx_style)
                 row_xlsx_style.update({
                     "font_size": 10,
-                    "border": True,
+                    "bg_color": '#FFFFFF',
+                    "font_color": '#000000',
                 })
                 cell_text_format = workbook.add_format(row_xlsx_style)
                 if isinstance(cell.val, DataError):
