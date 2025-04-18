@@ -130,10 +130,12 @@ class MisBuilderXlsxExploded(models.AbstractModel):
                 cell_format = workbook.add_format(cell_xlsx_style)
                 cell_xlsx_style.update({
                     "font_size": 10,
+                    "border": True,
                 })
                 cell_value_format = workbook.add_format(cell_xlsx_style)
                 row_xlsx_style.update({
                     "font_size": 10,
+                    "border": True,
                 })
                 cell_text_format = workbook.add_format(row_xlsx_style)
                 if isinstance(cell.val, DataError):
