@@ -178,7 +178,8 @@ class MisBuilderXlsxExploded(models.AbstractModel):
                             continue
                         row_pos += 1
                         cell_name = safe_eval(
-                            row.kpi.cell_report_expression, {"record": cell_line})
+                            row.kpi.cell_report_expression or "record.name",
+                            {"record": cell_line})
                         sheet.write(
                             row_pos, col_pos - 2, cell_name, cell_text_format)
                         sheet.write(
