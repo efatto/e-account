@@ -11,10 +11,6 @@
                     name="%(sale_order_progress.action_update_account_invoice_line)d"
                     type="action"
                     icon="fa-edit"
-                    attrs="{'invisible': ['|', '|',
-                        ('invoice_id.state', '=', 'draft'),
-                        ('invoice_id.type', 'in', ['in_invoice', 'in_refund']),
-                        ('display_type', 'in', ('line_section', 'line_note'))]}"
                 />
                 <field name="sale_order_progress_id"
                        domain="[('order_id', 'in', sale_order_ids)]"/>
