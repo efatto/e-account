@@ -62,8 +62,14 @@ class SaleAdvancePaymentInv(models.TransientModel):
     @api.onchange("order_progress_id")
     def _onchange_order_progress_id(self):
         if self.order_progress_id:
-            self.amount_advance_toreturn = (
-                self.order_progress_id.amount_advance_toreturn)
+            downpayment_lines = self.order_progress_id.order_id.order_line.filtered(
+                "is_downpayment")
+            amount_advance_toreturn_net = self.order_progress_id.amount_advance_toreturn
+            if downpayment_lines and downpayment_lines[0].tax_id.amount:
+                amount_advance_toreturn_net = amount_advance_toreturn_net / (
+                    1 + downpayment_lines[0].tax_id.amount / 100.0
+                )
+            self.amount_advance_toreturn = amount_advance_toreturn_net
 
     @api.multi
     def _create_invoice(self, order, so_line, amount):
