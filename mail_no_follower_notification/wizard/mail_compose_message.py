@@ -12,7 +12,7 @@ class MailComposeMessage(models.TransientModel):
     @api.model
     def get_record_data(self, values):
         # Add followers as email recipients as no more notified by default, to show
-        # them to the user, whom will remove them directly if needed
+        # them to the user, who will remove them directly if needed
         res = super().get_record_data(values)
         if values.get("res_id") and values.get("model"):
             follower_ids = (
