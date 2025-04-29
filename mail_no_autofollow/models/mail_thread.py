@@ -22,8 +22,10 @@ class MailThread(models.AbstractModel):
         ).message_post(**kwargs)
 
     def _message_auto_subscribe_followers(self, updated_values, default_subtype_ids):
-        # Remove auto-subscribe by default
-        super()._message_auto_subscribe_followers(
+        # Remove auto-subscribe by default, except for internal users
+        res = super()._message_auto_subscribe_followers(
             updated_values=updated_values, default_subtype_ids=default_subtype_ids
         )
+        if "user_id" in updated_values:
+            return res
         return []
