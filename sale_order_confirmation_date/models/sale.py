@@ -10,6 +10,7 @@ class SaleOrder(models.Model):
         string="Confirmation date",
         readonly=True,
         index=True,
+        copy=False,
     )
 
     def _prepare_confirmation_values(self):
