@@ -7,7 +7,9 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     def _create_invoices(self, grouped=False, final=False, date=None):
-        invoice_ids = super()._create_invoices(grouped=grouped, final=final, date=date)
+        # do not put variable names as it conflicts with module
+        # sale_timesheet_invoice_description that rewrite the signature of the method
+        invoice_ids = super()._create_invoices(grouped, final, date)
         for invoice in invoice_ids:
             if invoice.line_ids and (
                 len(invoice.line_ids.mapped(invoice.line_ids._get_section_grouping()))
