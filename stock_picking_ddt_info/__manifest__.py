@@ -8,8 +8,8 @@
     "author": "Sergio Corato",
     "website": "https://github.com/efatto/e-account",
     "summary": "Da migrare i campi all'interno del modulo l10n_it_delivery_note,"
-               "in cui ci sono uguali con il prefisso dn_, verificare solo "
-               "dove si vedono a video.",
+    "in cui ci sono uguali con il prefisso dn_, verificare solo "
+    "dove si vedono a video.",
     "depends": [
         "stock",
     ],
