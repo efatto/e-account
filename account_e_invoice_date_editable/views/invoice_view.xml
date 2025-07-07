@@ -3,7 +3,7 @@
 
     <record id="view_invoice_form_fatturapa_in" model="ir.ui.view">
         <field name="name">account.invoice.form.e.invoice.date.editable</field>
-        <field name="model">account.invoice</field>
+        <field name="model">account.move</field>
         <field
             name="inherit_id"
             ref="l10n_it_fatturapa_in.view_invoice_form_fatturapa_in"
