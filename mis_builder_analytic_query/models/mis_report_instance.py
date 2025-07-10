@@ -11,12 +11,8 @@ class MisReportQuery(models.Model):
     analytic_account_field_id = fields.Many2one(
         "ir.model.fields", string="Model Analytic Account"
     )
-    parent_model_id = fields.Many2one(
-        "ir.model", string="Parent Model", ondelete="restrict"
-    )
-    parent_field_id = fields.Many2one(
-        "ir.model.fields", string="Parent Field", ondelete="restrict"
-    )
+    parent_model_id = fields.Many2one("ir.model", string="Parent Model")
+    parent_field_id = fields.Many2one("ir.model.fields", string="Parent Field")
     analytic_account_parent_field_id = fields.Many2one(
         "ir.model.fields",
         string="Parent Model Analytic Account",
