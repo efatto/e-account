@@ -1,1 +1,1 @@
-This module add a check for tax children.
+This module add a constraint on tax children reuse.
