@@ -1,4 +1,4 @@
-from odoo import api, _, models
+from odoo import _, api, models
 from odoo.exceptions import UserError
 
 
@@ -10,18 +10,20 @@ class AccountTax(models.Model):
         for tax in self:
             for child_tax in tax.children_tax_ids:
                 if len(child_tax.parent_tax_ids) > 1:
-                    raise UserError(_(
-                        "Tax %s has already a parent tax: %s") % (
+                    raise UserError(
+                        _("Tax %s has already a parent tax: %s")
+                        % (
                             child_tax.name,
                             ", ".join(
                                 [
-                                    "[%s] %s" % (i, name) for i, name in enumerate(
+                                    "[%s] %s" % (i, name)
+                                    for i, name in enumerate(
                                         child_tax.parent_tax_ids.filtered(
                                             lambda x: x != tax
                                         ).mapped("name"),
-                                        1
+                                        1,
                                     )
                                 ]
-                            )
+                            ),
                         )
                     )
