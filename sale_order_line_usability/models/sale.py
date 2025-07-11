@@ -9,25 +9,25 @@ class SaleOrderLine(models.Model):
     )
     move_price_unit = fields.Float(
         string="Move Cost Unit",
-        compute="_get_move_price_unit",
-        inverse="_set_move_price_unit",
+        compute="_compute_move_price_unit",
+        inverse="_inverse_move_price_unit",
         store=True,
     )
     move_price_delivering_total = fields.Float(
-        string="Total Delivering Costs", compute="_get_move_price_unit", store=False
+        string="Total Delivering Costs", compute="_compute_move_price_unit", store=False
     )
     move_price_invoiced_total = fields.Float(
-        string="Total Invoiced Costs", compute="_get_move_price_unit", store=False
+        string="Total Invoiced Costs", compute="_compute_move_price_unit", store=False
     )
     move_price_to_invoice_total = fields.Float(
         string="Total Cost To Invoice",
-        compute="_get_move_price_unit",
+        compute="_compute_move_price_unit",
         store=False,
         help="This cost is only computed when products can be sold but not purchased.",
     )
 
     @api.depends("move_ids.price_unit")
-    def _get_move_price_unit(self):
+    def _compute_move_price_unit(self):
         for line in self:
             # preserve negative values as costs
             line.move_price_unit = min(
@@ -50,8 +50,8 @@ class SaleOrderLine(models.Model):
                     qty_max_delivery - line.qty_invoiced
                 )
 
-    @api.one
-    def _set_move_price_unit(self):
+    def _inverse_move_price_unit(self):
+        self.ensure_one()
         if self.move_ids and self.move_price_unit:
             for move in self.move_ids:
                 move.price_unit = self.move_price_unit
