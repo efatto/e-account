@@ -1,6 +1,4 @@
-# Copyright 2022 Sergio Corato <https://github.com/sergiocorato>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import config
 
@@ -13,7 +11,6 @@ class SaleOrder(models.Model):
         default=True,
     )
 
-    @api.multi
     def action_confirm(self):
         if not config["test_enable"]:
             if any(
