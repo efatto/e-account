@@ -10,7 +10,7 @@ from odoo.addons.mis_builder.models.expression_evaluator import ExpressionEvalua
 class MisReportKpi(models.Model):
     _inherit = "mis.report.kpi"
 
-    query_id = fields.Many2one("mis.report.query", string="Linked Query")
+    query_id = fields.Many2one("mis.report.query", string="Linked Query", copy=False)
 
 
 class MisQueryExpressionEvaluator(ExpressionEvaluator):
