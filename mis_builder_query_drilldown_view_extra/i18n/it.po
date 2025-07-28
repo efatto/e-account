@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-22 08:26+0000\n"
-"PO-Revision-Date: 2024-03-22 08:26+0000\n"
+"POT-Creation-Date: 2025-07-28 06:58+0000\n"
+"PO-Revision-Date: 2025-07-28 06:58+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,11 @@ msgstr ""
 
 #. module: mis_builder_query_drilldown_view_extra
 #: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view_extra.view_account_analytic_line_tree
-msgid "Total Extra Cost"
-msgstr "Totale costi aggiuntivi"
+msgid "Total MRP Actual Cost"
+msgstr "Totale costi effettivi produzione"
+
+#. module: mis_builder_query_drilldown_view_extra
+#: model_terms:ir.ui.view,arch_db:mis_builder_query_drilldown_view_extra.view_account_analytic_line_tree
+msgid "Total MRP Quantity"
+msgstr "Totale quantità produzione"
 
