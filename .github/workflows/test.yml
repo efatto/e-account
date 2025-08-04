@@ -31,6 +31,8 @@ jobs:
     runs-on: ubuntu-22.04
     container: ${{ matrix.container }}
     name: ${{ matrix.name }}
+    env:
+      PIP_EXTRA_INDEX_URL: ${{ secrets.PIP_CONF }}
     strategy:
       fail-fast: false
       matrix:
@@ -53,10 +55,6 @@ jobs:
           persist-credentials: false
       - name: Install openupgradelib
         run: pip3 install -e "git+https://github.com/OCA/openupgradelib.git@master#egg=openupgradelib"
-      - name: Install mrp_employee_productivity module from e-efatto repo
-        run: pip3 install -e "git+https://github.com/efatto/e-efatto@14.0#egg=odoo14-addon-mrp_employee_productivity&subdirectory=setup/mrp_employee_productivity"
-      - name: Install mrp_workorder_timesheet_cost module from e-efatto repo
-        run: pip3 install -e "git+https://github.com/efatto/e-efatto@14.0#egg=odoo14-addon-mrp_workorder_timesheet_cost&subdirectory=setup/mrp_workorder_timesheet_cost"
       - name: Install addons and dependencies
         run: oca_install_addons
       - name: Check licenses

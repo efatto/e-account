@@ -1,6 +1,3 @@
-# Copyright 2021 Sergio Corato <https://github.com/sergiocorato>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
 from odoo import models
 
 
@@ -9,7 +6,7 @@ class MisReportInstance(models.Model):
 
     def drilldown(self, arg):
         res = super().drilldown(arg=arg)
-        if arg.get("model", False) == "account.invoice.line":
+        if arg.get("model", False) == "account.move.line":
             res.update(
                 {
                     "views": [
