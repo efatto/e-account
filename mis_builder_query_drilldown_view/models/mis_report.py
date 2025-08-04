@@ -10,45 +10,87 @@ class MisReportInstance(models.Model):
     def drilldown(self, arg):
         res = super().drilldown(arg=arg)
         if arg.get("model", False) == "account.invoice.line":
-            res.update({
-                "views": [
-                    [
-                        self.env.ref(
-                            'mis_builder_query_drilldown_view.view_invoice_line_tree'
-                        ).id, 'list'], [False, 'form']],
-            })
+            res.update(
+                {
+                    "views": [
+                        [
+                            self.env.ref(
+                                "mis_builder_query_drilldown_view.view_invoice_line_tree"
+                            ).id,
+                            "list",
+                        ],
+                        [False, "form"],
+                    ],
+                }
+            )
         if arg.get("model", False) == "sale.order.line":
-            res.update({
-                "views": [
-                    [
-                        self.env.ref(
-                            'mis_builder_query_drilldown_view.view_order_line_tree'
-                        ).id, 'list'
-                    ], [False, 'form']
-                ],
-            })
+            res.update(
+                {
+                    "views": [
+                        [
+                            self.env.ref(
+                                "mis_builder_query_drilldown_view.view_order_line_tree"
+                            ).id,
+                            "list",
+                        ],
+                        [False, "form"],
+                    ],
+                }
+            )
         if arg.get("model", False) == "account.analytic.line":
-            res.update({
-                "views": [[self.env.ref(
-                    'mis_builder_query_drilldown_view.view_account_analytic_line_tree'
-                ).id, 'list'], [False, 'form']],
-            })
+            res.update(
+                {
+                    "views": [
+                        [
+                            self.env.ref(
+                                "mis_builder_query_drilldown_view.view_account_analytic_line_tree"  # noqa
+                            ).id,
+                            "list",
+                        ],
+                        [False, "form"],
+                    ],
+                }
+            )
         if arg.get("model", False) == "mrp.workcenter.productivity":
-            res.update({
-                "views": [[self.env.ref(
-                    "mis_builder_query_drilldown_view.view_workcenter_productivity_tree"
-                ).id, 'list'], [False, 'form']],
-            })
+            res.update(
+                {
+                    "views": [
+                        [
+                            self.env.ref(
+                                "mis_builder_query_drilldown_view.view_workcenter_productivity_tree"  # noqa
+                            ).id,
+                            "list",
+                        ],
+                        [False, "form"],
+                    ],
+                }
+            )
         if arg.get("model", False) == "stock.move":
-            res.update({
-                "views": [[self.env.ref(
-                    'mis_builder_query_drilldown_view.view_stock_move_tree'
-                ).id, 'list'], [False, 'form']],
-            })
+            res.update(
+                {
+                    "views": [
+                        [
+                            self.env.ref(
+                                "mis_builder_query_drilldown_view.view_stock_move_tree"
+                            ).id,
+                            "list",
+                        ],
+                        [False, "form"],
+                    ],
+                }
+            )
         if arg.get("model", False) == "purchase.order.line":
-            res.update({
-                "views": [[self.env.ref(
-                    'mis_builder_query_drilldown_view.view_purchase_order_line_tree'
-                ).id, 'list'], [False, 'form']],
-            })
+            res.update(
+                {
+                    "views": [
+                        [
+                            self.env.ref(
+                                "mis_builder_query_drilldown_view.view_purchase_order_line_tree"  # noqa
+                            ).id,
+                            "list",
+                        ],
+                        [False, "form"],
+                    ],
+                }
+            )
         return res

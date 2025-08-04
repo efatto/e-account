@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Mis builder drilldown view",
-    "version": "12.0.1.0.0",
+    "version": "14.0.1.0.0",
     "category": "Reporting",
     "author": "Sergio Corato",
     "website": "https://github.com/efatto/e-account",
