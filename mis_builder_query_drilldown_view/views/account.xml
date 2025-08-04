@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="view_invoice_line_tree" model="ir.ui.view">
-        <field name="model">account.invoice.line</field>
-        <field name="name">account.invoice.line.tree</field>
+        <field name="model">account.move.line</field>
+        <field name="name">account.move.line.tree</field>
         <field name="priority" eval="999" />
         <field name="arch" type="xml">
             <tree string="Invoice Line">
                 <field name="name" />
                 <field name="account_id" groups="account.group_account_user" />
                 <field name="quantity" />
-                <field name="uom_id" groups="uom.group_uom" />
+                <field name="product_uom_id" groups="uom.group_uom" />
                 <field name="price_unit" />
                 <field name="discount" groups="base.group_no_one" />
                 <field
