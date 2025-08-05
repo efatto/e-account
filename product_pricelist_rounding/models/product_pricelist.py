@@ -14,9 +14,10 @@ class ProductPricelistItem(models.Model):
     def _compute_price(self, price, price_uom, product, quantity=1.0, partner=False):
         self.ensure_one()
         if self.price_round and self.rounding_method != "HALF-UP":
-            convert_to_price_uom = lambda price: product.uom_id._compute_price(
-                price, price_uom
-            )
+
+            def convert_to_price_uom(current_product, current_price):
+                return current_product.uom_id._compute_price(current_price, price_uom)
+
             # complete formula
             price_limit = price
             price = (price - (price * (self.price_discount / 100))) or 0.0
@@ -28,15 +29,15 @@ class ProductPricelistItem(models.Model):
                 )
 
             if self.price_surcharge:
-                price_surcharge = convert_to_price_uom(self.price_surcharge)
+                price_surcharge = convert_to_price_uom(product, self.price_surcharge)
                 price += price_surcharge
 
             if self.price_min_margin:
-                price_min_margin = convert_to_price_uom(self.price_min_margin)
+                price_min_margin = convert_to_price_uom(product, self.price_min_margin)
                 price = max(price, price_limit + price_min_margin)
 
             if self.price_max_margin:
-                price_max_margin = convert_to_price_uom(self.price_max_margin)
+                price_max_margin = convert_to_price_uom(product, self.price_max_margin)
                 price = min(price, price_limit + price_max_margin)
         else:
             price = super()._compute_price(
