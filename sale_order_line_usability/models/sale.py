@@ -10,18 +10,26 @@ class SaleOrderLine(models.Model):
     move_price_unit = fields.Float(
         string="Move Cost Unit",
         compute="_compute_move_price_unit",
+        compute_sudo=True,
         inverse="_inverse_move_price_unit",
         store=True,
     )
     move_price_delivering_total = fields.Float(
-        string="Total Delivering Costs", compute="_compute_move_price_unit", store=False
+        string="Total Delivering Costs",
+        compute_sudo=True,
+        compute="_compute_move_price_unit",
+        store=False
     )
     move_price_invoiced_total = fields.Float(
-        string="Total Invoiced Costs", compute="_compute_move_price_unit", store=False
+        string="Total Invoiced Costs",
+        compute_sudo=True,
+        compute="_compute_move_price_unit",
+        store=False
     )
     move_price_to_invoice_total = fields.Float(
         string="Total Cost To Invoice",
         compute="_compute_move_price_unit",
+        compute_sudo=True,
         store=False,
         help="This cost is only computed when products can be sold but not purchased.",
     )
