@@ -2,9 +2,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "ITA - Ricevute bancarie smarca pagamento",
-    "summary": "Annulla l\"effetto del bottone marca come pagata",
-    "version": "12.0.1.0.0",
-    "development_status": "Alpha",
+    "summary": "Annulla l'effetto del bottone marca come pagata",
+    "version": "14.0.1.0.0",
     "category": "Accounting",
     "website": "https://github.com/efatto/e-account",
     "author": "Sergio Corato",

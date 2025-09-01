@@ -18,13 +18,13 @@ class SaleOrderLine(models.Model):
         string="Total Delivering Costs",
         compute_sudo=True,
         compute="_compute_move_price_unit",
-        store=False
+        store=False,
     )
     move_price_invoiced_total = fields.Float(
         string="Total Invoiced Costs",
         compute_sudo=True,
         compute="_compute_move_price_unit",
-        store=False
+        store=False,
     )
     move_price_to_invoice_total = fields.Float(
         string="Total Cost To Invoice",
