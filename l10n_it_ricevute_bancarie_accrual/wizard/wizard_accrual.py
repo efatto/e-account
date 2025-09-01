@@ -4,6 +4,7 @@ from odoo.exceptions import Warning as UserError
 
 class RibaAccreditation(models.TransientModel):
     _inherit = "riba.accreditation"
+    _description = "Riba Accreditation"
     _name = "riba.accrual"
 
     def _get_accrual_date(self):

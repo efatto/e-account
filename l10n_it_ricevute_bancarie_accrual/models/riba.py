@@ -25,17 +25,19 @@ class RibaList(models.Model):
                 if line.accreditation_move_id:
                     line.accreditation_move_id.unlink()
 
-    def riba_accepted(self):
-        self.ensure_one()
-        super().riba_accepted()
-        self.date_accepted = self.date_accepted or fields.Date.context_today(self)
+    def confirm(self):
+        super().confirm()
+        for distinta in self:
+            distinta.date_accepted = (
+                distinta.date_accepted or fields.Date.context_today(distinta)
+            )
 
-    def riba_accredited(self):
-        self.ensure_one()
-        super().riba_accredited()
-        self.date_accreditation = self.date_accreditation or fields.Date.context_today(
-            self
-        )
+    def settle_all_line(self):
+        super().settle_all_line()
+        for distinta in self:
+            distinta.date_accreditation = (
+                distinta.date_accreditation or fields.Date.context_today(distinta)
+            )
 
     accreditation_move_ids = fields.Many2many(
         "account.move",
