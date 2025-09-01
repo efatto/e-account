@@ -14,9 +14,9 @@ ITA - Ricevute bancarie smarca pagamento
    !! source digest: sha256:2a74c9f7e5964e39f42e286fa12e0ad6236b37e370e0ec45590aae96830f26e9
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Alpha
+    :alt: Beta
 .. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -27,11 +27,6 @@ ITA - Ricevute bancarie smarca pagamento
 |badge1| |badge2| |badge3|
 
 This module add a button to revert 'Mark as Settled' to riba line.
-
-.. IMPORTANT::
-   This is an alpha version, the data model and design can change at any time without warning.
-   Only for development or testing purpose, do not use in production.
-   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 

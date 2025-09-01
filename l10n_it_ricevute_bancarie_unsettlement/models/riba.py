@@ -1,12 +1,11 @@
-from odoo import _, api, models
+from odoo import _, models
 from odoo.exceptions import UserError
 
 
 class RibaListLine(models.Model):
     _inherit = "riba.distinta.line"
 
-    @api.multi
-    def riba_line_unsettlement(self):
+    def button_unsettle(self):
         for riba_line in self:
             if not riba_line.distinta_id.config_id.settlement_journal_id:
                 raise UserError(_("Please define a Settlement Journal."))
