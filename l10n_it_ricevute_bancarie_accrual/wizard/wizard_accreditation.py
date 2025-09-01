@@ -1,11 +1,10 @@
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 from odoo.exceptions import Warning as UserError
 
 
 class RibaAccreditation(models.TransientModel):
     _inherit = "riba.accreditation"
 
-    @api.multi
     def _get_accreditation_journal_id(self):
         if self._context.get("active_model", False) == "riba.distinta.line":
             res = self.env["riba.configuration"].get_default_value_by_list_line(
@@ -15,7 +14,6 @@ class RibaAccreditation(models.TransientModel):
             res = super()._get_accreditation_journal_id()
         return res
 
-    @api.multi
     def _get_accreditation_account_id(self):
         if self._context.get("active_model", False) == "riba.distinta.line":
             res = self.env["riba.configuration"].get_default_value_by_list_line(
@@ -25,14 +23,12 @@ class RibaAccreditation(models.TransientModel):
             res = super()._get_accreditation_account_id()
         return res
 
-    @api.multi
     def _get_acceptance_account_id(self):
         res = self.env["riba.configuration"].get_default_value_by_list_line(
             "acceptance_account_id"
         )
         return res
 
-    @api.multi
     def _get_bank_account_id(self):
         if self._context.get("active_model", False) == "riba.distinta.line":
             res = self.env["riba.configuration"].get_default_value_by_list_line(
@@ -42,7 +38,6 @@ class RibaAccreditation(models.TransientModel):
             res = super()._get_bank_account_id()
         return res
 
-    @api.multi
     def _get_bank_expense_account_id(self):
         if self._context.get("active_model", False) == "riba.distinta.line":
             res = self.env["riba.configuration"].get_default_value_by_list_line(
@@ -52,7 +47,6 @@ class RibaAccreditation(models.TransientModel):
             res = super()._get_bank_expense_account_id()
         return res
 
-    @api.multi
     def _get_accreditation_amount(self):
         amount = 0.0
         if self._context.get("active_model", False) == "riba.distinta.line":
@@ -63,12 +57,13 @@ class RibaAccreditation(models.TransientModel):
                 raise UserError(
                     _("Accreditation of only one bank configuration is possible")
                 )
-            amount = sum([l.amount for l in riba_lines if l.state == "confirmed"])
+            amount = sum(
+                [line.amount for line in riba_lines if line.state == "confirmed"]
+            )
         elif self._context.get("active_model", False) == "riba.distinta":
             amount = super()._get_accreditation_amount()
         return amount
 
-    @api.multi
     def skip(self):
         if self._context.get("active_model", False) == "riba.distinta.line":
             active_ids = self._context.get("active_ids", False)
@@ -86,7 +81,6 @@ class RibaAccreditation(models.TransientModel):
         else:
             return super().skip()
 
-    @api.multi
     def _get_accreditation_date(self):
         res = False
         if self._context.get("active_model", False) == "riba.distinta":
@@ -97,7 +91,6 @@ class RibaAccreditation(models.TransientModel):
             )
         return res
 
-    @api.multi
     def create_move(self):
         # accredit only from distinta line
         active_ids = self.env.context.get("active_ids", False)

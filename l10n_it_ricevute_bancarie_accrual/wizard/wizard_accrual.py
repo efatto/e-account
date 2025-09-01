@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 from odoo.exceptions import Warning as UserError
 
 
@@ -6,7 +6,6 @@ class RibaAccreditation(models.TransientModel):
     _inherit = "riba.accreditation"
     _name = "riba.accrual"
 
-    @api.multi
     def _get_accrual_date(self):
         res = False
         if self._context.get("active_model", False) == "riba.distinta":
@@ -17,7 +16,6 @@ class RibaAccreditation(models.TransientModel):
             )
         return res
 
-    @api.multi
     def _get_accrual_amount(self):
         amount = 0.0
         if self._context.get("active_model", False) == "riba.distinta.line":
@@ -28,10 +26,11 @@ class RibaAccreditation(models.TransientModel):
                 raise UserError(
                     _("It is only possible to accrue one bank configuration")
                 )
-            amount = sum([l.amount for l in riba_lines if l.state == "accredited"])
+            amount = sum(
+                [line.amount for line in riba_lines if line.state == "accredited"]
+            )
         return amount
 
-    @api.multi
     def create_accrue_move(self):
         self.ensure_one()
         # accrue only from distinta lines
@@ -95,8 +94,10 @@ class RibaAccreditation(models.TransientModel):
         }
 
     date_accrual = fields.Date(
-        string="Accrual date", default=_get_accrual_date, oldname="date_accruement"
+        string="Accrual date",
+        default=_get_accrual_date,
     )
     accrual_amount = fields.Float(
-        string="Accrue amount", default=_get_accrual_amount, oldname="accruement_amount"
+        string="Accrue amount",
+        default=_get_accrual_amount,
     )

@@ -12,6 +12,7 @@
         "l10n_it_ricevute_bancarie",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "views/riba_view.xml",
         "views/wizard_accreditation.xml",
         "views/wizard_unsolved.xml",

@@ -9,9 +9,16 @@
             <field name="accreditation_journal_id" position="after">
                 <field name="date_accreditation" />
             </field>
-            <field name="bank_expense_account_id" position="replace" />
-            <field name="expense_amount" position="replace" />
-            <footer position="replace">
+            <field name="bank_expense_account_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="expense_amount" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <footer position="attributes">
+                <attribute name="invisible">1</attribute>
+            </footer>
+            <xpath expr="//form" position="inside">
                 <button
                     string="Create"
                     name="create_move"
@@ -20,7 +27,7 @@
                     class="oe_highlight"
                 />
                 <button string="Cancel" special="cancel" class="oe_link" />
-            </footer>
+            </xpath>
         </field>
     </record>
 
@@ -71,17 +78,17 @@
         </field>
     </record>
 
-    <act_window
-        name="Ri.Ba. Accreditation"
-        res_model="riba.accreditation"
-        src_model="riba.distinta.line"
-        key2="client_action_multi"
-        view_mode="form"
-        view_type="form"
-        target="new"
-        multi="True"
-        id="action_riba_line_accreditation"
-        view_id="riba_line_accreditation"
-    />
+    <record id="action_riba_line_accreditation" model="ir.actions.act_window">
+        <field name="name">Ri.Ba. Accreditation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">riba.accreditation</field>
+        <field
+            name="binding_model_id"
+            ref="l10n_it_ricevute_bancarie.model_riba_distinta_line"
+        />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="riba_line_accreditation" />
+    </record>
 
 </odoo>

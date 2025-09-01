@@ -37,17 +37,17 @@
         </field>
     </record>
 
-    <act_window
-        name="C/O Accrual"
-        res_model="riba.accrual"
-        src_model="riba.distinta.line"
-        key2="client_action_multi"
-        view_mode="form"
-        view_type="form"
-        target="new"
-        multi="True"
-        id="action_riba_line_accrual"
-        view_id="riba_line_accrual"
-    />
+    <record id="action_riba_line_accrual" model="ir.actions.act_window">
+        <field name="name">C/O Accrual</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">riba.accrual</field>
+        <field
+            name="binding_model_id"
+            ref="l10n_it_ricevute_bancarie.model_riba_distinta_line"
+        />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="riba_line_accrual" />
+    </record>
 
 </odoo>

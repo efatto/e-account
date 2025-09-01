@@ -21,7 +21,6 @@ class RibaUnsolved(models.TransientModel):
         default=_get_effects_amount, string="Overdue Effects amount"
     )
 
-    @api.multi
     def create_move(self):
         active_ids = self._context.get("active_ids", False)
         if not active_ids:
@@ -36,22 +35,22 @@ class RibaUnsolved(models.TransientModel):
         unsolved_amount = 0
         unsolved_move_line_ids = {}
         for distinta_line in distinta_lines:
-            for riba_move_line in distinta_line.move_line_ids:
-                if (
-                    riba_move_line.move_line_id.account_id.id
-                    == distinta_line.partner_id.property_account_receivable_id.id
-                ):
+            account_receivable_id = (
+                distinta_line.partner_id.property_account_receivable_id
+            )
+            for rml in distinta_line.move_line_ids:
+                if rml.move_line_id.account_id.id == account_receivable_id.id:
                     lines.append(
                         (
                             0,
                             0,
                             {
                                 "name": _("Overdue Effects %s")
-                                % riba_move_line.move_line_id.invoice_id.move_name,
-                                "invoice_number": riba_move_line.move_line_id.invoice_id.move_name,
-                                "invoice_id": riba_move_line.move_line_id.invoice_id.id,
-                                "account_id": distinta_line.partner_id.property_account_receivable_id.id,
-                                "debit": riba_move_line.amount,
+                                % rml.move_line_id.move_id.name,
+                                "invoice_number": rml.move_line_id.move_id.name,
+                                "move_id": rml.move_line_id.move_id.id,
+                                "account_id": account_receivable_id.id,
+                                "debit": rml.amount,
                                 "credit": 0.0,
                                 "partner_id": distinta_line.partner_id.id,
                                 "date_maturity": wizard.new_due_date,
@@ -61,12 +60,10 @@ class RibaUnsolved(models.TransientModel):
                     )
                     unsolved_desc += " %s (%s)" % (
                         distinta_line.sequence,
-                        riba_move_line.move_line_id.invoice_id.move_name,
+                        rml.move_line_id.move_id.name,
                     )
-                    unsolved_amount += riba_move_line.amount
-                    unsolved_move_line_ids.update(
-                        {riba_move_line.move_line_id: distinta_line}
-                    )
+                    unsolved_amount += rml.amount
+                    unsolved_move_line_ids.update({rml.move_line_id: distinta_line})
         lines.append(
             (
                 0,
@@ -74,7 +71,7 @@ class RibaUnsolved(models.TransientModel):
                 {
                     "name": _("Bank"),
                     "account_id": wizard.bank_account_id.id,
-                    "credit": unsolved_amount + wizard.expense_amount,
+                    "credit": unsolved_amount + wizard.past_due_fee_amount,
                     "debit": 0.0,
                 },
             ),
@@ -87,7 +84,7 @@ class RibaUnsolved(models.TransientModel):
                     {
                         "name": _("Expenses"),
                         "account_id": wizard.bank_expense_account_id.id,
-                        "debit": wizard.expense_amount,
+                        "debit": wizard.past_due_fee_amount,
                         "credit": 0.0,
                     },
                 ),
@@ -101,7 +98,7 @@ class RibaUnsolved(models.TransientModel):
         move_id = move_model.create(move_vals)
 
         for unsolved_move_line in unsolved_move_line_ids:
-            invoice = unsolved_move_line.invoice_id
+            invoice = unsolved_move_line.move_id
             distinta_line = unsolved_move_line_ids[unsolved_move_line]
             for move_line in move_id.line_ids:
                 if (
@@ -110,7 +107,7 @@ class RibaUnsolved(models.TransientModel):
                 ):
                     for riba_move_line_id in distinta_line.move_line_ids:
                         if (
-                            riba_move_line_id.move_line_id.invoice_id.move_name
+                            riba_move_line_id.move_line_id.move_id.name
                             == move_line.invoice_number
                         ):
                             invoice.write(
