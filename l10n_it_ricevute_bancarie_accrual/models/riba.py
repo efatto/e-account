@@ -1,13 +1,13 @@
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class RibaList(models.Model):
-    _inherit = 'riba.distinta'
+    _inherit = "riba.distinta"
 
     @api.multi
     def _get_accreditation_move_ids(self):
         self.ensure_one()
-        move_ids = self.env['account.move']
+        move_ids = self.env["account.move"]
         for line in self.line_ids:
             move_ids |= line.accreditation_move_id
         self.accreditation_move_ids = move_ids
@@ -15,7 +15,7 @@ class RibaList(models.Model):
     @api.multi
     def _get_accrual_move_ids(self):
         self.ensure_one()
-        move_ids = self.env['account.move']
+        move_ids = self.env["account.move"]
         for line in self.line_ids:
             move_ids |= line.accrual_move_id
         self.accrual_move_ids = move_ids
@@ -38,33 +38,34 @@ class RibaList(models.Model):
     def riba_accredited(self):
         self.ensure_one()
         super(RibaList, self).riba_accredited()
-        self.date_accreditation = self.date_accreditation or \
-            fields.Date.context_today(self)
+        self.date_accreditation = self.date_accreditation or fields.Date.context_today(
+            self
+        )
 
     accreditation_move_ids = fields.Many2many(
-        'account.move',
-        compute='_get_accreditation_move_ids',
-        string="Accreditation Entries")
+        "account.move",
+        compute="_get_accreditation_move_ids",
+        string="Accreditation Entries",
+    )
     accrual_move_ids = fields.Many2many(
-        'account.move',
+        "account.move",
         compute=_get_accrual_move_ids,
         string="Accrual Entries",
-        oldname='accruement_move_ids')
-    state = fields.Selection(
-        selection_add=[('accrued', 'Accrued')])
+        oldname="accruement_move_ids",
+    )
+    state = fields.Selection(selection_add=[("accrued", "Accrued")])
 
 
 class RibaListLine(models.Model):
-    _inherit = 'riba.distinta.line'
+    _inherit = "riba.distinta.line"
 
     accreditation_move_id = fields.Many2one(
-        'account.move',
-        string='Accreditation Entry',
-        readonly=True)
+        "account.move", string="Accreditation Entry", readonly=True
+    )
     accrual_move_id = fields.Many2one(
-        'account.move',
-        string='Accrual Entry',
+        "account.move",
+        string="Accrual Entry",
         readonly=True,
-        oldname='accruement_move_id')
-    state = fields.Selection(
-        selection_add=[('accrued', 'Accrued')])
+        oldname="accruement_move_id",
+    )
+    state = fields.Selection(selection_add=[("accrued", "Accrued")])
