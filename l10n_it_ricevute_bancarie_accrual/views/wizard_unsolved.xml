@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="riba_unsolved_inh" model="ir.ui.view">
         <field name="name">riba.unsolved.wizard.inh</field>
         <field name="model">riba.unsolved</field>
-        <field name="inherit_id" ref="l10n_it_ricevute_bancarie.riba_unsolved"/>
+        <field name="inherit_id" ref="l10n_it_ricevute_bancarie.riba_unsolved" />
         <field name="arch" type="xml">
             <field name="overdue_effects_amount" position="after">
-                <field name="new_due_date"/>
-                <field name="is_riba"/>
+                <field name="new_due_date" />
+                <field name="is_riba" />
             </field>
             <field name="effects_account_id" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -31,7 +31,8 @@
         </field>
     </record>
 
-   <act_window name="Unsolved Ri.Ba."
+   <act_window
+        name="Unsolved Ri.Ba."
         res_model="riba.unsolved"
         src_model="riba.distinta.line"
         key2="client_action_multi"
@@ -40,6 +41,7 @@
         target="new"
         multi="True"
         id="l10n_it_ricevute_bancarie.riba_unsolved_action"
-        view_id="l10n_it_ricevute_bancarie.riba_unsolved"/>
+        view_id="l10n_it_ricevute_bancarie.riba_unsolved"
+    />
 
 </odoo>
