@@ -2,16 +2,25 @@
 <odoo>
 
      <record id="invoice_tree_unsolved" model="ir.ui.view">
-        <field name="name">invoice.invoice.tree.unsolved</field>
-        <field name="model">account.invoice</field>
-        <field name="inherit_id" ref="account.invoice_tree" />
+        <field name="name">account.move.tree.unsolved</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree" />
         <field name="arch" type="xml">
             <field name="state" position="after">
                 <field name="is_unsolved" invisible="1" />
             </field>
             <tree position="attributes">
-                <attribute name="colors">
-                    red:is_unsolved == True;blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'
+                <attribute name="decoration-danger">
+                    is_unsolved == True
+                </attribute>
+                <attribute name="decoration-success">
+                    state == 'draft'
+                </attribute>
+                <attribute name="decoration-info">
+                    state == 'posted'
+                </attribute>
+                <attribute name="decoration-muted">
+                    state == 'cancel'
                 </attribute>
             </tree>
         </field>
