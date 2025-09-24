@@ -53,15 +53,19 @@ class AccountMoveLine(models.Model):
         )
         self._cr.execute(query, where_params)
         result = self._cr.fetchall()
-        if not result:
-            for line in self:
-                line.balance_progressive = 0
-                line.balance_progressive_currency = 0
-        else:
+        if result:
+            lines_not_in_result = [
+                x for x in self if x.id not in [y[0] for y in result]
+            ]
             for line_id, balance, balance_currency in result:
                 line = self.browse(line_id)
                 line.balance_progressive = balance
                 line.balance_progressive_currency = balance_currency
+        else:
+            lines_not_in_result = self
+        for line_not_in_result in lines_not_in_result:
+            line_not_in_result.balance_progressive = 0
+            line_not_in_result.balance_progressive_currency = 0
 
     balance_progressive = fields.Monetary(
         compute="_compute_balance_progressive",
