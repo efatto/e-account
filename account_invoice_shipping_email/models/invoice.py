@@ -22,9 +22,7 @@ class AccountMove(models.Model):
         # partner and lang will be overriden by template, only the template is used
         partner = self.partner_shipping_id or self.partner_id
         lang = partner.lang or self.env.context.get("lang")
-        template = partner.email_shipping_template_id.with_context(
-            lang=lang
-        )
+        template = partner.email_shipping_template_id.with_context(lang=lang)
         ctx = {
             "default_model": "account.move",
             "default_res_id": self.id,
