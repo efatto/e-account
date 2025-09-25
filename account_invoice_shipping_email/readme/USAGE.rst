@@ -8,7 +8,7 @@ che è visibile quanto lo stato dell'avviso è *Non inviata*:
 .. image:: ../static/description/stato_non_inviata.png
     :alt: Stato non inviata
 
-Nel caso nel cliente sia impostata un modello di mail per l'avviso di merce pronta, sarà utilizzato in automatico:
+Nel caso nell'indirizzo di consegna scelto in fattura oppure nel cliente sia impostato un modello di mail per l'avviso di merce pronta, sarà utilizzato in automatico:
 
 .. image:: ../static/description/email.png
     :alt: Email
