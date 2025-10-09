@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='get_invoice_warnings']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="date_due_visibility">
+                    <div class="o_setting_left_pane">
+                        <field name="due_list_visibility" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="due_list_visibility" string="Date due visibility" />
+                        <div class="text-muted">
+                            Show date due even if unique (valid for vendor invoices too)
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
