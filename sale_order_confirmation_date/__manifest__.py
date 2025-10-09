@@ -7,6 +7,9 @@
     "author": "Sergio Corato",
     "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
+    "summary": "Restore confirmation date in sale order, distinct from date order. "
+    "In the migration date orders are overwritten by confirmation date, so "
+    "it is necessary to restore them.",
     "depends": [
         "sale",
     ],
