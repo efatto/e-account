@@ -23,5 +23,5 @@ class MisReportKpi(models.Model):
         help="Field or expression to evaluate to be shown in report xlsx."
              "Possible use of 'record'. E.g.: "
              "'name' or 'product_id.name' or "
-             "'" ".join(record.extra_cost_invoice_line_ids.mapped(\"name\"))'"
+             "'" ".join(record.actual_cost_mrp_invoice_line_ids.mapped(\"name\"))'"
     )
