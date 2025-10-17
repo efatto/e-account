@@ -14,6 +14,7 @@
     ],
     "data": [
         "views/account.xml",
+        "views/stock.xml"
     ],
     "installable": True,
 }
