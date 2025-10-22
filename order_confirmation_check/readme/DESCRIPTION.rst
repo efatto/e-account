@@ -1,1 +1,1 @@
-This module add ability to generate comment with OpenAI.
+This module add ability to check confirmation order for sale and purchase.
