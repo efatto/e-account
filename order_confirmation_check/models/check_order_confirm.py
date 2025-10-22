@@ -12,8 +12,8 @@ Dipendenze (installare via pip):
 - Pillow
 
 Nota: è necessario installare il binario Tesseract-OCR (es. su Windows
-"Tesseract-OCR\tesseract.exe"). Se necessario impostare pytesseract.pytesseract.tesseract_cmd
-con il path corretto.
+"Tesseract-OCR\tesseract.exe").
+Se necessario impostare pytesseract.pytesseract.tesseract_cmd con il path corretto.
 
 Uso:
 # from check_code_quantity import check_code_and_qty
@@ -233,7 +233,9 @@ def check_code_and_qty(
     for target_code in target_data:
         # Normalizza codice: rimuove spazi e caratteri non alfanumerici
         norm_target = _normalize_code(target_code)
-        # Normalizza testo: rimuovi caratteri non alfanumerici per ricerca codice "compatta"
+        target_qty = target_data[target_code]
+        # Normalizza testo: rimuovi caratteri non alfanumerici per ricerca codice
+        # "compatta"
         compact_text = _normalize_code(full_text)
 
         code_found = norm_target in compact_text
@@ -241,7 +243,7 @@ def check_code_and_qty(
         # Cerca la quantità: controllo più permissivo
         # - cerca il numero come parola isolata
         qty_pattern = re.compile(
-            r"\b" + re.escape(str(target_data[target_code])) + r"\b",
+            r"\b" + re.escape(str(target_qty)) + r"\b",
             flags=re.IGNORECASE,
         )
         qty_found = bool(qty_pattern.search(full_text))
@@ -249,10 +251,14 @@ def check_code_and_qty(
         # Se non trovato direttamente, prova a trovare numeri e confrontarli
         if not qty_found:
             nums = _extract_numbers(full_text)
-            qty_found = target_data[target_code] in nums
+            qty_found = target_qty in nums
 
         if code_found and qty_found:
-            target_results[target_code] = [True, "TUTTO CORRETTO"]
+            target_results[target_code] = [True, "OK"]
         else:
-            target_results[target_code] = [False, "VALORI ERRATI"]
+            target_results[target_code] = [
+                False,
+                f"Not found {'code: ' + target_code if not code_found else ''} "
+                f"{'qty: ' + str(target_qty) if not qty_found else ''}",
+            ]
     return target_results

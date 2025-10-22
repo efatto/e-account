@@ -23,6 +23,9 @@ def check_attachment(object_to_check, object_to_check_lines):
     file_ext = object_to_check.attachment_to_check_id.mimetype.replace(
         "application/", ""
     )
+    lang = tools.get_lang(
+        object_to_check.env, lang_code=object_to_check.partner_id.lang
+    )
     _logger.info(
         f"Checking file {file_path} with extension {file_ext} for sale order "
         f"{object_to_check.name}"
@@ -31,7 +34,12 @@ def check_attachment(object_to_check, object_to_check_lines):
         file_path,
         file_ext,
         {
-            line.product_id.default_code: int(line.product_uom_qty)
+            line.product_id.default_code: lang.format(
+                "%.0f",
+                line.product_uom_qty,
+                grouping=True,
+                monetary=False,
+            )
             for line in lines_to_check
         },
     )
