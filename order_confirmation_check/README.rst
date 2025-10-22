@@ -26,7 +26,7 @@ Check Sale/Purchase Order Confirmation
 
 |badge1| |badge2| |badge3|
 
-This module add ability to generate comment with OpenAI.
+This module add ability to check confirmation order for sale and purchase.
 
 **Table of contents**
 
@@ -36,23 +36,15 @@ This module add ability to generate comment with OpenAI.
 Usage
 =====
 
-Creare un nuovo record in Impostazioni > Funzioni Tecniche > Generatore Commenti.
+Entrare in un ordine di acquisto o di vendita con un allegato con la conferma d'ordine (oppure aggiungerlo) e selezionarlo nel box:
 
-Inserire la chiave API di connessione ad OpenAI, gli altri valori sono configurati di default e sono modificabili.
+.. image:: https://raw.githubusercontent.com/efatto/e-report/14.0/order_confirmation_checker/static/description/selezione.png
+    :alt: Selezione file
 
-La funzione fornita da questo modulo è utilizzabile da altri moduli solo tramite codice.
+Avviare il controllo con il bottone:
 
-La libreria inglobata in questo modulo ha una licenza diversa da questo modulo: 'Unlicense' ed è stata sviluppata da Compiuta srl.
-
-La libreria va caricata tramite il campo:
-
-.. image:: https://github.com/EuBiome/ebm-odoo/blob/14.0/comment_generator/static/description/upload_modulo.png
-    :alt: Upload modulo
-
-Per completare l'aggiornamento e renderla utilizzata va lanciata l'azione di ricreazione dell'ambiente virtuale:
-
-.. image:: https://github.com/EuBiome/ebm-odoo/blob/14.0/comment_generator/static/description/create_virtualenv.png
-    :alt: Crea ambiente virtuale
+.. image:: https://raw.githubusercontent.com/efatto/e-report/14.0/order_confirmation_checker/static/description/controllo.png
+    :alt: Controllo conferma d'ordine
 
 Bug Tracker
 ===========

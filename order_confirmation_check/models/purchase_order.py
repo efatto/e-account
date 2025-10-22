@@ -1,6 +1,4 @@
-
-from odoo import _, fields, models, tools
-
+from odoo import models
 
 from .check_order_mixin import check_attachment
 

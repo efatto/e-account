@@ -1,11 +1,12 @@
+import logging
 import os
 
-from odoo import _, models, fields
-from odoo import _, tools
+from odoo import _, fields, models, tools
 from odoo.exceptions import ValidationError
-import logging
-_logger = logging.getLogger(__name__)
+
 from .check_order_confirm import check_code_and_qty
+
+_logger = logging.getLogger(__name__)
 
 
 def check_attachment(object_to_check, object_to_check_lines):
@@ -16,8 +17,12 @@ def check_attachment(object_to_check, object_to_check_lines):
         lambda x: x.product_id.type == "product" and x.product_id.default_code
     )
     filestore = tools.config.filestore(object_to_check._cr.dbname)
-    file_path = os.path.join(filestore, object_to_check.attachment_to_check_id.store_fname)
-    file_ext = object_to_check.attachment_to_check_id.mimetype.replace("application/", "")
+    file_path = os.path.join(
+        filestore, object_to_check.attachment_to_check_id.store_fname
+    )
+    file_ext = object_to_check.attachment_to_check_id.mimetype.replace(
+        "application/", ""
+    )
     _logger.info(
         f"Checking file {file_path} with extension {file_ext} for sale order "
         f"{object_to_check.name}"
