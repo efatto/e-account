@@ -239,6 +239,10 @@ def check_code_and_qty(
         compact_text = _normalize_code(full_text)
 
         code_found = norm_target in compact_text
+        if not code_found:
+            # try using O instead of 0
+            norm_target = norm_target.replace("0", "O")
+            code_found = norm_target in compact_text
 
         # Cerca la quantità: controllo più permissivo
         # - cerca il numero come parola isolata
