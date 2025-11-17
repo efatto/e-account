@@ -7,11 +7,7 @@ class GetIntrastatInfo(models.AbstractModel):
     _description = "Get Intrastat Info"
 
     def _get_info(
-        self,
-        product_id,
-        quantity,
-        price_subtotal,
-        intrastat_info=None,
+        self, product_id, quantity, price_subtotal, intrastat_info=None,
     ):
         # if the country of origin is not found in the product, get it from the first
         # seller of the product and eventually from the current company
@@ -21,10 +17,16 @@ class GetIntrastatInfo(models.AbstractModel):
         )
         country_name = (
             product_id.intrastat_country_origin_id
-            and product_id.intrastat_country_origin_id.with_context(lang="en_US").name
+            and product_id.intrastat_country_origin_id.with_context(
+            lang="en_US"
+        ).name
             or product_id.seller_ids
-            and product_id.seller_ids[0].name.country_id.with_context(lang="en_US").name
-            or self.env.user.company_id.country_id.with_context(lang="en_US").name
+            and product_id.seller_ids[0]
+            .name.country_id.with_context(lang="en_US")
+            .name
+            or self.env.user.company_id.country_id.with_context(
+            lang="en_US"
+        ).name
         )
         weight = float_round(
             product_id.weight * quantity,
