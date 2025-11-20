@@ -7,26 +7,25 @@ class GetIntrastatInfo(models.AbstractModel):
     _description = "Get Intrastat Info"
 
     def _get_info(
-        self, product_id, quantity, price_subtotal, intrastat_info=None,
+        self,
+        product_id,
+        quantity,
+        price_subtotal,
+        lang_code,
+        intrastat_info=None,
     ):
         # if the country of origin is not found in the product, get it from the first
         # seller of the product and eventually from the current company
-        lang = get_lang(self.env, lang_code=self.env.company.partner_id.lang)
+        lang = get_lang(self.env, lang_code=lang_code)
         precision_weight_digits = (
             self.env["decimal.precision"].search([("name", "=", "Stock Weight")]).digits
         )
         country_name = (
             product_id.intrastat_country_origin_id
-            and product_id.intrastat_country_origin_id.with_context(
-            lang="en_US"
-        ).name
+            and product_id.intrastat_country_origin_id.with_context(lang="en_US").name
             or product_id.seller_ids
-            and product_id.seller_ids[0]
-            .name.country_id.with_context(lang="en_US")
-            .name
-            or self.env.user.company_id.country_id.with_context(
-            lang="en_US"
-        ).name
+            and product_id.seller_ids[0].name.country_id.with_context(lang="en_US").name
+            or self.env.user.company_id.country_id.with_context(lang="en_US").name
         )
         weight = float_round(
             product_id.weight * quantity,
@@ -50,8 +49,8 @@ class GetIntrastatInfo(models.AbstractModel):
         intrastat_info[hs_code]["price_subtotal"] += price_subtotal
         return intrastat_text, intrastat_info
 
-    def _get_narration(self, intrastat_info=None):
-        lang = get_lang(self.env, lang_code=self.env.company.partner_id.lang)
+    def _get_narration(self, lang_code, currency_id, intrastat_info=None):
+        lang = get_lang(self.env, lang_code=lang_code)
         precision_weight_digits = (
             self.env["decimal.precision"].search([("name", "=", "Stock Weight")]).digits
         )
@@ -76,7 +75,7 @@ class GetIntrastatInfo(models.AbstractModel):
         narration += "\n".join(
             [
                 f"{n}: {intrastat_info[n]['weight']} kg |"
-                f" {intrastat_info[n]['price_subtotal']} €"
+                f" {intrastat_info[n]['price_subtotal']} {currency_id.symbol}"
                 for n in intrastat_info
             ]
         )
