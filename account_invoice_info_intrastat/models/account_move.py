@@ -17,6 +17,7 @@ class AccountMove(models.Model):
                     line.product_id,
                     line.quantity,
                     line.price_subtotal,
+                    move.partner_id.lang,
                     intrastat_info,
                 )
                 if "HS CODE" in line.name:
@@ -27,7 +28,11 @@ class AccountMove(models.Model):
                 move.narration = re.compile("\n[0-9]{4,12}: .*€").sub(
                     "", move.narration
                 )
-            move.narration = get_intrastat_info._get_narration(intrastat_info)
+            move.narration = get_intrastat_info._get_narration(
+                lang_code=move.partner_id.lang,
+                currency_id=move.currency_id,
+                intrastat_info=intrastat_info,
+            )
 
     def action_remove_intrastat_data_invoice(self):
         for move in self.filtered(lambda x: x.move_type.startswith("out_")):
