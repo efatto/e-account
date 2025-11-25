@@ -7,7 +7,9 @@
     "author": "Sergio Corato",
     "summary": "This module add logic to store a copy of sale order as revision, "
     "while the user continue to use the same sale order, to preserve "
-    "chat history and attachments.",
+    "chat history and attachments. If there are 'purchase_date' and 'purchase_price' "
+    "fields in the sale.order.line, supplied by sale_order_cost_recalculation module, "
+    "they will be copied without recomputation.",
     "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [

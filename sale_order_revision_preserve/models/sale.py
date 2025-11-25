@@ -1,7 +1,20 @@
-# Copyright 2021 Sergio Corato <https://github.com/sergiocorato>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from odoo import api, models
 
-from odoo import models
+
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    @api.returns(None, lambda value: value[0])
+    def copy_data(self, default=None):
+        default = dict(default or {})
+        if (
+            hasattr(self, "purchase_price")
+            and hasattr(self, "purchase_date")
+            and self.env.context.get("preserve_purchase_price")
+        ):
+            default["purchase_price"] = self.purchase_price
+            default["purchase_date"] = self.purchase_date
+        return super().copy_data(default=default)
 
 
 class SaleOrder(models.Model):
@@ -29,6 +42,10 @@ class SaleOrder(models.Model):
                 "name": "%s-%02d" % (self.unrevisioned_name, new_rev_number),
             }
         )
+        default_data["order_line"] = [
+            (0, 0, line.with_context(preserve_purchase_price=True).copy_data()[0])
+            for line in self.order_line
+        ]
         new_revision = self.copy(default_data)
         self.old_revision_ids.write(
             {
