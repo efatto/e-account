@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* helpdesk_mngt_ticket_view
+# 	* helpdesk_mgmt_ticket_view
 #
 msgid ""
 msgstr ""
