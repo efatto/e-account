@@ -6,9 +6,6 @@ from odoo import models
 class FatturapaAttachmentOut(models.Model):
     _inherit = "fatturapa.attachment.out"
 
-    # Usage: put in a email template:
-    # ${object.fatturapa_attachment_out_id.get_url_report()}
-
     def get_url_report(self):
         self.ensure_one()
         attachment_obj = self.env["ir.attachment"]
