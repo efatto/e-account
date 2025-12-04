@@ -14,7 +14,7 @@ class FatturapaAttachmentOut(models.Model):
         result = base64.b64encode(pdf)
         file_name = "%s_%s.pdf" % (
             self.invoice_partner_id.name,
-            self.id,
+            self.out_invoice_ids[0].name.replace("/", "_"),
         )
         att = attachment_obj.create(
             {
@@ -26,12 +26,10 @@ class FatturapaAttachmentOut(models.Model):
             }
         )
         att.generate_access_token()
-        url = "{}/web/content/ir.attachment/{}/datas/{}?download=true".format(
+        url = "{}/web/content/ir.attachment/{}/datas/{}?download=true{}".format(
             self.env["ir.config_parameter"].sudo().get_param("web.base.url"),
             att.id,
             att.name,
+            f"&access_token={att.access_token}",
         )
-
-        url += f"&access_token={att.access_token}"
-        url = f"<a href='{url}'>Download {file_name}</a>"
         return url
