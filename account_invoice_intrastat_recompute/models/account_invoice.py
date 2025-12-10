@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import api, fields, models
 
 
 class AccountInvoice(models.Model):
@@ -9,8 +9,7 @@ class AccountInvoice(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         res = super(
-            AccountInvoice,
-            self.with_context(no_recurse_compute_intrastat=True)
+            AccountInvoice, self.with_context(no_recurse_compute_intrastat=True)
         ).create(vals_list)
         if res.intrastat and res.auto_recompute_intrastat:
             res.compute_intrastat_lines()
