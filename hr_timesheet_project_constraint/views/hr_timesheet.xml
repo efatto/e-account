@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_account_analytic_line_tree" model="ir.ui.view">
+        <field name="name">account.analytic.line.tree.project.account</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_tree" />
+        <field name="arch" type="xml">
+            <field name="account_id" position="after">
+                <field name="project_id" optional="hide" />
+                <field name="project_analytic_account_id" optional="hide" />
+            </field>
+        </field>
+    </record>
+    <record id="hr_timesheet_line_tree" model="ir.ui.view">
+        <field name="name">account.analytic.line.tree.hr.project.account</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree" />
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="project_analytic_account_id" optional="hide" />
+                <field name="account_id" optional="hide" />
+            </field>
+        </field>
+    </record>
+    <record id="hr_timesheet_line_form" model="ir.ui.view">
+        <field name="name">account.analytic.line.form</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_form" />
+        <field name="arch" type="xml">
+            <field name="project_id" position="before">
+                <field name="account_id" invisible="1" />
+            </field>
+            <field name="project_id" position="attributes">
+                <attribute
+                    name="domain"
+                >[('analytic_account_id', '=', account_id)]</attribute>
+            </field>
+        </field>
+    </record>
+    <record id="hr_timesheet_line_search" model="ir.ui.view">
+        <field name="name">account.analytic.line.search</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_search" />
+        <field name="arch" type="xml">
+            <filter name="mine" position="after">
+                <field name="is_project_account_not_the_same" invisible="1" />
+                <filter
+                    string="Analytic account is not the same in the project"
+                    name="wrong_analytic_account"
+                    domain="[('is_project_account_not_the_same', '=', True)]"
+                />
+            </filter>
+        </field>
+    </record>
+
+</odoo>
