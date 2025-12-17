@@ -1,6 +1,3 @@
-# Copyright 2019-2023 Sergio Corato <https://github.com/sergiocorato>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
 from datetime import timedelta
 
 import odoo.tests.common as common
@@ -19,17 +16,17 @@ class TestAccountBalanceProgressive(common.TransactionCase):
         )
         self.account = self.env["account.account"].create(
             {
-                "code": "TEST_CREDIT_PROGRESSIVE",
+                "code": "TEST.CREDIT.PROGRESSIVE",
                 "name": "Credit progressive",
-                "user_type_id": self.env.ref("account.data_account_type_payable").id,
+                "account_type": "liability_payable",
                 "reconcile": True,
             }
         )
         self.account_expenses = self.env["account.account"].create(
             {
-                "code": "TEST_EXPENSE_PROGRESSIVE",
+                "code": "TEST.EXPENSE.PROGRESSIVE",
                 "name": "Expense progressive",
-                "user_type_id": self.env.ref("account.data_account_type_expenses").id,
+                "account_type": "expense",
             }
         )
 
