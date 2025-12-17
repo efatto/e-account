@@ -6,7 +6,7 @@ from odoo import _, fields
 
 class TestAccountBalanceProgressive(common.TransactionCase):
     def setUp(self):
-        super(TestAccountBalanceProgressive, self).setUp()
+        super().setUp()
         self.miscellaneous_journal = self.env["account.journal"].create(
             {
                 "name": "Miscellaneus journal",
