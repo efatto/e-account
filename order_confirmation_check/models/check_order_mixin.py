@@ -30,29 +30,60 @@ def check_attachment(object_to_check, object_to_check_lines):
         f"Checking file {file_path} with extension {file_ext} for sale order "
         f"{object_to_check.name}"
     )
-    target_results = check_code_and_qty(
-        file_path,
-        file_ext,
-        {
-            line.product_id.default_code: lang.format(
+    data_to_check = {}
+    for line in lines_to_check:
+        partner_code = False
+        if line._name == "purchase.order.line":
+            partner = (
+                line.partner_id
+                if not line.partner_id.parent_id
+                else line.partner_id.parent_id
+            )
+            if partner in line.product_id.seller_ids.mapped("name"):
+                seller = line.product_id._select_seller(
+                    partner_id=line.partner_id,
+                    quantity=line.product_qty,
+                    date=line.order_id.date_order and line.order_id.date_order.date(),
+                    uom_id=line.product_uom,
+                )
+                if seller:
+                    partner_code = seller[0].product_code or ""
+        elif line._name == "sale.order.line":
+            if line.product_id and line.order_id and line.order_id.partner_id:
+                partner_code = line.product_id._select_customerinfo(
+                    partner=line.order_partner_id,
+                    quantity=None,
+                )[0]
+        data_to_check[line.id] = dict(
+            default_code=line.product_id.default_code,
+            quantity=lang.format(
                 "%.0f",
                 line.product_uom_qty,
                 grouping=True,
                 monetary=False,
-            )
-            for line in lines_to_check
-        },
+            ),
+            partner_code=partner_code,
+            price_total=lang.format(
+                "%.0f",
+                line.price_subtotal,
+                grouping=True,
+                monetary=False,
+            ),
+        )
+    target_results = check_code_and_qty(
+        file_path,
+        file_ext,
+        data_to_check,
     )
     for line in lines_to_check:
-        target_result = target_results.get(line.product_id.default_code)
-        if not target_result or target_result[0] == "Undefined":
-            check_result = False
-            check_message = _("No result found for this line")
+        if target_results.get(line.id):
+            target_result = target_results[line.id]
+            for key in target_result:
+                line.check_result = key
+                line.check_message = target_result[key]
         else:
-            check_result = target_result[0]
-            check_message = target_result[1]
-        line.check_result = check_result
-        line.check_message = check_message
+            line.check_result = False
+            line.check_message = _("No match found")
     if all(x.check_result for x in lines_to_check):
         object_to_check.check_result = True
         object_to_check.check_message = _("All lines checked")
@@ -66,7 +97,7 @@ class CheckOrderMixinChild(models.AbstractModel):
         string="Confirmation check result",
         default=False,
     )
-    check_message = fields.Char(
+    check_message = fields.Text(
         string="Confirmation check message",
     )
 

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-22 09:03+0000\n"
-"PO-Revision-Date: 2025-10-22 09:03+0000\n"
+"POT-Creation-Date: 2025-12-22 18:28+0000\n"
+"PO-Revision-Date: 2025-12-22 18:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -121,8 +121,8 @@ msgstr "Nessun allegato da controllare"
 #. module: order_confirmation_checker
 #: code:addons/order_confirmation_checker/models/check_order_mixin.py:0
 #, python-format
-msgid "No result found for this line"
-msgstr "Nessun risultato trovato per questa riga"
+msgid "No match found"
+msgstr "Nessun risultato"
 
 #. module: order_confirmation_checker
 #: code:addons/order_confirmation_checker/models/check_order_confirm.py:0
