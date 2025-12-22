@@ -192,9 +192,12 @@ def check_code_and_qty(
 
     - file_path: percorso locale verso file (pdf, jpg, png, eml, ecc.)
     - target_data: dict con:
-        stringa del codice da cercare (es. 'JPM09', se nel documento ci sono spazi tra i
-         caratteri, la funzione li ignora)
-        quantità intera da cercare (es. 100)
+        id della riga e dict con:
+            stringa del codice da cercare (es. 'JPM09', se nel documento ci sono spazi
+             tra i caratteri, la funzione li ignora)
+            quantità intera da cercare (es. 100)
+            codice del prodotto del partner (cliente o fornitore)
+            prezzo totale
 
     Ritorna (True, 'TUTTO CORRETTO') o (False, 'VALORI ERRATI').
     """
@@ -230,10 +233,12 @@ def check_code_and_qty(
         return {"Undefined": [False, "Nessun testo estratto dal documento"]}
 
     target_results = {}
-    for target_code in target_data:
+    for target in target_data:
         # Normalizza codice: rimuove spazi e caratteri non alfanumerici
-        norm_target = _normalize_code(target_code)
-        target_qty = target_data[target_code]
+        norm_target = _normalize_code(target_data[target].get("default_code"))
+        target_qty = target_data[target].get("quantity")
+        target_partner_code = _normalize_code(target_data[target].get("partner_code"))
+        target_price = target_data[target].get("price_total")
         # Normalizza testo: rimuovi caratteri non alfanumerici per ricerca codice
         # "compatta"
         compact_text = _normalize_code(full_text)
@@ -243,6 +248,12 @@ def check_code_and_qty(
             # try using O instead of 0
             norm_target = norm_target.replace("0", "O")
             code_found = norm_target in compact_text
+
+        partner_code_found = target_partner_code in compact_text
+        if not partner_code_found:
+            # try using O instead of 0
+            target_partner_code = target_partner_code.replace("0", "O")
+            partner_code_found = target_partner_code in compact_text
 
         # Cerca la quantità: controllo più permissivo
         # - cerca il numero come parola isolata
@@ -257,12 +268,34 @@ def check_code_and_qty(
             nums = _extract_numbers(full_text)
             qty_found = target_qty in nums
 
-        if code_found and qty_found:
-            target_results[target_code] = [True, "OK"]
-        else:
-            target_results[target_code] = [
-                False,
-                f"Not found {'code: ' + target_code if not code_found else ''} "
-                f"{'qty: ' + str(target_qty) if not qty_found else ''}",
-            ]
+        # Cerca il prezzo: controllo più permissivo
+        # - cerca il numero come parola isolata
+        price_pattern = re.compile(
+            r"\b" + re.escape(str(target_price)) + r"\b",
+            flags=re.IGNORECASE,
+        )
+        price_found = bool(price_pattern.search(full_text))
+
+        # Se non trovato direttamente, prova a trovare numeri e confrontarli
+        if not price_found:
+            nums = _extract_numbers(full_text)
+            price_found = target_price in nums
+
+        result_msg = "{code}, {partner_code}, {qty}, {price}.".format(
+            code=(
+                f"Code {'not' if not code_found else ''} found: "
+                + target_data[target].get("default_code")
+            ),
+            partner_code=(
+                f"Partner product code {'not' if not partner_code_found else ''} found: "
+                + target_data[target].get("partner_code")
+            ),
+            qty=f"Quantity {'not' if not qty_found else ''} found: " + str(target_qty),
+            price=f"Price {'not' if not price_found else ''} found: "
+            + str(target_price),
+        )
+
+        target_results[target] = {
+            (code_found or partner_code_found) and qty_found and price_found: result_msg
+        }
     return target_results
