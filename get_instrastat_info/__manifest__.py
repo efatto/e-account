@@ -3,7 +3,7 @@
 {
     "name": "Technical module to get Intrastat info",
     "summary": "Add a reusable method to get Intrastat info",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Accounting",
     "website": "https://github.com/efatto/e-account",
     "author": "Sergio Corato",
