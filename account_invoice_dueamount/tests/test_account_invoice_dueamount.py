@@ -1,6 +1,3 @@
-# Copyright 2023 Sergio Corato <https://github.com/sergiocorato>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
 from odoo import fields
 from odoo.tests import tagged
 
@@ -34,16 +31,16 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
         )
         self.revenue_account = self.env["account.account"].create(
             {
-                "code": "TEST_REVENUE",
+                "code": "TEST.REVENUE",
                 "name": "Sale revenue",
-                "user_type_id": self.env.ref("account.data_account_type_revenue").id,
+                "account_type": "income",
             }
         )
         self.expense_account = self.env["account.account"].create(
             {
-                "code": "TEST_EXPENSE",
+                "code": "TEST.EXPENSE",
                 "name": "Purchase expense",
-                "user_type_id": self.env.ref("account.data_account_type_expenses").id,
+                "account_type": "expense",
             }
         )
         self.partner = self.env["res.partner"].create(
@@ -70,14 +67,14 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
                         {
                             "value": "balance",
                             "days": 30,
-                            "option": "after_invoice_month",
+                            "end_month": True,
                         },
                     ),
                 ],
             }
         )
 
-    def create_invoice(self, move_type):
+    def create_custom_invoice(self, move_type):
         invoice_line_data = {
             "product_id": self.env.ref("product.product_product_5").id,
             "quantity": 5,
@@ -119,7 +116,7 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
     def _test_invoice(self, move_type):
         # create invoice with payment term and check it is the default, then create
         # another invoice forcing due amounts
-        invoice = self.create_invoice(move_type)
+        invoice = self.create_custom_invoice(move_type)
         invoice._post()
         self.assertEqual(len(invoice.line_ids.filtered(lambda x: x.date_maturity)), 2)
         invoice.button_draft()
@@ -139,7 +136,8 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
         )
         invoice._post()
         inv_line_ids = invoice.line_ids.filtered(
-            lambda x: x.account_id.user_type_id.type in ("receivable", "payable")
+            lambda x: x.account_id.account_type
+            in ("asset_receivable", "liability_payable")
         )
         self.assertAlmostEqual(
             sum(invoice.mapped("dueamount_line_ids.amount")),
