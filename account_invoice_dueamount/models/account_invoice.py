@@ -1,6 +1,3 @@
-# Copyright 2017-2023 Sergio Corato <https://github.com/sergiocorato>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
 from odoo import _, exceptions, fields, models
 from odoo.tools import float_compare, float_is_zero
 
@@ -17,22 +14,33 @@ class AccountMove(models.Model):
     def dueamount_set(self):
         for invoice in self:
             others_lines = invoice.line_ids.filtered(
-                lambda inv_line: inv_line.account_id.user_type_id.type
-                not in ("receivable", "payable")
+                lambda inv_line: inv_line.account_id.account_type
+                not in ("asset_receivable", "liability_payable")
             )
             company_currency_id = (
                 invoice.company_id or invoice.env.company
             ).currency_id
             total_balance = sum(
-                others_lines.mapped(lambda l: company_currency_id.round(l.balance))
+                others_lines.mapped(
+                    lambda ol, c=company_currency_id: c.round(ol.balance)
+                )
             )
             if total_balance:
                 if invoice.invoice_payment_term_id:
                     # context for compatibility w/ account_payment_term_partner_holiday
-                    totlines = invoice.invoice_payment_term_id.with_context(
-                        currency_id=invoice.currency_id.id,
-                        default_partner_id=invoice.partner_id.id,
-                    ).compute(total_balance, invoice.invoice_date or False)
+                    totlines = invoice.invoice_payment_term_id._compute_terms(
+                        date_ref=invoice.invoice_date
+                        or invoice.date
+                        or fields.Date.context_today(invoice),
+                        currency=invoice.currency_id,
+                        tax_amount_currency=total_balance,
+                        tax_amount=total_balance,
+                        untaxed_amount_currency=0,
+                        untaxed_amount=0,
+                        company=invoice.company_id,
+                        cash_rounding=invoice.invoice_cash_rounding_id,
+                        sign=1 if invoice.is_inbound(include_receipts=True) else -1,
+                    )
                 else:
                     totlines = [(invoice.invoice_date, total_balance)]
                 dueamount_line_obj = self.env["account.invoice.dueamount.line"]
@@ -41,8 +49,8 @@ class AccountMove(models.Model):
                     due_line_id = dueamount_line_obj.create(
                         [
                             {
-                                "date": line[0],
-                                "amount": line[1]
+                                "date": line["date"],
+                                "amount": line["company_amount"]
                                 * (
                                     invoice.move_type in ("out_invoice", "in_refund")
                                     and -1
@@ -80,13 +88,13 @@ class AccountMove(models.Model):
                 if float_compare(total_dueamount, move.amount_total, 2) != 0:
                     raise exceptions.ValidationError(
                         _(
-                            "Total amount of due amount lines %.2f must be equal to "
-                            "invoice total amount %.2f"
+                            "Total amount of due amount lines %(due_amount).2f must be "
+                            "equal to invoice total amount %(total_amount).2f"
                         )
-                        % (
-                            total_dueamount,
-                            move.amount_total,
-                        )
+                        % {
+                            "due_amount": total_dueamount,
+                            "total_amount": move.amount_total,
+                        }
                     )
 
                 dueamount_ids = move.dueamount_line_ids.ids
