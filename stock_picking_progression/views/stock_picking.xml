@@ -8,6 +8,10 @@
                 <field name="progress" widget="percentpie" optional="show" />
                 <field name="progress_text" optional="show" />
             </xpath>
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="total_qty" optional="hide" />
+                <field name="done_qty" optional="show" />
+            </xpath>
         </field>
     </record>
 </odoo>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-22 08:23+0000\n"
-"PO-Revision-Date: 2025-01-22 08:23+0000\n"
+"POT-Creation-Date: 2025-12-24 11:09+0000\n"
+"PO-Revision-Date: 2025-12-24 11:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,6 +26,11 @@ msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: stock_picking_progression
+#: model:ir.model.fields,field_description:stock_picking_progression.field_stock_picking__done_qty
+msgid "Done Qty"
+msgstr "Q.tà completata"
+
+#. module: stock_picking_progression
 #: model:ir.model.fields,field_description:stock_picking_progression.field_stock_picking__id
 msgid "ID"
 msgstr ""
@@ -39,6 +44,11 @@ msgstr "Ultima modifica il"
 #: model:ir.model.fields,field_description:stock_picking_progression.field_stock_picking__progress_text
 msgid "Progress"
 msgstr "Progresso"
+
+#. module: stock_picking_progression
+#: model:ir.model.fields,field_description:stock_picking_progression.field_stock_picking__total_qty
+msgid "Total Qty"
+msgstr "Q.tà totale"
 
 #. module: stock_picking_progression
 #: model:ir.model,name:stock_picking_progression.model_stock_picking
