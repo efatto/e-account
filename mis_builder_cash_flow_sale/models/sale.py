@@ -1,5 +1,3 @@
-# Copyright 2022-2023 Sergio Corato <https://github.com/sergiocorato>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import config, float_is_zero, float_round
@@ -51,11 +49,11 @@ class SaleOrderLine(models.Model):
         string="Forecast cashflow line",
     )
 
-    @api.model
-    def create(self, vals):
-        line = super().create(vals)
-        line._refresh_cashflow_line()
-        return line
+    @api.model_create_multi
+    def create(self, vals_list):
+        lines = super().create(vals_list)
+        lines._refresh_cashflow_line()
+        return lines
 
     def write(self, vals):
         res = super().write(vals)
@@ -64,8 +62,8 @@ class SaleOrderLine(models.Model):
             or vals.get("commitment_date")
             or vals.get("product_uom_qty")
             or vals.get("discount")
-            or vals.get("discount2")
-            or vals.get("discount3")
+            or vals.get("discount2")  # noqa
+            or vals.get("discount3")  # noqa
         ):
             self._refresh_cashflow_line()
         return res
@@ -74,18 +72,26 @@ class SaleOrderLine(models.Model):
         for line in self:
             line.cashflow_line_ids.unlink()
             if line.order_id.payment_mode_id.fixed_journal_id:
-                journal_id = line.order_id.payment_mode_id.fixed_journal_id
-                if line.price_total < 0:
-                    account_id = journal_id.payment_credit_account_id
-                else:
-                    account_id = journal_id.payment_debit_account_id
+                account_id = (
+                    line.order_id.payment_mode_id.fixed_journal_id.bank_account_id
+                )
+            elif (
+                line.price_total < 0
+                and line.company_id.account_journal_payment_credit_account_id
+            ):
+                account_id = line.company_id.account_journal_payment_credit_account_id
+            elif (
+                line.price_total > 0
+                and line.company_id.account_journal_payment_debit_account_id
+            ):
+                account_id = line.company_id.account_journal_payment_debit_account_id
             else:
                 account_ids = self.env["account.account"].search(
                     [
                         (
-                            "user_type_id",
+                            "account_type",
                             "=",
-                            self.env.ref("account.data_account_type_liquidity").id,
+                            "asset_cash",
                         ),
                         ("company_id", "=", line.order_id.company_id.id),
                     ],
@@ -117,21 +123,28 @@ class SaleOrderLine(models.Model):
                 precision_rounding=line.order_id.currency_id.rounding,
             ):
                 totlines = [
-                    (
-                        (
+                    {
+                        "date": (
                             line.commitment_date
                             or line.order_id.commitment_date
                             or line.order_id.date_order
                         ).strftime("%Y-%m-%d"),
-                        sale_balance_total_currency,
-                    )
+                        "company_amount": sale_balance_total_currency,
+                    }
                 ]
                 if line.order_id.payment_term_id:
-                    totlines = line.order_id.payment_term_id.compute(
-                        sale_balance_total_currency,
-                        line.commitment_date
+                    totlines = line.order_id.payment_term_id._compute_terms(
+                        date_ref=line.commitment_date
                         or line.order_id.commitment_date
-                        or line.order_id.date_order,
+                        or line.order_id.date_order
+                        or fields.Date.context_today(line),
+                        currency=line.currency_id,
+                        tax_amount_currency=sale_balance_total_currency,
+                        tax_amount=sale_balance_total_currency,
+                        untaxed_amount_currency=0,
+                        untaxed_amount=0,
+                        company=line.company_id,
+                        sign=1,
                     )
                 line.write(
                     {
@@ -140,10 +153,14 @@ class SaleOrderLine(models.Model):
                                 0,
                                 0,
                                 {
-                                    "name": _("Due line #%s/%s of Sale order %s")
-                                    % (i, len(totlines), line.order_id.name),
-                                    "date": dueline[0],
-                                    "sale_balance_currency": dueline[1],
+                                    "name": _(
+                                        "Due line #%(num)s/%(to)s of Sale order %(so)s",
+                                        num=i,
+                                        to=len(totlines),
+                                        so=line.order_id.name,
+                                    ),
+                                    "date": dueline["date"],
+                                    "sale_balance_currency": dueline["company_amount"],
                                     "currency_id": line.order_id.currency_id.id,
                                     "balance": 0,
                                     "sale_line_id": line.id,
