@@ -10,6 +10,9 @@ extend-select = [
     "I",  # isort
     "UP",  # pyupgrade
 ]
+# Ignore UP031 globally.
+ignore = ["UP031"]
+
 extend-safe-fixes = ["UP008"]
 exclude = ["setup/*"]
 

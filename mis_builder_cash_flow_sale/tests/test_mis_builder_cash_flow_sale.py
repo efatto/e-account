@@ -1,5 +1,3 @@
-# Copyright 2023 Sergio Corato <https://github.com/sergiocorato>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import fields
 from odoo.tests.common import Form, SavepointCase
 from odoo.tools.date_utils import relativedelta
@@ -38,7 +36,8 @@ class TestMisBuilderCashflowSale(SavepointCase):
                         {
                             "value": "percent",
                             "value_amount": 50,
-                            "days": 30,
+                            "months": 1,
+                            "end_month": True,
                         },
                     ),
                     (
@@ -46,8 +45,8 @@ class TestMisBuilderCashflowSale(SavepointCase):
                         0,
                         {
                             "value": "balance",
-                            "days": 30,
-                            "option": "after_invoice_month",
+                            "months": 2,
+                            "end_month": True,
                         },
                     ),
                 ],
@@ -57,7 +56,7 @@ class TestMisBuilderCashflowSale(SavepointCase):
             {
                 "name": "Bank",
                 "code": "100999",
-                "user_type_id": cls.env.ref("account.data_account_type_liquidity").id,
+                "account_type": "asset_cash",
             }
         )
         cls.customer_payment_mode = cls.payment_mode_model.create(
