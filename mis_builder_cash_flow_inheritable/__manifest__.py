@@ -2,11 +2,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "MIS Builder cash flow make query inheritable",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "other",
     "author": "Sergio Corato",
-    "summary": "This module do nothing by himself. It is used from other modules "
-    "to extend cash flow query.",
     "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
