@@ -2,13 +2,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Base comment template preserve",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "other",
     "author": "Sergio Corato",
     "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
-    "summary": "This module preserves the comments already present in the "
-    "document if they are not defined in the partner.",
     "depends": [
         "base_comment_template",
     ],
