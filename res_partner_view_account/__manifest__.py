@@ -4,11 +4,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Partner button view account moves",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Accounting & Finance",
     "author": "Alexis de Lattre - Akretion, Sergio Corato",
-    "summary": "This module add button to open credit or debit account moves "
-    "related to the partner.",
     "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
