@@ -10,7 +10,7 @@
                         <field name="company_id" invisible="1" />
                         <field
                             name="account_id"
-                            domain="[('deprecated', '=', False), ('user_type_id.type', 'not in', ('receivable', 'payable')), ('company_id', '=', company_id), ('is_off_balance', '=', False)]"
+                            domain="[('deprecated', '=', False), ('account_type', 'not in', ('asset_receivable', 'liability_payable')), ('company_id', '=', company_id), ('is_off_balance', '=', False)]"
                         />
                     </group>
                 </div>
