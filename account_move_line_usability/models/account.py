@@ -12,6 +12,6 @@ class AccountMoveLine(models.Model):
             else:
                 self.account_id = self.partner_id.property_account_payable_id
 
-    name = fields.Text("Name", required=True)
-    date_from = fields.Date(compute=lambda *a, **k: {}, string="Date from")
-    date_to = fields.Date(compute=lambda *a, **k: {}, string="Date to")
+    name = fields.Text(required=True)
+    date_from = fields.Date(compute=lambda *a, **k: {})
+    date_to = fields.Date(compute=lambda *a, **k: {})
