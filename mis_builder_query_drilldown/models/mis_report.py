@@ -1,6 +1,3 @@
-# Copyright 2020 Sergio Corato <https://github.com/sergiocorato>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
 from odoo import fields, models
 from odoo.tools.safe_eval import safe_eval
 
@@ -41,7 +38,9 @@ class MisReportInstance(models.Model):
     _inherit = "mis.report.instance"
 
     def _add_column_move_lines(self, aep, kpi_matrix, period, label, description):
-        super()._add_column_move_lines(aep, kpi_matrix, period, label, description)
+        res = super()._add_column_move_lines(
+            aep, kpi_matrix, period, label, description
+        )
         expression_evaluator = MisQueryExpressionEvaluator(
             aep,
             period.date_from,
@@ -59,6 +58,7 @@ class MisReportInstance(models.Model):
             period._get_additional_query_filter,
             no_auto_expand_accounts=self.no_auto_expand_accounts,
         )
+        return res
 
     def drilldown(self, arg):
         self.ensure_one()
