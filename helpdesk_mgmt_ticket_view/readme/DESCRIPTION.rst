@@ -1,1 +1,1 @@
-This module change portal view in helpdesk to show the entiry name of the ticket.
+This module change portal view in helpdesk to show the entire name of the ticket.
