@@ -15,9 +15,9 @@ class MisReportKpi(models.Model):
 
 class MisQueryExpressionEvaluator(ExpressionEvaluator):
     def eval_expressions(self, expressions, locals_dict):
-        vals, drilldown_args, name_error = super(
-            MisQueryExpressionEvaluator, self
-        ).eval_expressions(expressions, locals_dict)
+        vals, drilldown_args, name_error = super().eval_expressions(
+            expressions, locals_dict
+        )
         for expression in expressions:
             if expression.kpi_id.query_id:
                 domain = (
@@ -41,9 +41,7 @@ class MisReportInstance(models.Model):
     _inherit = "mis.report.instance"
 
     def _add_column_move_lines(self, aep, kpi_matrix, period, label, description):
-        super(MisReportInstance, self)._add_column_move_lines(
-            aep, kpi_matrix, period, label, description
-        )
+        super()._add_column_move_lines(aep, kpi_matrix, period, label, description)
         expression_evaluator = MisQueryExpressionEvaluator(
             aep,
             period.date_from,
@@ -77,7 +75,7 @@ class MisReportInstance(models.Model):
                 )
             )
             return {
-                "name": "{} - {}".format(model, period.name),
+                "name": f"{model} - {period.name}",
                 "domain": domain,
                 "type": "ir.actions.act_window",
                 "res_model": model,
@@ -86,4 +84,4 @@ class MisReportInstance(models.Model):
                 "view_mode": "tree",
                 "target": "current",
             }
-        return super(MisReportInstance, self).drilldown(arg)
+        return super().drilldown(arg)
