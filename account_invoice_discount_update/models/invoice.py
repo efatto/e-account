@@ -16,6 +16,4 @@ class AccountMove(models.Model):
                 line.with_context(check_move_validity=False).update(
                     {"discount": invoice.discount}
                 )
-            invoice.with_context(check_move_validity=False)._recompute_dynamic_lines(
-                recompute_all_taxes=True, recompute_tax_base_amount=True
-            )
+            invoice._sync_dynamic_lines(container={"records": invoice, "self": invoice})
