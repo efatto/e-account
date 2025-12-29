@@ -5,7 +5,7 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
 @tagged("post_install", "-at_install")
-class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
+class TestAccountInvoiceDiscountUpdate(AccountTestInvoicingCommon):
     def setUp(self):
         super().setUp()
         self.sale_journal = (
