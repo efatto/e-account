@@ -13,6 +13,7 @@
                 <button
                     name="%(account_invoice_line_update.action_update_account_move_line)d"
                     type="action"
+                    title="Update line"
                     icon="fa-edit"
                     attrs="{
                         'invisible': ['|', ('display_type', 'in', ('line_section', 'line_note')), ('account_type', 'in', ('asset_receivable', 'liability_payable'))],
