@@ -1,0 +1,87 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_it_fatturapa_in_preview_export_zip
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-07 14:24+0000\n"
+"PO-Revision-Date: 2025-03-07 14:24+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__assigned_attachment_ids
+msgid "Assigned Attachments"
+msgstr "Allegati assegnati"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in_preview_export_zip.wizard_account_invoice_report_export
+msgid "Cancel"
+msgstr "Annulla"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.actions.act_window,name:l10n_it_fatturapa_in_preview_export_zip.action_report_invoice_export
+#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in_preview_export_zip.wizard_account_invoice_report_export
+msgid "Export e-invoice previews"
+msgstr "Esporta preview e-fatture"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__export_report_name
+msgid "Exported file name"
+msgstr "Nome file esportato"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__data
+msgid "File"
+msgstr ""
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__name
+msgid "Filename"
+msgstr "Nome file"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento da"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in_preview_export_zip.field_wizard_account_invoice_export__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamenti il"
+
+#. module: l10n_it_fatturapa_in_preview_export_zip
+#: model:ir.model,name:l10n_it_fatturapa_in_preview_export_zip.model_wizard_account_invoice_export
+msgid "wizard.account.invoice.export"
+msgstr ""
