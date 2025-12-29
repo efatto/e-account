@@ -40,7 +40,7 @@ Solve some usability issue in account move line:
 Usage
 =====
 
-Nothing to-do.
+Nothing todo.
 
 Bug Tracker
 ===========

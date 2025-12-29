@@ -7,6 +7,15 @@
             <xpath expr="//field[@name='line_ids']/tree" position="attributes">
                 <attribute name="class">account_move_line_usability_class</attribute>
             </xpath>
+            <xpath
+                expr="//field[@name='line_ids']/tree/field[@name='partner_id']"
+                position="after"
+            >
+                <xpath
+                    expr="//field[@name='line_ids']/tree/field[@name='account_id']"
+                    position="move"
+                />
+            </xpath>
         </field>
     </record>
     <record id="view_account_move_line_filter_date_from_date_to" model="ir.ui.view">

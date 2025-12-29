@@ -6,11 +6,12 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 @tagged("post_install", "-at_install")
 class TestAccountInvoiceDiscountUpdate(AccountTestInvoicingCommon):
-    def setUp(self):
-        super().setUp()
-        self.sale_journal = (
-            self.env["account.journal"]
-            .with_company(self.env.user.company_id.id)
+    @classmethod
+    def setUpClass(cls, chart_template_ref=None):
+        super().setUpClass(chart_template_ref=chart_template_ref)
+        cls.sale_journal = (
+            cls.env["account.journal"]
+            .with_company(cls.env.user.company_id.id)
             .search(
                 [
                     ("type", "=", "sale"),
@@ -18,9 +19,9 @@ class TestAccountInvoiceDiscountUpdate(AccountTestInvoicingCommon):
                 limit=1,
             )
         )
-        self.purchase_journal = (
-            self.env["account.journal"]
-            .with_company(self.env.user.company_id.id)
+        cls.purchase_journal = (
+            cls.env["account.journal"]
+            .with_company(cls.env.user.company_id.id)
             .search(
                 [
                     ("type", "=", "purchase"),
@@ -28,21 +29,21 @@ class TestAccountInvoiceDiscountUpdate(AccountTestInvoicingCommon):
                 limit=1,
             )
         )
-        self.revenue_account = self.env["account.account"].create(
+        cls.revenue_account = cls.env["account.account"].create(
             {
                 "code": "TEST.REVENUE",
                 "name": "Sale revenue",
                 "account_type": "income",
             }
         )
-        self.expense_account = self.env["account.account"].create(
+        cls.expense_account = cls.env["account.account"].create(
             {
                 "code": "TEST.EXPENSE",
                 "name": "Purchase expense",
                 "account_type": "expense",
             }
         )
-        self.partner = self.env["res.partner"].create(
+        cls.partner = cls.env["res.partner"].create(
             {
                 "name": "Test partner",
             }
