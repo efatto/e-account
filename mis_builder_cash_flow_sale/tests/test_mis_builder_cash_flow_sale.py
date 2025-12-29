@@ -1,9 +1,9 @@
 from odoo import fields
-from odoo.tests.common import Form, SavepointCase
+from odoo.tests.common import Form, TransactionCase
 from odoo.tools.date_utils import relativedelta
 
 
-class TestMisBuilderCashflowSale(SavepointCase):
+class TestMisBuilderCashflowSale(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
