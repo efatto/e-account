@@ -2,10 +2,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Account Invoice Due list Optional Visibility",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "other",
     "author": "Sergio Corato",
-    "summary": "Add option to make due list always visible.",
     "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
