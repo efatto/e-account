@@ -1,17 +1,18 @@
 from odoo import fields
-from odoo.tests import tagged
+from odoo.tests import Form, tagged
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
 @tagged("post_install", "-at_install")
 class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
-    def setUp(self):
-        super().setUp()
-        self.today = fields.Date.today()
-        self.sale_journal = (
-            self.env["account.journal"]
-            .with_company(self.env.user.company_id.id)
+    @classmethod
+    def setUpClass(cls, chart_template_ref=None):
+        super().setUpClass(chart_template_ref=chart_template_ref)
+        cls.today = fields.Date.today()
+        cls.sale_journal = (
+            cls.env["account.journal"]
+            .with_company(cls.env.user.company_id.id)
             .search(
                 [
                     ("type", "=", "sale"),
@@ -19,9 +20,9 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
                 limit=1,
             )
         )
-        self.purchase_journal = (
-            self.env["account.journal"]
-            .with_company(self.env.user.company_id.id)
+        cls.purchase_journal = (
+            cls.env["account.journal"]
+            .with_company(cls.env.user.company_id.id)
             .search(
                 [
                     ("type", "=", "purchase"),
@@ -29,26 +30,26 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
                 limit=1,
             )
         )
-        self.revenue_account = self.env["account.account"].create(
+        cls.revenue_account = cls.env["account.account"].create(
             {
                 "code": "TEST.REVENUE",
                 "name": "Sale revenue",
                 "account_type": "income",
             }
         )
-        self.expense_account = self.env["account.account"].create(
+        cls.expense_account = cls.env["account.account"].create(
             {
                 "code": "TEST.EXPENSE",
                 "name": "Purchase expense",
                 "account_type": "expense",
             }
         )
-        self.partner = self.env["res.partner"].create(
+        cls.partner = cls.env["res.partner"].create(
             {
                 "name": "Test partner",
             }
         )
-        self.payment_term_2rate = self.env["account.payment.term"].create(
+        cls.payment_term_2rate = cls.env["account.payment.term"].create(
             {
                 "name": "Payment term 30/60 end of month",
                 "line_ids": [
@@ -75,30 +76,31 @@ class TestAccountInvoiceDueAmount(AccountTestInvoicingCommon):
         )
 
     def create_custom_invoice(self, move_type):
-        invoice_line_data = {
-            "product_id": self.env.ref("product.product_product_5").id,
-            "quantity": 5,
-            "account_id": move_type.startswith("out_")
-            and self.revenue_account.id
-            or self.expense_account.id,
-            "name": "product test 5",
-            "price_unit": 6,
-            "currency_id": self.env.ref("base.EUR").id,
-        }
-        invoice = self.env["account.move"].create(
-            {
-                "move_type": move_type,
-                "invoice_date": self.today,
-                "currency_id": self.env.ref("base.EUR").id,
-                "journal_id": move_type.startswith("out_")
-                and self.sale_journal.id
-                or self.purchase_journal.id,
-                "company_id": self.env.user.company_id.id,
-                "partner_id": self.partner.id,
-                "invoice_line_ids": [(0, 0, invoice_line_data)],
-                "invoice_payment_term_id": self.payment_term_2rate.id,
-            }
+        invoice_form = Form(
+            self.env["account.move"].with_context(default_move_type=move_type)
         )
+        invoice_form.invoice_date = fields.Date.today()
+        invoice_form.currency_id = self.env.ref("base.EUR")
+        invoice_form.journal_id = (
+            self.sale_journal if move_type.startswith("out_") else self.purchase_journal
+        )
+        invoice_form.company_id = self.env.user.company_id
+        invoice_form.partner_id = self.partner
+        invoice_form.invoice_payment_term_id = self.payment_term_2rate
+        for _i in range(0, 3):
+            with invoice_form.invoice_line_ids.new() as line_form:
+                line_form.product_id = self.env.ref("product.product_product_5")
+                line_form.quantity = 5
+                line_form.account_id = (
+                    self.revenue_account
+                    if move_type.startswith("out_")
+                    else self.expense_account
+                )
+                line_form.name = "product test 5"
+                line_form.price_unit = 6
+                line_form.discount = 10
+                line_form.currency_id = self.env.ref("base.EUR")
+        invoice = invoice_form.save()
         return invoice
 
     def test_01_out_invoice(self):
