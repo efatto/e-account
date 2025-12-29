@@ -24,4 +24,4 @@ class ResPartner(models.Model):
                 )
                 % (" - ".join(self.mapped("name")))
             )
-        super().toggle_active()
+        return super().toggle_active()
