@@ -15,7 +15,7 @@
                     type="action"
                     icon="fa-edit"
                     attrs="{
-                        'invisible': ['|', ('display_type', 'in', ('line_section', 'line_note')), ('account_internal_type', 'in', ('receivable', 'payable'))],
+                        'invisible': ['|', ('display_type', 'in', ('line_section', 'line_note')), ('account_type', 'in', ('asset_receivable', 'liability_payable'))],
                     }"
                 />
             </xpath>
