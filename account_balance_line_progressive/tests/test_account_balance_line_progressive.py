@@ -1,20 +1,21 @@
 from datetime import timedelta
 
-import odoo.tests.common as common
 from odoo import _, fields
+from odoo.tests.common import TransactionCase
 
 
-class TestAccountBalanceProgressive(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.miscellaneous_journal = self.env["account.journal"].create(
+class TestAccountBalanceProgressive(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.miscellaneous_journal = cls.env["account.journal"].create(
             {
                 "name": "Miscellaneus journal",
                 "type": "general",
                 "code": "J_MISC",
             }
         )
-        self.account = self.env["account.account"].create(
+        cls.account = cls.env["account.account"].create(
             {
                 "code": "TEST.CREDIT.PROGRESSIVE",
                 "name": "Credit progressive",
@@ -22,7 +23,7 @@ class TestAccountBalanceProgressive(common.TransactionCase):
                 "reconcile": True,
             }
         )
-        self.account_expenses = self.env["account.account"].create(
+        cls.account_expenses = cls.env["account.account"].create(
             {
                 "code": "TEST.EXPENSE.PROGRESSIVE",
                 "name": "Expense progressive",
