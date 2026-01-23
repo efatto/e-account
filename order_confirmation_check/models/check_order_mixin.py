@@ -53,7 +53,7 @@ def check_attachment(object_to_check, object_to_check_lines):
                 partner_code = line.product_id._select_customerinfo(
                     partner=line.order_partner_id,
                     quantity=None,
-                )[0]
+                )[:1]
         data_to_check[line.id] = dict(
             default_code=line.product_id.default_code,
             quantity=lang.format(
@@ -62,7 +62,7 @@ def check_attachment(object_to_check, object_to_check_lines):
                 grouping=True,
                 monetary=False,
             ),
-            partner_code=partner_code,
+            partner_code=partner_code or "",
             price_total=lang.format(
                 "%.0f",
                 line.price_subtotal,

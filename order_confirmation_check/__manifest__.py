@@ -8,6 +8,7 @@
     "license": "AGPL-3",
     "category": "other",
     "depends": [
+        "product_supplierinfo_for_customer",
         "purchase_stock",
         "sale_stock",
     ],
