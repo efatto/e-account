@@ -5,6 +5,13 @@ class AccountInvoiceReport(models.Model):
     _inherit = "account.invoice.report"
 
     @api.model
+    def _select(self):
+        res = super()._select()
+        # Override original select to replace line.balance with line.price_subtotal
+        res = res.replace("line.balance", "COALESCE(line.price_subtotal, line.balance)")
+        return res
+
+    @api.model
     def _from(self):
         from_str = super()._from()
         from_str = (
