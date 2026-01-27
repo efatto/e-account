@@ -5,7 +5,8 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     progress = fields.Float(
-        compute="_compute_qty", store=True, string=" ", group_operator=None)
+        compute="_compute_qty", store=True, string=" ", group_operator=None
+    )
     progress_text = fields.Char(
         string="Progress",
         store=True,
