@@ -4,7 +4,7 @@
     "name": "Check Sale/Purchase Order Confirmation",
     "version": "14.0.1.0.0",
     "author": "Sergio Corato, Hydronit",
-    "website": "https://github.com/efatto/e-report",
+    "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "category": "other",
     "depends": [
