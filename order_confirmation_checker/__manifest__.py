@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Check Sale/Purchase Order Confirmation",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.2",
     "author": "Sergio Corato, Hydronit",
     "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
