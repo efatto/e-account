@@ -7,6 +7,11 @@
         <field name="arch" type="xml">
             <xpath expr="//sheet" position="inside">
                 <button
+                    name="button_create_row_from_attachment"
+                    string="Create rows from attachment"
+                    type="object"
+                />
+                <button
                     name="button_check_attachment"
                     string="Check attachment with confirmation info"
                     type="object"
