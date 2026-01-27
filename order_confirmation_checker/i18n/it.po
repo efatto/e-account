@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* order_confirmation_check
+# 	* order_confirmation_checker
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-22 18:28+0000\n"
-"PO-Revision-Date: 2025-12-22 18:28+0000\n"
+"POT-Creation-Date: 2026-01-29 17:05+0000\n"
+"PO-Revision-Date: 2026-01-29 17:05+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,150 +15,184 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: order_confirmation_check
-#: code:addons/order_confirmation_check/models/check_order_mixin.py:0
+#. module: order_confirmation_checker
+#: code:addons/order_confirmation_checker/models/check_order_mixin.py:0
 #, python-format
 msgid "All lines checked"
 msgstr "Tutte le righe controllate"
 
-#. module: order_confirmation_check
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_child__assigned_attachment_ids
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_parent__assigned_attachment_ids
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order__assigned_attachment_ids
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order_line__assigned_attachment_ids
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order__assigned_attachment_ids
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order_line__assigned_attachment_ids
+#. module: order_confirmation_checker
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_child__assigned_attachment_ids
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_parent__assigned_attachment_ids
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order__assigned_attachment_ids
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order_line__assigned_attachment_ids
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order__assigned_attachment_ids
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order_line__assigned_attachment_ids
 msgid "Assigned Attachments"
 msgstr "Allegati assegnati"
 
-#. module: order_confirmation_check
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_parent__attachment_to_check_id
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order__attachment_to_check_id
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order__attachment_to_check_id
+#. module: order_confirmation_checker
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_parent__attachment_to_check_id
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order__attachment_to_check_id
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order__attachment_to_check_id
 msgid "Attachment To Check"
 msgstr "Allegato da controllare"
 
-#. module: order_confirmation_check
-#: model_terms:ir.ui.view,arch_db:order_confirmation_check.purchase_order_form
-#: model_terms:ir.ui.view,arch_db:order_confirmation_check.view_order_form
+#. module: order_confirmation_checker
+#: model_terms:ir.ui.view,arch_db:order_confirmation_checker.purchase_order_form
+#: model_terms:ir.ui.view,arch_db:order_confirmation_checker.view_order_form
 msgid "C.O."
 msgstr ""
 
-#. module: order_confirmation_check
-#: model:ir.model,name:order_confirmation_check.model_check_order_mixin_child
-#: model:ir.model,name:order_confirmation_check.model_check_order_mixin_parent
+#. module: order_confirmation_checker
+#: model:ir.model,name:order_confirmation_checker.model_check_order_mixin_child
+#: model:ir.model,name:order_confirmation_checker.model_check_order_mixin_parent
 msgid "Check Order Mixin"
 msgstr ""
 
-#. module: order_confirmation_check
-#: model_terms:ir.ui.view,arch_db:order_confirmation_check.purchase_order_form
-#: model_terms:ir.ui.view,arch_db:order_confirmation_check.view_order_form
+#. module: order_confirmation_checker
+#: model_terms:ir.ui.view,arch_db:order_confirmation_checker.purchase_order_form
+#: model_terms:ir.ui.view,arch_db:order_confirmation_checker.view_order_form
 msgid "Check attachment with confirmation info"
 msgstr "Controlla l'allegato con le informazioni di conferma"
 
-#. module: order_confirmation_check
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_child__check_message
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_parent__check_message
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order__check_message
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order_line__check_message
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order__check_message
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order_line__check_message
+#. module: order_confirmation_checker
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_child__check_message
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_parent__check_message
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order__check_message
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order_line__check_message
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order__check_message
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order_line__check_message
 msgid "Confirmation check message"
 msgstr "Messaggio controllo conferma"
 
-#. module: order_confirmation_check
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_child__check_result
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_parent__check_result
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order__check_result
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order_line__check_result
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order__check_result
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order_line__check_result
+#. module: order_confirmation_checker
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_child__check_result
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_parent__check_result
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order__check_result
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order_line__check_result
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order__check_result
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order_line__check_result
 msgid "Confirmation check result"
 msgstr "Risultato controllo conferma"
 
-#. module: order_confirmation_check
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_child__display_name
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_parent__display_name
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order__display_name
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order_line__display_name
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order__display_name
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order_line__display_name
+#. module: order_confirmation_checker
+#: model_terms:ir.ui.view,arch_db:order_confirmation_checker.view_order_form
+msgid "Create rows from attachment"
+msgstr "Crea righe dall'allegato"
+
+#. module: order_confirmation_checker
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_child__display_name
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_parent__display_name
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order__display_name
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order_line__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
-#. module: order_confirmation_check
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_child__id
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_parent__id
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order__id
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order_line__id
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order__id
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order_line__id
+#. module: order_confirmation_checker
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_child__id
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_parent__id
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order__id
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order__id
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order_line__id
 msgid "ID"
 msgstr ""
 
-#. module: order_confirmation_check
-#: code:addons/order_confirmation_check/models/check_order_confirm.py:0
+#. module: order_confirmation_checker
+#: code:addons/order_confirmation_checker/models/check_order_confirm.py:0
 #, python-format
 msgid "Install pdf2image to read pdf files (pip install pdf2image)"
 msgstr "Installa pdf2image per leggere file pdf (pip install pdf2image)"
 
-#. module: order_confirmation_check
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_child____last_update
-#: model:ir.model.fields,field_description:order_confirmation_check.field_check_order_mixin_parent____last_update
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order____last_update
-#: model:ir.model.fields,field_description:order_confirmation_check.field_purchase_order_line____last_update
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order____last_update
-#: model:ir.model.fields,field_description:order_confirmation_check.field_sale_order_line____last_update
+#. module: order_confirmation_checker
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_child____last_update
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_parent____last_update
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order____last_update
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order_line____last_update
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order____last_update
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order_line____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
 
-#. module: order_confirmation_check
-#: code:addons/order_confirmation_check/models/check_order_mixin.py:0
+#. module: order_confirmation_checker
+#: code:addons/order_confirmation_checker/models/check_order_mixin.py:0
 #, python-format
 msgid "No attachment found to check"
 msgstr "Nessun allegato da controllare"
 
-#. module: order_confirmation_check
-#: code:addons/order_confirmation_check/models/check_order_mixin.py:0
+#. module: order_confirmation_checker
+#: code:addons/order_confirmation_checker/models/sale_order.py:0
+#, python-format
+msgid "No extracted text received."
+msgstr "Nessun testo estratto ricevuto."
+
+#. module: order_confirmation_checker
+#: code:addons/order_confirmation_checker/models/check_order_mixin.py:0
 #, python-format
 msgid "No match found"
 msgstr "Nessun risultato"
 
-#. module: order_confirmation_check
-#: code:addons/order_confirmation_check/models/check_order_confirm.py:0
+#. module: order_confirmation_checker
+#: code:addons/order_confirmation_checker/models/sale_order.py:0
+#, python-format
+msgid "No sale order lines were created."
+msgstr "Nessuna riga ordine di vendita creata."
+
+#. module: order_confirmation_checker
+#: code:addons/order_confirmation_checker/models/check_order_confirm.py:0
 #, python-format
 msgid "Pillow not installed. Resolve with: pip install Pillow"
 msgstr "Pillow non installato. Risolvi con: pip install Pillow"
 
-#. module: order_confirmation_check
-#: model:ir.model,name:order_confirmation_check.model_purchase_order
+#. module: order_confirmation_checker
+#: model:ir.model,name:order_confirmation_checker.model_purchase_order
 msgid "Purchase Order"
 msgstr "Ordine di acquisto"
 
-#. module: order_confirmation_check
-#: model:ir.model,name:order_confirmation_check.model_purchase_order_line
+#. module: order_confirmation_checker
+#: model:ir.model,name:order_confirmation_checker.model_purchase_order_line
 msgid "Purchase Order Line"
 msgstr "Riga ordine di acquisto"
 
-#. module: order_confirmation_check
-#: model:ir.model,name:order_confirmation_check.model_sale_order
+#. module: order_confirmation_checker
+#: model:ir.model,name:order_confirmation_checker.model_sale_order
 msgid "Sales Order"
 msgstr "Ordine di vendita"
 
-#. module: order_confirmation_check
-#: model:ir.model,name:order_confirmation_check.model_sale_order_line
+#. module: order_confirmation_checker
+#: model:ir.model,name:order_confirmation_checker.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Riga ordine di vendita"
 
-#. module: order_confirmation_check
-#: model:ir.model.fields,help:order_confirmation_check.field_check_order_mixin_parent__attachment_to_check_id
-#: model:ir.model.fields,help:order_confirmation_check.field_purchase_order__attachment_to_check_id
-#: model:ir.model.fields,help:order_confirmation_check.field_sale_order__attachment_to_check_id
+#. module: order_confirmation_checker
+#: model:ir.model.fields,help:order_confirmation_checker.field_check_order_mixin_parent__attachment_to_check_id
+#: model:ir.model.fields,help:order_confirmation_checker.field_purchase_order__attachment_to_check_id
+#: model:ir.model.fields,help:order_confirmation_checker.field_sale_order__attachment_to_check_id
 msgid "Select the attachment which contains the order confirmation"
 msgstr "Seleziona l'allegato che contiene la conferma dell'ordine di vendita"
 
-#. module: order_confirmation_check
-#: code:addons/order_confirmation_check/models/check_order_confirm.py:0
+#. module: order_confirmation_checker
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_child__smart_search
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_check_order_mixin_parent__smart_search
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order__smart_search
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_purchase_order_line__smart_search
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order__smart_search
+#: model:ir.model.fields,field_description:order_confirmation_checker.field_sale_order_line__smart_search
+msgid "Smart Search"
+msgstr "Ricerca intelligente"
+
+#. module: order_confirmation_checker
+#: code:addons/order_confirmation_checker/models/sale_order.py:0
+#: code:addons/order_confirmation_checker/models/sale_order.py:0
+#, python-format
+msgid "Something went wrong during data submission: %s"
+msgstr "Qualcosa è andato storto durante l'invio dei dati: %s"
+
+#. module: order_confirmation_checker
+#: code:addons/order_confirmation_checker/models/check_order_confirm.py:0
 #, python-format
 msgid "pytesseract not installed. Resolve with: pip install pytesseract"
 msgstr "pytesseract non installato. Risolvi con: pip install pytesseract"

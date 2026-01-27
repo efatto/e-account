@@ -1,4 +1,9 @@
-from odoo import models
+from urllib.parse import urljoin
+
+import requests
+
+from odoo import _, models
+from odoo.exceptions import UserError
 
 from .check_order_mixin import check_attachment
 
@@ -10,3 +15,119 @@ class SaleOrder(models.Model):
     def button_check_attachment(self):
         self.ensure_one()
         check_attachment(self, self.order_line)
+
+    def _n8n_webhook(self, option=False, data=False):
+        base_url = self.env["ir.config_parameter"].get_param("web.base.url")
+        # TODO put here the most of the logic, then call n8n or directly an ai only when
+        #  needed
+        # TODO add authentication? with n8n user and password
+        # headers = {
+        #     "Accepts": "application/json",
+        #     # "X-CMC_PRO_API_KEY": API_KEY,
+        # }
+        if option == "read_attach":
+            odoo_webhook = urljoin(base_url, "/n8n/webhook-test/read-attachment")
+            params = {"sale_order_id": self.id}
+            try:
+                req = requests.post(
+                    url=odoo_webhook,
+                    data=params,
+                    timeout=30,
+                    # headers=headers,
+                    verify=False,
+                )
+                response = req.json()
+            except IOError as e:
+                error_msg = _("Something went wrong during data submission: %s") % e
+                raise UserError(error_msg)
+        else:
+            odoo_webhook = urljoin(base_url, "/n8n/webhook-test/insert-so-rows")
+            params = {"sale_order_id": self.id, "data": data}
+            try:
+                # response = requests.post(
+                #     urljoin(params.api_url,
+                #     "/v3/domains/%s/webhooks" % params.domain),
+                #     auth=("api", params.api_key),
+                #     data={"id": event, "url": [odoo_webhook]},
+                # )
+                req = requests.get(
+                    url=odoo_webhook,
+                    params=params,
+                    timeout=30,
+                    # headers=headers,
+                    verify=False,
+                )
+                response = req.json()
+            except IOError as e:
+                error_msg = _("Something went wrong during data submission: %s") % e
+                raise UserError(error_msg)
+        return response
+
+    def _get_products_from_content(self, content) -> list:
+        product_codes = self.env["product.product"].search_read(
+            [
+                ("default_code", "!=", False),
+            ],
+            ["default_code"],
+        )
+        found_product_codes = []
+        for product_code in product_codes:
+            if (
+                len(product_code["default_code"]) > 2
+                and product_code["default_code"] in content
+            ):
+                found_product_codes.append(product_code)
+        customer_product_codes = self.env["product.customerinfo"].search_read(
+            ["|", ("product_code", "!=", False), ("product_name", "!=", False)],
+            ["product_code", "product_name", "product_id", "product_tmpl_id"],
+        )
+        if customer_product_codes:
+            for customer_product_code in customer_product_codes:
+                if (
+                    customer_product_code.get("product_code")
+                    and len(customer_product_code["product_code"]) > 2
+                    and customer_product_code["product_code"] in content
+                    or customer_product_code.get("product_name")
+                    and len(customer_product_code["product_name"]) > 2
+                    and customer_product_code["product_name"] in content
+                ):
+                    # escludes products already in product_codes
+                    product = False
+                    if customer_product_code.get("product_id"):
+                        product_id = customer_product_code["product_id"]
+                        product = self.env["product.product"].browse(product_id)
+                    elif customer_product_code.get("product_tmpl_id"):
+                        product = self.env["product.product"].search(
+                            [
+                                (
+                                    "product_tmpl_id",
+                                    "=",
+                                    customer_product_code["product_tmpl_id"][0],
+                                )
+                            ],
+                            limit=1,
+                        )
+                    if product and product.default_code not in [
+                        x["default_code"] for x in found_product_codes
+                    ]:
+                        found_product_codes.append(
+                            {
+                                "default_code": product.default_code,
+                                "id": product.id,
+                            }
+                        )
+        return found_product_codes
+
+    def button_create_row_from_attachment(self):
+        self.ensure_one()
+        response = self._n8n_webhook(option="read_attach")
+        extracted_text = response.get("extractedText")
+        if extracted_text:
+            products = self._get_products_from_content(extracted_text)
+            if products:
+                # call n8n to create the sale order lines with the found products
+                res = self._n8n_webhook(data=products)
+                if not res:
+                    raise UserError(_("No sale order lines were created."))
+        else:
+            raise UserError(_("No extracted text received."))
