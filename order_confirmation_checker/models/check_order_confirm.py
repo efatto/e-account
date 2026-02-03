@@ -185,7 +185,7 @@ def _extract_text_from_eml(path: str) -> str:  # noqa C901
 # ---------------------------------------------------------
 
 
-def check_code_and_qty(
+def check_code_and_qty(  # noqa C901
     file_path: str, file_ext: str, target_data: dict
 ) -> Dict[str, list]:
     """Controlla che in file_path siano presenti il codice e la quantità.
