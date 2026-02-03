@@ -1,3 +1,5 @@
+import json
+import logging
 from urllib.parse import urljoin
 
 import requests
@@ -6,6 +8,8 @@ from odoo import _, models
 from odoo.exceptions import UserError
 
 from .check_order_mixin import check_attachment
+
+logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -16,8 +20,11 @@ class SaleOrder(models.Model):
         self.ensure_one()
         check_attachment(self, self.order_line)
 
-    def _n8n_webhook(self, option=False, data=False):
+    def _n8n_webhook(self, option=False, data=False, extracted_text=False):
         base_url = self.env["ir.config_parameter"].get_param("web.base.url")
+        env_running = ""
+        if "test" in base_url:
+            env_running = "-test"
         # TODO put here the most of the logic, then call n8n or directly an ai only when
         #  needed
         # TODO add authentication? with n8n user and password
@@ -26,7 +33,9 @@ class SaleOrder(models.Model):
         #     # "X-CMC_PRO_API_KEY": API_KEY,
         # }
         if option == "read_attach":
-            odoo_webhook = urljoin(base_url, "/n8n/webhook-test/read-attachment")
+            odoo_webhook = urljoin(
+                base_url, f"/n8n/webhook{env_running}/read-attachment"
+            )
             params = {"sale_order_id": self.id}
             try:
                 req = requests.post(
@@ -41,8 +50,14 @@ class SaleOrder(models.Model):
                 error_msg = _("Something went wrong during data submission: %s") % e
                 raise UserError(error_msg)
         else:
-            odoo_webhook = urljoin(base_url, "/n8n/webhook-test/insert-so-rows")
-            params = {"sale_order_id": self.id, "data": data}
+            odoo_webhook = urljoin(
+                base_url, f"/n8n/webhook{env_running}/insert-so-rows"
+            )
+            params = {
+                "sale_order_id": self.id,
+                "data": json.dumps(data),
+                "extracted_text": extracted_text,
+            }
             try:
                 # response = requests.post(
                 #     urljoin(params.api_url,
@@ -118,6 +133,53 @@ class SaleOrder(models.Model):
                         )
         return found_product_codes
 
+    def _create_order_lines(self, values_dict):
+        current_so_lines = self.order_line
+        logger.info(f"N8N connector: importing from n8n values_dict: {values_dict}")
+        if isinstance(values_dict, dict):
+            if values_dict.get("order_id") and values_dict.get("order_lines"):
+                sale_order = self.env["sale.order"].search(
+                    [
+                        ("id", "=", values_dict["order_id"]),
+                    ]
+                )
+                for values in values_dict.get("order_lines"):
+                    if values.get("product_id"):
+                        product = self.env["product.product"].search(
+                            [
+                                ("id", "=", values["product_id"]),
+                            ]
+                        )
+                        if product:
+                            sale_order.write(
+                                {
+                                    "order_line": [
+                                        (
+                                            0,
+                                            0,
+                                            {
+                                                "product_id": product.id,
+                                                "price_unit": values.get(
+                                                    "price_unit", 0
+                                                ),
+                                                "product_uom_qty": values.get(
+                                                    "quantity", 0
+                                                ),
+                                            },
+                                        )
+                                    ],
+                                }
+                            )
+        contents = ""
+        if self.order_line != current_so_lines:
+            contents = "\n".join(
+                [line.name for line in self.order_line - current_so_lines]
+            )
+        if contents:
+            logger.info(f"N8N connector: imported lines with products: {contents}")
+        else:
+            logger.info("N8N connector: no new lines were imported.")
+
     def button_create_row_from_attachment(self):
         self.ensure_one()
         response = self._n8n_webhook(option="read_attach")
@@ -126,8 +188,10 @@ class SaleOrder(models.Model):
             products = self._get_products_from_content(extracted_text)
             if products:
                 # call n8n to create the sale order lines with the found products
-                res = self._n8n_webhook(data=products)
+                res = self._n8n_webhook(data=products, extracted_text=extracted_text)
                 if not res:
                     raise UserError(_("No sale order lines were created."))
+                else:
+                    self._create_order_lines(res)
         else:
             raise UserError(_("No extracted text received."))

@@ -38,6 +38,33 @@ class TestProductMarginExclude(SavepointCase):
  16/04/2026\n\nApplies the general conditions of sale. If confirmed after 3 days,
  50.00 Eur will be charged as a management cost to reprocess the order from the
  beginning."""
+        cls.output = """
+{
+    'company_id': 'Hydronit',
+    'customer': 'Hydra-Comp A/S',
+    'order_id': '39609',
+    'order_date': '19/01/2026',
+    'elaboration_notes': '',
+    'order_lines': [
+        {
+            'product_code': 'PPC140226_HY-Hydrop',
+            'partner_product_name': 'PPC-UR-R1,5-L-V200-G-G-P01-RETURN-KIT-2,5A+V100
+            Assembled & tested',
+            'product_id': '4431',
+            'quantity': '3.000',
+            'price_unit': '146.95000'
+        },
+       {
+            'product_code': '',
+            'partner_product_name': 'Imballo 1,3% valore della merce - Packing charge
+            1,3% of the value of the goods',
+            'product_id': '',
+            'quantity': '1.000',
+            'price_unit': '5.73000'
+        }
+    ]
+}
+        """
 
     def test_extract_text(self):
         sale_order_form = Form(self.env["sale.order"])
