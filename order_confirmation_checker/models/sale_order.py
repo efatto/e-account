@@ -137,14 +137,14 @@ class SaleOrder(models.Model):
     @staticmethod
     def _convert_string_to_float(string_value):
         converted_string_value = 0
-        r = re.search(r'(\d+)[.,](\d+)[.,]?(\d*)', string_value)
+        r = re.search(r"(\d+)[.,](\d+)[.,]?(\d*)", string_value)
         if r:
             if r.group(3):
-                converted_string_value = '{0}{1}.{2}'.format(*r.groups())
+                converted_string_value = "{}{}.{}".format(*r.groups())
             elif r.group(2):
-                converted_string_value = '{0}.{1}'.format(*r.groups())
+                converted_string_value = "{}.{}".format(*r.groups())
             else:
-                converted_string_value = '{}'.format(*r.groups())
+                converted_string_value = "{}".format(*r.groups())
         try:
             converted_string_value = float(converted_string_value)
         except ValueError:
@@ -156,13 +156,13 @@ class SaleOrder(models.Model):
         logger.info(f"N8N connector: importing from n8n values_dict: {values_dict}")
         if isinstance(values_dict, dict):
             if values_dict.get("order_id") and values_dict.get("order_lines"):
-                sale_order = self.env["sale.order"].search(
-                    [
-                        ("id", "=", values_dict["order_id"]),
-                    ]
-                )
+                assert self.id == int(values_dict["order_id"])
                 for values in values_dict.get("order_lines"):
-                    if values.get("product_id"):
+                    if (
+                        values.get("product_id")
+                        and values.get("quantity")
+                        and values.get("price_unit")
+                    ):
                         product = self.env["product.product"].search(
                             [
                                 ("id", "=", values["product_id"]),
@@ -170,10 +170,12 @@ class SaleOrder(models.Model):
                         )
                         if product:
                             price_unit = self._convert_string_to_float(
-                                values.get("price_unit", 0))
+                                values.get("price_unit", 0)
+                            )
                             product_uom_qty = self._convert_string_to_float(
-                                values.get("quantity", 0))
-                            sale_order.write(
+                                values.get("quantity", 0)
+                            )
+                            self.write(
                                 {
                                     "order_line": [
                                         (
