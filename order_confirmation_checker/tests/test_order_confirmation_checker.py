@@ -1,4 +1,5 @@
 from odoo.tests import Form, SavepointCase
+from odoo.tools.safe_eval import safe_eval
 
 
 class TestProductMarginExclude(SavepointCase):
@@ -8,13 +9,14 @@ class TestProductMarginExclude(SavepointCase):
         cls.sale_order_model = cls.env["sale.order"]
         cls.partner = cls.env.ref("base.res_partner_2")
         cls.product = cls.env.ref("product.product_product_4")
+        # default_code is FURN_0096
         cls.product1 = cls.env.ref("product.product_product_3")
+        # default_code is FURN_7800
         cls.customerinfo_model = cls.env["product.customerinfo"]
         cls.customerinfo = cls.customerinfo_model.create(
             {
                 "name": cls.partner.id,
                 "product_tmpl_id": cls.product1.product_tmpl_id.id,
-                # "product_id": cls.product.id,
                 "product_code": "CUST1234",
             }
         )
@@ -40,27 +42,32 @@ class TestProductMarginExclude(SavepointCase):
  beginning."""
         cls.output = """
 {
-    'company_id': 'Hydronit',
-    'customer': 'Hydra-Comp A/S',
-    'order_id': '39609',
+    'company_id': 'MyCompany',
+    'customer': 'MyCompanyComp A/S',
+    'order_id': '%(order_id)s',
     'order_date': '19/01/2026',
     'elaboration_notes': '',
     'order_lines': [
         {
-            'product_code': 'PPC140226_HY-Hydrop',
-            'partner_product_name': 'PPC-UR-R1,5-L-V200-G-G-P01-RETURN-KIT-2,5A+V100
-            Assembled & tested',
-            'product_id': '4431',
-            'quantity': '3.000',
-            'price_unit': '146.95000'
+            'product_code': '%(product1_default_code)s',
+            'partner_product_name': 'CUST1234',
+            'product_id': '%(product1_id)s',
+            'quantity': '7.000',
+            'price_unit': '16.98000'
         },
-       {
-            'product_code': '',
-            'partner_product_name': 'Imballo 1,3% valore della merce - Packing charge
-            1,3% of the value of the goods',
-            'product_id': '',
+        {
+            'product_code': '%(product_default_code)s',
+            'partner_product_name': 'PPCCB',
+            'product_id': '%(product_id)s',
             'quantity': '1.000',
             'price_unit': '5.73000'
+        },
+        {
+            'product_code': '',
+            'partner_product_name': 'False row - 1%% of the value of the goods',
+            'product_id': '',
+            'quantity': '1.000',
+            'price_unit': '51.73000'
         }
     ]
 }
@@ -70,10 +77,8 @@ class TestProductMarginExclude(SavepointCase):
         sale_order_form = Form(self.env["sale.order"])
         sale_order_form.partner_id = self.partner
         order = sale_order_form.save()
-        # todo create pdf to attach and test
-        # order.attachment_to_check_id
-        content = self.extracted_text
-        products = order._get_products_from_content(content)
+        # create pdf to attach and test will require a n8n istance in the GitHub machine
+        products = order._get_products_from_content(self.extracted_text)
         self.assertTrue(products, "No products found in content")
         self.assertIn(
             {"default_code": self.product.default_code, "id": self.product.id},
@@ -82,4 +87,23 @@ class TestProductMarginExclude(SavepointCase):
         self.assertIn(
             {"default_code": self.product1.default_code, "id": self.product1.id},
             products,
+        )
+
+    def test_create_order_lines(self):
+        sale_order_form = Form(self.env["sale.order"])
+        sale_order_form.partner_id = self.partner
+        order = sale_order_form.save()
+        output = self.output % dict(
+            order_id=order.id,
+            product1_default_code=self.product1.default_code,
+            product_default_code=self.product.default_code,
+            product1_id=self.product1.id,
+            product_id=self.product.id,
+        )
+        output_dict = safe_eval(output)
+        order._create_order_lines(output_dict)
+        self.assertTrue(order.order_line, "No order lines created")
+        self.assertEqual(
+            (self.product1 | self.product).ids,
+            order.order_line.mapped("product_id").ids,
         )

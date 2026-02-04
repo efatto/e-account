@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 from urllib.parse import urljoin
 
 import requests
@@ -133,6 +134,23 @@ class SaleOrder(models.Model):
                         )
         return found_product_codes
 
+    @staticmethod
+    def _convert_string_to_float(string_value):
+        converted_string_value = 0
+        r = re.search(r'(\d+)[.,](\d+)[.,]?(\d*)', string_value)
+        if r:
+            if r.group(3):
+                converted_string_value = '{0}{1}.{2}'.format(*r.groups())
+            elif r.group(2):
+                converted_string_value = '{0}.{1}'.format(*r.groups())
+            else:
+                converted_string_value = '{}'.format(*r.groups())
+        try:
+            converted_string_value = float(converted_string_value)
+        except ValueError:
+            pass
+        return converted_string_value
+
     def _create_order_lines(self, values_dict):
         current_so_lines = self.order_line
         logger.info(f"N8N connector: importing from n8n values_dict: {values_dict}")
@@ -151,6 +169,10 @@ class SaleOrder(models.Model):
                             ]
                         )
                         if product:
+                            price_unit = self._convert_string_to_float(
+                                values.get("price_unit", 0))
+                            product_uom_qty = self._convert_string_to_float(
+                                values.get("quantity", 0))
                             sale_order.write(
                                 {
                                     "order_line": [
@@ -159,12 +181,8 @@ class SaleOrder(models.Model):
                                             0,
                                             {
                                                 "product_id": product.id,
-                                                "price_unit": values.get(
-                                                    "price_unit", 0
-                                                ),
-                                                "product_uom_qty": values.get(
-                                                    "quantity", 0
-                                                ),
+                                                "price_unit": price_unit,
+                                                "product_uom_qty": product_uom_qty,
                                             },
                                         )
                                     ],
