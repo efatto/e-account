@@ -1,3 +1,4 @@
+# flake8: noqa: B950
 from odoo import models, tools
 
 
