@@ -22,13 +22,13 @@ class SaleOrder(models.Model):
         check_attachment(self, self.order_line)
 
     def _n8n_webhook(self, option=False, data=False, extracted_text=False):
+        # TODO spostare questo metodo in un modulo base di collegamento, in cui mettere
+        #  anche un campo con il testo da passare all'AI per elaborare le informazioni
         base_url = self.env["ir.config_parameter"].get_param("web.base.url")
         env_running = ""
         if "test" in base_url:
             env_running = "-test"
-        # TODO put here the most of the logic, then call n8n or directly an ai only when
-        #  needed
-        # TODO add authentication? with n8n user and password
+        # TODO add authentication? with n8n user and password, or
         # headers = {
         #     "Accepts": "application/json",
         #     # "X-CMC_PRO_API_KEY": API_KEY,
