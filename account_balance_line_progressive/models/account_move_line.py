@@ -6,20 +6,12 @@ class AccountMoveLine(models.Model):
     _order = "date desc, credit desc, id desc"
 
     def _compute_balance_progressive(self):
-        query = self._where_calc(
-            list(self.env.context.get("domain_cumulated_balance") or [])
-        )
-        # order_string = ", ".join(self._generate_order_by_inner(
-        #     self._table,
-        #     self.env.context.get(
-        #         'order_cumulated_balance'),
-        #     query,
-        #     reverse_direction=True))
-        from_clause, where_clause, where_clause_params = query.get_sql()
-        # tables, where_clause, where_params = self.with_context(
-        #     initial_bal=True
-        # )._query_get()
-        where_clause_params = [tuple(self.ids)] + where_clause_params
+        domain = list(self.env.context.get("domain_cumulated_balance") or [])
+        query = self.env["account.move.line"]._where_calc(domain)
+        # from_clause, from_params = query.from_clause
+        where_clause, where_params = query.where_clause
+        where_clause_params = [tuple(self.ids)] + list(where_params)
+
         sql = """SELECT l1.id AS line_id,
             COALESCE(SUM(l2.debit-l2.credit), 0) AS balance,
             CASE WHEN l1.currency_id <> l1.company_currency_id
@@ -48,29 +40,31 @@ class AccountMoveLine(models.Model):
             )
             JOIN account_move m1 on (m1.id = l2.move_id AND m1.state <> 'draft')
             WHERE l1.id IN %s """
+
         if where_clause:
             where_clause = "AND " + where_clause
             where_clause = where_clause.replace("account_move_line", "l1")
             sql += where_clause
+
         sql += (
             " GROUP BY l1.id, l1.currency_id, l1.company_currency_id,"
             " l2.currency_id, l2.company_currency_id"
         )
-        self._cr.execute(sql, where_clause_params)
-        result = self._cr.fetchall()
+
+        self.env.cr.execute(sql, where_clause_params)
+        result = self.env.cr.fetchall()
+
+        # Inizializza tutti i record a 0
+        for line in self:
+            line.balance_progressive = 0
+            line.balance_progressive_currency = 0
+
+        # Aggiorna i valori per i record trovati
         if result:
-            lines_not_in_result = [
-                x for x in self if x.id not in [y[0] for y in result]
-            ]
             for line_id, balance, balance_currency in result:
                 line = self.browse(line_id)
                 line.balance_progressive = balance
                 line.balance_progressive_currency = balance_currency
-        else:
-            lines_not_in_result = self
-        for line_not_in_result in lines_not_in_result:
-            line_not_in_result.balance_progressive = 0
-            line_not_in_result.balance_progressive_currency = 0
 
     balance_progressive = fields.Monetary(
         compute="_compute_balance_progressive",
