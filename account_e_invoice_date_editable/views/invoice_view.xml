@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_invoice_form_fatturapa_in" model="ir.ui.view">
         <field name="name">account.invoice.form.e.invoice.date.editable</field>
         <field name="model">account.move</field>
@@ -13,10 +12,9 @@
                 expr="//field[@name='e_invoice_received_date']"
                 position="attributes"
             >
-               <attribute name="attrs">{'invisible': False}</attribute>
-               <attribute name="readonly">0</attribute>
+                <attribute name="attrs">{'invisible': False}</attribute>
+                <attribute name="readonly">0</attribute>
             </xpath>
         </field>
     </record>
-
 </odoo>
