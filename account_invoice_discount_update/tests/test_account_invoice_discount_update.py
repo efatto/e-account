@@ -1,5 +1,4 @@
-from odoo import fields
-from odoo.tests import Form, tagged
+from odoo.tests import tagged
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
@@ -7,28 +6,10 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 @tagged("post_install", "-at_install")
 class TestAccountInvoiceDiscountUpdate(AccountTestInvoicingCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
-        cls.sale_journal = (
-            cls.env["account.journal"]
-            .with_company(cls.env.user.company_id.id)
-            .search(
-                [
-                    ("type", "=", "sale"),
-                ],
-                limit=1,
-            )
-        )
-        cls.purchase_journal = (
-            cls.env["account.journal"]
-            .with_company(cls.env.user.company_id.id)
-            .search(
-                [
-                    ("type", "=", "purchase"),
-                ],
-                limit=1,
-            )
-        )
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.sale_journal = cls.company_data["default_journal_sale"]
+        cls.purchase_journal = cls.company_data["default_journal_purchase"]
         cls.revenue_account = cls.env["account.account"].create(
             {
                 "code": "TEST.REVENUE",
@@ -50,30 +31,24 @@ class TestAccountInvoiceDiscountUpdate(AccountTestInvoicingCommon):
         )
 
     def create_custom_invoice(self, move_type):
-        invoice_form = Form(
-            self.env["account.move"].with_context(default_move_type=move_type)
-        )
-        invoice_form.invoice_date = fields.Date.today()
-        invoice_form.currency_id = self.env.ref("base.EUR")
-        invoice_form.journal_id = (
-            self.sale_journal if move_type.startswith("out_") else self.purchase_journal
-        )
-        invoice_form.company_id = self.env.user.company_id
-        invoice_form.partner_id = self.partner
-        for _i in range(0, 3):
-            with invoice_form.invoice_line_ids.new() as line_form:
-                line_form.product_id = self.env.ref("product.product_product_5")
-                line_form.quantity = 5
-                line_form.account_id = (
-                    self.revenue_account
-                    if move_type.startswith("out_")
-                    else self.expense_account
+        product = self._create_product(lst_price=100, taxes_id=self.tax_sale_a)
+        invoice = self._create_invoice(
+            move_type=move_type,
+            journal_id=self.sale_journal
+            if move_type.startswith("out_")
+            else self.purchase_journal,
+            post=False,
+            invoice_line_ids=[
+                self._prepare_invoice_line(
+                    product_id=product,
+                    quantity=5.0,
+                    partner_id=self.partner,
+                    price_unit=6,
+                    discount=10,
                 )
-                line_form.name = "product test 5"
-                line_form.price_unit = 6
-                line_form.discount = 10
-                line_form.currency_id = self.env.ref("base.EUR")
-        invoice = invoice_form.save()
+                for _i in range(0, 3)
+            ],
+        )
         return invoice
 
     def test_01_out_invoice(self):
