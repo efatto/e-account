@@ -10,6 +10,7 @@
     "summary": "Limit project selectable in account analytic line and add a constraint",
     "depends": [
         "hr_timesheet",
+        "sale_timesheet",
     ],
     "data": [
         "views/hr_timesheet.xml",
