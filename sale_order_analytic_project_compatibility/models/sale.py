@@ -6,7 +6,11 @@ class SaleOrder(models.Model):
 
     @api.onchange("analytic_account_id")
     def _onchange_analytic_account_id(self):
-        if self.project_id and self.analytic_account_id:
+        if (
+            self.project_id
+            and self.project_id.analytic_account_id
+            and self.analytic_account_id
+        ):
             if self.project_id.analytic_account_id != self.analytic_account_id:
                 self.project_id = False
         elif self.analytic_account_id:
@@ -20,5 +24,9 @@ class SaleOrder(models.Model):
 
     @api.constrains("project_id", "analytic_account_id")
     def _check_project_analytic_account(self):
-        if self.project_id and self.analytic_account_id:
+        if (
+            self.project_id
+            and self.project_id.analytic_account_id
+            and self.analytic_account_id
+        ):
             assert self.project_id.analytic_account_id == self.analytic_account_id
