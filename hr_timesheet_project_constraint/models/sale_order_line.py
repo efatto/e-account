@@ -1,4 +1,4 @@
-from odoo import api, models, fields
+from odoo import models
 
 
 class SaleOrderLine(models.Model):
@@ -6,5 +6,5 @@ class SaleOrderLine(models.Model):
 
     def _timesheet_create_task_prepare_values(self, project):
         res = super()._timesheet_create_task_prepare_values(project)
-        res.update('original_sale_line_id', self.id)
+        res.update({"original_sale_line_id": self.id})
         return res
