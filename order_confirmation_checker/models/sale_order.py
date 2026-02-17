@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 import requests
 
-from odoo import _, models
+from odoo import _, fields, models
 from odoo.exceptions import UserError
 
 from .check_order_mixin import check_attachment
@@ -155,41 +155,60 @@ class SaleOrder(models.Model):
         current_so_lines = self.order_line
         logger.info(f"N8N connector: importing from n8n values_dict: {values_dict}")
         if isinstance(values_dict, dict):
-            if values_dict.get("order_id") and values_dict.get("order_lines"):
-                assert self.id == int(values_dict["order_id"])
-                for values in values_dict.get("order_lines"):
-                    if (
-                        values.get("product_id")
-                        and values.get("quantity")
-                        and values.get("price_unit")
-                    ):
-                        product = self.env["product.product"].search(
-                            [
-                                ("id", "=", values["product_id"]),
-                            ]
-                        )
-                        if product:
-                            price_unit = self._convert_string_to_float(
-                                values.get("price_unit", 0)
+            if values_dict.get("orders"):
+                orders = values_dict["orders"]
+                for order in orders:
+                    if order.get("order_id") and order.get("order_lines"):
+                        assert self.id == int(order.get("order_id"))
+                        sale_order = self
+                        if order.get("delivery_date"):
+                            sale_order.commitment_date = fields.Date.from_string(
+                                order.get("delivery_date")
                             )
-                            product_uom_qty = self._convert_string_to_float(
-                                values.get("quantity", 0)
-                            )
-                            self.write(
-                                {
-                                    "order_line": [
-                                        (
-                                            0,
-                                            0,
-                                            {
-                                                "product_id": product.id,
-                                                "price_unit": price_unit,
-                                                "product_uom_qty": product_uom_qty,
-                                            },
-                                        )
-                                    ],
+                        if order != orders[0]:
+                            sale_order = self.copy(
+                                default={
+                                    "order_line": False,
+                                    "commitment_date": fields.Date.from_string(
+                                        order.get("delivery_date")
+                                    )
+                                    if order.get("delivery_date")
+                                    else None,
                                 }
                             )
+                        for values in order.get("order_lines"):
+                            if (
+                                values.get("product_id")
+                                and values.get("quantity")
+                                and values.get("price_unit")
+                            ):
+                                product = self.env["product.product"].search(
+                                    [
+                                        ("id", "=", values["product_id"]),
+                                    ]
+                                )
+                                if product:
+                                    price_unit = self._convert_string_to_float(
+                                        values.get("price_unit", 0)
+                                    )
+                                    product_qty = self._convert_string_to_float(
+                                        values.get("quantity", 0)
+                                    )
+                                    sale_order.write(
+                                        {
+                                            "order_line": [
+                                                (
+                                                    0,
+                                                    0,
+                                                    {
+                                                        "product_id": product.id,
+                                                        "price_unit": price_unit,
+                                                        "product_uom_qty": product_qty,
+                                                    },
+                                                )
+                                            ],
+                                        }
+                                    )
         contents = ""
         if self.order_line != current_so_lines:
             contents = "\n".join(
