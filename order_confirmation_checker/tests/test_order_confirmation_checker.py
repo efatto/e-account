@@ -20,7 +20,7 @@ class TestProductMarginExclude(SavepointCase):
                 "product_code": "CUST1234",
             }
         )
-        cls.extracted_text = """
+        cls.extracted_text_unique_delivery_date_us_format = """
 # MyCompany\n\nMyCompany Srl\nVia Kimm 62\n22222 Varano (MI)\nSDI:
  MyCompanyinvoices@pec.it\nVAT: IT99999999999\nFiscal Code: 99999999999\nQuality
  system certified ISO 9001\n\nBILLING ADDRESS:\nVia Kimm 62\n22222 Varano
@@ -40,45 +40,120 @@ class TestProductMarginExclude(SavepointCase):
  16/04/2026\n\nApplies the general conditions of sale. If confirmed after 3 days,
  50.00 Eur will be charged as a management cost to reprocess the order from the
  beginning."""
-        cls.output = """
+        cls.output_unique_delivery_date_us_format = """
 {
-    'company_id': 'MyCompany',
-    'customer': 'MyCompanyComp A/S',
-    'order_id': '%(order_id)s',
-    'order_date': '19/01/2026',
-    'elaboration_notes': '',
-    'order_lines': [
+    "company_id": "MyCompany",
+    "customer": "MyCompanyComp A/S",
+    "order_date": "2026-01-19",
+    "orders": [
         {
-            'product_code': '%(product1_default_code)s',
-            'partner_product_name': 'CUST1234',
-            'product_id': '%(product1_id)s',
-            'quantity': '7.000',
-            'price_unit': '16.98000'
+            "order_id": "%(order_id)s",
+            "elaboration_notes": "Delivery date 13/02/26",
+            "delivery_date": "2026-02-13",
+            "order_lines": [
+                {
+                    "product_code": "%(product1_default_code)s",
+                    "partner_product_name": "CUST1234",
+                    "product_id": "%(product1_id)s",
+                    "quantity": "7.000",
+                    "price_unit": "16.98000"
+                },
+                {
+                    "product_code": "%(product_default_code)s",
+                    "partner_product_name": "PPCCB",
+                    "product_id": "%(product_id)s",
+                    "quantity": "1.000",
+                    "price_unit": "5.73000"
+                },
+                {
+                    "product_code": "",
+                    "partner_product_name": "False row - 1%% of the value of the goods",
+                    "product_id": "",
+                    "quantity": "1.000",
+                    "price_unit": "51.73000"
+                }
+            ]
+        }
+    ]
+}
+        """
+        cls.extracted_text_delivery_date_lines_eur_format = """
+# MyCompany\n\nMyCompany Srl\nVia Kimm 62\n22222 Varano (MI)\nSDI:
+ MyCompanyinvoices@pec.it\nVAT: IT99999999999\nFiscal Code: 99999999999\nQuality
+ system certified ISO 9001\n\nBILLING ADDRESS:\nVia Kimm 62\n22222 Varano
+ (MI)\nCONTACTS:\nPhone: 0345465454\nEmail: info@MyCompany.com\n\nDATE:
+ 19/01/2026\nORDER: SO/2026/00287\nPAG.: 1/1\n\nPARTNER:\nMyCoa-Comp A/S\nBuonasr
+ 30, Skive DK-7800, Denmark\n+45 142828\nVAT: DK30303003\n\nCustomer ref.:\n50244
+ - BT\n\nPayment terms: MT60\nBANK Fineco\nOutside SEPA circuit \n\n|  Description
+ | Qty | U.M. | Deliv.date | Price/unit | Discounts | Amount | Total  |\n| --- |
+  --- | --- | --- | --- | --- | --- | --- |\n|  Order ref.
+ SO/2026/03287 - 2/01/2026 50364 - BT |  |  |  |  |  |  |   |\n|
+ [PPC140226_HY-MyCoop] [1091160] PPC140226_HY-MyCoop PPC-UR-R1,5-L-V200-G-G-P01-
+ RETURN-KIT-2,5A+V100 Assembled & tested
+ | 3,000 | Unit(s) | 13/02/26 | 11,95000\nPx pour 1 PCE |  | 11,95000 | 35,85 €  |\n|
+ [PP2413424_HY-MyCoop] [125475] CUST1234MyCoop PPC-UR-R1,5-L-V200-G-G-P01-RETURN-
+ KIT-2,5A+V100 Assembled & tested
+ | 7,000 | Unit(s) | 19/02/26 | 16,98000\nPx pour 1 PCE |  | 16,98000 | 118,86 €  |\n|
+ [FURN_0096] Test product internal - PPCCBokin charge technical amusement park in offer
+ | 1,000 | Unit(s) | 13/02/26 | 5,73000\nPx pour 1 PCE |  | 5,73000 | 5,73 € |\n|
+ | Total Without Taxes |   |   | 446,58 €  |\n|   | Taxes on 446,58 € |   |
+ | 0,00 €  |\n|   | Total |   |   | 446,58 €  |\n\nApplies the general conditions of
+ sale. If confirmed after 3 days,
+ 50,00 Eur will be charged as a management cost to reprocess the order from the
+ beginning."""
+        cls.output_unique_delivery_date_eur_format = """
+{
+    "company_id": "MyCompany",
+    "customer": "MyCompanyComp A/S",
+    "order_date": "2026-01-19",
+    "orders": [
+        {
+            "order_id": "%(order_id)s",
+            "elaboration_notes": "Delivery date 13/02/26",
+            "delivery_date": "2026-02-13",
+            "order_lines": [
+                {
+                    "product_code": "%(product_default_code)s",
+                    "partner_product_name": "PPCCB",
+                    "product_id": "%(product_id)s",
+                    "quantity": "1.000",
+                    "price_unit": "5.73000"
+                },
+                {
+                    "product_code": "",
+                    "partner_product_name": "False row - 1%% of the value of the goods",
+                    "product_id": "",
+                    "quantity": "1.000",
+                    "price_unit": "51.73000"
+                }
+            ]
         },
         {
-            'product_code': '%(product_default_code)s',
-            'partner_product_name': 'PPCCB',
-            'product_id': '%(product_id)s',
-            'quantity': '1.000',
-            'price_unit': '5.73000'
-        },
-        {
-            'product_code': '',
-            'partner_product_name': 'False row - 1%% of the value of the goods',
-            'product_id': '',
-            'quantity': '1.000',
-            'price_unit': '51.73000'
+            "order_id": "%(order_id)s",
+            "elaboration_notes": "Delivery date 19/02/26",
+            "delivery_date": "2026-02-19",
+            "order_lines": [
+                {
+                    "product_code": "%(product1_default_code)s",
+                    "partner_product_name": "CUST1234",
+                    "product_id": "%(product1_id)s",
+                    "quantity": "7.000",
+                    "price_unit": "16.98000"
+                }
+            ]
         }
     ]
 }
         """
 
-    def test_extract_text(self):
+    def test_00_extract_text_us(self):
         sale_order_form = Form(self.env["sale.order"])
         sale_order_form.partner_id = self.partner
         order = sale_order_form.save()
         # create pdf to attach and test will require a n8n istance in the GitHub machine
-        products = order._get_products_from_content(self.extracted_text)
+        products = order._get_products_from_content(
+            self.extracted_text_unique_delivery_date_us_format
+        )
         self.assertTrue(products, "No products found in content")
         self.assertIn(
             {"default_code": self.product.default_code, "id": self.product.id},
@@ -89,11 +164,11 @@ class TestProductMarginExclude(SavepointCase):
             products,
         )
 
-    def test_create_order_lines(self):
+    def test_01_create_order_lines_us(self):
         sale_order_form = Form(self.env["sale.order"])
         sale_order_form.partner_id = self.partner
         order = sale_order_form.save()
-        output = self.output % dict(
+        output = self.output_unique_delivery_date_us_format % dict(
             order_id=order.id,
             product1_default_code=self.product1.default_code,
             product_default_code=self.product.default_code,
@@ -107,3 +182,40 @@ class TestProductMarginExclude(SavepointCase):
             (self.product1 | self.product).ids,
             order.order_line.mapped("product_id").ids,
         )
+
+    def test_02_extract_text_eur(self):
+        sale_order_form = Form(self.env["sale.order"])
+        sale_order_form.partner_id = self.partner
+        order = sale_order_form.save()
+        products = order._get_products_from_content(
+            self.extracted_text_unique_delivery_date_eur_format
+        )
+        self.assertTrue(products, "No products found in content")
+        self.assertIn(
+            {"default_code": self.product.default_code, "id": self.product.id},
+            products,
+        )
+        self.assertIn(
+            {"default_code": self.product1.default_code, "id": self.product1.id},
+            products,
+        )
+
+    def test_02_create_order_lines_eur(self):
+        sale_order_form = Form(self.env["sale.order"])
+        sale_order_form.partner_id = self.partner
+        order = sale_order_form.save()
+        output = self.output_unique_delivery_date_eur_format % dict(
+            order_id=order.id,
+            product1_default_code=self.product1.default_code,
+            product_default_code=self.product.default_code,
+            product1_id=self.product1.id,
+            product_id=self.product.id,
+        )
+        output_dict = safe_eval(output)
+        order._create_order_lines(output_dict)
+        self.assertTrue(order.order_line, "No order lines created")
+        self.assertEqual(
+            self.product.ids,
+            order.order_line.mapped("product_id").ids,
+        )
+        # get other sale order for product1
