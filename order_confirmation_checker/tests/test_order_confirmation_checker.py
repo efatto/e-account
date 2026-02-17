@@ -1,5 +1,6 @@
 from odoo.tests import Form, SavepointCase
 from odoo.tools.safe_eval import safe_eval
+from odoo import fields
 
 
 class TestProductMarginExclude(SavepointCase):
@@ -218,4 +219,12 @@ class TestProductMarginExclude(SavepointCase):
             self.product.ids,
             order.order_line.mapped("product_id").ids,
         )
-        # get other sale order for product1
+        # check the other sale order created for product1
+        other_order = self.env["sale.order"].search(
+            [
+                ("partner_id", "=", self.partner.id),
+                ("commitment_date", "=", fields.Date.from_string("2026-02-19")),
+                ("order_line.product_id", "=", self.product1.id),
+            ]
+        )
+        self.assertTrue(other_order, "No other order found for product1")
