@@ -1,6 +1,6 @@
+from odoo import fields
 from odoo.tests import Form, SavepointCase
 from odoo.tools.safe_eval import safe_eval
-from odoo import fields
 
 
 class TestProductMarginExclude(SavepointCase):
