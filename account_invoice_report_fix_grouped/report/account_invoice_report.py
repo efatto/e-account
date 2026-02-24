@@ -12,7 +12,8 @@ class AccountInvoiceReport(models.Model):
             "line.balance",
             "line.price_subtotal "
             "* (CASE WHEN move.move_type IN ("
-            "'in_invoice','out_refund','in_receipt') THEN -1 ELSE 1 END)")
+            "'in_invoice','out_refund','in_receipt') THEN -1 ELSE 1 END)",
+        )
         return res
 
     @api.model
