@@ -8,7 +8,11 @@ class AccountInvoiceReport(models.Model):
     def _select(self):
         res = super()._select()
         # Override original select to replace line.balance with line.price_subtotal
-        res = res.replace("line.balance", "COALESCE(line.price_subtotal, line.balance)")
+        res = res.replace(
+            "line.balance",
+            "line.price_subtotal "
+            "* (CASE WHEN move.move_type IN ("
+            "'in_invoice','out_refund','in_receipt') THEN -1 ELSE 1 END)")
         return res
 
     @api.model
@@ -22,7 +26,8 @@ class AccountInvoiceReport(models.Model):
 
     @api.model
     def _where(self):
-        # get even the move lines of type income or expense - previously grouped by
+        # TODO check if there are invoice lines without tax
+        # get even the move lines with a tax set - required - previously grouped by
         # flag "group by account" in account journal - until v. 12.0 - removing filter
         # on exclude_from_invoice_tab
         where_str = super()._where()
