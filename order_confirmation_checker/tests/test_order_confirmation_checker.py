@@ -94,7 +94,7 @@ class TestProductMarginExclude(SavepointCase):
  | 3,000 | Unit(s) | 13/02/26 | 11,95000\nPx pour 1 PCE |  | 11,95000 | 35,85 €  |\n|
  [PP2413424_HY-MyCoop] [125475] CUST1234MyCoop PPC-UR-R1,5-L-V200-G-G-P01-RETURN-
  KIT-2,5A+V100 Assembled & tested
- | 7 | Unit(s) | 19/02/26 | 16,98000\nPx pour 1 PCE |  | 16,98000 | 118,86 €  |\n|
+ | 7,000 | Unit(s) | 19/02/26 | 16,98000\nPx pour 1 PCE |  | 16,98000 | 118,86 €  |\n|
  [FURN_0096] Test product internal - PPCCBokin charge technical amusement park in offer
  | 1,000 | Unit(s) | 13/02/26 | 5,73000\nPx pour 1 PCE |  | 5,73000 | 5,73 € |\n|
  | Total Without Taxes |   |   | 446,58 €  |\n|   | Taxes on 446,58 € |   |
@@ -138,8 +138,8 @@ class TestProductMarginExclude(SavepointCase):
                     "product_code": "%(product1_default_code)s",
                     "partner_product_name": "CUST1234",
                     "product_id": "%(product1_id)s",
-                    "quantity": "7.000",
-                    "price_unit": "16.98000"
+                    "quantity": "7",
+                    "price_unit": "16,98000"
                 }
             ]
         }
