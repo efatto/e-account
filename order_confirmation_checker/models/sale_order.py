@@ -148,7 +148,6 @@ class SaleOrder(models.Model):
 
     @staticmethod
     def _convert_string_to_float(string_value):
-        converted_string_value = 0
         r = re.search(r"(\d+)[.,](\d+)[.,]?(\d*)", string_value)
         if r:
             if r.group(3):
@@ -157,13 +156,12 @@ class SaleOrder(models.Model):
                 converted_string_value = "{}.{}".format(*r.groups())
             else:
                 converted_string_value = "{}".format(*r.groups())
+        else:
+            converted_string_value = string_value
         try:
             converted_string_value = float(converted_string_value)
         except ValueError:
-            try:
-                converted_string_value = int(converted_string_value)
-            except ValueError:
-                pass
+            pass
         return converted_string_value
 
     def _create_order_lines(self, values_dict):
