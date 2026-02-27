@@ -94,7 +94,7 @@ class TestProductMarginExclude(SavepointCase):
  | 3,000 | Unit(s) | 13/02/26 | 11,95000\nPx pour 1 PCE |  | 11,95000 | 35,85 €  |\n|
  [PP2413424_HY-MyCoop] [125475] CUST1234MyCoop PPC-UR-R1,5-L-V200-G-G-P01-RETURN-
  KIT-2,5A+V100 Assembled & tested
- | 7,000 | Unit(s) | 19/02/26 | 16,98000\nPx pour 1 PCE |  | 16,98000 | 118,86 €  |\n|
+ | 7 | Unit(s) | 19/02/26 | 16,98000\nPx pour 1 PCE |  | 16,98000 | 118,86 €  |\n|
  [FURN_0096] Test product internal - PPCCBokin charge technical amusement park in offer
  | 1,000 | Unit(s) | 13/02/26 | 5,73000\nPx pour 1 PCE |  | 5,73000 | 5,73 € |\n|
  | Total Without Taxes |   |   | 446,58 €  |\n|   | Taxes on 446,58 € |   |
@@ -189,7 +189,7 @@ class TestProductMarginExclude(SavepointCase):
         sale_order_form.partner_id = self.partner
         order = sale_order_form.save()
         products = order._get_products_from_content(
-            self.extracted_text_unique_delivery_date_eur_format
+            self.extracted_text_delivery_date_lines_eur_format
         )
         self.assertTrue(products, "No products found in content")
         self.assertIn(
