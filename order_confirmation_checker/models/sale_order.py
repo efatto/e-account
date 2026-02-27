@@ -160,7 +160,10 @@ class SaleOrder(models.Model):
         try:
             converted_string_value = float(converted_string_value)
         except ValueError:
-            pass
+            try:
+                converted_string_value = int(converted_string_value)
+            except ValueError:
+                pass
         return converted_string_value
 
     def _create_order_lines(self, values_dict):
