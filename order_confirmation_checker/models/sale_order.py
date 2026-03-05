@@ -193,7 +193,7 @@ class SaleOrder(models.Model):
                             if (
                                 values.get("product_id")
                                 and values.get("quantity")
-                                and values.get("price_unit")
+                                # and values.get("price_unit")
                             ):
                                 product = self.env["product.product"].search(
                                     [
@@ -201,9 +201,9 @@ class SaleOrder(models.Model):
                                     ]
                                 )
                                 if product:
-                                    price_unit = self._convert_string_to_float(
-                                        values.get("price_unit", 0)
-                                    )
+                                    # price_unit = self._convert_string_to_float(
+                                    #     values.get("price_unit", 0)
+                                    # )
                                     product_qty = self._convert_string_to_float(
                                         values.get("quantity", 0)
                                     )
@@ -215,7 +215,7 @@ class SaleOrder(models.Model):
                                                     0,
                                                     {
                                                         "product_id": product.id,
-                                                        "price_unit": price_unit,
+                                                        # "price_unit": price_unit,
                                                         "product_uom_qty": product_qty,
                                                     },
                                                 )
