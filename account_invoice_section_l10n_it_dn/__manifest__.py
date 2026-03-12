@@ -10,8 +10,9 @@
     "license": "AGPL-3",
     "category": "Accounting & Finance",
     "depends": [
-        "account_invoice_section_sale_order",
+        "account_invoice_section_sale_order_single",
         "l10n_it_delivery_note",
         "stock",
     ],
 }
+
