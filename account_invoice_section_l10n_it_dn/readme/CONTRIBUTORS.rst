@@ -1,1 +1,1 @@
-* Akim Juillerat <akim.juillerat@camptocamp.com>
+* Sergio Corato <https://github.com/sergiocorato>
