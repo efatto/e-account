@@ -375,13 +375,11 @@ ul.auto-toc {
 !! source digest: sha256:b622194930704016af431e8372b53fb83316a24631f0fe09bbc961a5200fc8c2
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/efatto/e-account/tree/14.0/account_invoice_section_l10n_it_dn"><img alt="efatto/e-account" src="https://img.shields.io/badge/github-efatto%2Fe--account-lightgray.png?logo=github" /></a></p>
-<p>This module extends <cite>account_invoice_section_sale_order</cite> to allow using pickings
-linked to the sale order line for the grouping invoice lines when invoicing sale
-orders.</p>
+<p>This module extends <cite>account_invoice_section_sale_order</cite> to allow using delivery notes and sale orders for invoice lines grouping when invoicing sale orders.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-1">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
 <li><a class="reference internal" href="#bug-tracker" id="toc-entry-2">Bug Tracker</a></li>
 <li><a class="reference internal" href="#credits" id="toc-entry-3">Credits</a><ul>
 <li><a class="reference internal" href="#authors" id="toc-entry-4">Authors</a></li>
@@ -391,20 +389,12 @@ orders.</p>
 </li>
 </ul>
 </div>
-<div class="section" id="known-issues-roadmap">
-<h2><a class="toc-backref" href="#toc-entry-1">Known issues / Roadmap</a></h2>
-<ul class="simple">
-<li>The selection of pickings for the section name relies on the last invoice
-that was created and is linked to the sale order line. In such case, there’s
-no guarantee the selection is correct if the quantity is reduced on prior
-invoice lines.</li>
-<li>Moreover, as Odoo considers the draft invoices for the computation of
-<cite>qty_invoiced</cite> on sales order line, we couldn’t base the selection of the last
-invoice on another field than the <cite>create_date</cite> although it would have been
-cleaner to rely on a <cite>date</cite> field, but this one is only set on the posting.
-Finally, defining another field for the generation of invoices wouldn’t have
-helped solve these issues.</li>
-</ul>
+<div class="section" id="usage">
+<h2><a class="toc-backref" href="#toc-entry-1">Usage</a></h2>
+<p>Un esempio di configurazione nel campo per il nome da assegnare alla sezione:</p>
+<pre class="code python literal-block">
+<span class="p">(</span><span class="s1">'DDT '</span> <span class="o">+</span> <span class="nb">object</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">' - '</span> <span class="o">+</span> <span class="nb">object</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">'</span><span class="si">%d</span><span class="s1">/%m/%Y'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'.'</span><span class="p">)</span> <span class="k">if</span> <span class="nb">object</span><span class="o">.</span><span class="n">_name</span> <span class="o">==</span> <span class="s1">'stock.delivery.note'</span> <span class="k">else</span> <span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">' - '</span> <span class="o">+</span> <span class="nb">object</span><span class="o">.</span><span class="n">date_order</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">'</span><span class="si">%d</span><span class="s1">/%m/%Y'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' - '</span> <span class="o">+</span> <span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="n">client_order_ref</span> <span class="ow">or</span> <span class="s1">''</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'.'</span><span class="p">)</span>
+</pre>
 </div>
 <div class="section" id="bug-tracker">
 <h2><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h2>
@@ -425,7 +415,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <div class="section" id="contributors">
 <h3><a class="toc-backref" href="#toc-entry-5">Contributors</a></h3>
 <ul class="simple">
-<li>Akim Juillerat &lt;<a class="reference external" href="mailto:akim.juillerat&#64;camptocamp.com">akim.juillerat&#64;camptocamp.com</a>&gt;</li>
+<li>Sergio Corato &lt;<a class="reference external" href="https://github.com/sergiocorato">https://github.com/sergiocorato</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">

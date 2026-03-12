@@ -26,28 +26,21 @@ Acccount Invoice Section DDT and Sale Order
 
 |badge1| |badge2| |badge3|
 
-This module extends `account_invoice_section_sale_order` to allow using pickings
-linked to the sale order line for the grouping invoice lines when invoicing sale
-orders.
+This module extends `account_invoice_section_sale_order` to allow using delivery notes and sale orders for invoice lines grouping when invoicing sale orders.
 
 **Table of contents**
 
 .. contents::
    :local:
 
-Known issues / Roadmap
-======================
+Usage
+=====
 
-* The selection of pickings for the section name relies on the last invoice
-  that was created and is linked to the sale order line. In such case, there's
-  no guarantee the selection is correct if the quantity is reduced on prior
-  invoice lines.
-* Moreover, as Odoo considers the draft invoices for the computation of
-  `qty_invoiced` on sales order line, we couldn't base the selection of the last
-  invoice on another field than the `create_date` although it would have been
-  cleaner to rely on a `date` field, but this one is only set on the posting.
-  Finally, defining another field for the generation of invoices wouldn't have
-  helped solve these issues.
+Un esempio di configurazione nel campo per il nome da assegnare alla sezione:
+
+.. code-block:: python
+
+  ('DDT ' + object.name + ' - ' + object.date.strftime('%d/%m/%Y') + '.') if object._name == 'stock.delivery.note' else (object.name + ' - ' + object.date_order.strftime('%d/%m/%Y') + ' - ' + (object.client_order_ref or '') + '.')
 
 Bug Tracker
 ===========
@@ -70,7 +63,7 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-* Akim Juillerat <akim.juillerat@camptocamp.com>
+* Sergio Corato <https://github.com/sergiocorato>
 
 Maintainers
 ~~~~~~~~~~~
