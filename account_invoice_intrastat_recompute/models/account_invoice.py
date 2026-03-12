@@ -18,9 +18,10 @@ class AccountInvoice(models.Model):
     def write(self, vals):
         res = super().write(vals)
         if not self.env.context.get("no_recurse_compute_intrastat"):
-            for inv in self:
-                if inv.intrastat and inv.auto_recompute_intrastat:
-                    inv.with_context(
-                        no_recurse_compute_intrastat=True
-                    ).compute_intrastat_lines()
+            if "invoice_line_ids" in vals:
+                for inv in self:
+                    if inv.intrastat and inv.auto_recompute_intrastat:
+                        inv.with_context(
+                            no_recurse_compute_intrastat=True
+                        ).compute_intrastat_lines()
         return res
