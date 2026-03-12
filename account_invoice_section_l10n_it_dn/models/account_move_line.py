@@ -1,4 +1,4 @@
-from odoo import api, models
+from odoo import models
 
 
 class AccountMoveLine(models.Model):
@@ -10,7 +10,6 @@ class AccountMoveLine(models.Model):
         group = super()._get_section_group()
         # If the product is not linked to a delivery note, put in the same group of a dn
         # with the same sale order.
-        # todo remove lines with type section or notes? or move at the end?
         invoice_section_grouping = self.company_id.invoice_section_grouping
         if (
             invoice_section_grouping == "delivery_note_sale"

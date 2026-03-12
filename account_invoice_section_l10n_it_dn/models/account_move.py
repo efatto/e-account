@@ -12,6 +12,8 @@ class AccountMove(models.Model):
         """Sort invoice lines according to the section ordering"""
         invoice_section_grouping = self.company_id.invoice_section_grouping
         if invoice_section_grouping == "delivery_note_sale":
+            # remove lines with display_type TODO or move at the end?
+            self.invoice_line_ids.filtered(lambda l: l.display_type).unlink()
             return self.invoice_line_ids.sorted(
                 key=lambda r: (
                     f"{r.mapped('sale_line_ids.delivery_note_line_ids.delivery_note_id.id')}"
