@@ -18,9 +18,21 @@ class AccountInvoiceLine(models.Model):
 
     @api.depends("move_line_ids.price_unit", "product_id", "product_id.standard_price")
     def _compute_move_price_unit(self):
-        for line in self:
-            price_unit = min([-abs(x.price_unit) for x in line.move_line_ids] or [0])
-            if not price_unit:
-                price_unit = -line.product_id.standard_price
+        invoice_lines = self.filtered(
+            lambda x: x.move_id.move_type
+            in ["out_invoice", "out_refund", "in_invoice", "in_refund"]
+        )
+        for not_invoice_line in self - invoice_lines:
+            not_invoice_line.move_price_unit = 0
+            not_invoice_line.move_price_total = 0
+        for line in invoice_lines:
+            if not line.product_id:
+                price_unit = 0
+            else:
+                price_unit = min(
+                    [-abs(x.price_unit) for x in line.move_line_ids] or [0]
+                )
+                if not price_unit:
+                    price_unit = -line.product_id.standard_price
             line.move_price_unit = price_unit
             line.move_price_total = line.quantity * line.move_price_unit
