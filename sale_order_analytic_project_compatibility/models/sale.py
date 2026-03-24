@@ -26,6 +26,7 @@ class SaleOrder(models.Model):
     def _check_project_analytic_account(self):
         if (
             self.project_id
+            and self.project_id.task_ids
             and self.project_id.analytic_account_id
             and self.analytic_account_id
         ):
