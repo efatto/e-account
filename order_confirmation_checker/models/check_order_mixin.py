@@ -16,7 +16,7 @@ def check_attachment(object_to_check, object_to_check_lines):
     lines_to_check = object_to_check_lines.filtered(
         lambda x: x.product_id.type == "product" and x.product_id.default_code
     )
-    filestore = tools.config.filestore(object_to_check._cr.dbname)
+    filestore = tools.sudo().config.filestore(object_to_check._cr.dbname)
     file_path = os.path.join(
         filestore, object_to_check.attachment_to_check_id.store_fname
     )
