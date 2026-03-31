@@ -23,11 +23,11 @@ class SaleOrder(models.Model):
 
     def _n8n_webhook(self, option=False, data=False, extracted_text=False):
         # TODO move this method to a generic module
-        base_url = self.env["ir.config_parameter"].get_param("web.base.url")
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         env_running = ""
         if "test" in base_url:
             env_running = "-test"
-        api_key = self.env["ir.config_parameter"].get_param("X-N8N_API_KEY")
+        api_key = self.env["ir.config_parameter"].sudo().get_param("X-N8N_API_KEY")
         if not api_key:
             raise UserError(
                 _(
@@ -66,7 +66,9 @@ class SaleOrder(models.Model):
                 "extracted_text": extracted_text,
             }
             try:
-                api_key = self.env["ir.config_parameter"].get_param("X-N8N_API_KEY")
+                api_key = (
+                    self.env["ir.config_parameter"].sudo().get_param("X-N8N_API_KEY")
+                )
                 if not api_key:
                     raise UserError(
                         _(
