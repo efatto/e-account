@@ -50,10 +50,14 @@ def check_attachment(object_to_check, object_to_check_lines):
                     partner_code = seller[0].product_code or ""
         elif line._name == "sale.order.line":
             if line.product_id and line.order_id and line.order_id.partner_id:
-                partner_code = line.product_id._select_customerinfo(
+                customer = line.product_id._select_customerinfo(
                     partner=line.order_partner_id,
                     quantity=None,
-                )[:1]
+                    date=line.order_id.date_order and line.order_id.date_order.date(),
+                    uom_id=line.product_uom,
+                )
+                if customer:
+                    partner_code = customer[0].product_code or ""
         data_to_check[line.id] = dict(
             default_code=line.product_id.default_code,
             quantity=lang.format(
