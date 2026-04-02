@@ -296,6 +296,6 @@ def check_code_and_qty(  # noqa C901
         )
 
         target_results[target] = {
-            (code_found or partner_code_found) and qty_found and price_found: result_msg
+            (code_found or partner_code_found) and qty_found: result_msg
         }
     return target_results
