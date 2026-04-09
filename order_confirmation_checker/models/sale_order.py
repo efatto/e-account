@@ -1,6 +1,5 @@
 import json
 import logging
-import re
 from urllib.parse import urljoin
 
 import requests
@@ -8,7 +7,7 @@ import requests
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 
-from .check_order_mixin import check_attachment
+from .check_order_mixin import _convert_string_to_float, check_attachment
 
 logger = logging.getLogger(__name__)
 
@@ -148,24 +147,6 @@ class SaleOrder(models.Model):
                         )
         return found_product_codes
 
-    @staticmethod
-    def _convert_string_to_float(string_value):
-        r = re.search(r"(\d+)[.,](\d+)[.,]?(\d*)", string_value)
-        if r:
-            if r.group(3):
-                converted_string_value = "{}{}.{}".format(*r.groups())
-            elif r.group(2):
-                converted_string_value = "{}.{}".format(*r.groups())
-            else:
-                converted_string_value = "{}".format(*r.groups())
-        else:
-            converted_string_value = string_value
-        try:
-            converted_string_value = float(converted_string_value)
-        except ValueError:
-            pass
-        return converted_string_value
-
     def _create_order_lines(self, values_dict):
         current_so_lines = self.order_line
         logger.info(f"N8N connector: importing from n8n values_dict: {values_dict}")
@@ -192,21 +173,14 @@ class SaleOrder(models.Model):
                                 }
                             )
                         for values in order.get("order_lines"):
-                            if (
-                                values.get("product_id")
-                                and values.get("quantity")
-                                # and values.get("price_unit")
-                            ):
+                            if values.get("product_id") and values.get("quantity"):
                                 product = self.env["product.product"].search(
                                     [
                                         ("id", "=", values["product_id"]),
                                     ]
                                 )
                                 if product:
-                                    # price_unit = self._convert_string_to_float(
-                                    #     values.get("price_unit", 0)
-                                    # )
-                                    product_qty = self._convert_string_to_float(
+                                    product_qty = _convert_string_to_float(
                                         values.get("quantity", 0)
                                     )
                                     sale_order.write(
@@ -217,7 +191,6 @@ class SaleOrder(models.Model):
                                                     0,
                                                     {
                                                         "product_id": product.id,
-                                                        # "price_unit": price_unit,
                                                         "product_uom_qty": product_qty,
                                                     },
                                                 )
