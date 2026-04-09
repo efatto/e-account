@@ -1,8 +1,4 @@
-import json
 import logging
-from urllib.parse import urljoin
-
-import requests
 
 from odoo import _, fields, models
 from odoo.exceptions import UserError
@@ -19,78 +15,6 @@ class SaleOrder(models.Model):
     def button_check_attachment(self):
         self.ensure_one()
         check_attachment(self, self.order_line)
-
-    def _n8n_webhook(self, option=False, data=False, extracted_text=False):
-        # TODO move this method to a generic module
-        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
-        env_running = ""
-        if "test" in base_url:
-            env_running = "-test"
-        api_key = self.env["ir.config_parameter"].sudo().get_param("X-N8N_API_KEY")
-        if not api_key:
-            raise UserError(
-                _(
-                    "API KEY not found in System Parameters. Make sure to "
-                    "define the API KEY using the key X-N8N_API_KEY"
-                )
-            )
-        headers = {
-            "Accepts": "application/json",
-            "X-N8N_API_KEY": api_key,
-        }
-        if option == "read_attach":
-            odoo_webhook = urljoin(
-                base_url, f"/n8n/webhook{env_running}/read-attachment"
-            )
-            params = {"sale_order_id": self.id}
-            try:
-                req = requests.post(
-                    url=odoo_webhook,
-                    data=params,
-                    timeout=30,
-                    headers=headers,
-                    verify=False,
-                )
-                response = req.json()
-            except IOError as e:
-                error_msg = _("Something went wrong during data submission: %s") % e
-                raise UserError(error_msg)
-        else:
-            odoo_webhook = urljoin(
-                base_url, f"/n8n/webhook{env_running}/insert-so-rows"
-            )
-            params = {
-                "sale_order_id": self.id,
-                "data": json.dumps(data),
-                "extracted_text": extracted_text,
-            }
-            try:
-                api_key = (
-                    self.env["ir.config_parameter"].sudo().get_param("X-N8N_API_KEY")
-                )
-                if not api_key:
-                    raise UserError(
-                        _(
-                            "API KEY not found in System Parameters. Make sure to "
-                            "define the API KEY using the key X-N8N_API_KEY"
-                        )
-                    )
-                headers = {
-                    "Accepts": "application/json",
-                    "X-N8N_API_KEY": api_key,
-                }
-                req = requests.get(
-                    url=odoo_webhook,
-                    params=params,
-                    timeout=30,
-                    headers=headers,
-                    verify=False,
-                )
-                response = req.json()
-            except IOError as e:
-                error_msg = _("Something went wrong during data submission: %s") % e
-                raise UserError(error_msg)
-        return response
 
     def _get_products_from_content(self, content) -> list:
         product_codes = self.env["product.product"].search_read(
