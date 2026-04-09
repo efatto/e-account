@@ -1,5 +1,6 @@
 import logging
 import os
+import re
 
 from odoo import _, fields, models, tools
 from odoo.exceptions import ValidationError
@@ -91,6 +92,25 @@ def check_attachment(object_to_check, object_to_check_lines):
     if all(x.check_result for x in lines_to_check):
         object_to_check.check_result = True
         object_to_check.check_message = _("All lines checked")
+
+
+@staticmethod
+def _convert_string_to_float(string_value):
+    r = re.search(r"(\d+)[.,](\d+)[.,]?(\d*)", string_value)
+    if r:
+        if r.group(3):
+            converted_string_value = "{}{}.{}".format(*r.groups())
+        elif r.group(2):
+            converted_string_value = "{}.{}".format(*r.groups())
+        else:
+            converted_string_value = "{}".format(*r.groups())
+    else:
+        converted_string_value = string_value
+    try:
+        converted_string_value = float(converted_string_value)
+    except ValueError:
+        pass
+    return converted_string_value
 
 
 class CheckOrderMixinChild(models.AbstractModel):
