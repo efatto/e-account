@@ -16,12 +16,12 @@ class AccountMove(models.Model):
             self.invoice_line_ids.filtered(lambda l: l.display_type).unlink()
             return self.invoice_line_ids.sorted(
                 key=lambda r: (
-                    f"{r.mapped('sale_line_ids.delivery_note_line_ids.delivery_note_id.id')}"
-                    f"{r.mapped('sale_line_ids.delivery_note_line_ids.sequence')}"
-                    f"{r.mapped('sale_line_ids.delivery_note_line_ids.id')}"
                     f"{r.mapped('sale_line_ids.order_id.id')}"
                     f"{r.mapped('sale_line_ids.sequence')}"
                     f"{r.mapped('sale_line_ids.id')}"
+                    f"{r.mapped('sale_line_ids.delivery_note_line_ids.delivery_note_id.id')}"  # noqa: E501
+                    f"{r.mapped('sale_line_ids.delivery_note_line_ids.sequence')}"
+                    f"{r.mapped('sale_line_ids.delivery_note_line_ids.id')}"
                 )
             )
         return super()._get_ordered_invoice_lines()
