@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 import requests
 
 from odoo import _, fields, models, tools
-from odoo.exceptions import ValidationError, UserError
+from odoo.exceptions import UserError, ValidationError
 
 from .check_order_confirm import check_code_and_qty
 
