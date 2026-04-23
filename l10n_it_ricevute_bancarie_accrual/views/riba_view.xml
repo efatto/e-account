@@ -74,21 +74,21 @@
                     name="%(action_riba_line_accredit)d"
                     type='action'
                     string="Accredit lines"
-                    states="accepted"
+                    states="accepted,accredited"
                     class="oe_highlight"
                 />
                 <button
                     name="%(action_riba_line_accrue)d"
                     type='action'
                     string="Accrue lines"
-                    states="accredited"
+                    states="accepted,accredited"
                     class="oe_highlight"
                 />
                 <button
                     name="%(action_riba_line_unsolved)d"
                     type='action'
                     string="Unsolved lines"
-                    states="accredited"
+                    states="accepted,accredited,paid,unsolved"
                     class="oe_highlight"
                 />
             </button>

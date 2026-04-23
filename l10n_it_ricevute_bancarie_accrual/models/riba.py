@@ -19,25 +19,28 @@ class RibaList(models.Model):
         self.accrual_move_ids = move_ids
 
     def riba_cancel(self):
-        super().riba_cancel()
+        res = super().riba_cancel()
         for riba_list in self:
             for line in riba_list.line_ids:
                 if line.accreditation_move_id:
                     line.accreditation_move_id.unlink()
+        return res
 
     def confirm(self):
-        super().confirm()
+        res = super().confirm()
         for distinta in self:
             distinta.date_accepted = (
                 distinta.date_accepted or fields.Date.context_today(distinta)
             )
+        return res
 
     def settle_all_line(self):
-        super().settle_all_line()
+        res = super().settle_all_line()
         for distinta in self:
             distinta.date_accreditation = (
                 distinta.date_accreditation or fields.Date.context_today(distinta)
             )
+        return res
 
     accreditation_move_ids = fields.Many2many(
         "account.move",
