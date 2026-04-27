@@ -1,17 +1,17 @@
 from odoo import fields
-from odoo.tests import common
+from odoo.tests import Form
 from odoo.tools.date_utils import relativedelta
 
+from odoo.addons.base.tests.common import BaseCommon
 
-class TestSaleOrderConfirmationDate(common.SavepointCase):
+
+class TestSaleOrderConfirmationDate(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.sale_order_model = cls.env["sale.order"]
         cls.partner = cls.env.ref("base.res_partner_2")
         cls.product = cls.env.ref("product.product_product_1")
-        cls.product.service_tracking = "task_in_project"
-        cls.product1 = cls.env.ref("product.product_product_2")
         cls.user_model = cls.env["res.users"].with_context(no_reset_password=True)
         cls.group_sale = cls.env.ref("sales_team.group_sale_salesman")
         cls.sale_user = cls.user_model.create(
@@ -27,38 +27,24 @@ class TestSaleOrderConfirmationDate(common.SavepointCase):
             ]
         )
 
-    def _create_sale_order(self, date_order):
-        new_sale = self.sale_order_model.with_user(self.sale_user).create(
-            {
-                "partner_id": self.partner.id,
-                "date_order": date_order,
-            }
-        )
-        return new_sale
-
     def _create_sale_order_line(self, order, product, qty):
-        line = (
-            self.env["sale.order.line"]
-            .with_user(self.sale_user)
-            .create(
-                {
-                    "order_id": order.id,
-                    "product_id": product.id,
-                    "product_uom_qty": qty,
-                    "price_unit": 100,
-                }
-            )
+        order_form = Form(
+            order.with_user(self.sale_user),
         )
-        line.product_id_change()
-        line._convert_to_write(line._cache)
-        return line
+        with order_form.order_line.new() as line_form:
+            line_form.product_id = product
+            line_form.product_uom_qty = qty
+            line_form.price_unit = 100
+        order = order_form.save()
 
     def test_00_order_confirmation_date(self):
         confirmation_date = fields.Datetime.now()
         date_order = confirmation_date + relativedelta(days=-10)
-        sale_order_1 = self._create_sale_order(date_order)
+        sale_order_form = Form(self.sale_order_model.with_user(self.sale_user))
+        sale_order_form.date_order = date_order
+        sale_order_form.partner_id = self.partner
+        sale_order_1 = sale_order_form.save()
         self._create_sale_order_line(sale_order_1, self.product, 5)
-        self._create_sale_order_line(sale_order_1, self.product1, 20)
         self.assertEqual(sale_order_1.date_order, date_order)
         sale_order_1.action_confirm()
         self.assertEqual(sale_order_1.date_order, date_order)

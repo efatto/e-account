@@ -5,7 +5,6 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     confirmation_date = fields.Datetime(
-        string="Confirmation date",
         readonly=True,
         index=True,
         copy=False,
