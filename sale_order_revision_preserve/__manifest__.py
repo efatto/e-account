@@ -2,18 +2,14 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Sale order revision preserve",
-    "version": "14.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Sale Management",
     "author": "Sergio Corato",
-    "summary": "This module add logic to store a copy of sale order as revision, "
-    "while the user continue to use the same sale order, to preserve "
-    "chat history and attachments. If there are 'purchase_date' and 'purchase_price' "
-    "fields in the sale.order.line, supplied by sale_order_cost_recalculation module, "
-    "they will be copied without recomputation.",
     "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
     "depends": [
         "sale_order_revision",
+        "sale_margin",
     ],
     "data": [],
     "installable": True,

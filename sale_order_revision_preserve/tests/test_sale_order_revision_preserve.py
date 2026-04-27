@@ -4,13 +4,13 @@
 # Copyright 2021 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests import common
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestSaleOrderRevisionPreserve(common.SavepointCase):
+class TestSaleOrderRevisionPreserve(BaseCommon):
     @classmethod
     def setUpClass(cls):
-        super(TestSaleOrderRevisionPreserve, cls).setUpClass()
+        super().setUpClass()
         cls.sale_order_model = cls.env["sale.order"]
         cls.partner_id = cls.env.ref("base.res_partner_2").id
         cls.product_id1 = cls.env.ref("product.product_product_1").id
