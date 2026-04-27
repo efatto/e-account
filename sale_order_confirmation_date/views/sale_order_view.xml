@@ -7,7 +7,7 @@
             <field name="date_order" position="after">
                 <field
                     name="confirmation_date"
-                    attrs="{'invisible': [('state', 'in', ['draft', 'sent'])]}"
+                    invisible="state in ['draft', 'sent']"
                 />
             </field>
         </field>
