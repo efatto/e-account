@@ -7,13 +7,8 @@ class SaleOrderLine(models.Model):
     @api.returns(None, lambda value: value[0])
     def copy_data(self, default=None):
         default = dict(default or {})
-        if (
-            hasattr(self, "purchase_price")
-            and hasattr(self, "purchase_date")
-            and self.env.context.get("preserve_purchase_price")
-        ):
+        if self.purchase_price and self.env.context.get("preserve_purchase_price"):
             default["purchase_price"] = self.purchase_price
-            default["purchase_date"] = self.purchase_date
         return super().copy_data(default=default)
 
 
@@ -36,8 +31,9 @@ class SaleOrder(models.Model):
         self.write(
             {
                 "state": "draft",
-                # revision_number of active so is unchanged (always 0), as there is an sql
-                # constraint that forbid to write the same number, even if modified later
+                # revision_number of active so is unchanged (always 0), as there is a
+                # sql constraint that forbid to write the same number, even if modified
+                # later
                 # 'revision_number': new_rev_number,
                 "name": "%s-%02d" % (self.unrevisioned_name, new_rev_number),
             }
