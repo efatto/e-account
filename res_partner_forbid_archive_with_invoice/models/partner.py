@@ -20,8 +20,8 @@ class ResPartner(models.Model):
             raise UserError(
                 _(
                     "Some selected partner has registered invoices or moves! \n"
-                    "You cannot deactivate these partners: %s"
+                    "You cannot deactivate these partners: %(partners)s",
+                    partners=" - ".join(self.mapped("name")),
                 )
-                % (" - ".join(self.mapped("name")))
             )
         return super().toggle_active()
