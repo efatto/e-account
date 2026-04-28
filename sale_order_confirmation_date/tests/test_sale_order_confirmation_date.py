@@ -13,7 +13,7 @@ class TestSaleOrderConfirmationDate(BaseCommon):
         super().setUpClass()
         cls.sale_order_model = cls.env["sale.order"]
         cls.partner = cls.env.ref("base.res_partner_2")
-        cls.product = cls.env.ref("product.product_product_1")
+        cls.product = cls.env.ref("product.product_delivery_01")
         cls.user_model = cls.env["res.users"].with_context(no_reset_password=True)
         cls.group_sale = cls.env.ref("sales_team.group_sale_salesman")
         cls.sale_user = cls.user_model.create(
