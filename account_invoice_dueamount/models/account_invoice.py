@@ -22,7 +22,7 @@ class AccountMove(models.Model):
             ).currency_id
             total_balance = sum(
                 others_lines.mapped(
-                    lambda ol, c=company_currency_id: c.round(ol.balance)
+                    lambda ol, currency=company_currency_id: currency.round(ol.balance)
                 )
             )
             if total_balance:
@@ -42,10 +42,17 @@ class AccountMove(models.Model):
                         sign=1 if invoice.is_inbound(include_receipts=True) else -1,
                     )
                 else:
-                    totlines = [(invoice.invoice_date, total_balance)]
+                    totlines = {
+                        "line_ids": [
+                            {
+                                "date": invoice.invoice_date,
+                                "company_amount": total_balance,
+                            }
+                        ]
+                    }
                 dueamount_line_obj = self.env["account.invoice.dueamount.line"]
                 due_line_ids = []
-                for line in totlines:
+                for line in totlines["line_ids"]:
                     due_line_id = dueamount_line_obj.create(
                         [
                             {
