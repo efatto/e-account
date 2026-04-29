@@ -10,28 +10,14 @@ class TestAccountInvoiceDiscountUpdate(AccountTestInvoicingCommon):
         super().setUpClass()
         cls.sale_journal = cls.company_data["default_journal_sale"]
         cls.purchase_journal = cls.company_data["default_journal_purchase"]
-        cls.revenue_account = cls.env["account.account"].create(
-            {
-                "code": "TEST.REVENUE",
-                "name": "Sale revenue",
-                "account_type": "income",
-            }
-        )
-        cls.expense_account = cls.env["account.account"].create(
-            {
-                "code": "TEST.EXPENSE",
-                "name": "Purchase expense",
-                "account_type": "expense",
-            }
-        )
         cls.partner = cls.env["res.partner"].create(
             {
                 "name": "Test partner",
             }
         )
+        cls.product = cls._create_product(lst_price=100, taxes_id=cls.tax_sale_a)
 
     def create_custom_invoice(self, move_type):
-        product = self._create_product(lst_price=100, taxes_id=self.tax_sale_a)
         invoice = self._create_invoice(
             move_type=move_type,
             journal_id=self.sale_journal
@@ -40,7 +26,7 @@ class TestAccountInvoiceDiscountUpdate(AccountTestInvoicingCommon):
             post=False,
             invoice_line_ids=[
                 self._prepare_invoice_line(
-                    product_id=product,
+                    product_id=self.product,
                     quantity=5.0,
                     partner_id=self.partner,
                     price_unit=6,
