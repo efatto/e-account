@@ -13,15 +13,15 @@ class AccountMove(models.Model):
         invoice_section_grouping = self.company_id.invoice_section_grouping
         if invoice_section_grouping == "delivery_note_sale":
             # remove lines with display_type TODO or move at the end?
-            self.invoice_line_ids.filtered(lambda l: l.display_type).unlink()
+            self.invoice_line_ids.filtered(lambda il: il.display_type).unlink()
             return self.invoice_line_ids.sorted(
-                key=lambda r: (
-                    f"{r.mapped('sale_line_ids.order_id.id')}"
-                    f"{r.mapped('sale_line_ids.sequence')}"
-                    f"{r.mapped('sale_line_ids.id')}"
-                    f"{r.mapped('sale_line_ids.delivery_note_line_ids.delivery_note_id.id')}"  # noqa: E501
-                    f"{r.mapped('sale_line_ids.delivery_note_line_ids.sequence')}"
-                    f"{r.mapped('sale_line_ids.delivery_note_line_ids.id')}"
+                key=lambda invl: (
+                    f"{invl.mapped('sale_line_ids.order_id.id')}"
+                    f"{invl.mapped('sale_line_ids.sequence')}"
+                    f"{invl.mapped('sale_line_ids.id')}"
+                    f"{invl.mapped('sale_line_ids.delivery_note_line_ids.delivery_note_id.id')}"  # noqa: E501
+                    f"{invl.mapped('sale_line_ids.delivery_note_line_ids.sequence')}"
+                    f"{invl.mapped('sale_line_ids.delivery_note_line_ids.id')}"
                 )
             )
         return super()._get_ordered_invoice_lines()
