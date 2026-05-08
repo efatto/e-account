@@ -3,7 +3,7 @@ import logging
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 
-from .check_order_mixin import _convert_string_to_float, check_attachment
+from .check_order_mixin import check_attachment, convert_string_to_float
 
 logger = logging.getLogger(__name__)
 
@@ -104,7 +104,7 @@ class SaleOrder(models.Model):
                                     ]
                                 )
                                 if product:
-                                    product_qty = _convert_string_to_float(
+                                    product_qty = convert_string_to_float(
                                         values.get("quantity", 0)
                                     )
                                     sale_order.write(
