@@ -1,0 +1,1 @@
+Questo modulo aggiunge il report footer definito nella struttura dei documenti dell'azienda al campo `Causale` nei `Dati Generali` della fattura elettronica, per inserire dei dati aziendali utili da trasmettere.
