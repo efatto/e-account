@@ -3,7 +3,7 @@ from odoo.tests import Form, SavepointCase
 from odoo.tools.safe_eval import safe_eval
 
 
-class TestProductMarginExclude(SavepointCase):
+class TestOrderConfirmationChecker(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
