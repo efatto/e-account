@@ -8,6 +8,7 @@ import requests
 
 from odoo import _, fields, models, tools
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.config import config
 
 from .check_order_confirm import check_code_and_qty
 
@@ -98,8 +99,7 @@ def check_attachment(object_to_check, object_to_check_lines):
         object_to_check.check_message = _("All lines checked")
 
 
-@staticmethod
-def _convert_string_to_float(string_value):
+def convert_string_to_float(string_value):
     r = re.search(r"(\d+)[.,](\d+)[.,]?(\d*)", string_value)
     if r:
         if r.group(3):
@@ -140,11 +140,21 @@ class CheckOrderMixinParent(models.AbstractModel):
         help="Select the attachment which contains the order confirmation",
     )
 
-    def _n8n_webhook(self, option=False, data=False, extracted_text=False):
+    def _compute_n8n_url(self, endpoint=""):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         env_running = ""
-        if "test" in base_url:
+        server_running_state = config.get("running_env", "test")
+        if server_running_state == "test":
             env_running = "-test"
+        is_exposed = config.get("proxy_mode", False)
+        if not is_exposed:
+            base_url = base_url.replace(str(config.get("http_port")), "5678")
+        n8n_url = urljoin(
+            base_url, f"{'/n8n' if is_exposed else ''}/webhook{env_running}/{endpoint}"
+        )
+        return n8n_url
+
+    def _n8n_webhook(self, option=False, data=False, extracted_text=False):
         api_key = self.env["ir.config_parameter"].sudo().get_param("X-N8N_API_KEY")
         if not api_key:
             raise UserError(
@@ -158,9 +168,7 @@ class CheckOrderMixinParent(models.AbstractModel):
             "X-N8N_API_KEY": api_key,
         }
         if option == "read_attach":
-            odoo_webhook = urljoin(
-                base_url, f"/n8n/webhook{env_running}/read-attachment"
-            )
+            odoo_webhook = self._compute_n8n_url("read-attachment")
             params = {"sale_order_id": self.id}  # todo rename order_id and reuse for PO
             try:
                 req = requests.post(
@@ -175,9 +183,7 @@ class CheckOrderMixinParent(models.AbstractModel):
                 error_msg = _("Something went wrong during data submission: %s") % e
                 raise UserError(error_msg)
         else:
-            odoo_webhook = urljoin(
-                base_url, f"/n8n/webhook{env_running}/insert-so-rows"
-            )
+            odoo_webhook = self._compute_n8n_url("insert-so-rows")
             params = {
                 "sale_order_id": self.id,
                 "data": json.dumps(data),
