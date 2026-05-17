@@ -8,7 +8,7 @@
     "author": "Sergio Corato",
     "website": "https://github.com/efatto/e-account",
     "license": "AGPL-3",
-    "depends": ["account", "l10n_it"],
+    "depends": ["account"],
     "data": [],
     "pre_init_hook": "pre_init_hook",
     "installable": True,
