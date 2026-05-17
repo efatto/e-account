@@ -10,7 +10,6 @@
     "license": "AGPL-3",
     "depends": ["account"],
     "data": [],
-    "pre_init_hook": "pre_init_hook",
     "installable": True,
     "auto_install": False,
 }
