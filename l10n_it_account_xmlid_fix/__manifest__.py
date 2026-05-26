@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Italy - Account XMLID Fix",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Localization/Italy",
     "summary": "Fix account XMLIDs before l10n_it installation",
     "author": "Sergio Corato",
