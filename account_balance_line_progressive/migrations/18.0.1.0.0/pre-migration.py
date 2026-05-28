@@ -17,8 +17,12 @@ def migrate(env, version):
         _logger.info(
             "l10n_it_account_xmlid_fix module is uninstalled, " "attempting to install"
         )
-        module_fix.button_install()
-        _logger.info("l10n_it_account_xmlid_fix module installed")
+        openupgrade.logged_query(
+            env.cr,
+            "UPDATE ir_module_module SET state='installed' "
+            "WHERE name='l10n_it_account_xmlid_fix'",
+        )
+        _logger.info("l10n_it_account_xmlid_fix module set to installed")
     elif module_fix.state == "installed":
         _logger.info("l10n_it_account_xmlid_fix module already installed")
     else:
