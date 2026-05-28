@@ -1,0 +1,215 @@
+{
+  "name": "Creazione righe SO da bottone in Odoo",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=IMPORTANT: the output of this instruction must be an importable json with only the fields described in the output parser\n\nINSTRUCTIONS:\nYou are a sale manager who is creating one or more sale order with a document received from a customer. In this document are usually present the name of our company {{ $json.query.extracted_text }}, the name of the customer (usually in the header on the left or in the center, or in the footer), the date of the document and a list of the ordered products.\n\nFills these keys:\n1. company: {{ $json.query.extracted_text }}\n2. customer: find the customer from {{ $json.query.extracted_text }}. This is a firm name different from company name, usually written in header or footer or in left upper position. Before the footer usually there is the delivery company, ignore it.\n3. order_date: find the date of the order from {{ $json.query.extracted_text }}. This is usually the date in the header or in the upper position of the first page, before the rows with the products. If you find different dates, one is usually today or some days before today and it's the order date, a date in the future is usually the consignment date requested. Put in this format: `YYYY-MM-DD`.\n\n4. orders: to know whether to create one or many sale orders, find the delivery date, usually a date in the future, different from the order date as referred in point 3., requested for product from {{ $json.query.extracted_text }}. There are two possibility:\n- the first is that there is only one date, in the header or in the footer, valid for the whole order: in this case there is only order, containing all the rows. In this case create a dict in sale orders with the subsequent keys 5. and 6. and \"order_lines\" as referred later.\n- the second is that there are many delivery dates, one for each row of the order: in this case it is important to aggregate the rows with the same delivery date and put in different sale orders. In this case create a dict in sale orders for every delivery date found, with the subsequent keys 5. and 6. and \"order_lines\" as referred later.\n\n5. order_id: MANDATORY: fill exactly with {{ $json.query.sale_order_id }}\n6. delivery_date: fill with the delivery date found in point 3. Put in this format: `YYYY-MM-DD`.\n\nGet info of ordered products from {{ $json.query.extracted_text }} considering that usually they are formatted in a table with a row for every product with these informations: product code, product name, quantity, price unit, price total. Sometimes there is a column with the delivery date, use it as explained in 5. if you find it. There could be other infos like VAT, unit of measure, discount, etc, ignore them for now. Important: ignore the parts in not tabular forms, like the header and footer. You can distinguish them from the tabular form that is like, for example:\n`code price qty ...`\n`AAA  00    00  ...`\n\nFind this information:\na. product code: product reference if you find an exact match of {{ $json.query.extracted_text }} in the {{ $json.query.data }} searching by the key \"default_code\", else  put the string ``\nb. partner product code: product reference of the customer if you find an exact match of {{ $json.query.extracted_text }} in the array  {{ $json.query.data }} searching by the key \"default_code\", else  put the string ``\nc. partner product name: product name of the customer if you find an exact match of {{ $json.query.extracted_text }} in the array  {{ $json.query.data }} searching by the key \"default_code\", else  put the string ``\n\nThen write in the json \"order_lines\" key a dict for every product ordered filling these keys:\nd. product_id: integer id of the product in the array {{ $json.query.data }} for the key found with a. or b. point above\ne. quantity: the quantity requested for the product from the customer if you find a number in {{ $json.query.extracted_text }}, else put the string `0`. MANDATORY: the number must be reported as-is.\nf. price unit: the price unit requested for the product from the customer if you find a number in {{ $json.query.extracted_text }}, else put the string `0`. MANDATORY: the number must be reported as-is.",
+        "hasOutputParser": true,
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.8,
+      "position": [
+        -16,
+        432
+      ],
+      "id": "5cc78243-0895-4a3b-bbb1-4d6271625588",
+      "name": "Basic LLM Chain",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "272baf5e-168c-4bc7-bf5a-1ddf4ff85225",
+              "leftValue": "={{ $json.query.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        32,
+        208
+      ],
+      "id": "a82f88c1-4f7a-4aad-a339-22f51f8a60d9",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "id": "1293bab9-d796-45f7-8618-ce60f217c716",
+      "name": "End",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        272,
+        224
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": "mistral-small-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        640
+      ],
+      "id": "04aeea05-ca5e-4a88-8535-449ff0e0d78e",
+      "name": "Mistral Cloud Chat Model",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "UGQUW3woQsQ0EOeY",
+          "name": "Mistral Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"company_id\": \"company_id\",\n  \"customer\": \"customer\",\n  \"order_date\": \"order date\",\n  \"orders\": [\n        {\n        \"order_id\": \"order_id\",\n        \"delivery_date\": \"delivery date\",\n        \"elaboration_notes\": \"notes on elaboration done\",\n        \"order_lines\": [\n          {\n            \"product_code\": \"product code\",\n            \"partner_product_name\": \"product name\",\n            \"product_id\": \"id\",\n            \"quantity\": \"quantity\",\n            \"price_unit\": \"price unit\"\n          }\n      ]\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        128,
+        640
+      ],
+      "id": "a0290f83-646d-4046-9896-8e04e5ab0460",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "path": "insert-so-rows",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "daea632a-8b34-4dc7-8ec4-4d225cf38f73",
+      "name": "insert-so-rows",
+      "webhookId": "56495729-c9c2-4528-8fc2-c8d879928324",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "Dn9c72hGd2pzYPLi",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        320,
+        432
+      ],
+      "id": "08d6f4b0-2f21-4e26-b79b-2c516cfd0f2a",
+      "name": "Respond to Webhook with data"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "End",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Cloud Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook with data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "insert-so-rows": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "f5d3c52a-83d2-4fe7-8503-0a01e0866d1b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bb74d1226a3d2fda9cbba77c1c1bd131e98fd6ef60398ba38ecf56c8cd3a5e60"
+  },
+  "id": "EtsMcLFfvtqioaR8",
+  "tags": []
+}
