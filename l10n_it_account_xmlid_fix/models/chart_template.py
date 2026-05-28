@@ -11,8 +11,7 @@ class AccountChartTemplate(models.AbstractModel):
     _inherit = "account.chart.template"
 
     def _load(self, template_code, company, install_demo, force_create=True):
-        if template_code == "l10n_it":
-            self._pre_install_l10n_it_fix_xmlids()
+        self._pre_install_l10n_it_fix_xmlids()
         return super()._load(template_code, company, install_demo, force_create)
 
     @api.model
