@@ -142,15 +142,11 @@ class CheckOrderMixinParent(models.AbstractModel):
 
     def _compute_n8n_url(self, endpoint=""):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
-        env_running = ""
-        server_running_state = config.get("running_env", "test")
-        if server_running_state == "test":
-            env_running = "-test"
         is_exposed = config.get("proxy_mode", False)
         if not is_exposed:
             base_url = base_url.replace(str(config.get("http_port")), "5678")
         n8n_url = urljoin(
-            base_url, f"{'/n8n' if is_exposed else ''}/webhook{env_running}/{endpoint}"
+            base_url, f"{'/n8n' if is_exposed else ''}/webhook/{endpoint}"
         )
         return n8n_url
 
