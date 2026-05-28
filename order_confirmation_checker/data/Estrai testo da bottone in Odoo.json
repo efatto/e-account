@@ -28,10 +28,7 @@
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
-      "position": [
-        272,
-        256
-      ],
+      "position": [272, 256],
       "id": "d7af66f5-678f-485e-b2c0-06aaa851b82a",
       "name": "If"
     },
@@ -40,10 +37,7 @@
       "id": "0055884a-9878-4eba-82fd-1402bd71b885",
       "name": "End",
       "type": "n8n-nodes-base.noOp",
-      "position": [
-        512,
-        496
-      ],
+      "position": [512, 496],
       "typeVersion": 1
     },
     {
@@ -52,10 +46,7 @@
       },
       "type": "n8n-nodes-base.mistralAi",
       "typeVersion": 1,
-      "position": [
-        720,
-        16
-      ],
+      "position": [720, 16],
       "id": "a050d56a-81b1-4248-a123-04fed9a17dc4",
       "name": "Extract text",
       "credentials": {
@@ -73,10 +64,7 @@
       },
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
-      "position": [
-        528,
-        32
-      ],
+      "position": [528, 32],
       "id": "2539b043-7fac-41b1-a992-bf3b0c2c1573",
       "name": "Convert to File"
     },
@@ -90,10 +78,7 @@
       },
       "type": "n8n-nodes-base.odoo",
       "typeVersion": 1,
-      "position": [
-        208,
-        0
-      ],
+      "position": [208, 0],
       "id": "34299df0-68a9-4b2e-b896-09072f028e18",
       "name": "Get sale order",
       "credentials": {
@@ -113,10 +98,7 @@
       },
       "type": "n8n-nodes-base.odoo",
       "typeVersion": 1,
-      "position": [
-        48,
-        256
-      ],
+      "position": [48, 256],
       "id": "7943fa0c-1705-456a-b5e5-979bf0454e96",
       "name": "Get attachments from sale order",
       "executeOnce": false,
@@ -133,10 +115,7 @@
       },
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.5,
-      "position": [
-        608,
-        272
-      ],
+      "position": [608, 272],
       "id": "985aa9c2-ed7f-4106-b5ac-c2e59c6ec822",
       "name": "Respond to Webhook"
     },
@@ -150,10 +129,7 @@
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
-      "position": [
-        0,
-        0
-      ],
+      "position": [0, 0],
       "id": "481de63a-83f4-492a-a365-88e4b7144b59",
       "name": "read-attachment",
       "webhookId": "83f0d916-200b-4cd6-8fce-0154c4c8583e",

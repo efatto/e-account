@@ -63,7 +63,6 @@ Authors
 ~~~~~~~
 
 * Sergio Corato
-* Hydronit
 
 Contributors
 ~~~~~~~~~~~~
