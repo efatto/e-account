@@ -31,7 +31,7 @@ class SaleOrder(models.Model):
             ):
                 found_product_codes.append(product_code)
         customer_product_codes = self.env["product.customerinfo"].search_read(
-            ["|", ("product_code", "!=", False), ("product_name", "!=", False)],
+            [("name", "=", self.partner_id.id), "|", ("product_code", "!=", False), ("product_name", "!=", False)],
             ["product_code", "product_name", "product_id", "product_tmpl_id"],
         )
         if customer_product_codes:
@@ -50,16 +50,10 @@ class SaleOrder(models.Model):
                         product_id = customer_product_code["product_id"]
                         product = self.env["product.product"].browse(product_id)
                     elif customer_product_code.get("product_tmpl_id"):
-                        product = self.env["product.product"].search(
-                            [
-                                (
-                                    "product_tmpl_id",
-                                    "=",
-                                    customer_product_code["product_tmpl_id"][0],
-                                )
-                            ],
-                            limit=1,
+                        product_template = self.env["product.template"].browse(
+                            customer_product_code["product_tmpl_id"][0],
                         )
+                        product = product_template.product_variant_id
                     if product and product.default_code not in [
                         x["default_code"] for x in found_product_codes
                     ]:
