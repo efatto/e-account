@@ -16,15 +16,15 @@ class AccountChartTemplate(models.AbstractModel):
 
     def _pre_install_l10n_it_fix_xmlids(self):
         """
-        Cerca i record esistenti (account, tax, group, fiscal position)
-        e assegna loro l'xmlid definito in l10n_it per evitare duplicati.
+        Search for existing records (account, tax, group, fiscal position)
+        and assign them the xmlid defined in l10n_it to avoid duplicates.
         """
         l10n_it_path = modules.get_module_path("l10n_it")
         if not l10n_it_path:
-            _logger.warning("Modulo l10n_it non trovato.")
+            _logger.warning("Module l10n_it not found.")
             return
 
-        # Configurazione dei file da processare
+        # Configuration of files to process
         csv_configs = [
             {
                 "file": "account.account-it.csv",
@@ -56,10 +56,10 @@ class AccountChartTemplate(models.AbstractModel):
             for company in self.env["res.company"].search([]):
                 csv_path = Path(l10n_it_path) / "data" / "template" / config["file"]
                 if not csv_path.exists():
-                    _logger.warning("File CSV non trovato: %s", str(csv_path))
+                    _logger.warning("CSV file not found: %s", str(csv_path))
                     continue
 
-                _logger.info("Processando %s per XMLID fix", config["file"])
+                _logger.info("Processing %s for XMLID fix", config["file"])
                 with csv_path.open(encoding="utf-8") as f:
                     reader = csv.DictReader(f)
                     for row in reader:
@@ -67,51 +67,61 @@ class AccountChartTemplate(models.AbstractModel):
                         search_value = row.get(config["csv_field"])
 
                         if not xml_id or not search_value:
+                            _logger.info(
+                                f"Record not found for xml_id {xml_id} in company "
+                                f"{company.name}"
+                            )
                             continue
 
-                        # Cerchiamo il record per il campo specificato
+                        # Search for the record by the specified field
                         record = self.env[config["model"]].search(
                             [(config["search_field"], "=", search_value)], limit=1
                         )
 
-                        if record:
-                            full_xml_id = f"account.{xml_id}"
-                            existing_xmlid = self.env.ref(
-                                full_xml_id, raise_if_not_found=False
+                        if not record:
+                            _logger.info(
+                                f"No record found for search value {search_value} in "
+                                f"company {company.name}"
+                            )
+                            continue
+
+                        full_xml_id = f"account.{xml_id}"
+                        existing_xmlid = self.env.ref(
+                            full_xml_id, raise_if_not_found=False
+                        )
+
+                        if not existing_xmlid:
+                            _logger.info(
+                                "Assigning XMLID %s to %s (%s: %s)",
+                                full_xml_id,
+                                config["model"],
+                                config["search_field"],
+                                search_value,
+                            )
+                            self.env["ir.model.data"].create(
+                                {
+                                    "name": xml_id,
+                                    "module": "account",
+                                    "model": config["model"],
+                                    "res_id": record.id,
+                                    "noupdate": True,
+                                }
+                            )
+                        elif existing_xmlid != record:
+                            _logger.warning(
+                                "XMLID %s already exists for %s but points to "
+                                "another record (%s instead of %s)",
+                                full_xml_id,
+                                config["model"],
+                                existing_xmlid.id,
+                                record.id,
                             )
 
-                            if not existing_xmlid:
-                                _logger.info(
-                                    "Assegnazione XMLID %s a %s (%s: %s)",
-                                    full_xml_id,
-                                    config["model"],
-                                    config["search_field"],
-                                    search_value,
-                                )
-                                self.env["ir.model.data"].create(
-                                    {
-                                        "name": xml_id,
-                                        "module": "account",
-                                        "model": config["model"],
-                                        "res_id": record.id,
-                                        "noupdate": True,
-                                    }
-                                )
-                            elif existing_xmlid != record:
-                                _logger.warning(
-                                    "XMLID %s già esistente per %s ma punta a "
-                                    "un altro record (%s invece di %s)",
-                                    full_xml_id,
-                                    config["model"],
-                                    existing_xmlid.id,
-                                    record.id,
-                                )
-
-        # Gestione dei journal standard di Odoo creati da account.chart.template
-        # In Odoo 18 i journal standard sono sale, purchase, general, exch,
-        # caba, bank, cash, stj. Durante l'installazione di l10n_it,
-        # se esistono già, l'installer cerca di riconoscerli tramite XMLID.
-        # In Odoo 18 l'XMLID previsto è account.IDCOMPAGNIA_XMLID.
+        # Handling of Odoo standard journals created by account.chart.template
+        # In Odoo 18 standard journals are sale, purchase, general, exch,
+        # caba, bank, cash, stj. During the installation of l10n_it,
+        # if they already exist, the installer tries to recognize them via XMLID.
+        # In Odoo 18 the expected XMLID is account.COMPANYID_XMLID.
         journals_to_fix = [
             {"xml_id": "sale", "type": "sale", "codes": ["FATT", "INV"]},
             {"xml_id": "purchase", "type": "purchase", "codes": ["ACQ", "BILL"]},
@@ -125,7 +135,7 @@ class AccountChartTemplate(models.AbstractModel):
 
         for company in self.env["res.company"].search([]):
             for j_conf in journals_to_fix:
-                # Cerchiamo un journal esistente per codice o per tipo
+                # Search for an existing journal by code or type
                 journal = self.env["account.journal"].search(
                     [
                         ("code", "in", j_conf["codes"]),
@@ -143,6 +153,13 @@ class AccountChartTemplate(models.AbstractModel):
                         limit=1,
                     )
 
+                if not journal:
+                    _logger.info(
+                        f"Journal not found for {j_conf['type']} in company "
+                        f"{company.name}"
+                    )
+                    continue
+
                 if journal:
                     xml_id_name = f"{company.id}_{j_conf['xml_id']}"
                     full_xml_id = f"account.{xml_id_name}"
@@ -150,7 +167,7 @@ class AccountChartTemplate(models.AbstractModel):
 
                     if not existing_xmlid:
                         _logger.info(
-                            "Assegnazione XMLID %s al journal %s (tipo: %s)",
+                            "Assigning XMLID %s to journal %s (type: %s)",
                             full_xml_id,
                             journal.name,
                             j_conf["type"],
