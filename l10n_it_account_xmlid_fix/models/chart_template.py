@@ -14,7 +14,7 @@ class AccountChartTemplate(models.AbstractModel):
         self._pre_install_l10n_it_fix_xmlids()
         return super()._load(template_code, company, install_demo, force_create)
 
-    def _pre_install_l10n_it_fix_xmlids(self):
+    def _pre_install_l10n_it_fix_xmlids(self):  # noqa: C901
         """
         Search for existing records (account, tax, group, fiscal position)
         and assign them the xmlid defined in l10n_it to avoid duplicates.
@@ -74,6 +74,8 @@ class AccountChartTemplate(models.AbstractModel):
                             continue
 
                         # Search for the record by the specified field
+                        if config["model"] == "account.account":
+                            search_value = search_value + "00"
                         record = self.env[config["model"]].search(
                             [(config["search_field"], "=", search_value)], limit=1
                         )
@@ -81,7 +83,7 @@ class AccountChartTemplate(models.AbstractModel):
                         if not record:
                             _logger.info(
                                 f"No record found for search value {search_value} in "
-                                f"company {company.name}"
+                                f"{config['model']} in company {company.name}"
                             )
                             continue
 
@@ -130,7 +132,7 @@ class AccountChartTemplate(models.AbstractModel):
             {"xml_id": "caba", "type": "general", "codes": ["CABA"]},
             {"xml_id": "bank", "type": "bank", "codes": ["BNK4", "BANK"]},
             {"xml_id": "cash", "type": "cash", "codes": ["CSH1", "CASH"]},
-            {"xml_id": "stj", "type": "general", "codes": ["STJ"]},
+            {"xml_id": "inventory_valuation", "type": "general", "codes": ["STJ"]},
         ]
 
         for company in self.env["res.company"].search([]):
