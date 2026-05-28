@@ -1,0 +1,267 @@
+{
+  "name": "Estrai testo da bottone in Odoo",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "272baf5e-168c-4bc7-bf5a-1ddf4ff85225",
+              "leftValue": "={{ $json.datas }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        272,
+        256
+      ],
+      "id": "d7af66f5-678f-485e-b2c0-06aaa851b82a",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "id": "0055884a-9878-4eba-82fd-1402bd71b885",
+      "name": "End",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        512,
+        496
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mistralAi",
+      "typeVersion": 1,
+      "position": [
+        720,
+        16
+      ],
+      "id": "a050d56a-81b1-4248-a123-04fed9a17dc4",
+      "name": "Extract text",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "q9xEjZhfT7lxLMJi",
+          "name": "Mistral Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "datas",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        528,
+        32
+      ],
+      "id": "2539b043-7fac-41b1-a992-bf3b0c2c1573",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "sale.order",
+        "operation": "get",
+        "customResourceId": "={{ $json.body.sale_order_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "34299df0-68a9-4b2e-b896-09072f028e18",
+      "name": "Get sale order",
+      "credentials": {
+        "odooApi": {
+          "id": "GDtQocU5PglxzfvO",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "ir.attachment",
+        "operation": "get",
+        "customResourceId": "={{ $json.attachment_to_check_id[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        48,
+        256
+      ],
+      "id": "7943fa0c-1705-456a-b5e5-979bf0454e96",
+      "name": "Get attachments from sale order",
+      "executeOnce": false,
+      "credentials": {
+        "odooApi": {
+          "id": "GDtQocU5PglxzfvO",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        608,
+        272
+      ],
+      "id": "985aa9c2-ed7f-4106-b5ac-c2e59c6ec822",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "read-attachment",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "481de63a-83f4-492a-a365-88e4b7144b59",
+      "name": "read-attachment",
+      "webhookId": "83f0d916-200b-4cd6-8fce-0154c4c8583e",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "M5WZLNYW2wocOooZ",
+          "name": "Header Auth account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "End",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Extract text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract text": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get sale order": {
+      "main": [
+        [
+          {
+            "node": "Get attachments from sale order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get attachments from sale order": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "read-attachment": {
+      "main": [
+        [
+          {
+            "node": "Get sale order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        [
+          {
+            "node": "End",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "03816d9a-7e5f-4f95-bbdd-bffd1333ea63",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2284f7efb77dcf616ec45a1780bb3e74fcc5d3a3b2982aed35204ad2e6dc6e58"
+  },
+  "id": "O2PsldoZ7DIQWfVS",
+  "tags": []
+}
