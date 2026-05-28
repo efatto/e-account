@@ -31,7 +31,12 @@ class SaleOrder(models.Model):
             ):
                 found_product_codes.append(product_code)
         customer_product_codes = self.env["product.customerinfo"].search_read(
-            [("name", "=", self.partner_id.id), "|", ("product_code", "!=", False), ("product_name", "!=", False)],
+            [
+                ("name", "=", self.partner_id.id),
+                "|",
+                ("product_code", "!=", False),
+                ("product_name", "!=", False),
+            ],
             ["product_code", "product_name", "product_id", "product_tmpl_id"],
         )
         if customer_product_codes:
