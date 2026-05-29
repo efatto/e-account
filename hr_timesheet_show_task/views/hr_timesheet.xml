@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="hr_timesheet_line_tree" model="ir.ui.view">
-        <field name="name">account.analytic.line.tree.hr_timesheet.task</field>
+        <field name="name">account.analytic.line.list.hr_timesheet.task</field>
         <field name="model">account.analytic.line</field>
         <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree" />
         <field name="arch" type="xml">
@@ -13,5 +12,4 @@
             </field>
         </field>
     </record>
-
 </odoo>
