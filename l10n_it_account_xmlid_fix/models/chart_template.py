@@ -63,6 +63,8 @@ class AccountChartTemplate(models.AbstractModel):
                 with csv_path.open(encoding="utf-8") as f:
                     reader = csv.DictReader(f)
                     for row in reader:
+                        if not row.get("id"):
+                            continue
                         xml_id = f"{company.id}_{row.get('id')}"
                         search_value = row.get(config["csv_field"])
 
@@ -77,7 +79,11 @@ class AccountChartTemplate(models.AbstractModel):
                         if config["model"] == "account.account":
                             search_value = search_value + "00"
                         record = self.env[config["model"]].search(
-                            [(config["search_field"], "=", search_value)], limit=1
+                            [
+                                (config["search_field"], "=", search_value),
+                                ("company_id", "=", company.id),
+                            ],
+                            limit=1,
                         )
 
                         if not record:
