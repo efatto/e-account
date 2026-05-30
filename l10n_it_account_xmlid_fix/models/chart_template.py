@@ -31,24 +31,28 @@ class AccountChartTemplate(models.AbstractModel):
                 "model": "account.account",
                 "search_field": "code",
                 "csv_field": "code",
+                "company_id": "company_ids",
             },
             {
                 "file": "account.tax-it.csv",
                 "model": "account.tax",
                 "search_field": "name",
                 "csv_field": "name",
+                "company_id": "company_id",
             },
             {
                 "file": "account.tax.group-it.csv",
                 "model": "account.tax.group",
                 "search_field": "name",
                 "csv_field": "name",
+                "company_id": "company_id",
             },
             {
                 "file": "account.fiscal.position-it.csv",
                 "model": "account.fiscal.position",
                 "search_field": "name",
                 "csv_field": "name",
+                "company_id": "company_id",
             },
         ]
 
@@ -78,15 +82,12 @@ class AccountChartTemplate(models.AbstractModel):
                         # Search for the record by the specified field
                         if config["model"] == "account.account":
                             search_value = search_value + "00"
-                        record = (
-                            self.env[config["model"]]
-                            .with_company(company.id)
-                            .search(
-                                [
-                                    (config["search_field"], "=", search_value),
-                                ],
-                                limit=1,
-                            )
+                        record = self.env[config["model"]].search(
+                            [
+                                (config["search_field"], "=", search_value),
+                                (config["company_id"], "in", company.ids),
+                            ],
+                            limit=1,
                         )
 
                         if not record:
