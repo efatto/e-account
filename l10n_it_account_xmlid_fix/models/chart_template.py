@@ -78,12 +78,15 @@ class AccountChartTemplate(models.AbstractModel):
                         # Search for the record by the specified field
                         if config["model"] == "account.account":
                             search_value = search_value + "00"
-                        record = self.env[config["model"]].search(
-                            [
-                                (config["search_field"], "=", search_value),
-                                ("company_id", "=", company.id),
-                            ],
-                            limit=1,
+                        record = (
+                            self.env[config["model"]]
+                            .with_company(company.id)
+                            .search(
+                                [
+                                    (config["search_field"], "=", search_value),
+                                ],
+                                limit=1,
+                            )
                         )
 
                         if not record:
@@ -141,10 +144,11 @@ class AccountChartTemplate(models.AbstractModel):
             {"xml_id": "inventory_valuation", "type": "general", "codes": ["STJ"]},
         ]
 
+        journal_obj = self.env["account.journal"]
         for company in self.env["res.company"].search([]):
             for j_conf in journals_to_fix:
                 # Search for an existing journal by code or type
-                journal = self.env["account.journal"].search(
+                journal = journal_obj.search(
                     [
                         ("code", "in", j_conf["codes"]),
                         ("company_id", "=", company.id),
@@ -153,7 +157,7 @@ class AccountChartTemplate(models.AbstractModel):
                 )
 
                 if not journal:
-                    journal = self.env["account.journal"].search(
+                    journal = journal_obj.search(
                         [
                             ("type", "=", j_conf["type"]),
                             ("company_id", "=", company.id),
