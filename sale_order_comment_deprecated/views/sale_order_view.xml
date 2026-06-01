@@ -1,25 +1,23 @@
 <odoo>
-
     <record model="ir.ui.view" id="sale_order_form_add_old_comment">
-      <field name="name">sale_order_old_comment.sale.order.form</field>
-      <field name="model">sale.order</field>
-      <field name="inherit_id" ref="sale.view_order_form" />
-      <field name="arch" type="xml">
-        <xpath expr="//notebook/page[@name='comments']" position="inside">
-            <group>
-                <field name="note1" groups="base.group_no_one"/>
-                <field name="note2" groups="base.group_no_one"/>
-            </group>
-        </xpath>
-        <xpath
+        <field name="name">sale_order_old_comment.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='comments']" position="inside">
+                <group>
+                    <field name="note1" groups="base.group_no_one" />
+                    <field name="note2" groups="base.group_no_one" />
+                </group>
+            </xpath>
+            <xpath
                 expr="/form/sheet/notebook/page/field/form/field[@name='name']"
                 position="after"
             >
-              <group groups="base.group_no_one">
-                  <field name="formatted_note" colspan="4" />
-              </group>
-        </xpath>
-      </field>
+                <group groups="base.group_no_one">
+                    <field name="formatted_note" colspan="4" />
+                </group>
+            </xpath>
+        </field>
     </record>
-
 </odoo>
