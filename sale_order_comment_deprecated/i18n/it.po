@@ -17,8 +17,8 @@ msgstr ""
 
 #. module: sale_order_comment_deprecated
 #: model:ir.model.fields,field_description:sale_order_comment_deprecated.field_sale_order__note2
-msgid "Bottom Comment"
-msgstr "Nota superiore"
+msgid "Bottom Comment (readonly as deprecated)"
+msgstr "Nota superiore (in sola lettura perché deprecato)"
 
 #. module: sale_order_comment_deprecated
 #: model_terms:ir.ui.view,arch_db:sale_order_comment_deprecated.sale_order_form_add_old_comment
@@ -33,8 +33,8 @@ msgstr "Nome visualizzato"
 
 #. module: sale_order_comment_deprecated
 #: model:ir.model.fields,field_description:sale_order_comment_deprecated.field_sale_order_line__formatted_note
-msgid "Formatted Note"
-msgstr "Nota formattata"
+msgid "Formatted Note (readonly as deprecated)"
+msgstr "Nota formattata (in sola lettura perché deprecato)"
 
 #. module: sale_order_comment_deprecated
 #: model:ir.model.fields,field_description:sale_order_comment_deprecated.field_sale_order__id
@@ -60,5 +60,5 @@ msgstr "Riga ordine di vendita"
 
 #. module: sale_order_comment_deprecated
 #: model:ir.model.fields,field_description:sale_order_comment_deprecated.field_sale_order__note1
-msgid "Top Comment"
-msgstr "Nota inferiore"
+msgid "Top Comment (readonly as deprecated)"
+msgstr "Nota inferiore (in sola lettura perché deprecato)"
