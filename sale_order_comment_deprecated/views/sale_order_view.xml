@@ -5,11 +5,11 @@
       <field name="model">sale.order</field>
       <field name="inherit_id" ref="sale.view_order_form" />
       <field name="arch" type="xml">
-        <xpath expr="//notebook" position="inside">
-          <page string="Comments" name="comments" groups="base.group_no_one">
-              <field name="note1" nolabel="1" colspan="2" />
-              <field name="note2" nolabel="1" colspan="2" />
-          </page>
+        <xpath expr="//notebook/page[@name='comments']" position="inside">
+            <group>
+                <field name="note1" groups="base.group_no_one"/>
+                <field name="note2" groups="base.group_no_one"/>
+            </group>
         </xpath>
         <xpath
                 expr="/form/sheet/notebook/page/field/form/field[@name='name']"
