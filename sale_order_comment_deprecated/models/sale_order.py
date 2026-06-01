@@ -15,4 +15,5 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     formatted_note = fields.Html(
-        "Formatted Note (readonly as deprecated)", readonly=True)
+        "Formatted Note (readonly as deprecated)", readonly=True
+    )
