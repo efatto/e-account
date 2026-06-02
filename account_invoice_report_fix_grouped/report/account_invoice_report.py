@@ -8,8 +8,12 @@ class AccountInvoiceReport(models.Model):
     @api.model
     def _from(self) -> SQL:
         return SQL(
-            f"{super()._from()} LEFT JOIN account_move_line_account_tax_rel aml_atr "
-            "ON line.id = aml_atr.account_move_line_id "
+            """
+                %s
+                LEFT JOIN account_move_line_account_tax_rel aml_atr
+                ON line.id = aml_atr.account_move_line_id
+            """,
+            super()._from(),
         )
 
     @api.model
