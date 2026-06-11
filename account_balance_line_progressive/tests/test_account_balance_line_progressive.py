@@ -96,9 +96,36 @@ class TestAccountBalanceProgressive(common.TransactionCase):
             ).balance_progressive,
             5,
         )
+        # Test multiple lines in the same day: both should have the daily final balance
+        move3 = self.create_move(date, debit=10, credit=0, number=4)
+        move3.action_post()
+
+        # Trigger recompute for both lines in the same day
+        lines_to_recompute = (move2.line_ids + move3.line_ids).filtered(
+            lambda x: x.account_id == self.account
+        )
+        self.env["account.move.line"].invalidate_cache(
+            ["balance_progressive"], lines_to_recompute.ids
+        )
+
+        # The balance was 5. We added 10. Total 15.
+        # Both move2 and move3 should show the same daily final balance (15).
+        self.assertAlmostEqual(
+            move3.line_ids.filtered(
+                lambda x: x.account_id == self.account
+            ).balance_progressive,
+            15,
+        )
+        self.assertAlmostEqual(
+            move2.line_ids.filtered(
+                lambda x: x.account_id == self.account
+            ).balance_progressive,
+            15,
+        )
+
         self.assertAlmostEqual(
             move2.line_ids.filtered(
                 lambda x: x.account_id == self.account_expenses
             ).balance_progressive,
-            -5,
+            -15,
         )

@@ -12,15 +12,16 @@ class AccountMoveLine(models.Model):
         tables, where_clause, where_params = self.with_context(
             initial_bal=True
         )._query_get()
+        # Ensure we are using the correct context for all lines to be computed
         where_params = [tuple(self.ids)] + where_params
         query = """SELECT l1.id AS line_id,
             COALESCE(SUM(l2.debit-l2.credit), 0) AS balance,
-            CASE WHEN l1.currency_id <> l1.company_currency_id
+            SUM(CASE WHEN l1.currency_id <> l1.company_currency_id
                     AND l2.currency_id <> l2.company_currency_id
                     AND l1.currency_id = l2.currency_id
-                THEN COALESCE(SUM(l2.amount_currency), 0)
+                THEN l2.amount_currency
                 ELSE 0
-                END
+                END)
                 AS balance_currency
             FROM account_move_line l1
             LEFT JOIN account_account a
@@ -37,9 +38,7 @@ class AccountMoveLine(models.Model):
                     )
                )
             AND (
-                 l2.date < l1.date
-                 OR (l2.date = l1.date AND l1.debit >=0)
-                 OR (l2.date = l1.date AND l2.id <= l1.id)
+                 l2.date <= l1.date
             )
             JOIN account_move m1 on (m1.id = l2.move_id AND m1.state <> 'draft')
             WHERE l1.id IN %s """
@@ -48,24 +47,21 @@ class AccountMoveLine(models.Model):
             where_clause = where_clause.replace("account_move_line", "l1")
             query += where_clause
         query += (
-            " GROUP BY l1.id, l1.currency_id, l1.company_currency_id,"
-            " l2.currency_id, l2.company_currency_id"
+            " GROUP BY l1.id, l1.currency_id, l1.company_currency_id"
         )
         self._cr.execute(query, where_params)
         result = self._cr.fetchall()
-        if result:
-            lines_not_in_result = [
-                x for x in self if x.id not in [y[0] for y in result]
-            ]
-            for line_id, balance, balance_currency in result:
-                line = self.browse(line_id)
-                line.balance_progressive = balance
-                line.balance_progressive_currency = balance_currency
-        else:
-            lines_not_in_result = self
-        for line_not_in_result in lines_not_in_result:
-            line_not_in_result.balance_progressive = 0
-            line_not_in_result.balance_progressive_currency = 0
+        for line_id, balance, balance_currency in result:
+            line = self.browse(line_id)
+            line.balance_progressive = balance
+            line.balance_progressive_currency = balance_currency
+
+        # Reset lines not in result (though with the current query they should be there)
+        ids_in_result = [y[0] for y in result]
+        for line in self:
+            if line.id not in ids_in_result:
+                line.balance_progressive = 0
+                line.balance_progressive_currency = 0
 
     balance_progressive = fields.Monetary(
         compute="_compute_balance_progressive",
