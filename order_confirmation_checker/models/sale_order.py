@@ -29,6 +29,7 @@ class SaleOrder(models.Model):
                 len(product_code["default_code"]) > 2
                 and product_code["default_code"] in content
             ):
+                product_code["customer_code"] = ""
                 found_product_codes.append(product_code)
         customer_product_codes = self.env["product.customerinfo"].search_read(
             [
@@ -66,20 +67,43 @@ class SaleOrder(models.Model):
                             {
                                 "default_code": product.default_code,
                                 "id": product.id,
+                                "customer_code": customer_product_code.get(
+                                    "product_code"
+                                ),
                             }
                         )
+        # sort by length of codes to help n8n matching (complex to simple)
+        found_product_codes.sort(
+            key=lambda x: max(
+                len(x.get("default_code") or ""), len(x.get("customer_code") or "")
+            ),
+            reverse=True,
+        )
         return found_product_codes
 
     def _create_order_lines(self, values_dict):
         current_so_lines = self.order_line
         logger.info(f"N8N connector: importing from n8n values_dict: {values_dict}")
         if isinstance(values_dict, dict):
+            order_date = False
+            client_order_ref = False
+            if values_dict.get("order_date"):
+                try:
+                    order_date = fields.Date.from_string(values_dict["order_date"])
+                except ValueError:
+                    order_date = False
+            if values_dict.get("client_order_ref"):
+                client_order_ref = values_dict["client_order_ref"]
             if values_dict.get("orders"):
                 orders = values_dict["orders"]
                 for order in orders:
                     if order.get("order_id") and order.get("order_lines"):
                         assert self.id == int(order.get("order_id"))
                         sale_order = self
+                        if order_date:
+                            sale_order.date_order = order_date
+                        if client_order_ref:
+                            sale_order.client_order_ref = client_order_ref
                         if order.get("delivery_date"):
                             sale_order.commitment_date = fields.Date.from_string(
                                 order.get("delivery_date")

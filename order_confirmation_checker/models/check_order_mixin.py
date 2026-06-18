@@ -181,6 +181,8 @@ class CheckOrderMixinParent(models.AbstractModel):
         else:
             odoo_webhook = self._compute_n8n_url("insert-so-rows")
             params = {
+                "company_id": self.company_id.id,
+                "company_name": self.company_id.name,
                 "sale_order_id": self.id,
                 "data": json.dumps(data),
                 "extracted_text": extracted_text,
