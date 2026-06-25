@@ -100,3 +100,16 @@ class TestAccountBalanceProgressive(TransactionCase):
             ).balance_progressive,
             -5,
         )
+
+    def test_multi_lines_same_date(self):
+        date = fields.Date.today()
+        move1 = self.create_move(date, debit=100, credit=0, number=10)
+        move1.action_post()
+        move2 = self.create_move(date, debit=0, credit=30, number=11)
+        move2.action_post()
+
+        line1 = move1.line_ids.filtered(lambda x: x.account_id == self.account)
+        line2 = move2.line_ids.filtered(lambda x: x.account_id == self.account)
+
+        # in the same date the progressive balance must be the same
+        self.assertEqual(line1.balance_progressive, line2.balance_progressive)
