@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <odoo>
     <record id="hr_timesheet.timesheet_action_all" model="ir.actions.act_window">
-        <field name="view_mode">tree,form,calendar,pivot,kanban</field>
+        <field name="view_mode">list,form,calendar,pivot,kanban</field>
     </record>
 
     <record id="timesheet_action_calendar" model="ir.ui.view">
