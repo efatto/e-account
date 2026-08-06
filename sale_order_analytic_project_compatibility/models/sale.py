@@ -30,12 +30,12 @@ class SaleOrder(models.Model):
             if len(project_ids) == 1:
                 self.project_id = project_ids[0]
 
-    @api.constrains("project_id", "analytic_account_id")
-    def _check_project_analytic_account(self):
-        if (
-            self.project_id
-            and self.project_id.task_ids
-            and self.project_id.analytic_account_id
-            and self.analytic_account_id
-        ):
-            assert self.project_id.analytic_account_id == self.analytic_account_id
+    # @api.constrains("project_id", "analytic_account_id")
+    # def _check_project_analytic_account(self):
+    #     if (
+    #         self.project_id
+    #         and self.project_id.task_ids
+    #         and self.project_id.analytic_account_id
+    #         and self.analytic_account_id
+    #     ):
+    #         assert self.project_id.analytic_account_id == self.analytic_account_id
