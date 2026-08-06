@@ -12,7 +12,10 @@ class SaleOrder(models.Model):
             and self.analytic_account_id
         ):
             if self.project_id.analytic_account_id != self.analytic_account_id:
-                if self.state in ("draft", "sent"):
+                if (
+                    self.state in ("draft", "sent")
+                    or not self.analytic_account_id.project_ids
+                ):
                     self.project_id = False
                 else:
                     # set the first project of the analytic account as it is not
