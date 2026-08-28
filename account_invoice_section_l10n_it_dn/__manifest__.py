@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Acccount Invoice Section DDT and Sale Order",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "summary": "Extension of Acccount Invoice Section Sale Order to allow "
     "grouping of invoice lines according to DDT and Sale Order.",
     "author": "Sergio Corato",
@@ -14,4 +14,5 @@
         "l10n_it_delivery_note",
         "stock",
     ],
+    "installable": True,
 }
