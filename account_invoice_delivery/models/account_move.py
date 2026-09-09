@@ -5,8 +5,6 @@
 
 from odoo import _, api, fields, models
 
-from ..utils import get_bool_param
-
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -39,10 +37,7 @@ class AccountMove(models.Model):
             self.with_context(
                 auto_refresh_delivery=True,
             )._remove_delivery_line()
-        if (
-            get_bool_param(self.env, "auto_add_delivery_line")
-            and self.delivery_carrier_id
-        ):
+        if self.company_id.sale_auto_add_delivery_line and self.delivery_carrier_id:
             price_unit = self.rate_shipment(self.delivery_carrier_id)["price"]
             if not self.is_all_service:
                 self._create_delivery_line(self.delivery_carrier_id, price_unit)
@@ -52,13 +47,12 @@ class AccountMove(models.Model):
         """Create or refresh delivery line on create of customer invoices/refund."""
         # todo pass is_delivery field from sale.order.line to account.move.line created
         invoice = super().create(vals)
-        if invoice.move_type.startswith("out_"):
+        if invoice.is_sale_document():
             invoice._auto_refresh_delivery()
+            container = {"records": invoice, "self": invoice}
             invoice.with_context(
                 auto_refresh_delivery=True, check_move_validity=False
-            )._recompute_dynamic_lines(
-                recompute_all_taxes=True, recompute_tax_base_amount=True
-            )
+            )._sync_dynamic_lines(container=container)
         return invoice
 
     def write(self, vals):
@@ -77,17 +71,16 @@ class AccountMove(models.Model):
         if deleting_delivery_line:
             self = self.with_context(deleting_delivery_line=deleting_delivery_line)
         res = super().write(vals)
-        if get_bool_param(self.env, "auto_add_delivery_line"):
+        if self.company_id.sale_auto_add_delivery_line:
             for invoice in self.filtered(lambda x: x.state == "draft"):
                 delivery_line = invoice.invoice_line_ids.filtered("is_delivery")
                 invoice.with_context(
                     delivery_discount=delivery_line[-1:].discount,
                 )._auto_refresh_delivery()
+                container = {"records": invoice, "self": invoice}
                 invoice.with_context(
                     auto_refresh_delivery=True, check_move_validity=False
-                )._recompute_dynamic_lines(
-                    recompute_all_taxes=True, recompute_tax_base_amount=True
-                )
+                )._sync_dynamic_lines(container=container)
         return res
 
     def _compute_amount_total_without_delivery(self):
@@ -110,8 +103,8 @@ class AccountMove(models.Model):
                        # TODO maybe the currency code?
         """
         self.ensure_one()
-        if hasattr(carrier, "%s_rate_shipment" % carrier.delivery_type):
-            res = getattr(carrier, "%s_rate_shipment" % carrier.delivery_type)(self)
+        if hasattr(carrier, f"{carrier.delivery_type}_rate_shipment"):
+            res = getattr(carrier, f"{carrier.delivery_type}_rate_shipment")(self)
             # apply fiscal position
             company = carrier.company_id or self.company_id or self.env.company
             res["price"] = carrier.product_id._get_tax_included_unit_price(
@@ -134,10 +127,18 @@ class AccountMove(models.Model):
                 and self._compute_amount_total_without_delivery() >= carrier.amount
             ):
                 res["warning_message"] = _(
-                    "The shipping is free since the order amount exceeds %.2f."
-                ) % (carrier.amount)
+                    "The shipping is free since the order amount exceeds %(amount).2f.",
+                    amount=carrier.amount,
+                )
                 res["price"] = 0.0
             return res
+        else:
+            return {
+                "success": False,
+                "price": 0.0,
+                "error_message": _("Error: this delivery method is not available."),
+                "warning_message": False,
+            }
 
     def _create_delivery_line(self, carrier, price_unit):
         """Allow users to keep discounts to delivery lines. Unit price will
@@ -155,16 +156,11 @@ class AccountMove(models.Model):
         )
         taxes_ids = taxes.ids
         if self.partner_id and self.fiscal_position_id:
-            taxes_ids = self.fiscal_position_id.map_tax(
-                taxes, carrier.product_id, self.partner_id
-            ).ids
+            taxes_ids = self.fiscal_position_id.map_tax(taxes).ids
 
         # Create the account move line
         if carrier.product_id.description_sale:
-            so_description = "%s: %s" % (
-                carrier.name,
-                carrier.product_id.description_sale,
-            )
+            so_description = f"{carrier.name}: {carrier.product_id.description_sale}"
         else:
             so_description = carrier.name
         values = {
@@ -182,8 +178,8 @@ class AccountMove(models.Model):
         if carrier.invoice_policy == "real":
             values["price_unit"] = 0
             values["name"] += _(
-                " (Estimated Cost: %s )",
-                self.env["sale.order"]._format_currency_amount(price_unit),
+                " (Estimated Cost: %(cost)s )",
+                cost=self.env["sale.order"]._format_currency_amount(price_unit),
             )
         else:
             values["price_unit"] = price_unit

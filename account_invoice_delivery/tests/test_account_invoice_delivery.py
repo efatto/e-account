@@ -2,7 +2,9 @@
 # Copyright 2024 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests import Form, common, tagged
+from odoo.tests import Form, tagged
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 def _execute_onchanges(records, field_name):
@@ -13,16 +15,16 @@ def _execute_onchanges(records, field_name):
 
 
 @tagged("post_install", "-at_install")
-class TestDeliveryAutoRefresh(common.SavepointCase):
+class TestDeliveryAutoRefresh(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.revenue_account = cls.env["account.account"].create(
             {
-                "code": "TEST_REVENUE",
+                "code": "TEST.REVENUE",
                 "name": "Sale revenue",
-                "user_type_id": cls.env.ref("account.data_account_type_revenue").id,
+                "account_type": "income",
             }
         )
         service = cls.env["product.product"].create(
@@ -99,8 +101,8 @@ class TestDeliveryAutoRefresh(common.SavepointCase):
     @staticmethod
     def _create_invoice_from_so(order):
         picking = order.picking_ids[0]
-        for ml in picking.move_lines:
-            ml.quantity_done = ml.product_qty
+        for ml in picking.move_ids:
+            ml.quantity = ml.product_qty
         picking._action_done()
         order._create_invoices()
         invoice = order.invoice_ids[0]
