@@ -9,8 +9,8 @@ class StockQuantPackage(models.Model):
             "product.template"
         ]._get_weight_uom_id_from_ir_config_parameter()
 
-    dimensions = fields.Text(string="Dimensions")
-    weight_custom = fields.Float(string="Weight custom")
+    dimensions = fields.Text()
+    weight_custom = fields.Float()
     weight_custom_uom_id = fields.Many2one(
         comodel_name="uom.uom",
         string="Weight unit of measure",
