@@ -5,5 +5,6 @@ Questo modulo automatizza la riga di consegna in fattura.
   per distinguerle dalla righe normali.
 - Se si cambia una qualsiasi riga fattura, salvando, il prezzo della
   consegna verrà aggiornato.
-- Se impostato nel parametro di sistema, la riga della consegna sarà
-  auto-aggiunta alla creazione/salvataggio.
+- Se abilitato nelle impostazioni Spedizione della società, la riga della
+  consegna sarà aggiunta o aggiornata alla creazione/salvataggio delle
+  fatture cliente in bozza, mantenendo sconti e collegamenti agli ordini.
