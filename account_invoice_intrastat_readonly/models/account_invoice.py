@@ -9,8 +9,10 @@ class AccountInvoice(models.Model):
     def onchange_instrastat(self):
         if (
             self.move_type.startswith("out_")
+            and hasattr(self.fiscal_position_id, "intrastat_sale")
             and self.fiscal_position_id.intrastat_sale != self.intrastat
             or self.move_type.startswith("in_")
+            and hasattr(self.fiscal_position_id, "intrastat_purchase")
             and self.fiscal_position_id.intrastat_purchase != self.intrastat
         ):
             raise ValidationError(
