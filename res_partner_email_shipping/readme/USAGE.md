@@ -1,11 +1,9 @@
 È possibile aggiungere una mail per contatto spedizione nel partner
 
-.. image:: ../static/description/email.png
-    :alt: Email
+![Email](../static/description/email.png)
 
 e un eventuale modello di email:
 
-.. image:: ../static/description/modello_email.png
-    :alt: Modello email
+![Modello email](../static/description/modello_email.png)
 
 Questi campi sono utili se vengono installati dei moduli aggiuntivi.
