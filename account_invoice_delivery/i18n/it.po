@@ -17,8 +17,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_invoice_delivery
-#: model:ir.model.fields,field_description:account_invoice_delivery.field_account_bank_statement_line__delivery_carrier_id
-#: model:ir.model.fields,field_description:account_invoice_delivery.field_account_move__delivery_carrier_id
+#: model:ir.model.fields,field_description:account_invoice_delivery.field_account_bank_statement_line__delivery_method_id
+#: model:ir.model.fields,field_description:account_invoice_delivery.field_account_move__delivery_method_id
 msgid "Delivery Method"
 msgstr "Metodo di consegna"
 
