@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="invoice_form_send_shipping_email" model="ir.ui.view">
         <field name="name">account.invoice.form.shippin.email</field>
         <field name="model">account.move</field>
@@ -54,5 +53,4 @@
             </field>
         </field>
     </record>
-
 </odoo>

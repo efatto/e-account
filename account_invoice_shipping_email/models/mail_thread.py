@@ -29,6 +29,6 @@ class MailThread(models.AbstractModel):
             message=message,
             msg_vals=msg_vals,
             notify_by_email=notify_by_email,
-            **kwargs
+            **kwargs,
         )
         return res
