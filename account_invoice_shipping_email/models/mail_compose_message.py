@@ -16,4 +16,4 @@ class MailComposeMessage(models.TransientModel):
                     "shipping_email_date": fields.Datetime.now(),
                 }
             )
-        return super(MailComposeMessage, self).send_mail(auto_commit=auto_commit)
+        return super().send_mail(auto_commit=auto_commit)

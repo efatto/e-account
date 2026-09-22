@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===============================
 Send shipping mail from invoice
 ===============================
@@ -17,16 +13,17 @@ Send shipping mail from invoice
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-efatto%2Fe--account-lightgray.png?logo=github
-    :target: https://github.com/efatto/e-account/tree/14.0/account_invoice_shipping_email
+    :target: https://github.com/efatto/e-account/tree/18.0/account_invoice_shipping_email
     :alt: efatto/e-account
 
 |badge1| |badge2| |badge3|
 
-This module add a button to send a mail to organize shipping and trace it.
+This module add a button to send a mail to organize shipping and trace
+it.
 
 **Table of contents**
 
@@ -36,40 +33,47 @@ This module add a button to send a mail to organize shipping and trace it.
 Usage
 =====
 
-Usare il bottone *Contatta per spedizione* nella fattura per inviare una mail di avviso:
+Usare il bottone *Contatta per spedizione* nella fattura per inviare una
+mail di avviso:
 
-.. image:: https://raw.githubusercontent.com/efatto/e-account/14.0/account_invoice_shipping_email/static/description/contatta.png
-    :alt: Contatta per spedizione
+|Contatta per spedizione|
 
 che è visibile quanto lo stato dell'avviso è *Non inviata*:
 
-.. image:: https://raw.githubusercontent.com/efatto/e-account/14.0/account_invoice_shipping_email/static/description/stato_non_inviata.png
-    :alt: Stato non inviata
+|Stato non inviata|
 
-Nel caso nell'indirizzo di consegna scelto in fattura oppure nel cliente sia impostato un modello di mail per l'avviso di merce pronta, sarà utilizzato in automatico:
+Nel caso nell'indirizzo di consegna scelto in fattura oppure nel cliente
+sia impostato un modello di mail per l'avviso di merce pronta, sarà
+utilizzato in automatico:
 
-.. image:: https://raw.githubusercontent.com/efatto/e-account/14.0/account_invoice_shipping_email/static/description/email.png
-    :alt: Email
+|Email|
 
-A seguito dell'invio, lo stato del contatto per la spedizione sarà *In attesa di conferma corriere/ritiro*:
+A seguito dell'invio, lo stato del contatto per la spedizione sarà *In
+attesa di conferma corriere/ritiro*:
 
-.. image:: https://raw.githubusercontent.com/efatto/e-account/14.0/account_invoice_shipping_email/static/description/stato_attesa.png
-    :alt: In attesa di conferma corriere/ritiro
+|In attesa di conferma corriere/ritiro|
 
-E si potrà usare il bottone per confermare che la spedizione è stata organizzata:
+E si potrà usare il bottone per confermare che la spedizione è stata
+organizzata:
 
-.. image:: https://raw.githubusercontent.com/efatto/e-account/14.0/account_invoice_shipping_email/static/description/conferma.png
-    :alt: Conferma spedizione
+|Conferma spedizione|
 
 Lo stato passerà quindi in *Spedizione confermata*:
 
-.. image:: https://raw.githubusercontent.com/efatto/e-account/14.0/account_invoice_shipping_email/static/description/stato_confermata.png
-    :alt: Spedizione confermata
+|Spedizione confermata|
 
-Si potrà nel mentre raggruppare o filtrare le fatture per controllare lo *Stato spedizione*:
+Si potrà nel mentre raggruppare o filtrare le fatture per controllare lo
+*Stato spedizione*:
 
-.. image:: https://raw.githubusercontent.com/efatto/e-account/14.0/account_invoice_shipping_email/static/description/filtra_raggruppa.png
-    :alt: Filtra o raggruppa
+|Filtra o raggruppa|
+
+.. |Contatta per spedizione| image:: https://raw.githubusercontent.com/efatto/e-account/18.0/account_invoice_shipping_email/static/description/contatta.png
+.. |Stato non inviata| image:: https://raw.githubusercontent.com/efatto/e-account/18.0/account_invoice_shipping_email/static/description/stato_non_inviata.png
+.. |Email| image:: https://raw.githubusercontent.com/efatto/e-account/18.0/account_invoice_shipping_email/static/description/email.png
+.. |In attesa di conferma corriere/ritiro| image:: https://raw.githubusercontent.com/efatto/e-account/18.0/account_invoice_shipping_email/static/description/stato_attesa.png
+.. |Conferma spedizione| image:: https://raw.githubusercontent.com/efatto/e-account/18.0/account_invoice_shipping_email/static/description/conferma.png
+.. |Spedizione confermata| image:: https://raw.githubusercontent.com/efatto/e-account/18.0/account_invoice_shipping_email/static/description/stato_confermata.png
+.. |Filtra o raggruppa| image:: https://raw.githubusercontent.com/efatto/e-account/18.0/account_invoice_shipping_email/static/description/filtra_raggruppa.png
 
 Bug Tracker
 ===========
@@ -77,7 +81,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/efatto/e-account/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/efatto/e-account/issues/new?body=module:%20account_invoice_shipping_email%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/efatto/e-account/issues/new?body=module:%20account_invoice_shipping_email%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -85,18 +89,18 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Sergio Corato
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Sergio Corato <https://github.com/sergiocorato>
+-  Sergio Corato <https://github.com/sergiocorato>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
-This module is part of the `efatto/e-account <https://github.com/efatto/e-account/tree/14.0/account_invoice_shipping_email>`_ project on GitHub.
+This module is part of the `efatto/e-account <https://github.com/efatto/e-account/tree/18.0/account_invoice_shipping_email>`_ project on GitHub.
 
 You are welcome to contribute.
