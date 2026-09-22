@@ -4,7 +4,7 @@ from odoo import fields, models
 class MailComposeMessage(models.TransientModel):
     _inherit = "mail.compose.message"
 
-    def send_mail(self, auto_commit=False):
+    def _action_send_mail(self, auto_commit=False):
         if (
             self._context.get("mark_shipping_email_as_sent", False)
             and self._context.get("default_model", False) == "account.move"
@@ -16,4 +16,4 @@ class MailComposeMessage(models.TransientModel):
                     "shipping_email_date": fields.Datetime.now(),
                 }
             )
-        return super().send_mail(auto_commit=auto_commit)
+        return super()._action_send_mail(auto_commit=auto_commit)

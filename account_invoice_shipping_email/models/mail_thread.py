@@ -1,34 +1,22 @@
-from odoo import models, tools
+from odoo import api, models
 
 
-class MailThread(models.AbstractModel):
-    _inherit = "mail.thread"
+class MailThreadCC(models.AbstractModel):
+    _inherit = "mail.thread.cc"
 
-    def _notify_by_email_add_values(self, base_mail_values):
-        res = super()._notify_by_email_add_values(base_mail_values=base_mail_values)
-        if self.env.context.get("default_email_cc"):
-            emails_normalized = tools.email_normalize_all(
-                self.env.context["default_email_cc"]
-            )
-            if emails_normalized:
-                res.update(
-                    {
-                        "email_cc": ",".join(emails_normalized),
-                    }
-                )
-        return res
+    @api.model
+    def message_new(self, msg_dict, custom_values=None):
+        # remove recipient added in cc
+        if self._context.get("mark_shipping_email_as_sent") and msg_dict.get("cc"):
+            msg_dict.pop("cc")
+        return super().message_new(msg_dict, custom_values=custom_values)
 
-    def _notify_thread(self, message, msg_vals=False, notify_by_email=True, **kwargs):
-        if self.env.context.get("default_email_cc"):
-            # remove recipient added in cc, to send only 1 mail
-            partners = self.env["res.partner"].browse(msg_vals["partner_ids"])
-            for partner in partners:
-                if partner.email in self.env.context.get("default_email_cc"):
-                    msg_vals["partner_ids"].remove(partner.id)
-        res = super()._notify_thread(
-            message=message,
-            msg_vals=msg_vals,
-            notify_by_email=notify_by_email,
-            **kwargs,
-        )
-        return res
+    def message_update(self, msg_dict, update_vals=None):
+        # remove recipient added in cc
+        if self._context.get("mark_shipping_email_as_sent") and msg_dict.get("cc"):
+            msg_dict.pop("cc")
+        if self._context.get("mark_shipping_email_as_sent") and update_vals.get(
+            "email_cc"
+        ):
+            update_vals.pop("email_cc")
+        return super().message_update(msg_dict, update_vals=update_vals)

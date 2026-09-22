@@ -13,9 +13,7 @@ class AccountMove(models.Model):
         string="Shipping State",
         default="no",
     )
-    shipping_email_date = fields.Datetime(
-        string="Shipping Email Date",
-    )
+    shipping_email_date = fields.Datetime()
 
     def action_send_shipping_email(self):
         self.ensure_one()
@@ -52,19 +50,21 @@ class AccountMove(models.Model):
         self.ensure_one()
         self.shipping_email_state = "confirmed"
 
-    def _notify_get_groups(self, msg_vals=None):
+    def _notify_get_recipients_groups_fillup(
+        self, groups, model_description, msg_vals=None
+    ):
         """
-        Remove access button to portal and customer if the document is a shipping mail.
+        Remove access' button to all groups if the document is shipping email.
         """
-        groups = super()._notify_get_groups(msg_vals=msg_vals)
+        groups = super()._notify_get_recipients_groups_fillup(
+            groups=groups, model_description=model_description, msg_vals=msg_vals
+        )
         if (
-            self._context.get("mark_shipping_email_as_sent", False)
-            and self._context.get("default_model", False) == "account.move"
-            and self._context.get("default_res_id", False)
+            self._context.get("mark_shipping_email_as_sent")
+            and self._context.get("default_model") == "account.move"
+            and self._context.get("default_res_id")
         ):
-            for _group_name, _group_method, group_data in groups:
-                # exclude all
-                # if group_name in ["portal", "customer"]:
-                group_data["has_button_access"] = False
+            for _group_name, _group_func, group_data in groups:
+                group_data.set_default("has_button_access", False)
 
         return groups

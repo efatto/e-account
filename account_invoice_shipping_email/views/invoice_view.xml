@@ -3,36 +3,35 @@
     <record id="invoice_form_send_shipping_email" model="ir.ui.view">
         <field name="name">account.invoice.form.shippin.email</field>
         <field name="model">account.move</field>
-        <field
-            name="inherit_id"
-            ref="account_invoice_shipping_info.invoice_form_view_shipping_info"
-        />
+        <field name="inherit_id" ref="account_invoice_shipping_info.view_move_form" />
         <field name="arch" type="xml">
-            <field name="goods_appearance_id" position="before">
-                <field name="shipping_email_state" />
-                <field name="shipping_email_date" />
-            </field>
+            <group name="shipping_info" position="inside">
+                <group name="shipping_email_info" string="Shipping Email Info">
+                    <field name="shipping_email_state" />
+                    <field name="shipping_email_date" />
+                </group>
+            </group>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button
                     name="action_send_shipping_email"
                     string="Send shipping Email"
                     type="object"
                     icon="fa-send"
-                    attrs="{'invisible': ['|', ('shipping_email_state', '!=', 'no'), ('move_type', 'not in', ['in_refund', 'out_invoice'])]}"
+                    invisible="(shipping_email_state != 'no' or move_type not in ['in_refund', 'out_invoice'])"
                 />
                 <button
                     name="action_send_shipping_email"
                     string="Re-Send shipping Email"
                     type="object"
                     icon="fa-send"
-                    attrs="{'invisible': ['|', ('shipping_email_state', '!=', 'sent'), ('move_type', 'not in', ['in_refund', 'out_invoice'])]}"
+                    invisible="(shipping_email_state != 'sent' or move_type not in ['in_refund', 'out_invoice'])"
                 />
                 <button
                     name="action_set_shipping_confirmed"
                     string="Set shipping confirmed"
                     type="object"
                     icon="fa-ship"
-                    attrs="{'invisible': ['|', ('shipping_email_state', '!=', 'sent'), ('move_type', 'not in', ['in_refund', 'out_invoice'])]}"
+                    invisible="(shipping_email_state != 'sent' or move_type not in ['in_refund', 'out_invoice'])"
                 />
             </xpath>
         </field>
@@ -42,7 +41,7 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_out_invoice_tree" />
         <field name="arch" type="xml">
-            <field name="state" position="after">
+            <field name="status_in_payment" position="after">
                 <field
                     name="shipping_email_state"
                     widget="badge"
