@@ -9,7 +9,7 @@ from odoo import Command, _, api, fields, models
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    delivery_carrier_id = fields.Many2one(
+    delivery_method_id = fields.Many2one(
         comodel_name="delivery.carrier",
         string="Delivery Method",
         check_company=True,
@@ -47,13 +47,13 @@ class AccountMove(models.Model):
         self = self.with_company(self.company_id).with_context(
             auto_refresh_delivery=True
         )
-        if not self.delivery_carrier_id or self.is_all_service:
+        if not self.delivery_method_id or self.is_all_service:
             self._remove_delivery_line()
         else:
-            price_unit = self.rate_shipment(self.delivery_carrier_id)["price"]
+            price_unit = self.rate_shipment(self.delivery_method_id)["price"]
             delivery_lines = self.invoice_line_ids.filtered("is_delivery")
             if not delivery_lines:
-                self._create_delivery_line(self.delivery_carrier_id, price_unit)
+                self._create_delivery_line(self.delivery_method_id, price_unit)
             else:
                 delivery_line = delivery_lines[:1]
                 if len(delivery_lines) > 1:
@@ -104,7 +104,7 @@ class AccountMove(models.Model):
 
     def _compute_amount_total_without_delivery(self):
         self.ensure_one()
-        use_price_untaxed = self.delivery_carrier_id.use_price_untaxed
+        use_price_untaxed = self.delivery_method_id.use_price_untaxed
         delivery_cost = sum(
             self.invoice_line_ids.filtered("is_delivery").mapped(
                 "price_subtotal" if use_price_untaxed else "price_total"
@@ -218,7 +218,7 @@ class AccountMove(models.Model):
 
     def _update_delivery_line(self, delivery_line, price_unit):
         """Refresh changed values without losing discounts or sales line links."""
-        values = self._prepare_delivery_line_vals(self.delivery_carrier_id, price_unit)
+        values = self._prepare_delivery_line_vals(self.delivery_method_id, price_unit)
         new_vals = {}
         for name, value in values.items():
             field = delivery_line._fields[name]

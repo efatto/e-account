@@ -122,7 +122,7 @@ class TestDeliveryAutoRefresh(AccountTestInvoicingCommon):
         delivery_line = self._confirm_sale_order(self.order, 3)
         self.assertTrue(delivery_line.exists())
         invoice = self._create_invoice_from_so(self.order)
-        self.assertEqual(invoice.delivery_carrier_id, self.order.carrier_id)
+        self.assertEqual(invoice.delivery_method_id, self.order.carrier_id)
         delivery_line = invoice.line_ids.filtered("is_delivery")
         self.assertTrue(delivery_line.exists())
         sale_delivery_line = self.order.order_line.filtered("is_delivery")
@@ -152,7 +152,7 @@ class TestDeliveryAutoRefresh(AccountTestInvoicingCommon):
         self.assertEqual(line_delivery.discount, 10)
         self.assertEqual(line_delivery, delivery_line)
         self.assertEqual(line_delivery.sale_line_ids, sale_delivery_line)
-        invoice.delivery_carrier_id = self.carrier_2
+        invoice.delivery_method_id = self.carrier_2
         line_delivery = invoice.invoice_line_ids.filtered("is_delivery")
         self.assertEqual(line_delivery.discount, 10)
 
@@ -202,7 +202,7 @@ class TestDeliveryAutoRefresh(AccountTestInvoicingCommon):
         )
         invoice_form.partner_id = self.partner
         invoice_form.partner_shipping_id = self.partner
-        invoice_form.delivery_carrier_id = self.carrier_1
+        invoice_form.delivery_method_id = self.carrier_1
         with invoice_form.invoice_line_ids.new() as il_form:
             il_form.product_id = service
             il_form.quantity = 2
@@ -215,7 +215,7 @@ class TestDeliveryAutoRefresh(AccountTestInvoicingCommon):
             "move_type": move_type,
             "partner_id": self.partner.id,
             "partner_shipping_id": self.partner.id,
-            "delivery_carrier_id": self.carrier_1.id,
+            "delivery_method_id": self.carrier_1.id,
             "invoice_date": fields.Date.to_date("2026-01-15"),
             "invoice_line_ids": [
                 Command.create(
@@ -265,10 +265,10 @@ class TestDeliveryAutoRefresh(AccountTestInvoicingCommon):
     def test_remove_carrier_and_last_product(self):
         self.env.company.sale_auto_add_delivery_line = True
         invoice = self._create_invoice()
-        invoice.delivery_carrier_id = False
+        invoice.delivery_method_id = False
         self.assertFalse(invoice.invoice_line_ids.filtered("is_delivery"))
         self._assert_balanced(invoice)
-        invoice.delivery_carrier_id = self.carrier_1
+        invoice.delivery_method_id = self.carrier_1
         product_line = invoice.invoice_line_ids.filtered(
             lambda line: not line.is_delivery
         )
@@ -421,7 +421,7 @@ class TestDeliveryAutoRefresh(AccountTestInvoicingCommon):
                 move_type,
                 currency_id=foreign_currency.id,
                 pricelist_id=pricelist.id,
-                delivery_carrier_id=carrier.id,
+                delivery_method_id=carrier.id,
             )
             delivery_line = invoice.invoice_line_ids.filtered("is_delivery")
             self.assertAlmostEqual(delivery_line.price_unit, 100)
@@ -497,7 +497,7 @@ class TestDeliveryAutoRefresh(AccountTestInvoicingCommon):
         orders.action_confirm()
         invoices = orders._create_invoices()
         self.assertEqual(len(invoices), 2)
-        self.assertEqual(invoices.delivery_carrier_id, self.carrier_1 | self.carrier_2)
+        self.assertEqual(invoices.delivery_method_id, self.carrier_1 | self.carrier_2)
 
     def test_company_settings_are_respected_in_batch(self):
         second_company = self.setup_other_company()["company"]
@@ -567,7 +567,7 @@ class TestDeliveryAutoRefresh(AccountTestInvoicingCommon):
             }
         )
         invoice = self._create_invoice(
-            pricelist_id=False, delivery_carrier_id=carrier.id
+            pricelist_id=False, delivery_method_id=carrier.id
         )
         self.assertEqual(
             invoice.invoice_line_ids.filtered("is_delivery").price_unit, 25

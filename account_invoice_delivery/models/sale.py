@@ -5,11 +5,11 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     def _get_invoice_grouping_keys(self):
-        return super()._get_invoice_grouping_keys() + ["delivery_carrier_id"]
+        return super()._get_invoice_grouping_keys() + ["delivery_method_id"]
 
     def _prepare_invoice(self):
         res = super()._prepare_invoice()
-        res.update(delivery_carrier_id=self.carrier_id.id)
+        res.update(delivery_method_id=self.carrier_id.id)
         return res
 
 
