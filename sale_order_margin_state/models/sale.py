@@ -11,9 +11,8 @@ class SaleOrderLine(models.Model):
         [
             ("normal", "Margin missing or over maximum"),  # grey
             ("blocked", "Margin between mininum and zero"),  # red
-            ("done", "Margin normal (between minimum and maximum)"),
-        ],  # green
-        string="Margin State",
+            ("done", "Margin normal (between minimum and maximum)"),  # green
+        ],
         compute="_compute_margin_state",
         store=True,
     )
