@@ -9,9 +9,9 @@ class SaleReport(models.Model):
     )
 
     def _select_additional_fields(self, fields):
-        fields[
-            "margin_percent_weighted"
-        ] = ", MAX(s.margin_percent * 100.0) AS margin_percent_weighted"
+        fields["margin_percent_weighted"] = (
+            ", MAX(s.margin_percent * 100.0) AS margin_percent_weighted"
+        )
         return super()._select_additional_fields(fields)
 
     @api.model
