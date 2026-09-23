@@ -41,7 +41,8 @@ class SaleOrder(models.Model):
 
 
 class SaleOrderLine(models.Model):
-    _inherit = "sale.order.line"
+    _name = "sale.order.line"
+    _inherit = ["sale.order.line", "mis.cash_flow.mixin"]
 
     cashflow_line_ids = fields.One2many(
         comodel_name="mis.cash_flow.forecast_line",
@@ -68,26 +69,6 @@ class SaleOrderLine(models.Model):
             self._refresh_cashflow_line()
         return res
 
-    def _get_account(self, account_ref):
-        chart_template = self.with_context(
-            allowed_company_ids=self.company_id.root_id.ids
-        ).env["account.chart.template"]
-        outstanding_account_id = (
-            chart_template.ref(account_ref, raise_if_not_found=False)
-            or self.env["account.account"].search(
-                [
-                    (
-                        "account_type",
-                        "=",
-                        "asset_cash",
-                    ),
-                    ("company_ids", "in", self.company_id.id),
-                ],
-                limit=1,
-            )
-        ).id
-        return outstanding_account_id
-
     def _refresh_cashflow_line(self):
         debit_account_id = self._get_account("account_journal_payment_debit_account_id")
         credit_account_id = self._get_account(
@@ -99,9 +80,9 @@ class SaleOrderLine(models.Model):
                 account_id = (
                     line.order_id.payment_mode_id.fixed_journal_id.bank_account_id.id
                 )
-            elif line.price_total < 0 and credit_account_id:
+            elif line.price_total < 0:
                 account_id = credit_account_id
-            elif line.price_total > 0 and debit_account_id:
+            else:
                 account_id = debit_account_id
 
             # check is there is a residual prevision of amount to pay
