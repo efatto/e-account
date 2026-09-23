@@ -10,10 +10,10 @@ class AccountInvoiceLine(models.Model):
     account_code = fields.Char(related="account_id.code")
     product_standard_price = fields.Float(related="product_id.standard_price")
     move_price_unit = fields.Float(
-        string="Unit Cost", compute="_compute_move_price_unit", store=True
+        string="Minimal Unit Cost", compute="_compute_move_price_unit", store=True
     )
     move_price_total = fields.Float(
-        string="Total Cost", compute="_compute_move_price_unit", store=True
+        string="Minimal Total Cost", compute="_compute_move_price_unit", store=True
     )
 
     @api.depends("move_line_ids.price_unit", "product_id", "product_id.standard_price")
