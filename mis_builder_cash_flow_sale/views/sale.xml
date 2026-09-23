@@ -10,20 +10,16 @@
             >
                 <div string="Cash flow" groups="account.group_account_manager">
                     <field name="cashflow_line_ids">
-                        <tree editable="bottom">
+                        <list editable="bottom">
                             <field name="date" />
                             <field name="currency_id" />
-                            <field
-                                name="sale_balance_currency"
-                                widget="monetary"
-                                options="{'currency_field': 'sale_currency_id'}"
-                            />
+                            <field name="sale_balance_currency" widget="monetary" />
                             <field name="sale_invoiced_percent" />
                             <field
                                 name="sale_balance_forecast"
                                 sum="Total forecast balance"
                             />
-                        </tree>
+                        </list>
                     </field>
                 </div>
             </xpath>

@@ -1,9 +1,11 @@
 from odoo import fields
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
 from odoo.tools.date_utils import relativedelta
 
+from odoo.addons.base.tests.common import BaseCommon
 
-class TestMisBuilderCashflowSale(TransactionCase):
+
+class TestMisBuilderCashflowSale(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -36,17 +38,18 @@ class TestMisBuilderCashflowSale(TransactionCase):
                         {
                             "value": "percent",
                             "value_amount": 50,
-                            "months": 1,
-                            "end_month": True,
+                            "nb_days": 0,
+                            "delay_type": "days_after_end_of_month",
                         },
                     ),
                     (
                         0,
                         0,
                         {
-                            "value": "balance",
-                            "months": 2,
-                            "end_month": True,
+                            "value": "percent",
+                            "value_amount": 50,
+                            "nb_days": 0,
+                            "delay_type": "days_after_end_of_next_month",
                         },
                     ),
                 ],
