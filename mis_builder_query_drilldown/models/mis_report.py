@@ -79,9 +79,9 @@ class MisReportInstance(models.Model):
                 "domain": domain,
                 "type": "ir.actions.act_window",
                 "res_model": model,
-                "views": [[False, "tree"], [False, "form"]],
+                "views": [[False, "list"], [False, "form"]],
                 "view_type": "tree",
-                "view_mode": "tree",
+                "view_mode": "list",
                 "target": "current",
             }
         return super().drilldown(arg)
