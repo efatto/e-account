@@ -5,7 +5,7 @@
         <field name="model">mis.report</field>
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='kpi_ids']/tree/field[@name='expression']"
+                expr="//field[@name='kpi_ids']/list/field[@name='expression']"
                 position="after"
             >
                 <field name="query_id" />
