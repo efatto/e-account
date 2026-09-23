@@ -68,38 +68,41 @@ class SaleOrderLine(models.Model):
             self._refresh_cashflow_line()
         return res
 
+    def _get_account(self, account_ref):
+        chart_template = self.with_context(
+            allowed_company_ids=self.company_id.root_id.ids
+        ).env["account.chart.template"]
+        outstanding_account_id = (
+            chart_template.ref(account_ref, raise_if_not_found=False)
+            or self.env["account.account"].search(
+                [
+                    (
+                        "account_type",
+                        "=",
+                        "asset_cash",
+                    ),
+                    ("company_ids", "in", self.company_id.id),
+                ],
+                limit=1,
+            )
+        ).id
+        return outstanding_account_id
+
     def _refresh_cashflow_line(self):
+        debit_account_id = self._get_account("account_journal_payment_debit_account_id")
+        credit_account_id = self._get_account(
+            "account_journal_payment_credit_account_id"
+        )
         for line in self:
             line.cashflow_line_ids.unlink()
             if line.order_id.payment_mode_id.fixed_journal_id:
                 account_id = (
-                    line.order_id.payment_mode_id.fixed_journal_id.bank_account_id
+                    line.order_id.payment_mode_id.fixed_journal_id.bank_account_id.id
                 )
-            elif (
-                line.price_total < 0
-                and line.company_id.account_journal_payment_credit_account_id
-            ):
-                account_id = line.company_id.account_journal_payment_credit_account_id
-            elif (
-                line.price_total > 0
-                and line.company_id.account_journal_payment_debit_account_id
-            ):
-                account_id = line.company_id.account_journal_payment_debit_account_id
-            else:
-                account_ids = self.env["account.account"].search(
-                    [
-                        (
-                            "account_type",
-                            "=",
-                            "asset_cash",
-                        ),
-                        ("company_id", "=", line.order_id.company_id.id),
-                    ],
-                    limit=1,
-                )
-                if not account_ids:
-                    return False
-                account_id = account_ids[0]
+            elif line.price_total < 0 and credit_account_id:
+                account_id = credit_account_id
+            elif line.price_total > 0 and debit_account_id:
+                account_id = debit_account_id
 
             # check is there is a residual prevision of amount to pay
             # compute actual value of sale_order row
@@ -122,16 +125,18 @@ class SaleOrderLine(models.Model):
                 sale_balance_total_currency,
                 precision_rounding=line.order_id.currency_id.rounding,
             ):
-                totlines = [
-                    {
-                        "date": (
-                            line.commitment_date
-                            or line.order_id.commitment_date
-                            or line.order_id.date_order
-                        ).strftime("%Y-%m-%d"),
-                        "company_amount": sale_balance_total_currency,
-                    }
-                ]
+                totlines = {
+                    "line_ids": [
+                        {
+                            "date": (
+                                line.commitment_date
+                                or line.order_id.commitment_date
+                                or line.order_id.date_order
+                            ),
+                            "company_amount": sale_balance_total_currency,
+                        }
+                    ]
+                }
                 if line.order_id.payment_term_id:
                     totlines = line.order_id.payment_term_id._compute_terms(
                         date_ref=line.commitment_date
@@ -164,7 +169,7 @@ class SaleOrderLine(models.Model):
                                     "currency_id": line.order_id.currency_id.id,
                                     "balance": 0,
                                     "sale_line_id": line.id,
-                                    "account_id": account_id.id,
+                                    "account_id": account_id,
                                     "partner_id": line.order_id.partner_id.id,
                                     "res_id": line.id,
                                     "res_model_id": self.env.ref(
@@ -172,7 +177,7 @@ class SaleOrderLine(models.Model):
                                     ).id,
                                 },
                             )
-                            for i, dueline in enumerate(totlines, start=1)
+                            for i, dueline in enumerate(totlines["line_ids"], start=1)
                         ]
                     }
                 )
