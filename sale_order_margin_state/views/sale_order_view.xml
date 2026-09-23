@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='price_unit']"
+                expr="//notebook/page[@name='order_lines']/field[@name='order_line']/list/field[@name='price_unit']"
                 position="after"
             >
                 <field name="margin_state" widget="state_selection" string=" " />

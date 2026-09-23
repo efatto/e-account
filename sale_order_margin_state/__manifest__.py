@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Sale order margin state",
-    "version": "14.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "other",
     "author": "Sergio Corato",
     "summary": "Add state of margin in sale order line.",
