@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===========================
 Mis builder drilldown query
 ===========================
@@ -17,11 +13,11 @@ Mis builder drilldown query
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-efatto%2Fe--account-lightgray.png?logo=github
-    :target: https://github.com/efatto/e-account/tree/16.0/mis_builder_query_drilldown
+    :target: https://github.com/efatto/e-account/tree/18.0/mis_builder_query_drilldown
     :alt: efatto/e-account
 
 |badge1| |badge2| |badge3|
@@ -38,8 +34,8 @@ Configuration
 
 Configure Mis Builder Report as usual.
 
-In Accounting > Configuration > MIS Reporting > MIS Report Templates configure
-Query in Kpi to enable drilldown in report.
+In Accounting > Configuration > MIS Reporting > MIS Report Templates
+configure Query in Kpi to enable drilldown in report.
 
 Bug Tracker
 ===========
@@ -47,7 +43,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/efatto/e-account/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/efatto/e-account/issues/new?body=module:%20mis_builder_query_drilldown%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/efatto/e-account/issues/new?body=module:%20mis_builder_query_drilldown%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -55,17 +51,17 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Sergio Corato
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Sergio Corato <https://github.com/sergiocorato>
+-  Sergio Corato <https://github.com/sergiocorato>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 .. |maintainer-sergiocorato| image:: https://github.com/sergiocorato.png?size=40px
     :target: https://github.com/sergiocorato
@@ -75,6 +71,6 @@ Current maintainer:
 
 |maintainer-sergiocorato| 
 
-This module is part of the `efatto/e-account <https://github.com/efatto/e-account/tree/16.0/mis_builder_query_drilldown>`_ project on GitHub.
+This module is part of the `efatto/e-account <https://github.com/efatto/e-account/tree/18.0/mis_builder_query_drilldown>`_ project on GitHub.
 
 You are welcome to contribute.
