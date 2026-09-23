@@ -1,11 +1,11 @@
-# Copyright 2023 Sergio Corato <https://github.com/sergiocorato>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import fields
-from odoo.tests.common import Form, SavepointCase
+from odoo.tests import Form
 from odoo.tools.date_utils import relativedelta
 
+from odoo.addons.base.tests.common import BaseCommon
 
-class TestMisBuilderCashflowPurchase(SavepointCase):
+
+class TestMisBuilderCashflowPurchase(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -38,16 +38,18 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
                         {
                             "value": "percent",
                             "value_amount": 50,
-                            "days": 30,
+                            "nb_days": 0,
+                            "delay_type": "days_after_end_of_month",
                         },
                     ),
                     (
                         0,
                         0,
                         {
-                            "value": "balance",
-                            "days": 30,
-                            "option": "after_invoice_month",
+                            "value": "percent",
+                            "value_amount": 50,
+                            "nb_days": 0,
+                            "delay_type": "days_after_end_of_next_month",
                         },
                     ),
                 ],
@@ -57,7 +59,7 @@ class TestMisBuilderCashflowPurchase(SavepointCase):
             {
                 "name": "Bank",
                 "code": "100999",
-                "user_type_id": cls.env.ref("account.data_account_type_liquidity").id,
+                "account_type": "asset_cash",
             }
         )
         cls.supplier_payment_mode = cls.payment_mode_model.create(

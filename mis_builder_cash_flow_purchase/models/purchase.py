@@ -40,7 +40,8 @@ class PurchaseOrder(models.Model):
 
 
 class PurchaseOrderLine(models.Model):
-    _inherit = "purchase.order.line"
+    _name = "purchase.order.line"
+    _inherit = ["purchase.order.line", "mis.cash_flow.mixin"]
 
     cashflow_line_ids = fields.One2many(
         comodel_name="mis.cash_flow.forecast_line",
@@ -48,11 +49,11 @@ class PurchaseOrderLine(models.Model):
         string="Forecast cashflow line",
     )
 
-    @api.model
-    def create(self, vals):
-        line = super().create(vals)
-        line._refresh_cashflow_line()
-        return line
+    @api.model_create_multi
+    def create(self, vals_list):
+        lines = super().create(vals_list)
+        lines._refresh_cashflow_line()
+        return lines
 
     def write(self, vals):
         res = super().write(vals)
@@ -61,36 +62,27 @@ class PurchaseOrderLine(models.Model):
             or vals.get("date_planned")
             or vals.get("product_qty")
             or vals.get("discount")
-            or vals.get("discount2")
-            or vals.get("discount3")
+            or vals.get("discount2")  # noqa
+            or vals.get("discount3")  # noqa
         ):
             self._refresh_cashflow_line()
         return res
 
     def _refresh_cashflow_line(self):
+        debit_account_id = self._get_account("account_journal_payment_debit_account_id")
+        credit_account_id = self._get_account(
+            "account_journal_payment_credit_account_id"
+        )
         for line in self:
             line.cashflow_line_ids.unlink()
             if line.order_id.payment_mode_id.fixed_journal_id:
-                journal_id = line.order_id.payment_mode_id.fixed_journal_id
-                if line.price_total < 0:
-                    account_id = journal_id.payment_credit_account_id
-                else:
-                    account_id = journal_id.payment_debit_account_id
-            else:
-                account_ids = self.env["account.account"].search(
-                    [
-                        (
-                            "user_type_id",
-                            "=",
-                            self.env.ref("account.data_account_type_liquidity").id,
-                        ),
-                        ("company_id", "=", line.order_id.company_id.id),
-                    ],
-                    limit=1,
+                account_id = (
+                    line.order_id.payment_mode_id.fixed_journal_id.bank_account_id.id
                 )
-                if not account_ids:
-                    return False
-                account_id = account_ids[0]
+            elif line.price_total < 0:
+                account_id = credit_account_id
+            else:
+                account_id = debit_account_id
 
             # check is there is a residual prevision of amount to pay
             # compute actual value of purchase_order row
@@ -113,22 +105,31 @@ class PurchaseOrderLine(models.Model):
                 purchase_balance_total_currency,
                 precision_rounding=line.order_id.currency_id.rounding,
             ):
-                totlines = [
-                    (
-                        (
-                            line.date_planned
-                            or line.order_id.date_planned
-                            or line.order_id.date_order
-                        ).strftime("%Y-%m-%d"),
-                        purchase_balance_total_currency,
-                    )
-                ]
+                totlines = {
+                    "line_ids": [
+                        {
+                            "date": (
+                                line.date_planned
+                                or line.order_id.date_planned
+                                or line.order_id.date_order
+                            ),
+                            "company_amount": purchase_balance_total_currency,
+                        }
+                    ]
+                }
                 if line.order_id.payment_term_id:
-                    totlines = line.order_id.payment_term_id.compute(
-                        purchase_balance_total_currency,
-                        line.date_planned
+                    totlines = line.order_id.payment_term_id._compute_terms(
+                        date_ref=line.date_planned
                         or line.order_id.date_planned
-                        or line.order_id.date_order,
+                        or line.order_id.date_order
+                        or fields.Date.context_today(line),
+                        currency=line.currency_id,
+                        tax_amount_currency=purchase_balance_total_currency,
+                        tax_amount=purchase_balance_total_currency,
+                        untaxed_amount_currency=0,
+                        untaxed_amount=0,
+                        company=line.company_id,
+                        sign=1,
                     )
                 line.write(
                     {
@@ -137,14 +138,21 @@ class PurchaseOrderLine(models.Model):
                                 0,
                                 0,
                                 {
-                                    "name": _("Due line #%s/%s of Purchase order %s")
-                                    % (i, len(totlines), line.order_id.name),
-                                    "date": dueline[0],
-                                    "purchase_balance_currency": dueline[1],
+                                    "name": _(
+                                        "Due line #%(num)s/%(to)s of Purchase order "
+                                        "%(po)s",
+                                        num=i,
+                                        to=len(totlines),
+                                        po=line.order_id.name,
+                                    ),
+                                    "date": dueline["date"],
+                                    "purchase_balance_currency": dueline[
+                                        "company_amount"
+                                    ],
                                     "currency_id": line.order_id.currency_id.id,
                                     "balance": 0,
                                     "purchase_line_id": line.id,
-                                    "account_id": account_id.id,
+                                    "account_id": account_id,
                                     "partner_id": line.order_id.partner_id.id,
                                     "res_id": line.id,
                                     "res_model_id": self.env.ref(
@@ -152,7 +160,7 @@ class PurchaseOrderLine(models.Model):
                                     ).id,
                                 },
                             )
-                            for i, dueline in enumerate(totlines, start=1)
+                            for i, dueline in enumerate(totlines["line_ids"], start=1)
                         ]
                     }
                 )
