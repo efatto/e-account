@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Sale Report Weighted Margin Percent",
-    "version": "14.0.1.0.1",
+    "version": "18.0.1.0.0",
     "category": "Sales",
     "author": "Sergio Corato",
     "summary": "Adds the weighted margin percent to sale analysis report",

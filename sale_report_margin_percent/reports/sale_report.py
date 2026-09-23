@@ -5,14 +5,15 @@ class SaleReport(models.Model):
     _inherit = "sale.report"
 
     margin_percent_weighted = fields.Float(
-        string="Margin Weighted (%)", readonly=True, group_operator="avg"
+        string="Margin Weighted (%)", readonly=True, aggregator="avg"
     )
 
-    def _select_additional_fields(self, fields):
-        fields["margin_percent_weighted"] = (
+    def _select_additional_fields(self):
+        res = super()._select_additional_fields()
+        res["margin_percent_weighted"] = (
             ", MAX(s.margin_percent * 100.0) AS margin_percent_weighted"
         )
-        return super()._select_additional_fields(fields)
+        return res
 
     @api.model
     def read_group(
