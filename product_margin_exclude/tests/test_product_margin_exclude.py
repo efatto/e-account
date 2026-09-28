@@ -1,7 +1,7 @@
-from odoo.tests import SavepointCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestProductMarginExclude(SavepointCase):
+class TestProductMarginExclude(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

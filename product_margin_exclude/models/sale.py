@@ -8,30 +8,24 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     @api.depends(
-        "price_subtotal",
-        "product_uom_qty",
-        "purchase_price",
         "product_id",
         "product_id.exclude_from_margin",
         "price_unit",
     )
     def _compute_margin(self):
-        super()._compute_margin()
+        res = super()._compute_margin()
         for line in self.filtered(lambda sol: sol.product_id.exclude_from_margin):
             line.margin = 0.0
             line.margin_percent = 0.0
+        return res
 
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    @api.depends(
-        "order_line.margin",
-        "amount_untaxed",
-        "order_line.product_id.exclude_from_margin",
-    )
+    @api.depends("order_line.product_id.exclude_from_margin")
     def _compute_margin(self):
-        super()._compute_margin()
+        res = super()._compute_margin()
         for order in self.filtered(
             lambda so: any(sol.product_id.exclude_from_margin for sol in so.order_line)
         ):
@@ -43,3 +37,4 @@ class SaleOrder(models.Model):
                     or [0]
                 )
                 order.margin_percent = order.margin / (amount_untaxed_not_excluded or 1)
+        return res
