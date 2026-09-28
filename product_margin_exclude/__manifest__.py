@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Product excluded from sale margin",
-    "version": "14.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "other",
     "author": "Sergio Corato",
     "summary": "Add ability to exclude products from margin computation.",
