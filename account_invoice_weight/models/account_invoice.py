@@ -18,38 +18,40 @@ class AccountMove(models.Model):
         "with 'On picking' all data is computed on pickings;\n"
         "with 'Manual' all data remains those set by user.",
     )
-    gross_weight = fields.Float(
+    # The shipping fields are provided by l10n_it_accompanying_invoice, here they
+    # are made computed to be filled from pickings or invoice lines.
+    delivery_gross_weight = fields.Float(
         compute="_compute_weight",
         inverse="_inverse_weight",
         store=True,
         readonly=False,
         help="Computation is done on save.",
     )
-    gross_weight_custom = fields.Float()
-    volume = fields.Float(
+    delivery_gross_weight_custom = fields.Float()
+    delivery_volume = fields.Float(
         compute="_compute_weight",
         inverse="_inverse_weight",
         store=True,
         readonly=False,
         help="Computation is done on save.",
     )
-    volume_custom = fields.Float()
-    net_weight = fields.Float(
+    delivery_volume_custom = fields.Float()
+    delivery_net_weight = fields.Float(
         compute="_compute_weight",
         inverse="_inverse_weight",
         store=True,
         readonly=False,
         help="Computation is done on save.",
     )
-    net_weight_custom = fields.Float()
-    packages = fields.Integer(
+    delivery_net_weight_custom = fields.Float()
+    delivery_packages = fields.Integer(
         compute="_compute_weight",
         inverse="_inverse_weight",
         store=True,
         readonly=False,
         help="Computation is done on save.",
     )
-    packages_custom = fields.Integer()
+    delivery_packages_custom = fields.Integer()
     stock_package_ids = fields.Many2many(
         comodel_name="stock.quant.package",
         string="Packages custom",
@@ -63,9 +65,8 @@ class AccountMove(models.Model):
         for move in self:
             # remove picking_ids already invoiced with other invoices!
             move.stock_package_ids = move.picking_ids.filtered(
-                lambda pick: all(
-                    move == m
-                    for m in pick.move_lines.mapped("invoice_line_ids.move_id")
+                lambda pick, mo=move: all(
+                    mo == m for m in pick.move_ids.mapped("invoice_line_ids.move_id")
                 )
             ).mapped("stock_package_ids")
 
@@ -74,60 +75,65 @@ class AccountMove(models.Model):
         volume_uom_id = self.env[
             "product.template"
         ]._get_volume_uom_id_from_ir_config_parameter()
+        weight_uom_id = self.env[
+            "product.template"
+        ]._get_weight_uom_id_from_ir_config_parameter()
         for invoice in self:
             # sum weight from pickings
             if invoice.compute_weight == "picking" and invoice.picking_ids:
                 net_weight = sum(
-                    x.net_weight_uom_id._compute_quantity(
-                        qty=x.weight, to_unit=invoice.net_weight_uom_id
+                    weight_uom_id._compute_quantity(
+                        qty=pick.shipping_weight,
+                        to_unit=invoice.delivery_net_weight_uom_id,
                     )
-                    for x in invoice.picking_ids
+                    for pick in invoice.picking_ids
                 )
                 gross_weight = sum(
-                    x.gross_weight_uom_id._compute_quantity(
-                        qty=x.shipping_weight, to_unit=invoice.gross_weight_uom_id
+                    weight_uom_id._compute_quantity(
+                        qty=pick.shipping_weight,
+                        to_unit=invoice.delivery_gross_weight_uom_id,
                     )
-                    for x in invoice.picking_ids
+                    for pick in invoice.picking_ids
                 )
                 volume = sum(
                     volume_uom_id._compute_quantity(
-                        qty=x.volume, to_unit=invoice.volume_uom_id
+                        qty=pick.volume, to_unit=invoice.delivery_volume_uom_id
                     )
-                    for x in invoice.picking_ids
+                    for pick in invoice.picking_ids
                 )
-                packages = sum(x.number_of_packages for x in invoice.picking_ids)
+                packages = sum(pick.number_of_packages for pick in invoice.picking_ids)
             # compute from invoice if not pickings or not compute_weight on picking
             elif invoice.compute_weight == "invoice":
                 net_weight = sum(
                     inv_line.product_id.weight_uom_id._compute_quantity(
                         qty=(inv_line.product_id.weight or 0) * inv_line.quantity,
-                        to_unit=invoice.net_weight_uom_id,
+                        to_unit=invoice.delivery_net_weight_uom_id,
                     )
                     for inv_line in invoice.invoice_line_ids
                 )
-                # gross_weight obviously does not exist in product
-                gross_weight = invoice.gross_weight_custom
+                # gross_weight cannot exist in product
+                gross_weight = invoice.delivery_gross_weight_custom
                 volume = sum(
                     inv_line.product_id.volume_uom_id._compute_quantity(
                         qty=(inv_line.product_id.volume or 0) * inv_line.quantity,
-                        to_unit=invoice.volume_uom_id,
+                        to_unit=invoice.delivery_volume_uom_id,
                     )
                     for inv_line in invoice.invoice_line_ids
                 )
-                packages = invoice.packages_custom
+                packages = invoice.delivery_packages_custom
             else:
-                net_weight = invoice.net_weight_custom
-                gross_weight = invoice.gross_weight_custom
-                volume = invoice.volume_custom
-                packages = invoice.packages_custom
-            invoice.net_weight = net_weight
-            invoice.gross_weight = gross_weight
-            invoice.volume = volume
-            invoice.packages = packages
+                net_weight = invoice.delivery_net_weight_custom
+                gross_weight = invoice.delivery_gross_weight_custom
+                volume = invoice.delivery_volume_custom
+                packages = invoice.delivery_packages_custom
+            invoice.delivery_net_weight = net_weight
+            invoice.delivery_gross_weight = gross_weight
+            invoice.delivery_volume = volume
+            invoice.delivery_packages = packages
 
     def _inverse_weight(self):
         for invoice in self:
-            invoice.net_weight_custom = invoice.net_weight
-            invoice.gross_weight_custom = invoice.gross_weight
-            invoice.volume_custom = invoice.volume
-            invoice.packages_custom = invoice.packages
+            invoice.delivery_net_weight_custom = invoice.delivery_net_weight
+            invoice.delivery_gross_weight_custom = invoice.delivery_gross_weight
+            invoice.delivery_volume_custom = invoice.delivery_volume
+            invoice.delivery_packages_custom = invoice.delivery_packages

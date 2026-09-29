@@ -3,22 +3,21 @@
     <record id="view_move_form_weight" model="ir.ui.view">
         <field name="name">account.invoice.form.weight</field>
         <field name="model">account.move</field>
-        <field
-            name="inherit_id"
-            ref="account_invoice_shipping_info.invoice_form_view_shipping_info"
-        />
+        <field name="inherit_id" ref="l10n_it_accompanying_invoice.view_move_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='packages']" position="before">
+            <group name="shipping_parcels" position="inside">
                 <field name="compute_weight" />
-                <field name="stock_package_ids">
-                    <tree>
+            </group>
+            <field name="delivery_packages" position="after">
+                <field name="stock_package_ids" string="Packages custom">
+                    <list>
                         <field name="dimensions" />
                         <field name="weight_custom" />
                         <field name="weight_custom_uom_id" />
                         <field name="goods_appearance_id" />
-                    </tree>
+                    </list>
                 </field>
-            </xpath>
+            </field>
         </field>
     </record>
 </odoo>

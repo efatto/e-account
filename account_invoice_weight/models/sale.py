@@ -9,7 +9,7 @@ class SaleOrder(models.Model):
 
         for move in moves:
             if move.stock_package_ids:
-                move.goods_appearance_id = move.stock_package_ids.mapped(
+                move.delivery_goods_appearance_id = move.stock_package_ids.mapped(
                     "goods_appearance_id"
                 )[:1]
                 dimensions = []
@@ -34,6 +34,6 @@ class SaleOrder(models.Model):
                     )
                     for pack in move.stock_package_ids
                 )
-                move.gross_weight_custom = gross_weight_custom
+                move.delivery_gross_weight_custom = gross_weight_custom
 
         return moves
