@@ -50,12 +50,10 @@ def migrate_fields(cr):
                 ],
             )
         query = sql.SQL(
-            """
+            f"""
             UPDATE account_move
-            set {new_field} = {old_field}
-            """.format(
-                new_field=fields[1], old_field=fields[0]
-            )
+            set {fields[1]} = {fields[0]}
+            """
         )
         openupgrade.logged_query(
             env.cr,
