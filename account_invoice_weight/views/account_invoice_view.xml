@@ -11,12 +11,12 @@
             <xpath expr="//field[@name='packages']" position="before">
                 <field name="compute_weight" />
                 <field name="stock_package_ids">
-                    <tree>
+                    <list>
                         <field name="dimensions" />
                         <field name="weight_custom" />
                         <field name="weight_custom_uom_id" />
                         <field name="goods_appearance_id" />
-                    </tree>
+                    </list>
                 </field>
             </xpath>
         </field>
