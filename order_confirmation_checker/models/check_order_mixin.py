@@ -175,7 +175,7 @@ class CheckOrderMixinParent(models.AbstractModel):
                     verify=False,
                 )
                 response = req.json()
-            except IOError as e:
+            except OSError as e:
                 error_msg = _("Something went wrong during data submission: %s") % e
                 raise UserError(error_msg)
         else:
@@ -210,7 +210,7 @@ class CheckOrderMixinParent(models.AbstractModel):
                     verify=False,
                 )
                 response = req.json()
-            except IOError as e:
+            except OSError as e:
                 error_msg = _("Something went wrong during data submission: %s") % e
                 raise UserError(error_msg)
         return response
