@@ -33,7 +33,7 @@ class SaleOrder(models.Model):
                 found_product_codes.append(product_code)
         customer_product_codes = self.env["product.customerinfo"].search_read(
             [
-                ("name", "=", self.partner_id.id),
+                ("partner_id", "=", self.partner_id.id),
                 "|",
                 ("product_code", "!=", False),
                 ("product_name", "!=", False),
@@ -81,7 +81,7 @@ class SaleOrder(models.Model):
         )
         return found_product_codes
 
-    def _create_order_lines(self, values_dict):
+    def _create_order_lines(self, values_dict):  # noqa: C901
         current_so_lines = self.order_line
         logger.info(f"N8N connector: importing from n8n values_dict: {values_dict}")
         if isinstance(values_dict, dict):

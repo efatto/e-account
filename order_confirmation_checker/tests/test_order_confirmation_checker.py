@@ -1,9 +1,11 @@
 from odoo import fields
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form
 from odoo.tools.safe_eval import safe_eval
 
+from odoo.addons.base.tests.common import BaseCommon
 
-class TestOrderConfirmationChecker(SavepointCase):
+
+class TestOrderConfirmationChecker(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -16,7 +18,7 @@ class TestOrderConfirmationChecker(SavepointCase):
         cls.customerinfo_model = cls.env["product.customerinfo"]
         cls.customerinfo = cls.customerinfo_model.create(
             {
-                "name": cls.partner.id,
+                "partner_id": cls.partner.id,
                 "product_tmpl_id": cls.product1.product_tmpl_id.id,
                 "product_code": "CUST1234",
             }
@@ -156,14 +158,11 @@ class TestOrderConfirmationChecker(SavepointCase):
             self.extracted_text_unique_delivery_date_us_format
         )
         self.assertTrue(products, "No products found in content")
-        self.assertIn(
-            {"default_code": self.product.default_code, "id": self.product.id},
-            products,
-        )
-        self.assertIn(
-            {"default_code": self.product1.default_code, "id": self.product1.id},
-            products,
-        )
+        product_codes = [
+            (product["default_code"], product["id"]) for product in products
+        ]
+        self.assertIn((self.product.default_code, self.product.id), product_codes)
+        self.assertIn((self.product1.default_code, self.product1.id), product_codes)
 
     def test_01_create_order_lines_us(self):
         sale_order_form = Form(self.env["sale.order"])
@@ -192,14 +191,11 @@ class TestOrderConfirmationChecker(SavepointCase):
             self.extracted_text_delivery_date_lines_eur_format
         )
         self.assertTrue(products, "No products found in content")
-        self.assertIn(
-            {"default_code": self.product.default_code, "id": self.product.id},
-            products,
-        )
-        self.assertIn(
-            {"default_code": self.product1.default_code, "id": self.product1.id},
-            products,
-        )
+        product_codes = [
+            (product["default_code"], product["id"]) for product in products
+        ]
+        self.assertIn((self.product.default_code, self.product.id), product_codes)
+        self.assertIn((self.product1.default_code, self.product1.id), product_codes)
 
     def test_02_create_order_lines_eur(self):
         sale_order_form = Form(self.env["sale.order"])
