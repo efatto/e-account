@@ -20,7 +20,7 @@ def check_attachment(object_to_check, object_to_check_lines):
     if not object_to_check.attachment_to_check_id:
         raise ValidationError(_("No attachment found to check"))
     lines_to_check = object_to_check_lines.filtered(
-        lambda x: x.product_id.type == "product" and x.product_id.default_code
+        lambda x: x.product_id.type == "consu" and x.product_id.default_code
     )
     filestore = tools.config.filestore(object_to_check._cr.dbname)
     file_path = os.path.join(
@@ -113,6 +113,7 @@ def convert_string_to_float(string_value):
     try:
         converted_string_value = float(converted_string_value)
     except ValueError:
+        _logger.info(f"Invalid float value: {string_value}")
         pass
     return converted_string_value
 
@@ -176,13 +177,13 @@ class CheckOrderMixinParent(models.AbstractModel):
                 )
                 response = req.json()
             except OSError as e:
-                error_msg = _("Something went wrong during data submission: %s") % e
-                raise UserError(error_msg)
+                error_msg = _("Something went wrong during data submission: %(err)s", e)
+                raise UserError(error_msg) from e
         else:
             odoo_webhook = self._compute_n8n_url("insert-so-rows")
             params = {
-                "company_id": self.company_id.id,
-                "company_name": self.company_id.name,
+                "company_id": self.env.company.id,
+                "company_name": self.env.company.name,
                 "sale_order_id": self.id,
                 "data": json.dumps(data),
                 "extracted_text": extracted_text,
@@ -212,5 +213,5 @@ class CheckOrderMixinParent(models.AbstractModel):
                 response = req.json()
             except OSError as e:
                 error_msg = _("Something went wrong during data submission: %s") % e
-                raise UserError(error_msg)
+                raise UserError(error_msg) from e
         return response

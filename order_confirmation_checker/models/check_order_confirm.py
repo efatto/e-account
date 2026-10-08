@@ -35,14 +35,16 @@ _logger = logging.getLogger(__name__)
 try:
     from PIL import Image
 except Exception:
-    raise ValidationError(_("Pillow not installed. Resolve with: pip install Pillow"))
+    raise ValidationError(
+        _("Pillow not installed. Resolve with: pip install Pillow")
+    ) from None
 
 try:
     import pytesseract
 except Exception:
     raise ValidationError(
         _("pytesseract not installed. Resolve with: pip install pytesseract")
-    )
+    ) from None
 
 # pdf2image è opzionale (usato per convertire PDF in immagini)
 try:
@@ -163,11 +165,13 @@ def _extract_text_from_eml(path: str) -> str:  # noqa C901
                         try:
                             texts.append(_ocr_image(tfname))
                         except Exception:
+                            _logger.info(f"Invalid image file: {tfname}")
                             pass
                 finally:
                     try:
                         os.unlink(tfname)
                     except Exception:
+                        _logger.info(f"Invalid image file: {tfname}")
                         pass
     else:
         # messaggio singolo
@@ -286,8 +290,8 @@ def check_code_and_qty(  # noqa C901
                 + target_data[target].get("default_code")
             ),
             partner_code=(
-                f"Partner product code {'not' if not partner_code_found else ''} found: "
-                + target_data[target].get("partner_code")
+                f"Partner product code {'not' if not partner_code_found else ''} "
+                f"found: " + target_data[target].get("partner_code")
             ),
             qty=f"Quantity {'not' if not qty_found else ''} found: " + str(target_qty),
             price=f"Price {'not' if not price_found else ''} found: "
