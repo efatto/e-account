@@ -26,7 +26,6 @@ import logging
 import os
 import re
 import tempfile
-from typing import Dict, Union
 
 from odoo import _
 from odoo.exceptions import ValidationError
@@ -84,7 +83,7 @@ def _extract_numbers(text: str) -> list:
 # ---------------------------------------------------------
 
 
-def _ocr_image(image: Union[str, Image.Image]) -> str:
+def _ocr_image(image: str | Image.Image) -> str:
     """Esegue OCR su immagine (path o PIL.Image).
     Ritorna il testo OCR come stringa."""
     if isinstance(image, str):
@@ -187,7 +186,7 @@ def _extract_text_from_eml(path: str) -> str:  # noqa C901
 
 def check_code_and_qty(  # noqa C901
     file_path: str, file_ext: str, target_data: dict
-) -> Dict[str, list]:
+) -> dict[str, list]:
     """Controlla che in file_path siano presenti il codice e la quantità.
 
     - file_path: percorso locale verso file (pdf, jpg, png, eml, ecc.)
@@ -221,7 +220,7 @@ def check_code_and_qty(  # noqa C901
             except Exception:
                 # fallback: leggi come testo semplice
                 try:
-                    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                    with open(file_path, encoding="utf-8", errors="ignore") as f:
                         full_text = f.read()
                 except Exception:
                     full_text = ""
