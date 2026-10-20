@@ -98,6 +98,9 @@ class TestMisBuilderCashflowPurchase(BaseCommon):
         self.assertEqual(len(po_lines), 1)
         for line in po_lines:
             self.assertTrue(line.cashflow_line_ids)
+            self.assertEqual(
+                line.cashflow_line_ids.account_id, self.journal_c1.default_account_id
+            )
             self.assertAlmostEqual(
                 sum(line.mapped("cashflow_line_ids.purchase_balance_forecast")),
                 -line.price_total,

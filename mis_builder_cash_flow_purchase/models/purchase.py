@@ -75,10 +75,9 @@ class PurchaseOrderLine(models.Model):
         )
         for line in self:
             line.cashflow_line_ids.unlink()
-            if line.order_id.payment_mode_id.fixed_journal_id:
-                account_id = (
-                    line.order_id.payment_mode_id.fixed_journal_id.bank_account_id.id
-                )
+            journal = line.order_id.payment_mode_id.fixed_journal_id
+            if journal.default_account_id:
+                account_id = journal.default_account_id.id
             elif line.price_total < 0:
                 account_id = credit_account_id
             else:
