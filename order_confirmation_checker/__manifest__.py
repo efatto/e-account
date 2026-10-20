@@ -18,6 +18,6 @@
         "views/purchase.xml",
         "views/sale.xml",
     ],
-    "external_dependencies": {"python": ["pytesseract"]},
+    "external_dependencies": {"python": ["pdf2image", "pytesseract"]},
     "installable": True,
 }
