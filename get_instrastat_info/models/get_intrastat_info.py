@@ -16,7 +16,7 @@ class GetIntrastatInfo(models.AbstractModel):
     ):
         # if the country of origin is not found in the product, get it from the first
         # seller of the product and eventually from the current company
-        lang = get_lang(self.env, lang_code=lang_code)
+        lang = self.env["res.lang"].browse(get_lang(self.env, lang_code=lang_code).id)
         precision_weight_digits = (
             self.env["decimal.precision"].search([("name", "=", "Stock Weight")]).digits
         )
@@ -24,7 +24,9 @@ class GetIntrastatInfo(models.AbstractModel):
             product_id.intrastat_country_origin_id
             and product_id.intrastat_country_origin_id.with_context(lang="en_US").name
             or product_id.seller_ids
-            and product_id.seller_ids[0].name.country_id.with_context(lang="en_US").name
+            and product_id.seller_ids[0]
+            .partner_id.country_id.with_context(lang="en_US")
+            .name
             or self.env.user.company_id.country_id.with_context(lang="en_US").name
         )
         weight = float_round(
@@ -43,14 +45,13 @@ class GetIntrastatInfo(models.AbstractModel):
             f"%.{precision_weight_digits or 2}f",
             weight,
             grouping=True,
-            monetary=False,
         )
         intrastat_text += f"NET WEIGHT: {weight} kg"
         intrastat_info[hs_code]["price_subtotal"] += price_subtotal
         return intrastat_text, intrastat_info
 
     def _get_narration(self, lang_code, currency_id, intrastat_info=None):
-        lang = get_lang(self.env, lang_code=lang_code)
+        lang = self.env["res.lang"].browse(get_lang(self.env, lang_code=lang_code).id)
         precision_weight_digits = (
             self.env["decimal.precision"].search([("name", "=", "Stock Weight")]).digits
         )
@@ -61,13 +62,11 @@ class GetIntrastatInfo(models.AbstractModel):
                     f"%.{precision_weight_digits or 2}f",
                     intrastat_info[x]["weight"],
                     grouping=True,
-                    monetary=False,
                 ),
                 "price_subtotal": lang.format(
                     "%.2f",
                     intrastat_info[x]["price_subtotal"],
                     grouping=True,
-                    monetary=True,
                 ),
             }
             for x in intrastat_info
