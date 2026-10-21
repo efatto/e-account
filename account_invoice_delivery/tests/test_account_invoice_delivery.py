@@ -105,9 +105,10 @@ class TestDeliveryAutoRefresh(AccountTestInvoicingCommon):
     @staticmethod
     def _create_invoice_from_so(order):
         picking = order.picking_ids[0]
-        for ml in picking.move_ids:
-            ml.quantity = ml.product_qty
-        picking._action_done()
+        for move in picking.move_ids:
+            move.quantity = move.product_qty
+            move.picked = True
+        picking.button_validate()
         order._create_invoices()
         invoice = order.invoice_ids[0]
         return invoice

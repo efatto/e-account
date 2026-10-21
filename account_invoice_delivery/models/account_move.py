@@ -52,8 +52,19 @@ class AccountMove(models.Model):
         else:
             price_unit = self.rate_shipment(self.delivery_method_id)["price"]
             delivery_lines = self.invoice_line_ids.filtered("is_delivery")
+            sale_delivery_lines = self.invoice_line_ids.sale_line_ids.filtered(
+                "is_delivery"
+            )
+            if not sale_delivery_lines:
+                sale_delivery_lines = (
+                    self.invoice_line_ids.sale_line_ids.order_id.order_line.filtered(
+                        "is_delivery"
+                    )
+                )
             if not delivery_lines:
-                self._create_delivery_line(self.delivery_method_id, price_unit)
+                delivery_line = self._create_delivery_line(
+                    self.delivery_method_id, price_unit
+                )
             else:
                 delivery_line = delivery_lines[:1]
                 if len(delivery_lines) > 1:
@@ -61,13 +72,28 @@ class AccountMove(models.Model):
                     delivery_line.write(
                         {
                             "sale_line_ids": [
-                                Command.set(delivery_lines.sale_line_ids.ids)
+                                Command.set(
+                                    (
+                                        delivery_lines.sale_line_ids
+                                        | sale_delivery_lines
+                                    ).ids
+                                )
                             ],
                             "discount": delivery_lines[-1:].discount,
                         }
                     )
                     (delivery_lines - delivery_line).unlink()
                 self._update_delivery_line(delivery_line, price_unit)
+            if delivery_line and sale_delivery_lines:
+                delivery_line.write(
+                    {
+                        "sale_line_ids": [
+                            Command.set(
+                                (delivery_line.sale_line_ids | sale_delivery_lines).ids
+                            )
+                        ]
+                    }
+                )
 
     @api.model_create_multi
     def create(self, vals_list):
