@@ -80,7 +80,6 @@ class MisReportInstance(models.Model):
                 "type": "ir.actions.act_window",
                 "res_model": model,
                 "views": [[False, "list"], [False, "form"]],
-                "view_type": "tree",
                 "view_mode": "list",
                 "target": "current",
             }
