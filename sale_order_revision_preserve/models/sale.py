@@ -7,8 +7,9 @@ class SaleOrderLine(models.Model):
     @api.returns(None, lambda value: value[0])
     def copy_data(self, default=None):
         default = dict(default or {})
-        if self.purchase_price and self.env.context.get("preserve_purchase_price"):
-            default["purchase_price"] = self.purchase_price
+        purchase_price = self.sudo().purchase_price
+        if purchase_price and self.env.context.get("preserve_purchase_price"):
+            default["purchase_price"] = purchase_price
         return super().copy_data(default=default)
 
 
