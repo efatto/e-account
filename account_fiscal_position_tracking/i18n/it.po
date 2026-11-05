@@ -1,76 +1,121 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_invoice_shipping_email
+# 	* account_fiscal_position_tracking
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 18:53+0000\n"
-"PO-Revision-Date: 2024-02-12 18:53+0000\n"
+"POT-Creation-Date: 2026-11-05 07:37+0000\n"
+"PO-Revision-Date: 2026-11-05 07:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: account_invoice_shipping_email
-#: model:ir.model.fields,field_description:account_invoice_shipping_email.field_account_move__display_name
-#: model:ir.model.fields,field_description:account_invoice_shipping_email.field_mail_compose_message__display_name
-msgid "Display Name"
-msgstr "Nome visualizzato"
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,field_description:account_fiscal_position_tracking.field_account_fiscal_position__message_needaction
+msgid "Action Needed"
+msgstr "Azione richiesta"
 
-#. module: account_invoice_shipping_email
-#: model:ir.model,name:account_invoice_shipping_email.model_mail_compose_message
-msgid "Email composition wizard"
-msgstr "Procedura guidata composizione email"
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,field_description:account_fiscal_position_tracking.field_account_fiscal_position__message_attachment_count
+msgid "Attachment Count"
+msgstr "Numero di allegati"
 
-#. module: account_invoice_shipping_email
-#: model:ir.model.fields,field_description:account_invoice_shipping_email.field_account_move__id
-#: model:ir.model.fields,field_description:account_invoice_shipping_email.field_mail_compose_message__id
-msgid "ID"
+#. module: account_fiscal_position_tracking
+#: model:ir.model,name:account_fiscal_position_tracking.model_account_fiscal_position
+msgid "Fiscal Position"
+msgstr "Posizione fiscale"
+
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,field_description:account_fiscal_position_tracking.field_account_fiscal_position__message_follower_ids
+msgid "Followers"
 msgstr ""
 
-#. module: account_invoice_shipping_email
-#: model:ir.model,name:account_invoice_shipping_email.model_account_move
-msgid "Journal Entry"
-msgstr "Registrazione contabile"
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,field_description:account_fiscal_position_tracking.field_account_fiscal_position__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
 
-#. module: account_invoice_shipping_email
-#: model:ir.model.fields,field_description:account_invoice_shipping_email.field_account_move____last_update
-#: model:ir.model.fields,field_description:account_invoice_shipping_email.field_mail_compose_message____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,field_description:account_fiscal_position_tracking.field_account_fiscal_position__has_message
+msgid "Has Message"
+msgstr ""
 
-#. module: account_invoice_shipping_email
-#: model:ir.model.fields.selection,name:account_invoice_shipping_email.selection__account_move__shipping_email_state__no
-msgid "Not sent"
-msgstr "Non inviata"
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,help:account_fiscal_position_tracking.field_account_fiscal_position__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Se marcato, ci sono nuovi messaggi da leggere."
 
-#. module: account_invoice_shipping_email
-#: model_terms:ir.ui.view,arch_db:account_invoice_shipping_email.invoice_form_send_shipping_email
-msgid "Send shipping Email"
-msgstr "Contatta per spedizione"
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,help:account_fiscal_position_tracking.field_account_fiscal_position__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Se marcato, alcuni messaggi hanno un errore di recapito."
 
-#. module: account_invoice_shipping_email
-#: model:ir.model.fields.selection,name:account_invoice_shipping_email.selection__account_move__shipping_email_state__sent
-msgid "Waiting confirm"
-msgstr "In attesa di conferma corriere/ritiro"
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,field_description:account_fiscal_position_tracking.field_account_fiscal_position__message_is_follower
+msgid "Is Follower"
+msgstr "È un follower"
 
-#. module: account_invoice_shipping_email
-#: model_terms:ir.ui.view,arch_db:account_invoice_shipping_email.invoice_form_send_shipping_email
-msgid "Set shipping confirmed"
-msgstr "Imposta spedizione confermata"
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,field_description:account_fiscal_position_tracking.field_account_fiscal_position__message_has_error
+msgid "Message Delivery error"
+msgstr "Errore di recapito del messaggio"
 
-#. module: account_invoice_shipping_email
-#: model:ir.model.fields,field_description:account_invoice_shipping_email.field_account_bank_statement_line__shipping_email_state
-#: model:ir.model.fields,field_description:account_invoice_shipping_email.field_account_move__shipping_email_state
-#: model:ir.model.fields,field_description:account_invoice_shipping_email.field_account_payment__shipping_email_state
-msgid "Shipping State"
-msgstr "Stato spedizione"
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,field_description:account_fiscal_position_tracking.field_account_fiscal_position__message_ids
+msgid "Messages"
+msgstr "Messaggi"
 
-#. module: account_invoice_shipping_email
-#: model:ir.model.fields.selection,name:account_invoice_shipping_email.selection__account_move__shipping_email_state__confirmed
-msgid "Shipping confirmed"
-msgstr "Spedizione confermata"
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,field_description:account_fiscal_position_tracking.field_account_fiscal_position__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Numero di azioni"
+
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,field_description:account_fiscal_position_tracking.field_account_fiscal_position__message_has_error_counter
+msgid "Number of errors"
+msgstr "Numero di errori"
+
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,help:account_fiscal_position_tracking.field_account_fiscal_position__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,help:account_fiscal_position_tracking.field_account_fiscal_position__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Numero di messaggi con errore di recapito"
+
+#. module: account_fiscal_position_tracking
+#: model:ir.model,name:account_fiscal_position_tracking.model_account_fiscal_position_tax
+msgid "Tax Mapping of Fiscal Position"
+msgstr "Mappatura imposta per la posizione fiscale"
+
+#. module: account_fiscal_position_tracking
+#. odoo-python
+#: code:addons/account_fiscal_position_tracking/models/account_fiscal_position.py:0
+msgid "Taxes source and destination must be different."
+msgstr "L'imposta sorgente e quella destinazione devono essere diverse."
+
+#. module: account_fiscal_position_tracking
+#. odoo-python
+#: code:addons/account_fiscal_position_tracking/models/account_fiscal_position.py:0
+msgid "Taxes source and destination must have the same type of tax use."
+msgstr ""
+"L'imposta sorgente e quella destinazione devono avere lo stesso tipo di "
+"utilizzo delle imposte."
+
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,field_description:account_fiscal_position_tracking.field_account_fiscal_position__website_message_ids
+msgid "Website Messages"
+msgstr "Messaggi sul sito web"
+
+#. module: account_fiscal_position_tracking
+#: model:ir.model.fields,help:account_fiscal_position_tracking.field_account_fiscal_position__website_message_ids
+msgid "Website communication history"
+msgstr "Storico delle comunicazioni sul sito web"
