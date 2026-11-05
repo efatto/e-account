@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Tax with required declaration of intent in invoice",
-    "version": "14.0.1.0.1",
+    "version": "18.0.1.0.0",
     "author": "Sergio Corato",
     "website": "https://github.com/efatto/e-account",
     "category": "Localisation / Accounting",
