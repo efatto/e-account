@@ -18,7 +18,8 @@ class AccountFiscalPositionTax(models.Model):
                     _("Taxes source and destination must be different.")
                 )
             if (
-                tax_mapping.tax_src_id.type_tax_use
+                tax_mapping.tax_dest_id
+                and tax_mapping.tax_src_id.type_tax_use
                 != tax_mapping.tax_dest_id.type_tax_use
             ):
                 raise ValidationError(
