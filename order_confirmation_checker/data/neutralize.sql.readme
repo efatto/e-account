@@ -1,0 +1,5 @@
+-- the n8n API key is stored in the database and used to call the n8n workflows
+-- that read the order attachments: a neutralized database can access for test
+-- purposes, it's a user interaction only
+--DELETE FROM ir_config_parameter
+-- WHERE key = 'X-N8N_API_KEY';
