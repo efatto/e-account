@@ -1,4 +1,8 @@
+import base64
+from unittest.mock import patch
+
 from odoo import fields
+from odoo.exceptions import UserError
 from odoo.tests import Form
 from odoo.tools.safe_eval import safe_eval
 
@@ -153,7 +157,7 @@ class TestOrderConfirmationChecker(BaseCommon):
         sale_order_form = Form(self.env["sale.order"])
         sale_order_form.partner_id = self.partner
         order = sale_order_form.save()
-        # create pdf to attach and test will require a n8n istance in the GitHub machine
+        # create pdf to attach and test the extraction without an external service
         products = order._get_products_from_content(
             self.extracted_text_unique_delivery_date_us_format
         )
@@ -224,3 +228,62 @@ class TestOrderConfirmationChecker(BaseCommon):
             ]
         )
         self.assertTrue(other_order, "No other order found for product1")
+
+    def test_03_create_order_lines_from_ai(self):
+        sale_order_form = Form(self.env["sale.order"])
+        sale_order_form.partner_id = self.partner
+        order = sale_order_form.save()
+        output = self.output_unique_delivery_date_us_format % dict(
+            order_id=order.id,
+            product1_default_code=self.product1.default_code,
+            product_default_code=self.product.default_code,
+            product1_id=self.product1.id,
+            product_id=self.product.id,
+        )
+
+        class FakeConnection:
+            def _run(self, prompt=None, **kwargs):
+                return (output, 0, 0, 1)
+
+        with (
+            patch.object(
+                type(order),
+                "_ai_extract_attachment_text",
+                return_value={
+                    "text": self.extracted_text_unique_delivery_date_us_format
+                },
+            ),
+            patch.object(
+                type(order), "_get_ai_connection", return_value=FakeConnection()
+            ),
+        ):
+            order.button_create_row_from_attachment()
+        self.assertTrue(order.order_line, "No order lines created")
+        self.assertEqual(
+            (self.product1 | self.product).ids,
+            order.order_line.mapped("product_id").ids,
+        )
+
+    def test_04_extract_attachment_text(self):
+        sale_order_form = Form(self.env["sale.order"])
+        sale_order_form.partner_id = self.partner
+        order = sale_order_form.save()
+        content = "FURN_0096 1,00 100,00"
+        attachment = self.env["ir.attachment"].create(
+            {
+                "name": "order_confirmation.txt",
+                "datas": base64.b64encode(content.encode()),
+                "res_model": "sale.order",
+                "res_id": order.id,
+            }
+        )
+        order.attachment_to_check_id = attachment
+        result = order._ai_extract_attachment_text()
+        self.assertIn("FURN_0096", result["text"])
+
+    def test_05_missing_ai_connection(self):
+        sale_order_form = Form(self.env["sale.order"])
+        sale_order_form.partner_id = self.partner
+        order = sale_order_form.save()
+        with self.assertRaises(UserError):
+            order._get_ai_connection()

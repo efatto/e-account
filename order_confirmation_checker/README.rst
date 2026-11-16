@@ -22,13 +22,30 @@ Check Sale/Purchase Order Confirmation
 
 |badge1| |badge2| |badge3|
 
-This module add ability to check confirmation order for sale and
-purchase.
+This module adds the ability to check the confirmation order received
+from customers and vendors, and to create sale order lines from a
+customer attachment using an AI connection provided by the OCA ``ai``
+modules.
+
+The procedures used to extract the attachment text and to create the
+sale order lines are defined as ``ai.tool`` records, so they can also be
+used by other AI tools or agents.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Configuration
+=============
+
+Create an AI connection in *AI Tool → AI Connection* (the available
+kinds depend on the installed ``ai_connection_*`` modules) and select it
+in *Sales → Configuration → Settings*, in the *Order Confirmation Check*
+section.
+
+The selected connection is stored in the system parameter
+``order_confirmation_checker.ai_connection_id``.
 
 Usage
 =====
@@ -41,6 +58,12 @@ conferma d'ordine (oppure aggiungerlo) e selezionarlo nel box:
 Avviare il controllo con il bottone:
 
 |Controllo conferma d'ordine|
+
+Per creare le righe dell'ordine di vendita dall'allegato, configurare
+una connessione AI (vedi CONFIGURE) e usare il bottone *Create rows from
+attachment*. Le procedure di estrazione del testo e di creazione delle
+righe sono definite come record ``ai.tool`` e possono essere
+riutilizzate da altri strumenti AI.
 
 .. |Selezione file| image:: https://raw.githubusercontent.com/efatto/e-account/18.0/order_confirmation_checker/static/description/selezione.png
 .. |Controllo conferma d'ordine| image:: https://raw.githubusercontent.com/efatto/e-account/18.0/order_confirmation_checker/static/description/controllo.png

@@ -85,6 +85,30 @@ def _extract_numbers(text: str) -> list:
 # ---------------------------------------------------------
 
 
+def extract_text(file_path: str, file_ext: str) -> str:
+    """Estrae il testo da un documento supportato (pdf, immagini, eml).
+
+    - file_path: percorso locale del documento
+    - file_ext: estensione senza punto (es. "pdf") o mimetype (es. "application/pdf")
+    """
+    if not os.path.isfile(file_path):
+        raise ValidationError(_("File not found: %s") % file_path)
+    ext = "." + (file_ext or "").lower().split("/")[-1].lstrip(".")
+    if ext in (".jpg", ".jpeg", ".png", ".tif", ".tiff", ".bmp"):
+        return _ocr_image(file_path)
+    if ext == ".pdf":
+        return _extract_text_from_pdf(file_path)
+    if ext == ".eml":
+        return _extract_text_from_eml(file_path)
+    # prova a leggere come immagine
+    try:
+        return _ocr_image(file_path)
+    except Exception:
+        # fallback: leggi come testo semplice
+        with open(file_path, encoding="utf-8", errors="ignore") as f:
+            return f.read()
+
+
 def _ocr_image(image: str | Image.Image) -> str:
     """Esegue OCR su immagine (path o PIL.Image).
     Ritorna il testo OCR come stringa."""
@@ -207,27 +231,9 @@ def check_code_and_qty(  # noqa C901
     if not os.path.isfile(file_path):
         return {"Undefined": [False, f"File non trovato: {file_path}"]}
 
-    ext = "." + file_ext.lower()
-    full_text = ""
-    _logger.debug(f"Checking file {file_path} with extension {ext}")
+    _logger.debug(f"Checking file {file_path} with extension {file_ext}")
     try:
-        if ext in (".jpg", ".jpeg", ".png", ".tif", ".tiff", ".bmp"):
-            full_text = _ocr_image(file_path)
-        elif ext == ".pdf":
-            full_text = _extract_text_from_pdf(file_path)
-        elif ext in (".eml",):
-            full_text = _extract_text_from_eml(file_path)
-        else:
-            # prova a leggere come immagine
-            try:
-                full_text = _ocr_image(file_path)
-            except Exception:
-                # fallback: leggi come testo semplice
-                try:
-                    with open(file_path, encoding="utf-8", errors="ignore") as f:
-                        full_text = f.read()
-                except Exception:
-                    full_text = ""
+        full_text = extract_text(file_path, file_ext)
     except Exception as exc:
         _logger.info(f"Error extracting text from file {file_path}: {exc}")
         return {"Undefined": [False, f"Errore durante estrazione testo: {exc}"]}

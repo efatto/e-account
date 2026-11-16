@@ -1,11 +1,95 @@
+import json
 import logging
+import re
+from string import Template
 
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 
-from .check_order_mixin import check_attachment, convert_string_to_float
+from odoo.addons.ai_tool.tools import aitool
+
+from .check_order_confirm import extract_text
+from .check_order_mixin import (
+    check_attachment,
+    convert_string_to_float,
+    get_attachment_file,
+)
 
 logger = logging.getLogger(__name__)
+
+ORDER_LINES_PROMPT = """You are a sale manager creating one or more sale orders from
+a document received from a customer. The document usually contains our company name
+($company_name), the customer name, the document date and a list of ordered products.
+
+Return only a single valid JSON object, without markdown fences or comments, with the
+following structure:
+{
+  "company_id": $company_id,
+  "customer": "customer name",
+  "order_date": "YYYY-MM-DD",
+  "client_order_ref": "customer order reference",
+  "orders": [
+    {
+      "order_id": $order_id,
+      "delivery_date": "YYYY-MM-DD",
+      "elaboration_notes": "notes about the extraction",
+      "order_lines": [
+        {
+          "product_code": "code as it appears in the customer document",
+          "partner_product_name": "description as it appears in the document",
+          "product_id": 0,
+          "quantity": 0,
+          "price_unit": 0
+        }
+      ]
+    }
+  ]
+}
+
+INSTRUCTIONS:
+1. company_id: MANDATORY, use exactly $company_id.
+2. customer: find the customer in the document. It is a company name different from
+   our company name, usually in the header, footer or upper left position. Ignore the
+   delivery company usually placed before the footer.
+3. order_date: find the order date in the document, usually in the header or in the
+   upper position of the first page, before the product rows. If there are different
+   dates, the order date is usually today or a few days before today, while a future
+   date is usually the requested delivery date. Use the YYYY-MM-DD format.
+4. client_order_ref: find the customer order reference (for example their PO number).
+5. orders: find the delivery date requested for the products. If there is only one
+   delivery date valid for the whole order, create a single order containing all the
+   rows. If there are many delivery dates, one per row, group the rows by delivery
+   date and create one order per delivery date.
+6. order_id: MANDATORY, use exactly $order_id.
+7. delivery_date: use the delivery date found in the document, in YYYY-MM-DD format.
+
+CRITICAL PRODUCT IDENTIFICATION RULES:
+Use only the list of available products provided below in "PRODUCTS".
+Each element is a dictionary with "id" (the Odoo product id), "default_code" (our
+internal product code) and optionally "customer_code" (the customer specific code).
+For every row in the document table:
+a. Extract the product code or description from the document.
+b. Search it in PRODUCTS and match it with either "default_code" or "customer_code".
+   The list is sorted from the most complex/longest code to the simplest one: stop at
+   the very first match, so a specific code is preferred over a simpler one contained
+   in it.
+c. If a match is found, use the corresponding integer "id" from PRODUCTS.
+d. Do not invent product ids and do not use the product code as the id.
+e. If no product matches a row, skip that row or set product_id to null.
+
+Each order line must contain:
+- product_id: the integer "id" found in PRODUCTS, or null when not matched.
+- quantity: the requested quantity as a number.
+- price_unit: the requested unit price as a number.
+- product_code: the code as it appears in the customer document.
+- partner_product_name: the description as it appears in the customer document.
+
+PRODUCTS:
+$products
+
+DOCUMENT TEXT:
+$extracted_text
+"""
 
 
 class SaleOrder(models.Model):
@@ -15,6 +99,81 @@ class SaleOrder(models.Model):
     def button_check_attachment(self):
         self.ensure_one()
         check_attachment(self, self.order_line)
+
+    def button_create_row_from_attachment(self):
+        self.ensure_one()
+        tool = self.env.ref(
+            "order_confirmation_checker.ai_tool_create_order_lines_from_attachment"
+        )
+        tool._execute_tool(record=self)
+
+    @aitool(
+        input_schema={},
+        output_schema={
+            "text": {"type": "string"},
+        },
+    )
+    def _ai_extract_attachment_text(self):
+        self.ensure_one()
+        attachment = self.attachment_to_check_id
+        if not attachment:
+            raise UserError(_("No attachment found to check"))
+        file_path, file_ext = get_attachment_file(attachment)
+        return {"text": extract_text(file_path, file_ext)}
+
+    @aitool(
+        input_schema={},
+        output_schema={
+            "order_ids": {
+                "type": "array",
+                "items": {"type": "integer"},
+            },
+        },
+    )
+    def _ai_create_order_lines_from_attachment(self):
+        self.ensure_one()
+        extracted_text = self._ai_extract_attachment_text().get("text")
+        if not extracted_text:
+            raise UserError(_("No extracted text received."))
+        products = self._get_products_from_content(extracted_text)
+        if not products:
+            raise UserError(_("No products found in the attachment."))
+        prompt = self._prepare_order_lines_prompt(extracted_text, products)
+        response = self._get_ai_connection()._run(prompt=prompt)
+        values_dict = self._parse_ai_order_lines(response[0] if response else "")
+        if not values_dict:
+            raise UserError(_("No sale order lines were created."))
+        sale_orders = self._create_order_lines(values_dict)
+        if not sale_orders.order_line:
+            raise UserError(_("No sale order lines were created."))
+        return {"order_ids": sale_orders.ids}
+
+    def _prepare_order_lines_prompt(self, extracted_text, products):
+        self.ensure_one()
+        return Template(ORDER_LINES_PROMPT).substitute(
+            company_id=self.env.company.id,
+            company_name=self.env.company.name,
+            order_id=self.id,
+            products=json.dumps(products, indent=2, ensure_ascii=False),
+            extracted_text=extracted_text,
+        )
+
+    @staticmethod
+    def _parse_ai_order_lines(content):
+        """Extract the JSON object from the AI response."""
+        if isinstance(content, dict):
+            return content
+        if not content:
+            return {}
+        match = re.search(r"\{.*\}", content, re.DOTALL)
+        if not match:
+            return {}
+        try:
+            result = json.loads(match.group(0))
+        except ValueError:
+            logger.info("Invalid JSON returned by the AI connection: %s", content)
+            return {}
+        return result if isinstance(result, dict) else {}
 
     def _get_products_from_content(self, content) -> list:
         product_codes = self.env["product.product"].search_read(
@@ -72,7 +231,7 @@ class SaleOrder(models.Model):
                                 ),
                             }
                         )
-        # sort by length of codes to help n8n matching (complex to simple)
+        # sort by length of codes to help AI matching (complex to simple)
         found_product_codes.sort(
             key=lambda x: max(
                 len(x.get("default_code") or ""), len(x.get("customer_code") or "")
@@ -83,7 +242,8 @@ class SaleOrder(models.Model):
 
     def _create_order_lines(self, values_dict):  # noqa: C901
         current_so_lines = self.order_line
-        logger.info(f"N8N connector: importing from n8n values_dict: {values_dict}")
+        sale_orders = self
+        logger.info("AI connector: importing order values_dict: %s", values_dict)
         if isinstance(values_dict, dict):
             order_date = False
             client_order_ref = False
@@ -119,6 +279,7 @@ class SaleOrder(models.Model):
                                     else None,
                                 }
                             )
+                            sale_orders |= sale_order
                         for values in order.get("order_lines"):
                             if values.get("product_id") and values.get("quantity"):
                                 product = self.env["product.product"].search(
@@ -150,22 +311,7 @@ class SaleOrder(models.Model):
                 [line.name for line in self.order_line - current_so_lines]
             )
         if contents:
-            logger.info(f"N8N connector: imported lines with products: {contents}")
+            logger.info("AI connector: imported lines with products: %s", contents)
         else:
-            logger.info("N8N connector: no new lines were imported.")
-
-    def button_create_row_from_attachment(self):
-        self.ensure_one()
-        response = self._n8n_webhook(option="read_attach")
-        extracted_text = response.get("extractedText")
-        if extracted_text:
-            products = self._get_products_from_content(extracted_text)
-            if products:
-                # call n8n to create the sale order lines with the found products
-                res = self._n8n_webhook(data=products, extracted_text=extracted_text)
-                if not res:
-                    raise UserError(_("No sale order lines were created."))
-                else:
-                    self._create_order_lines(res)
-        else:
-            raise UserError(_("No extracted text received."))
+            logger.info("AI connector: no new lines were imported.")
+        return sale_orders

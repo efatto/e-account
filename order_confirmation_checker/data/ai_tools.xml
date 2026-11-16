@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 Sergio Corato
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+    <record id="ai_tool_extract_attachment_text" model="ai.tool">
+        <field name="name">extract_attachment_text</field>
+        <field
+            name="description"
+        >Extract all the text from the order confirmation attachment.</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="function_name">_ai_extract_attachment_text</field>
+        <field name="kind">record</field>
+    </record>
+
+    <record id="ai_tool_create_order_lines_from_attachment" model="ai.tool">
+        <field name="name">create_order_lines_from_attachment</field>
+        <field
+            name="description"
+        >Read the order confirmation attachment and create the sale order lines from the product codes found in it.</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="function_name">_ai_create_order_lines_from_attachment</field>
+        <field name="kind">record</field>
+    </record>
+</odoo>

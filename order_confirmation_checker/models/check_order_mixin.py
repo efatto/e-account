@@ -1,18 +1,23 @@
-import json
 import logging
 import os
 import re
-from urllib.parse import urljoin
-
-import requests
 
 from odoo import _, fields, models, tools
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools.config import config
 
 from .check_order_confirm import check_code_and_qty
 
 _logger = logging.getLogger(__name__)
+
+
+def get_attachment_file(attachment):
+    """Return the local path and extension of an attachment."""
+    attachment.ensure_one()
+    file_path = attachment._full_path(attachment.store_fname)
+    file_ext = os.path.splitext(attachment.name or "")[1].lstrip(".").lower()
+    if not file_ext:
+        file_ext = (attachment.mimetype or "").split("/")[-1].lower()
+    return file_path, file_ext
 
 
 def check_attachment(object_to_check, object_to_check_lines):
@@ -22,13 +27,7 @@ def check_attachment(object_to_check, object_to_check_lines):
     lines_to_check = object_to_check_lines.filtered(
         lambda x: x.product_id.type == "consu" and x.product_id.default_code
     )
-    filestore = tools.config.filestore(object_to_check._cr.dbname)
-    file_path = os.path.join(
-        filestore, object_to_check.attachment_to_check_id.store_fname
-    )
-    file_ext = object_to_check.attachment_to_check_id.mimetype.replace(
-        "application/", ""
-    )
+    file_path, file_ext = get_attachment_file(object_to_check.attachment_to_check_id)
     lang = tools.get_lang(
         object_to_check.env, lang_code=object_to_check.partner_id.lang
     )
@@ -141,77 +140,29 @@ class CheckOrderMixinParent(models.AbstractModel):
         help="Select the attachment which contains the order confirmation",
     )
 
-    def _compute_n8n_url(self, endpoint=""):
-        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
-        is_exposed = config.get("proxy_mode", False)
-        if not is_exposed:
-            base_url = base_url.replace(str(config.get("http_port")), "5678")
-        n8n_url = urljoin(
-            base_url, f"{'/n8n' if is_exposed else ''}/webhook/{endpoint}"
+    def _get_ai_connection(self):
+        """Return the AI connection configured for order confirmations."""
+        self.ensure_one()
+        param = (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("order_confirmation_checker.ai_connection_id")
         )
-        return n8n_url
-
-    def _n8n_webhook(self, option=False, data=False, extracted_text=False):
-        api_key = self.env["ir.config_parameter"].sudo().get_param("X-N8N_API_KEY")
-        if not api_key:
+        try:
+            connection_id = int(param)
+        except (TypeError, ValueError):
+            connection_id = False
+        connection = (
+            self.env["ai.connection"].sudo().browse(connection_id)
+            if connection_id
+            else self.env["ai.connection"].sudo()
+        )
+        if not connection or not connection.active:
             raise UserError(
                 _(
-                    "API KEY not found in System Parameters. Make sure to "
-                    "define the API KEY using the key X-N8N_API_KEY"
+                    "No active AI connection configured for order confirmations. "
+                    "Set one in Sales settings or in System Parameters with the "
+                    "key order_confirmation_checker.ai_connection_id."
                 )
             )
-        headers = {
-            "Accepts": "application/json",
-            "X-N8N_API_KEY": api_key,
-        }
-        if option == "read_attach":
-            odoo_webhook = self._compute_n8n_url("read-attachment")
-            params = {"sale_order_id": self.id}  # todo rename order_id and reuse for PO
-            try:
-                req = requests.post(
-                    url=odoo_webhook,
-                    data=params,
-                    timeout=30,
-                    headers=headers,
-                    verify=False,
-                )
-                response = req.json()
-            except OSError as e:
-                error_msg = _("Something went wrong during data submission: %(err)s", e)
-                raise UserError(error_msg) from e
-        else:
-            odoo_webhook = self._compute_n8n_url("insert-so-rows")
-            params = {
-                "company_id": self.env.company.id,
-                "company_name": self.env.company.name,
-                "sale_order_id": self.id,
-                "data": json.dumps(data),
-                "extracted_text": extracted_text,
-            }
-            try:
-                api_key = (
-                    self.env["ir.config_parameter"].sudo().get_param("X-N8N_API_KEY")
-                )
-                if not api_key:
-                    raise UserError(
-                        _(
-                            "API KEY not found in System Parameters. Make sure to "
-                            "define the API KEY using the key X-N8N_API_KEY"
-                        )
-                    )
-                headers = {
-                    "Accepts": "application/json",
-                    "X-N8N_API_KEY": api_key,
-                }
-                req = requests.get(
-                    url=odoo_webhook,
-                    params=params,
-                    timeout=30,
-                    headers=headers,
-                    verify=False,
-                )
-                response = req.json()
-            except OSError as e:
-                error_msg = _("Something went wrong during data submission: %s") % e
-                raise UserError(error_msg) from e
-        return response
+        return connection
